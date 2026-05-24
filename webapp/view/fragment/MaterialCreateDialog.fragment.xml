@@ -1,0 +1,90 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="materialCreateDialog"
+        title="자재 추가"
+        contentWidth="28rem"
+        draggable="true"
+        resizable="true"
+        class="invCreateDialog">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <MessageStrip
+                    text="입력한 정보는 SAP OData 서비스({dashboard>/ui/createEntityLabel})로 전송됩니다."
+                    type="Information"
+                    showIcon="true"
+                    class="sapUiSmallMarginBottom" />
+                <f:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4"
+                    labelSpanL="4"
+                    labelSpanM="4"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="0"
+                    emptySpanL="0"
+                    emptySpanM="0"
+                    emptySpanS="0"
+                    columnsXL="1"
+                    columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="false">
+                    <f:content>
+                        <Label text="자재코드" required="true" />
+                        <Input
+                            value="{create>/Component}"
+                            placeholder="예: UP-R-COT-003"
+                            maxLength="40"
+                            required="true" />
+
+                        <Label text="자재명" required="true" />
+                        <Input
+                            value="{create>/ComponentText}"
+                            placeholder="예: Cotton Fabric"
+                            maxLength="80"
+                            required="true" />
+
+                        <Label text="완제품" required="true" />
+                        <Input
+                            value="{create>/ParentMatnr}"
+                            placeholder="예: UP-F-PNT-001"
+                            maxLength="40"
+                            required="true" />
+
+                        <Label text="BOM 수량" />
+                        <Input
+                            value="{create>/BomQty}"
+                            type="Number"
+                            placeholder="1" />
+
+                        <Label text="주문 수량" />
+                        <Input
+                            value="{create>/OrderQty}"
+                            type="Number"
+                            placeholder="1" />
+
+                        <Label text="비고" />
+                        <Input
+                            value="{create>/Remark}"
+                            placeholder="선택 입력"
+                            maxLength="100" />
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                text="SAP에 저장"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press=".onSaveMaterial" />
+        </beginButton>
+        <endButton>
+            <Button text="취소" press=".onCancelMaterialCreate" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

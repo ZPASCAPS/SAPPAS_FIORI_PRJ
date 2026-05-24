@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Pascal Dashboard">
+  <g fill="none" stroke="#1D2D3E" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="6" width="38" height="26.5" rx="2.5"/>
+    <path d="M19.5 32.5v4.5M14 39h20"/>
+    <path d="M26 11.5h12.5M26 15.2h10"/>
+    <circle cx="15.5" cy="20.5" r="6.5"/>
+    <path d="M15.5 14v6.5l4.2 2.45"/>
+    <path d="M19.4 17.1l2.8-1.6"/>
+  </g>
+  <g fill="#1D2D3E" stroke="none">
+    <rect x="27.2" y="23.8" width="3.4" height="5.8" rx="0.4"/>
+    <rect x="31.8" y="21" width="3.4" height="8.6" rx="0.4"/>
+    <rect x="36.4" y="18" width="3.4" height="11.6" rx="0.4"/>
+  </g>
+</svg>

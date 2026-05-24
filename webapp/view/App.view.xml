@@ -1,0 +1,7 @@
+<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.App"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <App id="app" class="nxAppFullHeight">
+    </App>
+</mvc:View>
