@@ -361,4 +361,10 @@
             </HBox>
         </content>
     </Page>
+<Button 
+            id="chatbotFloatingBtn"
+            icon="sap-icon://comment" 
+            type="Emphasized"
+            press=".onOpenChatbot"
+            class="myFloatingButton" />
 </mvc:View>
