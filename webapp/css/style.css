@@ -737,3 +737,13 @@ html, body, body > div, #container, #container-uiarea,
         display: none;
     }
 }
+
+.myFloatingButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 60px;
+    height: 60px;
+    border-radius: 50% !important;
+}

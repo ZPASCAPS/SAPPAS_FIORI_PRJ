@@ -613,7 +613,39 @@ sap.ui.define([
                     MessageBox.error(this._extractSapError(oError, "SAP 자재 등록에 실패했습니다."));
                 }.bind(this)
             });
+        },
+
+        
+
+
+// 1. 챗봇 버튼 누르면 창 열기 - 김용민 0524
+        onOpenChatbot: function () {
+            var oView = this.getView();
+
+            // 만약 챗봇 창이 아직 한 번도 안 만들어졌다면 서랍에서 꺼내서 만듭니다.
+            if (!this._oChatbotDialog) {
+                // ⚠️ 중요: 팀원의 프로젝트 이름에 맞게 경로를 설정해야 합니다. (아래에서 다시 설명해 드릴게요!)
+                this._oChatbotDialog = sap.ui.xmlfragment(
+                    oView.getId(),
+                    "com.capstone.dashboard.fioridashboard.view.fragment.Chatbot", 
+                    this
+                );
+                oView.addDependent(this._oChatbotDialog);
+            }
+
+            // 챗봇 대화창을 화면에 짠! 하고 오픈합니다.
+            this._oChatbotDialog.open();
+        },
+
+        // 2. 닫기 버튼 누르면 창 닫기
+        onCloseChatbot: function () {
+            if (this._oChatbotDialog) {
+                this._oChatbotDialog.close();
+            }
         }
+
+
+
 
     });
 });
