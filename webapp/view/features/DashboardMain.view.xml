@@ -1,0 +1,29 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardMain"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    height="100%"
+    width="100%">
+
+    <VBox class="nxPageRoot" height="100%" width="100%" renderType="Bare">
+        <VBox class="nxMain" height="100%" width="100%" renderType="Bare" justifyContent="Start" alignItems="Stretch">
+            <mvc:XMLView
+                width="100%"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardHeader" />
+            <mvc:XMLView
+                width="100%"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardToolbar" />
+            <mvc:XMLView
+                width="100%"
+                height="100%"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardCanvas" />
+        </VBox>
+
+        <mvc:XMLView
+            viewName="com.capstone.dashboard.fioridashboard.view.features.AiAssistant"
+            class="nxOverlaySlot" />
+        <mvc:XMLView
+            viewName="com.capstone.dashboard.fioridashboard.view.features.MaterialCreate"
+            class="nxOverlaySlot" />
+    </VBox>
+</mvc:View>

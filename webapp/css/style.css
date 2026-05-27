@@ -30,11 +30,88 @@ html, body, body > div, #container, #container-uiarea,
     overflow: hidden;
 }
 
+.nxPage .sapMPageContent,
+.nxPage .sapMPageCont,
+.nxPageRoot {
+    overflow: hidden !important;
+    max-width: 100%;
+}
+
 /* ── Layout shell ── */
+.nxPageRoot {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxPageRoot > .nxMain {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
 .nxShell {
     height: 100% !important;
     min-height: 0;
+    min-width: 0;
+    width: 100% !important;
+    max-width: 100%;
     align-items: stretch;
+    overflow: hidden;
+    flex: 1 1 auto;
+}
+
+/* Sidebar nested view — 고정 너비 */
+.nxShell > .sapUiView:first-child {
+    flex: 0 0 15.5rem !important;
+    width: 15.5rem !important;
+    min-width: 15.5rem !important;
+    max-width: 15.5rem !important;
+    height: 100% !important;
+    overflow: hidden;
+}
+
+.nxShell > .sapUiView:first-child > .sapUiView,
+.nxShell > .sapUiView:first-child .nxSidebar {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* 메인 대시보드 nested view — 남은 가로 공간 전부 사용 */
+.nxShell > .sapUiView:last-child {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: 100% !important;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.nxShell > .sapUiView:last-child > .sapUiView,
+.nxShell > .sapUiView:last-child .nxPageRoot {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Overlay views (챗봇, 자재 Dialog) — 레이아웃 밀림 방지 */
+.nxOverlaySlot {
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: visible !important;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.nxOverlaySlot .myFloatingButton {
+    pointer-events: auto;
 }
 
 /* ── Sidebar ── */
@@ -48,17 +125,22 @@ html, body, body > div, #container, #container-uiarea,
     gap: 0;
 }
 
-/* Browser-tab style app title strip — sidebar와 동일 흰색 */
+/* Browser-tab style app title strip — 헤더와 동일 높이·구분선 */
 .nxBrandBar {
     flex-shrink: 0;
     width: 100%;
+    height: 3.75rem;
+    min-height: 3.75rem;
+    max-height: 3.75rem;
     background: #FFFFFF;
     border-bottom: 1px solid #E5E7EB;
+    box-sizing: border-box;
 }
 
 .nxBrand {
+    height: 3.75rem;
     min-height: 3.75rem;
-    padding: 0.7rem 0.85rem;
+    padding: 0 0.85rem;
     gap: 0.7rem;
     box-sizing: border-box;
 }
@@ -104,57 +186,128 @@ html, body, body > div, #container, #container-uiarea,
     gap: 0.1rem;
 }
 
-/* Dashboard hero — Main 위 독립 대형 블록 */
+/* Dashboard hero — 사이드바 상단 Dashboard 카드 */
 .nxDashHero {
-    margin: 0.15rem 0.15rem 0.35rem;
-    min-height: 3.75rem;
+    margin: 0.4rem 0.7rem 0.45rem 0.55rem !important;
+    width: calc(100% - 1.25rem) !important;
+    max-width: calc(100% - 1.25rem) !important;
+    box-sizing: border-box;
     padding: 0 !important;
+    height: 3.25rem !important;
+    min-height: 3.25rem !important;
+    display: flex !important;
+    align-items: center !important;
 }
 
-.nxDashHero .sapMBtnInner {
-    width: 100%;
-    min-height: 3.75rem;
-    padding: 0.95rem 1rem !important;
-    border-radius: 0.75rem !important;
-    border: 1px solid #E5E7EB !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+.nxDashHero .sapMBtnInner,
+.nxDashHero .sapMBtnInner:hover,
+.nxDashHero .sapMBtnInner:focus,
+.nxDashHero .sapMBtnInner:active,
+.nxDashHero:focus .sapMBtnInner,
+.nxDashHero.sapMBtnEmphasized .sapMBtnInner {
+    width: 100% !important;
+    min-height: 3.25rem !important;
+    height: 3.25rem !important;
+    padding: 0 1rem !important;
+    border-radius: 0.65rem !important;
+    border: none !important;
+    border-width: 0 !important;
+    outline: none !important;
+    background-image: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    align-content: center !important;
     justify-content: flex-start !important;
     gap: 0.65rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 10px rgba(124, 58, 237, 0.18) !important;
+}
+
+.nxDashHero:focus,
+.nxDashHero.sapMBtn:focus {
+    outline: none !important;
+}
+
+.nxDashHero .sapMBtnInner::before,
+.nxDashHero .sapMBtnInner::after {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .nxDashHero .sapMBtnIcon {
-    font-size: 1.35rem !important;
-    color: #7C3AED !important;
-    width: 2.25rem;
-    height: 2.25rem;
-    line-height: 2.25rem;
-    background: #F5F3FF;
-    border-radius: 0.55rem;
+    font-size: 1.15rem !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    align-self: center !important;
+    top: 0 !important;
+    position: relative !important;
 }
 
-.nxDashHero .sapMBtnContent {
-    font-size: 1.05rem !important;
-    font-weight: 700 !important;
-    color: #374151 !important;
+.nxDashHero .sapMBtnContent,
+.nxDashHero .sapMBtnContent bdi {
+    font-size: 0.98rem !important;
+    font-weight: 600 !important;
+    color: #FFFFFF !important;
     text-align: left;
+    letter-spacing: 0.01em;
+    line-height: 1.2 !important;
+    align-self: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    top: 0 !important;
+    position: relative !important;
 }
 
-.nxDashHero.nxDashHeroActive .sapMBtnInner {
-    background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%) !important;
-    border-color: #6D28D9 !important;
-    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.32) !important;
+/* 활성 — 깔끔한 보라, 이중 테두리·inset 제거 */
+.nxDashHero:not(.nxDashHeroInactive) .sapMBtnInner,
+.nxDashHero:not(.nxDashHeroInactive) .sapMBtnInner:hover,
+.nxDashHero:not(.nxDashHeroInactive) .sapMBtnInner:focus {
+    background: linear-gradient(180deg, #8B5CF6 0%, #7C3AED 100%) !important;
+    background-color: #7C3AED !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 10px rgba(124, 58, 237, 0.18) !important;
 }
 
-.nxDashHero.nxDashHeroActive .sapMBtnIcon {
-    color: #FFFFFF !important;
-    background: rgba(255, 255, 255, 0.18);
+.nxDashHero:not(.nxDashHeroInactive):hover .sapMBtnInner {
+    background: linear-gradient(180deg, #9333EA 0%, #7C3AED 100%) !important;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.08), 0 6px 14px rgba(124, 58, 237, 0.22) !important;
 }
 
-.nxDashHero.nxDashHeroActive .sapMBtnContent {
-    font-size: 1.12rem !important;
-    font-weight: 800 !important;
-    color: #FFFFFF !important;
+/* 비활성 — 연보라 플랫 카드 */
+.nxDashHero.nxDashHeroInactive .sapMBtnInner,
+.nxDashHero.nxDashHeroInactive .sapMBtnInner:hover,
+.nxDashHero.nxDashHeroInactive .sapMBtnInner:focus {
+    background: #F5F3FF !important;
+    background-color: #F5F3FF !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+.nxDashHero.nxDashHeroInactive .sapMBtnContent,
+.nxDashHero.nxDashHeroInactive .sapMBtnContent bdi {
+    color: #6D28D9 !important;
+    font-weight: 600 !important;
+}
+
+.nxDashHero.nxDashHeroInactive .sapMBtnIcon {
+    color: #7C3AED !important;
+    background: transparent !important;
+}
+
+.nxDashHero.nxDashHeroInactive:hover .sapMBtnInner {
+    background: #EDE9FE !important;
 }
 
 .nxNavDivider {
@@ -241,18 +394,91 @@ html, body, body > div, #container, #container-uiarea,
 
 /* ── Main area ── */
 .nxMain {
-    flex: 1;
-    min-width: 0;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: auto !important;
+    max-width: 100%;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+/* 헤더·툴바는 고정, 캔버스만 남은 영역 채움 */
+.nxMain > .sapUiView:first-child,
+.nxMain > .sapUiView:nth-child(2) {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
     min-height: 0;
-    background: #F9FAFB;
+    min-width: 0;
+    align-self: stretch;
+    overflow: hidden;
+}
+
+.nxMain > .sapUiView:last-child {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: hidden;
+}
+
+.nxMain > .sapUiView > .sapUiView {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100%;
+}
+
+.nxMain > .sapUiView:last-child > .sapUiView,
+.nxMain > .sapUiView:last-child .nxDashboardBlank {
+    height: 100% !important;
+    min-height: 0;
+}
+
+/* 대시보드 빈 캔버스 — 흰 백지 */
+.nxDashboardBlank {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    background: #FFFFFF;
+}
+
+.nxContent > .sapUiView,
+.nxRow2 > .sapUiView,
+.nxRow3 > .sapUiView {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-width: 0;
+    flex-shrink: 1;
+    overflow: hidden;
+}
+
+.nxRow2 > .sapUiView,
+.nxRow3 > .sapUiView {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .nxHeader {
     flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
     background: #FFFFFF;
     border-bottom: 1px solid #E5E7EB;
-    padding: 0.5rem 0.65rem;
-    min-height: 3.25rem;
+    padding: 0 0.65rem;
+    height: 3.75rem;
+    min-height: 3.75rem;
+    max-height: 3.75rem;
+    box-sizing: border-box;
+    align-items: center;
 }
 
 .nxSearchWrap {
@@ -291,6 +517,20 @@ html, body, body > div, #container, #container-uiarea,
     border-left: 1px solid #E5E7EB;
 }
 
+.nxProfileAvatar,
+.nxProfileAvatar.sapMAvatar,
+.nxProfileAvatar.sapFAvatar,
+.nxProfileAvatar .sapMAvatarCircle,
+.nxProfileAvatar .sapFAvatarCircle,
+.nxProfileAvatar .sapFAvatarInitialsHolder {
+    background: linear-gradient(135deg, #E35205 0%, #C2410C 100%) !important;
+    background-color: #E35205 !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    font-size: 0.72rem !important;
+}
+
 .nxProfileName {
     font-size: 0.85rem;
     font-weight: 700;
@@ -305,24 +545,34 @@ html, body, body > div, #container, #container-uiarea,
 .nxContentScroll {
     flex: 1;
     min-height: 0;
+    min-width: 0;
+    overflow-x: hidden !important;
 }
 
 .nxContentScroll .sapMScrollContScroll {
     padding: 0;
+    overflow-x: hidden !important;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .nxContent {
     gap: 0;
-    max-width: none;
+    max-width: 100%;
     width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* ── Title row ── */
 .nxTitleRow {
     margin: 0;
-    padding: 0.5rem 0.65rem;
+    padding: 0.65rem 0.65rem;
     background: #FFFFFF;
     border-bottom: 1px solid #E5E7EB;
+    box-sizing: border-box;
+    min-height: 3.25rem;
 }
 
 .nxPageTitle .sapMTitle {
@@ -433,6 +683,10 @@ html, body, body > div, #container, #container-uiarea,
     gap: 0;
     align-items: stretch;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .nxSalesCard {
@@ -450,6 +704,10 @@ html, body, body > div, #container, #container-uiarea,
     gap: 0;
     align-items: stretch;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .nxDistCard {

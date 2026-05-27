@@ -65,9 +65,9 @@ sap.ui.define([
                     period: "MONTHLY"
                 },
                 user: {
-                    name: "Young Alaska",
-                    role: "Business",
-                    initials: "YA"
+                    name: "Chan Young",
+                    role: "Business SK hynix",
+                    initials: "CY"
                 },
                 summary: {
                     totalMaterials: 0,

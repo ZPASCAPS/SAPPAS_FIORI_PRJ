@@ -3,7 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
 
-    <HBox class="nxHeader" alignItems="Center" justifyContent="SpaceBetween">
+    <HBox class="nxHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
         <HBox class="nxSearchWrap" alignItems="Center">
             <SearchField
                 id="globalSearch"
@@ -14,12 +14,14 @@
             <Text text="⌘ + F" class="nxSearchHint" />
         </HBox>
         <HBox alignItems="Center" class="nxHeaderActions">
-            <Button icon="sap-icon://gift" type="Transparent" tooltip="Rewards" class="nxIconBtn" />
             <Button icon="sap-icon://bell" type="Transparent" tooltip="Notifications" class="nxIconBtn" />
             <Button icon="sap-icon://action-settings" type="Transparent" tooltip="Settings" class="nxIconBtn" />
             <Button icon="sap-icon://refresh" type="Transparent" tooltip="SAP 새로고침" press=".onRefresh" class="nxIconBtn" />
             <HBox alignItems="Center" class="nxProfile">
-                <Avatar displaySize="XS" initials="{dashboard>/user/initials}" backgroundColor="Accent6" />
+                <Avatar
+                    displaySize="XS"
+                    initials="{dashboard>/user/initials}"
+                    class="nxProfileAvatar" />
                 <VBox class="sapUiTinyMarginBegin">
                     <Text text="{dashboard>/user/name}" class="nxProfileName" />
                     <Text text="{dashboard>/user/role}" class="nxProfileRole" />

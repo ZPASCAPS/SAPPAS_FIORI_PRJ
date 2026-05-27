@@ -1,0 +1,9 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardCanvas"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    height="100%"
+    width="100%">
+
+    <VBox class="nxDashboardBlank" height="100%" width="100%" renderType="Bare" />
+</mvc:View>
