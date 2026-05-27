@@ -2,8 +2,6 @@
     controllerName="com.capstone.dashboard.fioridashboard.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:layout="sap.ui.layout"
     displayBlock="true"
     height="100%">
 
@@ -11,360 +9,34 @@
         <content>
             <HBox class="nxShell" renderType="Bare" height="100%" width="100%">
 
-                <!-- Sidebar -->
-                <VBox class="nxSidebar" width="15.5rem">
-                    <VBox class="nxBrandBar">
-                        <HBox class="nxBrand" alignItems="Center">
-                            <Image
-                                src="images/pascal-sap.svg"
-                                width="2.35rem"
-                                height="2.35rem"
-                                densityAware="false"
-                                class="nxBrandLogo"
-                                alt="Pascal" />
-                            <Title text="Pascal" class="nxBrandTitle" level="H2" />
-                        </HBox>
-                    </VBox>
+                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.ModuleSideNav" />
 
-                    <ScrollContainer vertical="true" horizontal="false" height="100%" class="nxSideScroll">
-                        <VBox class="nxSideNav">
-                            <Button
-                                id="navDashboardHero"
-                                text="Dashboard"
-                                icon="sap-icon://bbyd-dashboard"
-                                type="Unstyled"
-                                iconFirst="true"
-                                class="nxDashHero nxDashHeroActive"
-                                width="100%"
-                                press=".onDashboardNav" />
-
-                            <VBox class="nxNavDivider" />
-
-                            <Text text="Main" class="nxNavSectionLabel" />
-                            <List
-                                id="mainNavList"
-                                mode="SingleSelectMaster"
-                                includeItemInSelection="true"
-                                selectionChange=".onNavSelect"
-                                class="nxNavList">
-                                <items>
-                                    <StandardListItem title="Materials" icon="sap-icon://product">
-                                        <customData><core:CustomData key="navKey" value="MATERIALS" /></customData>
-                                    </StandardListItem>
-                                    <StandardListItem title="Customers" icon="sap-icon://group">
-                                        <customData><core:CustomData key="navKey" value="CUSTOMERS" /></customData>
-                                    </StandardListItem>
-                                    <StandardListItem title="Message" icon="sap-icon://email" info="8" infoState="Information">
-                                        <customData><core:CustomData key="navKey" value="MESSAGES" /></customData>
-                                    </StandardListItem>
-                                </items>
-                            </List>
-
-                            <VBox class="nxNavDivider" />
-
-                            <Text text="Serve" class="nxNavSectionLabel" />
-                            <List class="nxNavList">
-                                <items>
-                                    <StandardListItem title="Product" icon="sap-icon://product" />
-                                    <StandardListItem title="Invoice" icon="sap-icon://money-bills" />
-                                    <StandardListItem title="Analytics" icon="sap-icon://line-chart" />
-                                    <StandardListItem title="Automation" icon="sap-icon://process" info="BETA" infoState="Success" />
-                                </items>
-                            </List>
-
-                            <VBox class="nxNavDivider" />
-
-                            <Text text="Support" class="nxNavSectionLabel" />
-                            <List class="nxNavList">
-                                <items>
-                                    <StandardListItem title="Settings" icon="sap-icon://action-settings" />
-                                    <StandardListItem title="Security" icon="sap-icon://shield" />
-                                    <StandardListItem title="Help" icon="sap-icon://sys-help" />
-                                </items>
-                            </List>
-                        </VBox>
-                    </ScrollContainer>
-
-                    <VBox class="nxSideFooter">
-                        <HBox alignItems="Center" class="nxTeamBox">
-                            <core:Icon src="sap-icon://group" size="1rem" color="#7C3AED" class="sapUiTinyMarginEnd" />
-                            <VBox>
-                                <Label text="Team" class="nxTeamLabel" />
-                                <Text text="pas" class="nxTeamValue" />
-                            </VBox>
-                        </HBox>
-                        <Text text="© 2026 Uniqlo SAP Dashboard" class="nxCopyright" />
-                    </VBox>
-                </VBox>
-
-                <!-- Main -->
                 <VBox class="nxMain" height="100%" width="100%">
-                    <!-- Header -->
-                    <HBox class="nxHeader" alignItems="Center" justifyContent="SpaceBetween">
-                        <HBox class="nxSearchWrap" alignItems="Center">
-                            <SearchField
-                                id="globalSearch"
-                                width="22rem"
-                                placeholder="Search materials, BOM, locations..."
-                                search=".onSearch"
-                                liveChange=".onSearch" />
-                            <Text text="⌘ + F" class="nxSearchHint" />
-                        </HBox>
-                        <HBox alignItems="Center" class="nxHeaderActions">
-                            <Button icon="sap-icon://gift" type="Transparent" tooltip="Rewards" class="nxIconBtn" />
-                            <Button icon="sap-icon://bell" type="Transparent" tooltip="Notifications" class="nxIconBtn" />
-                            <Button icon="sap-icon://action-settings" type="Transparent" tooltip="Settings" class="nxIconBtn" />
-                            <Button icon="sap-icon://refresh" type="Transparent" tooltip="SAP 새로고침" press=".onRefresh" class="nxIconBtn" />
-                            <HBox alignItems="Center" class="nxProfile">
-                                <Avatar displaySize="XS" initials="{dashboard>/user/initials}" backgroundColor="Accent6" />
-                                <VBox class="sapUiTinyMarginBegin">
-                                    <Text text="{dashboard>/user/name}" class="nxProfileName" />
-                                    <Text text="{dashboard>/user/role}" class="nxProfileRole" />
-                                </VBox>
-                            </HBox>
-                        </HBox>
-                    </HBox>
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardHeader" />
 
                     <ScrollContainer vertical="true" horizontal="false" class="nxContentScroll">
                         <VBox class="nxContent">
-                            <!-- Title row -->
-                            <HBox class="nxTitleRow" alignItems="Center" justifyContent="SpaceBetween">
-                                <Title text="Dashboard" level="H1" class="nxPageTitle" />
-                                <HBox alignItems="Center" class="nxTitleActions">
-                                    <Text text="{dashboard>/ui/dateRange}" class="nxDateChip" />
-                                    <Select selectedKey="{dashboard>/ui/period}" change=".onPeriodChange" class="nxSelectChip">
-                                        <core:Item key="MONTHLY" text="Monthly" />
-                                        <core:Item key="WEEKLY" text="Weekly" />
-                                    </Select>
-                                    <Button text="Filter" icon="sap-icon://filter" type="Transparent" press=".onFilterPress" class="nxGhostBtn" />
-                                    <Button text="Export" icon="sap-icon://download" type="Transparent" press=".onExport" class="nxGhostBtn" />
-                                    <Button text="자재 추가" icon="sap-icon://add" type="Emphasized" press=".onAddMaterial" class="nxPrimaryBtn" />
-                                </HBox>
-                            </HBox>
+                            <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardToolbar" />
+                            <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.InventoryStatus" />
 
-                            <!-- KPI Row -->
-                            <layout:Grid defaultSpan="L4 M4 S12" hSpacing="0" vSpacing="0" class="nxKpiGrid">
-                                <VBox class="nxCard nxKpiCard">
-                                    <HBox justifyContent="SpaceBetween" alignItems="Start">
-                                        <VBox>
-                                            <HBox alignItems="Center">
-                                                <Text text="Total Materials" class="nxKpiLabel" />
-                                                <core:Icon src="sap-icon://hint" size="0.75rem" color="#94a3b8" class="sapUiTinyMarginBegin" />
-                                            </HBox>
-                                            <Title text="{dashboard>/summary/totalMaterials}" level="H2" class="nxKpiValue" />
-                                            <HBox alignItems="Center" class="sapUiTinyMarginTop">
-                                                <ObjectStatus
-                                                    text="{dashboard>/summary/totalMaterialsTrend}"
-                                                    state="Success"
-                                                    class="nxTrendUp" />
-                                                <Text text="vs last period" class="nxTrendHint sapUiTinyMarginBegin" />
-                                            </HBox>
-                                        </VBox>
-                                        <VBox class="nxKpiIconWrap nxKpiIconPurple">
-                                            <core:Icon src="sap-icon://show" size="1.1rem" color="#7C3AED" />
-                                        </VBox>
-                                    </HBox>
-                                </VBox>
-
-                                <VBox class="nxCard nxKpiCard">
-                                    <HBox justifyContent="SpaceBetween" alignItems="Start">
-                                        <VBox>
-                                            <HBox alignItems="Center">
-                                                <Text text="Stock Value" class="nxKpiLabel" />
-                                                <core:Icon src="sap-icon://hint" size="0.75rem" color="#94a3b8" class="sapUiTinyMarginBegin" />
-                                            </HBox>
-                                            <Title text="{dashboard>/summary/stockValue}" level="H2" class="nxKpiValue" />
-                                            <HBox alignItems="Center" class="sapUiTinyMarginTop">
-                                                <ObjectStatus
-                                                    text="{dashboard>/summary/stockValueTrend}"
-                                                    state="Error"
-                                                    class="nxTrendDown" />
-                                                <Text text="shortage impact" class="nxTrendHint sapUiTinyMarginBegin" />
-                                            </HBox>
-                                        </VBox>
-                                        <VBox class="nxKpiIconWrap nxKpiIconBlue">
-                                            <core:Icon src="sap-icon://wallet" size="1.1rem" color="#3B82F6" />
-                                        </VBox>
-                                    </HBox>
-                                </VBox>
-
-                                <VBox class="nxCard nxKpiCard">
-                                    <HBox justifyContent="SpaceBetween" alignItems="Start">
-                                        <VBox>
-                                            <HBox alignItems="Center">
-                                                <Text text="Shortage Rate" class="nxKpiLabel" />
-                                                <core:Icon src="sap-icon://hint" size="0.75rem" color="#94a3b8" class="sapUiTinyMarginBegin" />
-                                            </HBox>
-                                            <Title text="{dashboard>/summary/shortageRate}" level="H2" class="nxKpiValue" />
-                                            <HBox alignItems="Center" class="sapUiTinyMarginTop">
-                                                <ObjectStatus
-                                                    text="{dashboard>/summary/shortageRateTrend}"
-                                                    state="Success"
-                                                    class="nxTrendUp" />
-                                                <Text text="monitoring" class="nxTrendHint sapUiTinyMarginBegin" />
-                                            </HBox>
-                                        </VBox>
-                                        <VBox class="nxKpiIconWrap nxKpiIconTeal">
-                                            <core:Icon src="sap-icon://accept" size="1.1rem" color="#14B8A6" />
-                                        </VBox>
-                                    </HBox>
-                                </VBox>
-                            </layout:Grid>
-
-                            <!-- Charts row -->
                             <HBox class="nxRow2" renderType="Bare">
-                                <VBox class="nxCard nxChartCard nxSalesCard">
-                                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxCardHeader">
-                                        <Title text="Sales Overview" level="H3" />
-                                        <HBox>
-                                            <Button text="Filter" type="Transparent" class="nxMiniBtn" press=".onFilterPress" />
-                                            <Button text="Sort" type="Transparent" class="nxMiniBtn" />
-                                            <Button icon="sap-icon://overflow" type="Transparent" />
-                                        </HBox>
-                                    </HBox>
-                                    <VBox class="nxSalesHero">
-                                        <Title text="{dashboard>/salesOverview/total}" level="H2" />
-                                        <HBox alignItems="Center" class="sapUiTinyMarginTop">
-                                            <ObjectStatus text="{dashboard>/salesOverview/trend}" state="Success" />
-                                            <Text text="increased from SAP stock" class="nxMuted sapUiTinyMarginBegin" />
-                                        </HBox>
-                                    </VBox>
-                                    <HBox class="nxBarChart" justifyContent="SpaceAround" alignItems="End"
-                                        items="{dashboard>/salesOverview/bars}">
-                                        <items>
-                                            <VBox alignItems="Center" class="nxBarColumn">
-                                                <HBox class="nxBarStack" alignItems="End" justifyContent="Center"
-                                                    items="{dashboard>segments}">
-                                                    <items>
-                                                        <VBox
-                                                            height="{= ${dashboard>height} + 'px' }"
-                                                            class="nxBarSeg {dashboard>tone}"
-                                                            width="0.85rem" />
-                                                    </items>
-                                                </HBox>
-                                                <Text text="{dashboard>month}" class="nxBarLabel sapUiTinyMarginTop" />
-                                            </VBox>
-                                        </items>
-                                    </HBox>
-                                    <HBox class="nxLegend sapUiSmallMarginTop" wrap="Wrap"
-                                        items="{dashboard>/salesOverview/legend}">
-                                        <items>
-                                            <HBox alignItems="Center" class="nxLegendItem sapUiSmallMarginEnd">
-                                                <VBox width="0.5rem" height="0.5rem" class="nxLegendDot {dashboard>tone}" />
-                                                <Text text="{dashboard>label}" class="nxLegendText sapUiTinyMarginBegin" />
-                                            </HBox>
-                                        </items>
-                                    </HBox>
-                                </VBox>
-
-                                <VBox class="nxCard nxChartCard nxSubCard">
-                                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxCardHeader">
-                                        <Title text="Stock Activity" level="H3" />
-                                        <Text text="{dashboard>/subscribers/subtitle}" class="nxMuted" />
-                                    </HBox>
-                                    <VBox class="nxSalesHero">
-                                        <Title text="{dashboard>/subscribers/total}" level="H2" />
-                                        <HBox alignItems="Center" class="sapUiTinyMarginTop">
-                                            <ObjectStatus
-                                                text="{dashboard>/subscribers/trend}"
-                                                state="{dashboard>/subscribers/trendState}" />
-                                            <Text text="재고 충족률 (RequiredQty 대비)" class="nxMuted sapUiTinyMarginBegin" />
-                                        </HBox>
-                                    </VBox>
-                                    <HBox class="nxWeekChart" alignItems="End" justifyContent="SpaceBetween"
-                                        items="{dashboard>/subscribers/days}">
-                                        <items>
-                                            <VBox alignItems="Center" class="nxWeekCol">
-                                                <VBox
-                                                    height="{= ${dashboard>height} + 'px' }"
-                                                    width="1.6rem"
-                                                    class="nxWeekBar {= ${dashboard>active} ? 'nxWeekBarActive' : ''}" />
-                                                <Text text="{dashboard>day}" class="nxBarLabel sapUiTinyMarginTop" />
-                                            </VBox>
-                                        </items>
-                                    </HBox>
-                                </VBox>
+                                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.OrderImpact" />
+                                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.StockActivity" />
                             </HBox>
 
-                            <!-- Bottom row -->
                             <HBox class="nxRow3" renderType="Bare">
-                                <VBox class="nxCard nxDistCard">
-                                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxCardHeader">
-                                        <Title text="Sales Distribution" level="H3" />
-                                        <Select class="nxSelectChip" selectedKey="MONTHLY">
-                                            <core:Item key="MONTHLY" text="Monthly" />
-                                        </Select>
-                                    </HBox>
-                                    <VBox items="{dashboard>/distribution/channels}" class="nxChannelList">
-                                        <items>
-                                            <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxChannelRow">
-                                                <Text text="{dashboard>label}" />
-                                                <Title text="{dashboard>amountLabel}" level="H4" />
-                                            </HBox>
-                                        </items>
-                                    </VBox>
-                                    <VBox class="nxDonutWrap" alignItems="Center">
-                                        <VBox class="nxDonut" />
-                                    </VBox>
-                                </VBox>
-
-                                <VBox class="nxCard nxTableCard">
-                                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxCardHeader">
-                                        <Title text="SAP Material Integrations" level="H3" />
-                                        <Link text="See All" press=".onSeeAllIntegrations" />
-                                    </HBox>
-                                    <HBox class="nxTableHead" alignItems="Center">
-                                        <CheckBox selected="false" enabled="false" class="nxColCheck" />
-                                        <Text text="Application" class="nxColApp" />
-                                        <Text text="Type" class="nxColType" />
-                                        <Text text="Rate" class="nxColRate" />
-                                        <Text text="Profit" class="nxColProfit" />
-                                    </HBox>
-                                    <List items="{dashboard>/integrations}" showSeparators="None" class="nxIntegrationsList">
-                                        <CustomListItem class="nxTableRow">
-                                            <HBox alignItems="Center" class="nxTableRowInner">
-                                                <CheckBox selected="{dashboard>selected}" class="nxColCheck" />
-                                                <HBox alignItems="Center" class="nxColApp">
-                                                    <VBox class="nxAppIcon">
-                                                        <core:Icon src="{dashboard>icon}" size="1rem" color="#7C3AED" />
-                                                    </VBox>
-                                                    <VBox class="sapUiTinyMarginBegin">
-                                                        <Text text="{dashboard>name}" class="nxAppName" />
-                                                        <Text text="{dashboard>code}" class="nxAppCode" />
-                                                    </VBox>
-                                                </HBox>
-                                                <Text text="{dashboard>type}" class="nxColType" />
-                                                <VBox class="nxColRate">
-                                                    <ProgressIndicator
-                                                        percentValue="{dashboard>rate}"
-                                                        displayValue="{dashboard>rate}%"
-                                                        state="{= ${dashboard>rate} &lt; 40 ? 'Error' : (${dashboard>rate} &lt; 70 ? 'Warning' : 'Success') }"
-                                                        class="nxRateBar" />
-                                                </VBox>
-                                                <Text text="{dashboard>profit}" class="nxColProfit" />
-                                            </HBox>
-                                        </CustomListItem>
-                                    </List>
-                                </VBox>
+                                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.ProcessFlow" />
+                                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.MaterialShortage" />
                             </HBox>
 
-                            <!-- Status summary strip -->
-                            <HBox class="nxStatusStrip" alignItems="Center" wrap="Wrap">
-                                <ObjectStatus text="전체 {dashboard>/counts/all}" state="Information" class="nxStatusPill" />
-                                <ObjectStatus text="정상 {dashboard>/counts/active}" state="Success" class="nxStatusPill" />
-                                <ObjectStatus text="확인 {dashboard>/counts/warning}" state="Warning" class="nxStatusPill" />
-                                <ObjectStatus text="부족 {dashboard>/counts/shortage}" state="Error" class="nxStatusPill" />
-                            </HBox>
+                            <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.StatusSummary" />
                         </VBox>
                     </ScrollContainer>
                 </VBox>
             </HBox>
         </content>
     </Page>
-<Button 
-            id="chatbotFloatingBtn"
-            icon="sap-icon://comment" 
-            type="Emphasized"
-            press=".onOpenChatbot"
-            class="myFloatingButton" />
+
+    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.AiAssistant" />
+    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.MaterialCreate" />
 </mvc:View>

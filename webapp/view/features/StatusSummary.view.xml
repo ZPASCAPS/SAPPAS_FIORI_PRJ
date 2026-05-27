@@ -1,0 +1,12 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.StatusSummary"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <HBox class="nxStatusStrip" alignItems="Center" wrap="Wrap">
+        <ObjectStatus text="전체 {dashboard>/counts/all}" state="Information" class="nxStatusPill" />
+        <ObjectStatus text="정상 {dashboard>/counts/active}" state="Success" class="nxStatusPill" />
+        <ObjectStatus text="확인 {dashboard>/counts/warning}" state="Warning" class="nxStatusPill" />
+        <ObjectStatus text="부족 {dashboard>/counts/shortage}" state="Error" class="nxStatusPill" />
+    </HBox>
+</mvc:View>

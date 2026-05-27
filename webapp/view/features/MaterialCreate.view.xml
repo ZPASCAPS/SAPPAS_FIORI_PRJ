@@ -1,4 +1,6 @@
-<core:FragmentDefinition
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.MaterialCreate"
+    xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:f="sap.ui.layout.form">
@@ -87,4 +89,4 @@
             <Button text="취소" press=".onCancelMaterialCreate" />
         </endButton>
     </Dialog>
-</core:FragmentDefinition>
+</mvc:View>

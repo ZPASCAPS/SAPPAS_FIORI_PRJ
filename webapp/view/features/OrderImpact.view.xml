@@ -1,0 +1,50 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.OrderImpact"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <VBox class="nxCard nxChartCard nxSalesCard">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxCardHeader">
+            <Title text="Sales Overview" level="H3" />
+            <HBox>
+                <Button text="Filter" type="Transparent" class="nxMiniBtn" press=".onFilterPress" />
+                <Button text="Sort" type="Transparent" class="nxMiniBtn" />
+                <Button icon="sap-icon://overflow" type="Transparent" />
+            </HBox>
+        </HBox>
+        <VBox class="nxSalesHero">
+            <Title text="{dashboard>/salesOverview/total}" level="H2" />
+            <HBox alignItems="Center" class="sapUiTinyMarginTop">
+                <ObjectStatus text="{dashboard>/salesOverview/trend}" state="Success" />
+                <Text text="increased from SAP stock" class="nxMuted sapUiTinyMarginBegin" />
+            </HBox>
+        </VBox>
+        <HBox class="nxBarChart" justifyContent="SpaceAround" alignItems="End"
+            items="{dashboard>/salesOverview/bars}">
+            <items>
+                <VBox alignItems="Center" class="nxBarColumn">
+                    <HBox class="nxBarStack" alignItems="End" justifyContent="Center"
+                        items="{dashboard>segments}">
+                        <items>
+                            <VBox
+                                height="{= ${dashboard>height} + 'px' }"
+                                class="nxBarSeg {dashboard>tone}"
+                                width="0.85rem" />
+                        </items>
+                    </HBox>
+                    <Text text="{dashboard>month}" class="nxBarLabel sapUiTinyMarginTop" />
+                </VBox>
+            </items>
+        </HBox>
+        <HBox class="nxLegend sapUiSmallMarginTop" wrap="Wrap"
+            items="{dashboard>/salesOverview/legend}">
+            <items>
+                <HBox alignItems="Center" class="nxLegendItem sapUiSmallMarginEnd">
+                    <VBox width="0.5rem" height="0.5rem" class="nxLegendDot {dashboard>tone}" />
+                    <Text text="{dashboard>label}" class="nxLegendText sapUiTinyMarginBegin" />
+                </HBox>
+            </items>
+        </HBox>
+    </VBox>
+</mvc:View>
