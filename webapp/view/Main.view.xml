@@ -8,35 +8,15 @@
     <Page id="dashboardPage" showHeader="false" enableScrolling="false" class="nxPage">
         <content>
             <HBox class="nxShell" renderType="Bare" height="100%" width="100%">
-
-                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.ModuleSideNav" />
-
-                <VBox class="nxMain" height="100%" width="100%">
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardHeader" />
-
-                    <ScrollContainer vertical="true" horizontal="false" class="nxContentScroll">
-                        <VBox class="nxContent">
-                            <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardToolbar" />
-                            <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.InventoryStatus" />
-
-                            <HBox class="nxRow2" renderType="Bare">
-                                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.OrderImpact" />
-                                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.StockActivity" />
-                            </HBox>
-
-                            <HBox class="nxRow3" renderType="Bare">
-                                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.ProcessFlow" />
-                                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.MaterialShortage" />
-                            </HBox>
-
-                            <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.StatusSummary" />
-                        </VBox>
-                    </ScrollContainer>
-                </VBox>
+                <mvc:XMLView
+                    width="15.5rem"
+                    height="100%"
+                    viewName="com.capstone.dashboard.fioridashboard.view.features.ModuleSideNav" />
+                <mvc:XMLView
+                    width="100%"
+                    height="100%"
+                    viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardMain" />
             </HBox>
         </content>
     </Page>
-
-    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.AiAssistant" />
-    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.MaterialCreate" />
 </mvc:View>

@@ -4,7 +4,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <HBox class="nxTitleRow" alignItems="Center" justifyContent="SpaceBetween">
+    <HBox class="nxTitleRow" width="100%" alignItems="Center" justifyContent="SpaceBetween">
         <Title text="Dashboard" level="H1" class="nxPageTitle" />
         <HBox alignItems="Center" class="nxTitleActions">
             <Text text="{dashboard>/ui/dateRange}" class="nxDateChip" />

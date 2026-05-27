@@ -16,6 +16,12 @@ sap.ui.define([
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.ModuleSideNav", {
 
+        onInit: function () {
+            var oModel = this.getView().getModel("dashboard");
+            var sKey = (oModel && oModel.getProperty("/ui/navKey")) || "DASHBOARD";
+            this._syncDashboardHeroState(sKey);
+        },
+
         onNavSelect: function (oEvent) {
             var oItem = oEvent.getParameter("listItem");
             var aCustom = oItem && oItem.getCustomData();
@@ -52,9 +58,11 @@ sap.ui.define([
                 return;
             }
             if (sKey === "DASHBOARD") {
-                oHero.addStyleClass("nxDashHeroActive");
+                oHero.setType("Emphasized");
+                oHero.removeStyleClass("nxDashHeroInactive");
             } else {
-                oHero.removeStyleClass("nxDashHeroActive");
+                oHero.setType("Transparent");
+                oHero.addStyleClass("nxDashHeroInactive");
             }
         }
     });

@@ -24,10 +24,10 @@
                     id="navDashboardHero"
                     text="Dashboard"
                     icon="sap-icon://bbyd-dashboard"
-                    type="Unstyled"
+                    type="Emphasized"
                     iconFirst="true"
-                    class="nxDashHero nxDashHeroActive"
-                    width="100%"
+                    class="nxDashHero"
+                    width="auto"
                     press=".onDashboardNav" />
 
                 <VBox class="nxNavDivider" />
