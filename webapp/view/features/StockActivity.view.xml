@@ -1,0 +1,33 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.StockActivity"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <VBox class="nxCard nxChartCard nxSubCard">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxCardHeader">
+            <Title text="Stock Activity" level="H3" />
+            <Text text="{dashboard>/subscribers/subtitle}" class="nxMuted" />
+        </HBox>
+        <VBox class="nxSalesHero">
+            <Title text="{dashboard>/subscribers/total}" level="H2" />
+            <HBox alignItems="Center" class="sapUiTinyMarginTop">
+                <ObjectStatus
+                    text="{dashboard>/subscribers/trend}"
+                    state="{dashboard>/subscribers/trendState}" />
+                <Text text="재고 충족률 (RequiredQty 대비)" class="nxMuted sapUiTinyMarginBegin" />
+            </HBox>
+        </VBox>
+        <HBox class="nxWeekChart" alignItems="End" justifyContent="SpaceBetween"
+            items="{dashboard>/subscribers/days}">
+            <items>
+                <VBox alignItems="Center" class="nxWeekCol">
+                    <VBox
+                        height="{= ${dashboard>height} + 'px' }"
+                        width="1.6rem"
+                        class="nxWeekBar {= ${dashboard>active} ? 'nxWeekBarActive' : ''}" />
+                    <Text text="{dashboard>day}" class="nxBarLabel sapUiTinyMarginTop" />
+                </VBox>
+            </items>
+        </HBox>
+    </VBox>
+</mvc:View>

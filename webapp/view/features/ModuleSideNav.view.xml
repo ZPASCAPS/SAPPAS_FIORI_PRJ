@@ -1,0 +1,91 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.ModuleSideNav"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <VBox class="nxSidebar" width="15.5rem">
+        <VBox class="nxBrandBar">
+            <HBox class="nxBrand" alignItems="Center">
+                <Image
+                    src="images/pascal-sap.svg"
+                    width="2.35rem"
+                    height="2.35rem"
+                    densityAware="false"
+                    class="nxBrandLogo"
+                    alt="Pascal" />
+                <Title text="Pascal" class="nxBrandTitle" level="H2" />
+            </HBox>
+        </VBox>
+
+        <ScrollContainer vertical="true" horizontal="false" height="100%" class="nxSideScroll">
+            <VBox class="nxSideNav">
+                <Button
+                    id="navDashboardHero"
+                    text="Dashboard"
+                    icon="sap-icon://bbyd-dashboard"
+                    type="Unstyled"
+                    iconFirst="true"
+                    class="nxDashHero nxDashHeroActive"
+                    width="100%"
+                    press=".onDashboardNav" />
+
+                <VBox class="nxNavDivider" />
+
+                <Text text="Main" class="nxNavSectionLabel" />
+                <List
+                    id="mainNavList"
+                    mode="SingleSelectMaster"
+                    includeItemInSelection="true"
+                    selectionChange=".onNavSelect"
+                    class="nxNavList">
+                    <items>
+                        <StandardListItem title="Materials" icon="sap-icon://product">
+                            <customData><core:CustomData key="navKey" value="MATERIALS" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="Customers" icon="sap-icon://group">
+                            <customData><core:CustomData key="navKey" value="CUSTOMERS" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="Message" icon="sap-icon://email" info="8" infoState="Information">
+                            <customData><core:CustomData key="navKey" value="MESSAGES" /></customData>
+                        </StandardListItem>
+                    </items>
+                </List>
+
+                <VBox class="nxNavDivider" />
+
+                <Text text="Serve" class="nxNavSectionLabel" />
+                <List class="nxNavList">
+                    <items>
+                        <StandardListItem title="Product" icon="sap-icon://product" />
+                        <StandardListItem title="Invoice" icon="sap-icon://money-bills" />
+                        <StandardListItem title="Analytics" icon="sap-icon://line-chart" />
+                        <StandardListItem title="Automation" icon="sap-icon://process" info="BETA" infoState="Success" />
+                    </items>
+                </List>
+
+                <VBox class="nxNavDivider" />
+
+                <Text text="Support" class="nxNavSectionLabel" />
+                <List class="nxNavList">
+                    <items>
+                        <StandardListItem title="Settings" icon="sap-icon://action-settings" />
+                        <StandardListItem title="Security" icon="sap-icon://shield" />
+                        <StandardListItem title="Help" icon="sap-icon://sys-help" />
+                    </items>
+                </List>
+            </VBox>
+        </ScrollContainer>
+
+        <VBox class="nxSideFooter">
+            <HBox alignItems="Center" class="nxTeamBox">
+                <core:Icon src="sap-icon://group" size="1rem" color="#7C3AED" class="sapUiTinyMarginEnd" />
+                <VBox>
+                    <Label text="Team" class="nxTeamLabel" />
+                    <Text text="pas" class="nxTeamValue" />
+                </VBox>
+            </HBox>
+            <Text text="© 2026 Uniqlo SAP Dashboard" class="nxCopyright" />
+        </VBox>
+    </VBox>
+</mvc:View>

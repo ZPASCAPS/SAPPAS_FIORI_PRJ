@@ -1,0 +1,26 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.ProcessFlow"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <VBox class="nxCard nxDistCard">
+        <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxCardHeader">
+            <Title text="Sales Distribution" level="H3" />
+            <Select class="nxSelectChip" selectedKey="MONTHLY">
+                <core:Item key="MONTHLY" text="Monthly" />
+            </Select>
+        </HBox>
+        <VBox items="{dashboard>/distribution/channels}" class="nxChannelList">
+            <items>
+                <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxChannelRow">
+                    <Text text="{dashboard>label}" />
+                    <Title text="{dashboard>amountLabel}" level="H4" />
+                </HBox>
+            </items>
+        </VBox>
+        <VBox class="nxDonutWrap" alignItems="Center">
+            <VBox class="nxDonut" />
+        </VBox>
+    </VBox>
+</mvc:View>

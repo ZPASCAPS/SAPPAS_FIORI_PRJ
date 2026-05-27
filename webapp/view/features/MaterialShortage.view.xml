@@ -1,0 +1,45 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.MaterialShortage"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <VBox class="nxCard nxTableCard" width="100%">
+            <HBox justifyContent="SpaceBetween" alignItems="Center" class="nxCardHeader">
+                <Title text="SAP Material Integrations" level="H3" />
+                <Link text="See All" press=".onSeeAllIntegrations" />
+            </HBox>
+            <HBox class="nxTableHead" alignItems="Center">
+                <CheckBox selected="false" enabled="false" class="nxColCheck" />
+                <Text text="Application" class="nxColApp" />
+                <Text text="Type" class="nxColType" />
+                <Text text="Rate" class="nxColRate" />
+                <Text text="Profit" class="nxColProfit" />
+            </HBox>
+            <List items="{dashboard>/integrations}" showSeparators="None" class="nxIntegrationsList">
+                <CustomListItem class="nxTableRow">
+                    <HBox alignItems="Center" class="nxTableRowInner">
+                        <CheckBox selected="{dashboard>selected}" class="nxColCheck" />
+                        <HBox alignItems="Center" class="nxColApp">
+                            <VBox class="nxAppIcon">
+                                <core:Icon src="{dashboard>icon}" size="1rem" color="#7C3AED" />
+                            </VBox>
+                            <VBox class="sapUiTinyMarginBegin">
+                                <Text text="{dashboard>name}" class="nxAppName" />
+                                <Text text="{dashboard>code}" class="nxAppCode" />
+                            </VBox>
+                        </HBox>
+                        <Text text="{dashboard>type}" class="nxColType" />
+                        <VBox class="nxColRate">
+                            <ProgressIndicator
+                                percentValue="{dashboard>rate}"
+                                displayValue="{dashboard>rate}%"
+                                state="{= ${dashboard>rate} &lt; 40 ? 'Error' : (${dashboard>rate} &lt; 70 ? 'Warning' : 'Success') }"
+                                class="nxRateBar" />
+                        </VBox>
+                        <Text text="{dashboard>profit}" class="nxColProfit" />
+                    </HBox>
+                </CustomListItem>
+            </List>
+    </VBox>
+</mvc:View>

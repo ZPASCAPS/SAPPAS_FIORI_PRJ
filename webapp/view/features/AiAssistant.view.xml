@@ -1,10 +1,19 @@
-<core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.AiAssistant"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Button
+        id="chatbotFloatingBtn"
+        icon="sap-icon://comment"
+        type="Emphasized"
+        press=".onOpenChatbot"
+        class="myFloatingButton" />
+
     <Dialog
         id="chatbotDialog"
         title="SAPPAS 챗봇 비서 🤖"
-        draggable="true" 
+        draggable="true"
         resizable="true"
         contentWidth="350px"
         contentHeight="500px">
@@ -17,4 +26,4 @@
             <Button text="닫기" press=".onCloseChatbot" />
         </buttons>
     </Dialog>
-</core:FragmentDefinition>
+</mvc:View>

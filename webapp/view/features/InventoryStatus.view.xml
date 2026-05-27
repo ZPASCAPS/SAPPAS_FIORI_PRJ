@@ -1,0 +1,75 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.InventoryStatus"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout">
+
+    <layout:Grid defaultSpan="L4 M4 S12" hSpacing="0" vSpacing="0" class="nxKpiGrid">
+        <VBox class="nxCard nxKpiCard">
+            <HBox justifyContent="SpaceBetween" alignItems="Start">
+                <VBox>
+                    <HBox alignItems="Center">
+                        <Text text="Total Materials" class="nxKpiLabel" />
+                        <core:Icon src="sap-icon://hint" size="0.75rem" color="#94a3b8" class="sapUiTinyMarginBegin" />
+                    </HBox>
+                    <Title text="{dashboard>/summary/totalMaterials}" level="H2" class="nxKpiValue" />
+                    <HBox alignItems="Center" class="sapUiTinyMarginTop">
+                        <ObjectStatus
+                            text="{dashboard>/summary/totalMaterialsTrend}"
+                            state="Success"
+                            class="nxTrendUp" />
+                        <Text text="vs last period" class="nxTrendHint sapUiTinyMarginBegin" />
+                    </HBox>
+                </VBox>
+                <VBox class="nxKpiIconWrap nxKpiIconPurple">
+                    <core:Icon src="sap-icon://show" size="1.1rem" color="#7C3AED" />
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <VBox class="nxCard nxKpiCard">
+            <HBox justifyContent="SpaceBetween" alignItems="Start">
+                <VBox>
+                    <HBox alignItems="Center">
+                        <Text text="Stock Value" class="nxKpiLabel" />
+                        <core:Icon src="sap-icon://hint" size="0.75rem" color="#94a3b8" class="sapUiTinyMarginBegin" />
+                    </HBox>
+                    <Title text="{dashboard>/summary/stockValue}" level="H2" class="nxKpiValue" />
+                    <HBox alignItems="Center" class="sapUiTinyMarginTop">
+                        <ObjectStatus
+                            text="{dashboard>/summary/stockValueTrend}"
+                            state="Error"
+                            class="nxTrendDown" />
+                        <Text text="shortage impact" class="nxTrendHint sapUiTinyMarginBegin" />
+                    </HBox>
+                </VBox>
+                <VBox class="nxKpiIconWrap nxKpiIconBlue">
+                    <core:Icon src="sap-icon://wallet" size="1.1rem" color="#3B82F6" />
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <VBox class="nxCard nxKpiCard">
+            <HBox justifyContent="SpaceBetween" alignItems="Start">
+                <VBox>
+                    <HBox alignItems="Center">
+                        <Text text="Shortage Rate" class="nxKpiLabel" />
+                        <core:Icon src="sap-icon://hint" size="0.75rem" color="#94a3b8" class="sapUiTinyMarginBegin" />
+                    </HBox>
+                    <Title text="{dashboard>/summary/shortageRate}" level="H2" class="nxKpiValue" />
+                    <HBox alignItems="Center" class="sapUiTinyMarginTop">
+                        <ObjectStatus
+                            text="{dashboard>/summary/shortageRateTrend}"
+                            state="Success"
+                            class="nxTrendUp" />
+                        <Text text="monitoring" class="nxTrendHint sapUiTinyMarginBegin" />
+                    </HBox>
+                </VBox>
+                <VBox class="nxKpiIconWrap nxKpiIconTeal">
+                    <core:Icon src="sap-icon://accept" size="1.1rem" color="#14B8A6" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </layout:Grid>
+</mvc:View>
