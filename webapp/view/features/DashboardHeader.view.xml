@@ -3,29 +3,60 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
 
-    <HBox class="nxHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
-        <HBox class="nxSearchWrap" alignItems="Center">
-            <SearchField
-                id="globalSearch"
-                width="22rem"
-                placeholder="Search materials, BOM, locations..."
-                search=".onSearch"
-                liveChange=".onSearch" />
-            <Text text="⌘ + F" class="nxSearchHint" />
+    <HBox class="nxHeader" width="100%" alignItems="Center">
+        <Button
+            icon="sap-icon://menu2"
+            type="Transparent"
+            tooltip="메뉴"
+            press=".onMenuPress"
+            class="nxHeaderMenuBtn" />
+
+        <HBox class="nxHeaderSearchArea" alignItems="Center">
+            <HBox class="nxSearchWrap" alignItems="Center">
+                <SearchField
+                    id="globalSearch"
+                    width="100%"
+                    placeholder="검색 (오더, 자재, 재고, 리포트 등)"
+                    search=".onSearch"
+                    liveChange=".onSearch"
+                    class="nxSearchField" />
+            </HBox>
         </HBox>
+
         <HBox alignItems="Center" class="nxHeaderActions">
-            <Button icon="sap-icon://bell" type="Transparent" tooltip="Notifications" class="nxIconBtn" />
-            <Button icon="sap-icon://action-settings" type="Transparent" tooltip="Settings" class="nxIconBtn" />
-            <Button icon="sap-icon://refresh" type="Transparent" tooltip="SAP 새로고침" press=".onRefresh" class="nxIconBtn" />
+            <HBox alignItems="Center" class="nxNotifyBtnWrap">
+                <Button
+                    icon="sap-icon://bell"
+                    type="Transparent"
+                    tooltip="알림"
+                    press=".onNotifications"
+                    class="nxIconBtn nxNotifyBtn" />
+                <Text
+                    text="{dashboard>/ui/notificationCount}"
+                    visible="{= ${dashboard>/ui/notificationCount} > 0 }"
+                    class="nxNotifyBadge" />
+            </HBox>
+            <Button
+                icon="sap-icon://sys-help"
+                type="Transparent"
+                tooltip="도움말"
+                press=".onHelp"
+                class="nxIconBtn" />
             <HBox alignItems="Center" class="nxProfile">
                 <Avatar
                     displaySize="XS"
                     initials="{dashboard>/user/initials}"
                     class="nxProfileAvatar" />
-                <VBox class="sapUiTinyMarginBegin">
-                    <Text text="{dashboard>/user/name}" class="nxProfileName" />
-                    <Text text="{dashboard>/user/role}" class="nxProfileRole" />
+                <VBox class="nxProfileInfo">
+                    <Text text="{dashboard>/user/name}" class="nxProfileName" wrapping="false" />
+                    <Text text="{dashboard>/user/role}" class="nxProfileRole" wrapping="false" />
                 </VBox>
+                <Button
+                    icon="sap-icon://slim-arrow-down"
+                    type="Transparent"
+                    tooltip="프로필"
+                    press=".onProfile"
+                    class="nxProfileMenuBtn" />
             </HBox>
         </HBox>
     </HBox>

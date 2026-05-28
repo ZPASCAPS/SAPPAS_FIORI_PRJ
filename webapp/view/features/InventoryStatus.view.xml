@@ -23,7 +23,7 @@
                     </HBox>
                 </VBox>
                 <VBox class="nxKpiIconWrap nxKpiIconPurple">
-                    <core:Icon src="sap-icon://show" size="1.1rem" color="#7C3AED" />
+                    <core:Icon src="sap-icon://show" size="1.1rem" color="#0070F2" />
                 </VBox>
             </HBox>
         </VBox>

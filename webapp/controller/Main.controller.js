@@ -59,15 +59,18 @@ sap.ui.define([
             var oDashboardModel = new JSONModel({
                 ui: {
                     navKey: "DASHBOARD",
+                    navLabel: "Dashboard",
                     createEntityLabel: "MaterialSet",
                     createEntityPath: "/MaterialSet",
                     dateRange: "Oct 18 - Nov 18",
-                    period: "MONTHLY"
+                    period: "MONTHLY",
+                    notificationCount: 6,
+                    lastUpdated: "2025.05.20 10:30 기준"
                 },
                 user: {
-                    name: "Chan Young",
-                    role: "Business SK hynix",
-                    initials: "CY"
+                    name: "박찬영",
+                    role: "FI/CO Analyst",
+                    initials: "PC"
                 },
                 summary: {
                     totalMaterials: 0,

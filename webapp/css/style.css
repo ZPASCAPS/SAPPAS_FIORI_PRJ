@@ -1,4 +1,20 @@
 /* ── Full-screen, no outer margin (standalone / no FLP shell) ── */
+
+/* Pascal 브랜드 컬러 — 챗봇 Emphasized 블루 기준 */
+:root {
+    --nx-brand: #0070F2;
+    --nx-brand-dark: #0057D2;
+    --nx-brand-light: #0084FF;
+    --nx-brand-hover: #0064D9;
+    --nx-brand-bg: #E5F4FF;
+    --nx-brand-bg-soft: #EFF6FF;
+    --nx-brand-bg-hover: #DBEAFE;
+    --nx-brand-muted: #BFDBFE;
+    --nx-brand-text: #0057D2;
+    --nx-brand-shadow: rgba(0, 112, 242, 0.18);
+    --nx-brand-shadow-strong: rgba(0, 112, 242, 0.22);
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -125,51 +141,55 @@ html, body, body > div, #container, #container-uiarea,
     gap: 0;
 }
 
-/* Browser-tab style app title strip — 헤더와 동일 높이·구분선 */
+/* Browser-tab style app title strip — Pascal 워드마크 로고 */
 .nxBrandBar {
     flex-shrink: 0;
     width: 100%;
     height: 3.75rem;
     min-height: 3.75rem;
     max-height: 3.75rem;
+    padding: 0 0.65rem 0 0.85rem;
+    margin: 0;
     background: #FFFFFF;
     border-bottom: 1px solid #E5E7EB;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
 }
 
-.nxBrand {
-    height: 3.75rem;
-    min-height: 3.75rem;
-    padding: 0 0.85rem;
-    gap: 0.7rem;
+.nxBrandMark {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     box-sizing: border-box;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
 }
 
-.nxBrandLogo {
-    width: 2.35rem;
-    height: 2.35rem;
+.nxBrandWordmark {
     flex-shrink: 0;
-    padding: 0;
-    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 100%;
+    height: 100%;
 }
 
-.nxBrandLogo .sapMImg,
-.nxBrandLogo img {
-    width: 2.35rem !important;
-    height: 2.35rem !important;
-    max-width: none;
+.nxBrandWordmark .sapMImg,
+.nxBrandWordmark img {
+    width: auto !important;
+    max-width: 11.75rem !important;
+    height: 2.2rem !important;
+    max-height: 2.2rem !important;
     object-fit: contain;
-    border-radius: 0;
-    box-shadow: none;
+    object-position: left center;
     display: block;
-}
-
-.nxBrandTitle .sapMTitle {
-    font-size: 1.85rem;
-    font-weight: 800;
-    color: #111827;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
+    margin: 0;
 }
 
 .nxSideScroll {
@@ -220,7 +240,7 @@ html, body, body > div, #container, #container-uiarea,
     align-content: center !important;
     justify-content: flex-start !important;
     gap: 0.65rem;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 10px rgba(124, 58, 237, 0.18) !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 10px rgba(0, 112, 242, 0.18) !important;
 }
 
 .nxDashHero:focus,
@@ -271,24 +291,24 @@ html, body, body > div, #container, #container-uiarea,
 .nxDashHero:not(.nxDashHeroInactive) .sapMBtnInner,
 .nxDashHero:not(.nxDashHeroInactive) .sapMBtnInner:hover,
 .nxDashHero:not(.nxDashHeroInactive) .sapMBtnInner:focus {
-    background: linear-gradient(180deg, #8B5CF6 0%, #7C3AED 100%) !important;
-    background-color: #7C3AED !important;
+    background: linear-gradient(180deg, #0084FF 0%, #0070F2 100%) !important;
+    background-color: #0070F2 !important;
     border: none !important;
     outline: none !important;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 10px rgba(124, 58, 237, 0.18) !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 10px rgba(0, 112, 242, 0.18) !important;
 }
 
 .nxDashHero:not(.nxDashHeroInactive):hover .sapMBtnInner {
-    background: linear-gradient(180deg, #9333EA 0%, #7C3AED 100%) !important;
-    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.08), 0 6px 14px rgba(124, 58, 237, 0.22) !important;
+    background: linear-gradient(180deg, #0094FF 0%, #0070F2 100%) !important;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.08), 0 6px 14px rgba(0, 112, 242, 0.22) !important;
 }
 
 /* 비활성 — 연보라 플랫 카드 */
 .nxDashHero.nxDashHeroInactive .sapMBtnInner,
 .nxDashHero.nxDashHeroInactive .sapMBtnInner:hover,
 .nxDashHero.nxDashHeroInactive .sapMBtnInner:focus {
-    background: #F5F3FF !important;
-    background-color: #F5F3FF !important;
+    background: #E5F4FF !important;
+    background-color: #E5F4FF !important;
     background-image: none !important;
     box-shadow: none !important;
     border: none !important;
@@ -297,17 +317,17 @@ html, body, body > div, #container, #container-uiarea,
 
 .nxDashHero.nxDashHeroInactive .sapMBtnContent,
 .nxDashHero.nxDashHeroInactive .sapMBtnContent bdi {
-    color: #6D28D9 !important;
+    color: #0057D2 !important;
     font-weight: 600 !important;
 }
 
 .nxDashHero.nxDashHeroInactive .sapMBtnIcon {
-    color: #7C3AED !important;
+    color: #0070F2 !important;
     background: transparent !important;
 }
 
 .nxDashHero.nxDashHeroInactive:hover .sapMBtnInner {
-    background: #EDE9FE !important;
+    background: #DBEAFE !important;
 }
 
 .nxNavDivider {
@@ -338,11 +358,11 @@ html, body, body > div, #container, #container-uiarea,
 
 .nxNavList .sapMLIB.sapMLIBSelected,
 .nxNavList .sapMLIB:hover {
-    background: #F5F3FF;
+    background: #E5F4FF;
 }
 
 .nxNavList .sapMSLIImgIcon {
-    color: #7C3AED;
+    color: #0070F2;
 }
 
 .nxNavList .sapMSLITitleOnly {
@@ -378,8 +398,8 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxUpgradeBtn .sapMBtnInner {
-    background: #7C3AED !important;
-    border-color: #7C3AED !important;
+    background: #0070F2 !important;
+    border-color: #0070F2 !important;
     border-radius: 0.65rem !important;
     font-weight: 600;
     height: 2.35rem;
@@ -473,48 +493,227 @@ html, body, body > div, #container, #container-uiarea,
     max-width: 100%;
     background: #FFFFFF;
     border-bottom: 1px solid #E5E7EB;
-    padding: 0 0.65rem;
+    padding: 0 1.25rem;
     height: 3.75rem;
     min-height: 3.75rem;
     max-height: 3.75rem;
     box-sizing: border-box;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 1rem;
 }
 
-.nxSearchWrap {
-    background: #F9FAFB;
-    border: 1px solid #E5E7EB;
-    border-radius: 0.65rem;
-    padding: 0 0.75rem 0 0.5rem;
-    height: 2.5rem;
-    gap: 0.5rem;
+.nxHeaderMenuBtn {
+    flex-shrink: 0;
 }
 
-.nxSearchWrap .sapMSF,
-.nxSearchWrap .sapMSFF {
+.nxHeaderMenuBtn .sapMBtnInner {
+    min-width: 2.25rem !important;
+    width: 2.25rem !important;
+    padding: 0 !important;
     border: none !important;
-    box-shadow: none !important;
     background: transparent !important;
 }
 
-.nxSearchHint {
-    font-size: 0.72rem;
-    color: #9CA3AF;
-    white-space: nowrap;
+.nxHeaderMenuBtn .sapMBtnInner,
+.nxHeaderMenuBtn .sapMBtnIcon {
+    color: #374151 !important;
+}
+
+.nxHeaderSearchArea {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 0;
+}
+
+.nxSearchWrap {
+    position: relative !important;
+    width: 28rem;
+    max-width: 36vw;
+    min-width: 14rem;
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    border-radius: 999px;
+    padding: 0 0.5rem 0 1rem;
+    height: 2.5rem;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center !important;
+    overflow: hidden;
+}
+
+.nxSearchField,
+.nxSearchWrap .sapMSF,
+.nxSearchWrap .sapMInputBase {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    position: static !important;
+}
+
+/* SearchField 내부 박스(테두리) 제거 — 바깥 pill만 유지 */
+.nxSearchWrap .sapMSFF,
+.nxSearchWrap .sapMSFF:hover,
+.nxSearchWrap .sapMSFF:focus-within,
+.nxSearchWrap .sapMSF:focus-within .sapMSFF,
+.nxSearchWrap .sapMInputBaseContentWrapper,
+.nxSearchWrap .sapMInputBaseContentWrapper:hover,
+.nxSearchWrap .sapMInputBaseContentWrapper:focus-within,
+.nxSearchWrap .sapMFocus .sapMInputBaseContentWrapper,
+.nxSearchWrap .sapMInputBaseDisabled .sapMInputBaseContentWrapper {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0;
+    position: static !important;
+}
+
+.nxSearchWrap .sapMSFI,
+.nxSearchWrap .sapMInputBaseInner {
+    flex: 1 1 auto !important;
+    order: 1 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 1.25rem !important;
+    min-height: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    line-height: 1.25rem !important;
+    color: #374151 !important;
+    padding: 0 2.25rem 0 0 !important;
+    margin: 0 !important;
+    vertical-align: middle !important;
+}
+
+.nxSearchWrap .sapMSFI::placeholder,
+.nxSearchWrap .sapMSFI::-webkit-input-placeholder,
+.nxSearchWrap .sapMSFI::-moz-placeholder,
+.nxSearchWrap .sapMInputBaseInner::placeholder,
+.nxSearchWrap .sapMInputBaseInner::-webkit-input-placeholder,
+.nxSearchWrap .sapMInputBaseInner::-moz-placeholder {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    color: #9CA3AF !important;
+    opacity: 1;
+}
+
+/* 돋보기 — pill 검색창 우측 끝 고정 */
+.nxSearchWrap .sapMSFB,
+.nxSearchWrap .sapMInputBaseIconContainer {
+    position: absolute !important;
+    right: 0.45rem !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    flex: 0 0 auto !important;
+    order: 2 !important;
+    width: 2rem !important;
+    min-width: 2rem !important;
+    height: 2rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    color: #9CA3AF !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-style: normal !important;
+    z-index: 2;
+}
+
+.nxSearchWrap .sapMSFB:hover,
+.nxSearchWrap .sapMSFB:focus,
+.nxSearchWrap .sapMInputBaseIconContainer:hover {
+    background: transparent !important;
+    color: #6B7280 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.nxSearchWrap .sapMInputBaseIconContainer .sapUiIcon {
+    color: #9CA3AF !important;
+    font-style: normal !important;
 }
 
 .nxHeaderActions {
-    gap: 0.25rem;
+    flex-shrink: 0;
+    gap: 0.35rem;
+    display: flex !important;
+    align-items: center !important;
+    margin-left: auto !important;
 }
 
 .nxIconBtn .sapMBtnInner {
     border-radius: 0.55rem;
+    border: none !important;
+    background: transparent !important;
+}
+
+.nxIconBtn .sapMBtnIcon {
+    color: #4B5563 !important;
+    font-size: 1.05rem !important;
+}
+
+.nxNotifyBtnWrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.15rem;
+}
+
+.nxNotifyBadge {
+    position: absolute;
+    top: 0.05rem;
+    right: 0.05rem;
+    min-width: 1rem;
+    height: 1rem;
+    padding: 0 0.2rem;
+    border-radius: 999px;
+    background: #0070F2;
+    color: #FFFFFF !important;
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.625rem !important;
+    font-weight: 800 !important;
+    line-height: 1rem !important;
+    text-align: center;
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .nxProfile {
     margin-left: 0.5rem;
-    padding-left: 0.75rem;
+    padding-left: 1rem;
+    gap: 0;
     border-left: 1px solid #E5E7EB;
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0;
 }
 
 .nxProfileAvatar,
@@ -527,19 +726,47 @@ html, body, body > div, #container, #container-uiarea,
     background-color: #E35205 !important;
     border: none !important;
     color: #FFFFFF !important;
-    font-weight: 700 !important;
-    font-size: 0.72rem !important;
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-weight: 800 !important;
+    font-size: 0.68rem !important;
 }
 
-.nxProfileName {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #111827;
+.nxProfileInfo {
+    min-width: 0;
+    margin-left: 0.5rem !important;
 }
 
-.nxProfileRole {
-    font-size: 0.72rem;
-    color: #6B7280;
+.nxProfileName,
+.nxProfileName .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    line-height: 1.25 !important;
+    white-space: nowrap;
+}
+
+.nxProfileRole,
+.nxProfileRole .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.75rem !important;
+    font-weight: 400 !important;
+    color: #6B7280 !important;
+    line-height: 1.25 !important;
+    white-space: nowrap;
+}
+
+.nxProfileMenuBtn .sapMBtnInner {
+    border: none !important;
+    background: transparent !important;
+    min-width: 1.5rem !important;
+    width: 1.5rem !important;
+    padding: 0 !important;
+}
+
+.nxProfileMenuBtn .sapMBtnIcon {
+    color: #9CA3AF !important;
+    font-size: 0.85rem !important;
 }
 
 .nxContentScroll {
@@ -565,7 +792,98 @@ html, body, body > div, #container, #container-uiarea,
     overflow-x: hidden;
 }
 
-/* ── Title row ── */
+/* ── Welcome row ── */
+.nxWelcomeRow {
+    margin: 0;
+    padding: 0 1.25rem;
+    background: #EEF2F6;
+    border-bottom: 1px solid #E5E7EB;
+    box-sizing: border-box;
+    height: 4.25rem;
+    min-height: 4.25rem;
+    gap: 1rem;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nxWelcomeLine {
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-wrap: nowrap !important;
+    gap: 0 !important;
+}
+
+.nxWelcomeText,
+.nxWelcomeText .sapMText,
+.nxWelcomeText .sapMTextMaxWidth {
+    display: inline-block !important;
+    width: auto !important;
+    max-width: none !important;
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.375rem !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    color: #111827 !important;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.nxWelcomeBrand,
+.nxWelcomeBrand .sapMText {
+    color: #0070F2 !important;
+}
+
+.nxWelcomeActions {
+    flex-shrink: 0;
+    gap: 0.65rem;
+    align-items: center !important;
+    display: flex !important;
+    height: 100%;
+}
+
+.nxLastUpdated,
+.nxLastUpdated .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    color: #6B7280 !important;
+    white-space: nowrap;
+    line-height: 1.25 !important;
+}
+
+.nxWelcomeRefreshBtn .sapMBtnInner {
+    border: none !important;
+    background: transparent !important;
+    min-width: 2rem !important;
+    width: 2rem !important;
+    padding: 0 !important;
+}
+
+.nxWelcomeRefreshBtn .sapMBtnIcon {
+    color: #0070F2 !important;
+    font-size: 1.05rem !important;
+}
+
+.nxSettingsBtn .sapMBtnInner {
+    border: 1px solid #D1D5DB !important;
+    background: #FFFFFF !important;
+    border-radius: 0.55rem !important;
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    padding: 0 0.9rem !important;
+    height: 2.35rem !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nxSettingsBtn .sapMBtnIcon {
+    color: #0070F2 !important;
+    font-size: 0.95rem !important;
+}
+
+/* ── Title row (legacy widgets) ── */
 .nxTitleRow {
     margin: 0;
     padding: 0.65rem 0.65rem;
@@ -611,8 +929,8 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxPrimaryBtn .sapMBtnInner {
-    background: #7C3AED !important;
-    border-color: #7C3AED !important;
+    background: #0070F2 !important;
+    border-color: #0070F2 !important;
     border-radius: 0.55rem !important;
     font-weight: 600;
 }
@@ -639,7 +957,7 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxKpiCard:hover {
-    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 112, 242, 0.08);
     transform: translateY(-1px);
 }
 
@@ -666,7 +984,7 @@ html, body, body > div, #container, #container-uiarea,
     display: flex;
 }
 
-.nxKpiIconPurple { background: #F5F3FF; }
+.nxKpiIconPurple { background: #E5F4FF; }
 .nxKpiIconBlue { background: #EFF6FF; }
 .nxKpiIconTeal { background: #F0FDFA; }
 
@@ -769,10 +1087,10 @@ html, body, body > div, #container, #container-uiarea,
     min-height: 0.5rem;
 }
 
-.nxBarSeg1 { background: linear-gradient(180deg, #A78BFA 0%, #7C3AED 100%); }
+.nxBarSeg1 { background: linear-gradient(180deg, #60A5FA 0%, #0070F2 100%); }
 .nxBarSeg2 { background: linear-gradient(180deg, #93C5FD 0%, #3B82F6 100%); }
 .nxBarSeg3 { background: linear-gradient(180deg, #67E8F9 0%, #06B6D4 100%); }
-.nxBarSeg4 { background: linear-gradient(180deg, #C4B5FD 0%, #8B5CF6 100%); }
+.nxBarSeg4 { background: linear-gradient(180deg, #93C5FD 0%, #0084FF 100%); }
 .nxBarSeg5 { background: linear-gradient(180deg, #BAE6FD 0%, #0EA5E9 100%); }
 
 .nxBarLabel {
@@ -789,10 +1107,10 @@ html, body, body > div, #container, #container-uiarea,
     border-radius: 50%;
 }
 
-.nxLegend1, .nxLegendDot.nxLegend1 { background: #7C3AED; }
+.nxLegend1, .nxLegendDot.nxLegend1 { background: #0070F2; }
 .nxLegend2, .nxLegendDot.nxLegend2 { background: #3B82F6; }
 .nxLegend3, .nxLegendDot.nxLegend3 { background: #06B6D4; }
-.nxLegend4, .nxLegendDot.nxLegend4 { background: #8B5CF6; }
+.nxLegend4, .nxLegendDot.nxLegend4 { background: #0084FF; }
 .nxLegend5, .nxLegendDot.nxLegend5 { background: #0EA5E9; }
 
 .nxLegendText {
@@ -820,7 +1138,7 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxWeekBarActive {
-    background: linear-gradient(180deg, #C4B5FD 0%, #7C3AED 100%) !important;
+    background: linear-gradient(180deg, #93C5FD 0%, #0070F2 100%) !important;
 }
 
 /* Distribution */
@@ -843,7 +1161,7 @@ html, body, body > div, #container, #container-uiarea,
     height: 9rem;
     border-radius: 50%;
     background: conic-gradient(
-        #7C3AED 0deg 130deg,
+        #0070F2 0deg 130deg,
         #3B82F6 130deg 220deg,
         #06B6D4 220deg 300deg,
         #E5E7EB 300deg 360deg
@@ -906,7 +1224,7 @@ html, body, body > div, #container, #container-uiarea,
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 0.55rem;
-    background: #F5F3FF;
+    background: #E5F4FF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1004,4 +1322,18 @@ html, body, body > div, #container, #container-uiarea,
     width: 60px;
     height: 60px;
     border-radius: 50% !important;
+}
+
+.myFloatingButton .sapMBtnInner,
+.myFloatingButton .sapMBtnInner:hover,
+.myFloatingButton .sapMBtnInner:focus {
+    background: var(--nx-brand) !important;
+    background-color: var(--nx-brand) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: 0 4px 14px var(--nx-brand-shadow-strong) !important;
+}
+
+.myFloatingButton .sapMBtnIcon {
+    color: #FFFFFF !important;
 }

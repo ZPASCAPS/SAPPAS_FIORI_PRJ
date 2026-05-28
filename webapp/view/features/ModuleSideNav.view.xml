@@ -6,15 +6,12 @@
 
     <VBox class="nxSidebar" width="15.5rem">
         <VBox class="nxBrandBar">
-            <HBox class="nxBrand" alignItems="Center">
+            <HBox class="nxBrandMark" alignItems="Center" justifyContent="Center" width="100%">
                 <Image
-                    src="images/pascal-sap.svg"
-                    width="2.35rem"
-                    height="2.35rem"
+                    src="images/pascal-logo.png"
                     densityAware="false"
-                    class="nxBrandLogo"
+                    class="nxBrandWordmark"
                     alt="Pascal" />
-                <Title text="Pascal" class="nxBrandTitle" level="H2" />
             </HBox>
         </VBox>
 
@@ -37,17 +34,14 @@
                     id="mainNavList"
                     mode="SingleSelectMaster"
                     includeItemInSelection="true"
-                    selectionChange=".onNavSelect"
+                    selectionChange=".onMainNavSelect"
                     class="nxNavList">
                     <items>
-                        <StandardListItem title="Materials" icon="sap-icon://product">
-                            <customData><core:CustomData key="navKey" value="MATERIALS" /></customData>
+                        <StandardListItem title="Worklist" icon="sap-icon://checklist">
+                            <customData><core:CustomData key="navKey" value="WORKLIST" /></customData>
                         </StandardListItem>
-                        <StandardListItem title="Customers" icon="sap-icon://group">
-                            <customData><core:CustomData key="navKey" value="CUSTOMERS" /></customData>
-                        </StandardListItem>
-                        <StandardListItem title="Message" icon="sap-icon://email" info="8" infoState="Information">
-                            <customData><core:CustomData key="navKey" value="MESSAGES" /></customData>
+                        <StandardListItem title="Alerts" icon="sap-icon://alert">
+                            <customData><core:CustomData key="navKey" value="ALERTS" /></customData>
                         </StandardListItem>
                     </items>
                 </List>
@@ -55,23 +49,65 @@
                 <VBox class="nxNavDivider" />
 
                 <Text text="Serve" class="nxNavSectionLabel" />
-                <List class="nxNavList">
+                <List
+                    id="serveNavList"
+                    mode="SingleSelectMaster"
+                    includeItemInSelection="true"
+                    selectionChange=".onServeNavSelect"
+                    class="nxNavList">
                     <items>
-                        <StandardListItem title="Product" icon="sap-icon://product" />
-                        <StandardListItem title="Invoice" icon="sap-icon://money-bills" />
-                        <StandardListItem title="Analytics" icon="sap-icon://line-chart" />
-                        <StandardListItem title="Automation" icon="sap-icon://process" info="BETA" infoState="Success" />
+                        <StandardListItem title="SD Sales" icon="sap-icon://sales-order">
+                            <customData><core:CustomData key="navKey" value="SD_SALES" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="MM Materials" icon="sap-icon://product">
+                            <customData><core:CustomData key="navKey" value="MM_MATERIALS" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="PP Production" icon="sap-icon://factory">
+                            <customData><core:CustomData key="navKey" value="PP_PRODUCTION" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="FI/CO Finance" icon="sap-icon://money-bills">
+                            <customData><core:CustomData key="navKey" value="FI_CO_FINANCE" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="Stock Monitor" icon="sap-icon://inventory">
+                            <customData><core:CustomData key="navKey" value="STOCK_MONITOR" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="Master Data Check" icon="sap-icon://validate">
+                            <customData><core:CustomData key="navKey" value="MASTER_DATA_CHECK" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="Report Center" icon="sap-icon://business-objects-experience">
+                            <customData><core:CustomData key="navKey" value="REPORT_CENTER" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="Document Flow" icon="sap-icon://process">
+                            <customData><core:CustomData key="navKey" value="DOCUMENT_FLOW" /></customData>
+                        </StandardListItem>
                     </items>
                 </List>
 
                 <VBox class="nxNavDivider" />
 
                 <Text text="Support" class="nxNavSectionLabel" />
-                <List class="nxNavList">
+                <List
+                    id="supportNavList"
+                    mode="SingleSelectMaster"
+                    includeItemInSelection="true"
+                    selectionChange=".onSupportNavSelect"
+                    class="nxNavList">
                     <items>
-                        <StandardListItem title="Settings" icon="sap-icon://action-settings" />
-                        <StandardListItem title="Security" icon="sap-icon://shield" />
-                        <StandardListItem title="Help" icon="sap-icon://sys-help" />
+                        <StandardListItem title="T-code Guide" icon="sap-icon://syntax">
+                            <customData><core:CustomData key="navKey" value="TCODE_GUIDE" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="Error Helper" icon="sap-icon://message-error">
+                            <customData><core:CustomData key="navKey" value="ERROR_HELPER" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="OData Status" icon="sap-icon://connected">
+                            <customData><core:CustomData key="navKey" value="ODATA_STATUS" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="System Log" icon="sap-icon://document-text">
+                            <customData><core:CustomData key="navKey" value="SYSTEM_LOG" /></customData>
+                        </StandardListItem>
+                        <StandardListItem title="Settings" icon="sap-icon://action-settings">
+                            <customData><core:CustomData key="navKey" value="SETTINGS" /></customData>
+                        </StandardListItem>
                     </items>
                 </List>
             </VBox>
@@ -79,7 +115,7 @@
 
         <VBox class="nxSideFooter">
             <HBox alignItems="Center" class="nxTeamBox">
-                <core:Icon src="sap-icon://group" size="1rem" color="#7C3AED" class="sapUiTinyMarginEnd" />
+                <core:Icon src="sap-icon://group" size="1rem" color="#0070F2" class="sapUiTinyMarginEnd" />
                 <VBox>
                     <Label text="Team" class="nxTeamLabel" />
                     <Text text="pas" class="nxTeamValue" />
