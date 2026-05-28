@@ -22,7 +22,7 @@
                         <CheckBox selected="{dashboard>selected}" class="nxColCheck" />
                         <HBox alignItems="Center" class="nxColApp">
                             <VBox class="nxAppIcon">
-                                <core:Icon src="{dashboard>icon}" size="1rem" color="#7C3AED" />
+                                <core:Icon src="{dashboard>icon}" size="1rem" color="#0070F2" />
                             </VBox>
                             <VBox class="sapUiTinyMarginBegin">
                                 <Text text="{dashboard>name}" class="nxAppName" />

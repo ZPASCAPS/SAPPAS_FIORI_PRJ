@@ -10,20 +10,44 @@
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
+    "sap/m/MessageToast",
     "com/capstone/dashboard/fioridashboard/service/DashboardDataService"
-], function (Controller, DashboardDataService) {
+], function (Controller, MessageToast, DashboardDataService) {
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader", {
 
-        onSearch: function (oEvent) {
-            var sQuery = oEvent.getParameter("query") || oEvent.getParameter("newValue") || "";
+        _applySearch: function (sQuery) {
             var oModel = this.getView().getModel("dashboard");
             if (!oModel) {
                 return;
             }
-            oModel.setProperty("/filters/query", sQuery);
+            oModel.setProperty("/filters/query", sQuery || "");
             DashboardDataService.applySearchFilter(oModel);
+        },
+
+        onSearch: function (oEvent) {
+            var sQuery = oEvent.getParameter("query")
+                || oEvent.getParameter("newValue")
+                || oEvent.getSource().getValue()
+                || "";
+            this._applySearch(sQuery);
+        },
+
+        onMenuPress: function () {
+            MessageToast.show("메뉴는 추후 연결 예정입니다");
+        },
+
+        onNotifications: function () {
+            MessageToast.show("알림함은 추후 연결 예정입니다");
+        },
+
+        onHelp: function () {
+            MessageToast.show("도움말은 추후 연결 예정입니다");
+        },
+
+        onProfile: function () {
+            MessageToast.show("프로필 메뉴는 추후 연결 예정입니다");
         },
 
         onRefresh: function () {
