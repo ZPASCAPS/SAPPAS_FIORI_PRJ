@@ -130,6 +130,10 @@ html, body, body > div, #container, #container-uiarea,
     pointer-events: auto;
 }
 
+.nxOverlaySlot .nxChatbotPanel {
+    pointer-events: auto;
+}
+
 /* ── Sidebar ── */
 .nxSidebar {
     flex-shrink: 0;
@@ -1450,25 +1454,127 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .myFloatingButton {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    width: 60px;
-    height: 60px;
+    position: fixed !important;
+    bottom: 1.5rem !important;
+    right: 1.5rem !important;
+    z-index: 9999 !important;
+    width: 4.5rem !important;
+    height: 4.5rem !important;
+    min-width: 4.5rem !important;
+    min-height: 4.5rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
     border-radius: 50% !important;
+    overflow: hidden !important;
 }
 
 .myFloatingButton .sapMBtnInner,
 .myFloatingButton .sapMBtnInner:hover,
-.myFloatingButton .sapMBtnInner:focus {
-    background: var(--nx-brand) !important;
-    background-color: var(--nx-brand) !important;
+.myFloatingButton .sapMBtnInner:focus,
+.myFloatingButton .sapMBtnInner:active {
+    width: 4.5rem !important;
+    height: 4.5rem !important;
+    min-width: 4.5rem !important;
+    min-height: 4.5rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
     border: none !important;
     outline: none !important;
-    box-shadow: 0 4px 14px var(--nx-brand-shadow-strong) !important;
+    border-radius: 50% !important;
+    background: var(--nx-brand) !important;
+    background-color: var(--nx-brand) !important;
+    box-shadow: 0 6px 18px var(--nx-brand-shadow-strong) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .myFloatingButton .sapMBtnIcon {
     color: #FFFFFF !important;
+    font-size: 1.625rem !important;
+    width: 1.625rem !important;
+    height: 1.625rem !important;
+    line-height: 1.625rem !important;
+}
+
+.myFloatingButton .sapMBtnContent {
+    display: none !important;
+}
+
+/* ── AI 챗봇 플로팅 패널 (버튼 위, 비모달) ── */
+.nxChatbotPanel {
+    position: fixed !important;
+    right: 1.5rem;
+    bottom: calc(1.5rem + 4.5rem + 0.75rem);
+    left: auto;
+    top: auto;
+    z-index: 9998 !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 0.85rem !important;
+    box-shadow: 0 10px 36px rgba(15, 23, 42, 0.16) !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+/* 드래그 후 left/top 좌표 사용 — bottom/right 고정 해제 */
+.nxChatbotPanel.nxChatbotPanelMoved {
+    right: auto !important;
+    bottom: auto !important;
+}
+
+.nxChatbotPanelHeader {
+    flex-shrink: 0;
+    padding: 0.85rem 0.75rem 0.85rem 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    background: #F8FAFC;
+    box-sizing: border-box;
+    cursor: move;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.nxChatbotPanelDragging {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+.nxChatbotPanelClose {
+    cursor: pointer !important;
+}
+
+.nxChatbotPanelTitle,
+.nxChatbotPanelTitle .sapMTitle {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin: 0 !important;
+}
+
+.nxChatbotPanelClose .sapMBtnInner {
+    min-width: 2rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.nxChatbotPanelBody {
+    flex: 1;
+    min-height: 0;
+    background: #FFFFFF;
+}
+
+.nxChatbotPanelContent {
+    padding: 1rem 1.1rem 1.25rem;
+    gap: 0.75rem;
+}
+
+.nxChatbotPanelMessage,
+.nxChatbotPanelMessage .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.55 !important;
+    color: #374151 !important;
 }
