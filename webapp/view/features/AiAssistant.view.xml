@@ -5,41 +5,57 @@
   Controller: com.capstone.dashboard.fioridashboard.controller.features.AiAssistant
 
   역할:
-  - 오른쪽 하단 플로팅 AI 챗봇 버튼과 대화 Dialog UI.
+  - 오른쪽 하단 플로팅 AI 챗봇 버튼 + 버튼 위 비모달 채팅 패널.
 
   대시보드 구조:
   DashboardMain → AiAssistant (화면 위 오버레이, nxOverlaySlot)
 
   협업:
-  - 챗봇 UI·Dialog → 이 View
-  - 열기/닫기 이벤트 → AiAssistant.controller.js
+  - 챗봇 UI → 이 View
+  - 열기/닫기 토글 · 헤더 드래그 이동 → AiAssistant.controller.js
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.AiAssistant"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
 
+    <VBox
+        id="chatbotPanel"
+        visible="false"
+        class="nxChatbotPanel"
+        width="22rem"
+        height="28rem">
+        <HBox
+            id="chatbotPanelHeader"
+            class="nxChatbotPanelHeader"
+            alignItems="Center"
+            justifyContent="SpaceBetween"
+            width="100%">
+            <Title text="SAPPAS 챗봇 비서 🤖" level="H5" class="nxChatbotPanelTitle" />
+            <Button
+                icon="sap-icon://decline"
+                type="Transparent"
+                tooltip="닫기"
+                press=".onCloseChatbot"
+                class="nxChatbotPanelClose" />
+        </HBox>
+        <ScrollContainer
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%"
+            class="nxChatbotPanelBody">
+            <VBox class="nxChatbotPanelContent">
+                <Text text="안녕하세요! 무엇을 도와드릴까요?" class="nxChatbotPanelMessage" />
+            </VBox>
+        </ScrollContainer>
+    </VBox>
+
     <Button
         id="chatbotFloatingBtn"
         icon="sap-icon://comment"
         type="Emphasized"
-        press=".onOpenChatbot"
+        tooltip="AI 챗봇"
+        press=".onToggleChatbot"
         class="myFloatingButton" />
-
-    <Dialog
-        id="chatbotDialog"
-        title="SAPPAS 챗봇 비서 🤖"
-        draggable="true"
-        resizable="true"
-        contentWidth="350px"
-        contentHeight="500px">
-        <content>
-            <VBox class="sapUiSmallMargin">
-                <Text text="안녕하세요! 무엇을 도와드릴까요?" />
-            </VBox>
-        </content>
-        <buttons>
-            <Button text="닫기" press=".onCloseChatbot" />
-        </buttons>
-    </Dialog>
 </mvc:View>
