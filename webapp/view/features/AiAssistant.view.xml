@@ -14,41 +14,144 @@
   - 챗봇 UI → 이 View
   - 열기/닫기 토글 · 헤더 드래그 이동 → AiAssistant.controller.js
 -->
+
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.AiAssistant"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+
+    <html:style>
+        .nxChatPanelBox {
+            background-color: #EBF0F5; /* 연한 회파란색 배경 */
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            border: 1px solid #CFD9E0;
+            overflow: hidden;
+        }
+        .nxChatHeader {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        /* 말풍선 공통 디자인 (둥근 모서리, 여백, 그림자) */
+        .chatBubble { 
+            padding: 10px 14px; 
+            border-radius: 12px; 
+            font-size: 0.95rem; 
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+            line-height: 1.4; 
+            white-space: pre-wrap; 
+            max-width: 100%;
+        }
+        /* 🧑‍💻 사용자 말풍선 (모던한 라이트 그린) */
+        .userBubble { 
+            background-color: #DCF8C6 !important; 
+            color: #000000; 
+            border-top-right-radius: 2px; /* 꼬리표 느낌 */
+        }
+        /* 🤖 AI 비서 말풍선 (순백색) */
+        .aiBubble { 
+            background-color: #FFFFFF !important; 
+            color: #000000; 
+            border-top-left-radius: 2px; /* 꼬리표 느낌 */
+        }
+        .nxInputArea {
+            background-color: #FFFFFF;
+            border-top: 1px solid #E5E5E5;
+        }
+    </html:style>
 
     <VBox
         id="chatbotPanel"
         visible="false"
-        class="nxChatbotPanel"
-        width="22rem"
-        height="28rem">
-        <HBox
+        class="nxChatbotPanel nxChatPanelBox"
+        width="26rem"
+        height="38rem"> <HBox
             id="chatbotPanelHeader"
-            class="nxChatbotPanelHeader"
+            class="nxChatHeader"
             alignItems="Center"
             justifyContent="SpaceBetween"
-            width="100%">
-            <Title text="SAPPAS 챗봇 비서 🤖" level="H5" class="nxChatbotPanelTitle" />
+            width="100%"
+            height="3rem">
+            <Title text="Pastell AI 비서 🤖" level="H5" class="sapUiSmallMarginBegin" />
             <Button
                 icon="sap-icon://decline"
                 type="Transparent"
                 tooltip="닫기"
                 press=".onCloseChatbot"
-                class="nxChatbotPanelClose" />
+                class="sapUiSmallMarginEnd" />
         </HBox>
+
         <ScrollContainer
+            id="chatScrollContainer"
             vertical="true"
             horizontal="false"
-            height="100%"
             width="100%"
-            class="nxChatbotPanelBody">
-            <VBox class="nxChatbotPanelContent">
-                <Text text="안녕하세요! 무엇을 도와드릴까요?" class="nxChatbotPanelMessage" />
-            </VBox>
+            height="100%">
+            <layoutData>
+                <FlexItemData growFactor="1" minHeight="0" />
+            </layoutData>
+            
+            <List 
+                id="chatList" 
+                items="{chatModel>/chat}" 
+                showSeparators="None" 
+                backgroundDesign="Transparent" 
+                class="sapUiResponsiveContentPadding">
+                <CustomListItem>
+                    
+                    <HBox visible="{= !${chatModel>isUser} }" class="sapUiSmallMarginBottom" width="100%">
+                        <core:Icon src="{chatModel>icon}" size="2rem" color="#18a3b8" class="sapUiSmallMarginEnd sapUiTinyMarginTop" />
+                        <VBox width="85%">
+                            <Text text="{chatModel>sender}" class="sapUiTinyMarginBottom" />
+                            <HBox alignItems="End">
+                                <VBox class="chatBubble aiBubble">
+                                    <Text text="{chatModel>text}" />
+                                </VBox>
+                                <Text text="{chatModel>time}" class="sapUiTinyMarginBegin sapUiTinyMarginBottom" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+
+                    <HBox visible="{chatModel>isUser}" justifyContent="End" class="sapUiSmallMarginBottom" width="100%">
+                        <VBox width="85%" alignItems="End">
+                            <HBox alignItems="End" justifyContent="End">
+                                <Text text="{chatModel>time}" class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+                                <VBox class="chatBubble userBubble">
+                                    <Text text="{chatModel>text}" />
+                                </VBox>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+
+                </CustomListItem>
+            </List>
         </ScrollContainer>
+
+        <HBox 
+            alignItems="Center" 
+            justifyContent="SpaceBetween"
+            width="100%" 
+            height="3.5rem"
+            class="nxInputArea">
+            <Input 
+                id="chatInput" 
+                placeholder="자연어로 명령해 보세요..." 
+                submit=".onSendVoiceCommand" 
+                class="sapUiSmallMarginBegin"
+                width="100%">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+            </Input>
+            <Button 
+                icon="sap-icon://paper-plane" 
+                type="Emphasized" 
+                text="전송"
+                press=".onSendVoiceCommand" 
+                class="sapUiTinyMarginBegin sapUiSmallMarginEnd" />
+        </HBox>
     </VBox>
 
     <Button
