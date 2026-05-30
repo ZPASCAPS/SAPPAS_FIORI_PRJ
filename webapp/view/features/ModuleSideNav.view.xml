@@ -1,3 +1,19 @@
+<!--
+  ModuleSideNav.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.ModuleSideNav
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.ModuleSideNav
+
+  역할:
+  - 왼쪽 사이드바: Pascal 로고, Dashboard 버튼, Main/Serve/Support 메뉴 목록.
+
+  대시보드 구조:
+  Main.view.xml → ModuleSideNav (왼쪽 15.5rem 고정 폭)
+
+  협업:
+  - 메뉴 항목·아이콘·로고 UI → 이 View
+  - 메뉴 클릭·navKey 변경 → ModuleSideNav.controller.js
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.ModuleSideNav"
     xmlns:mvc="sap.ui.core.mvc"
@@ -6,11 +22,12 @@
 
     <VBox class="nxSidebar" width="15.5rem">
         <VBox class="nxBrandBar">
-            <HBox class="nxBrandMark" alignItems="Center" justifyContent="Center" width="100%">
+            <HBox class="nxBrandMark" alignItems="Center" justifyContent="Start" width="100%">
                 <Image
-                    src="images/pascal-logo.png"
+                    src="images/pascal-logo-full.png"
                     densityAware="false"
-                    class="nxBrandWordmark"
+                    class="nxBrandLogo"
+                    height="1.25rem"
                     alt="Pascal" />
             </HBox>
         </VBox>

@@ -1,3 +1,19 @@
+<!--
+  DashboardToolbar.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.DashboardToolbar
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardToolbar
+
+  역할:
+  - 현재 탭 제목(navLabel), 기준 시각, 새로고침, 대시보드 설정 버튼 영역.
+
+  대시보드 구조:
+  Main → DashboardMain → DashboardToolbar (헤더 아래 회색 바)
+
+  협업:
+  - 타이틀·버튼 UI → 이 View
+  - 새로고침 EventBus 발행 → DashboardToolbar.controller.js
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardToolbar"
     xmlns:mvc="sap.ui.core.mvc"
@@ -5,9 +21,10 @@
 
     <HBox class="nxWelcomeRow" width="100%" alignItems="Center" justifyContent="SpaceBetween">
         <HBox alignItems="Center" class="nxWelcomeLine" width="100%">
-            <Text text="{= ${dashboard>/user/name} + ' 님, '}" class="nxWelcomeText" wrapping="false" />
-            <Text text="Pascal" class="nxWelcomeText nxWelcomeBrand" wrapping="false" />
-            <Text text="에 오신 것을 환영합니다." class="nxWelcomeText" wrapping="false" />
+            <Text
+                text="{dashboard>/ui/navLabel}"
+                class="nxWelcomeText"
+                wrapping="false" />
         </HBox>
 
         <HBox alignItems="Center" class="nxWelcomeActions">

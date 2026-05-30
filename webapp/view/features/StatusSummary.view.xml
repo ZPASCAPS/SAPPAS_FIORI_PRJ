@@ -1,3 +1,18 @@
+<!--
+  StatusSummary.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.StatusSummary
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.StatusSummary
+
+  역할:
+  - 자재 상태 요약 필터 pill (전체/정상/확인/부족 건수).
+
+  대시보드 구조:
+  (예비) DashboardCanvas에 연결 가능 — 현재 미사용
+
+  협업:
+  - pill UI → 이 View / 데이터: dashboard/counts
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.StatusSummary"
     xmlns:mvc="sap.ui.core.mvc"

@@ -1,3 +1,18 @@
+<!--
+  App.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.App
+  Controller: com.capstone.dashboard.fioridashboard.controller.App
+
+  역할:
+  - 앱 최상위 Shell. sap.m.App 컨테이너만 담당한다.
+
+  대시보드 구조:
+  App.view.xml → Main.view.xml (routing 없이 Component가 Main을 로드)
+
+  협업:
+  - 화면 UI는 거의 없음. 라우팅/RootView 변경 시에만 수정한다.
+-->
 <mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.App"
     displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc"

@@ -1,12 +1,17 @@
 /**
  * DashboardHeader.controller.js
  *
- * 역할:
- * - 대시보드 상단 헤더(검색, 새로고침, 프로필) 이벤트를 처리한다.
+ * View: com.capstone.dashboard.fioridashboard.view.features.DashboardHeader
+ * Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader
  *
- * 주요 기능:
- * - 전역 검색 필터 적용
- * - SAP 데이터 새로고침 요청 (EventBus)
+ * 역할:
+ * - 상단 헤더: 전역 검색, 알림, 프로필, 프로필 설정 Dialog(이름·모듈 Select).
+ *
+ * 대시보드 구조: DashboardMain → DashboardHeader (최상단)
+ *
+ * 협업:
+ * - 검색·프로필 Dialog → 이 Controller + DashboardHeader.view.xml
+ * - profileOptions 목록 → Main.controller.js (_initModels)
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
@@ -16,6 +21,10 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader", {
+
+        onExit: function () {
+            this._oProfileDialog = null;
+        },
 
         _applySearch: function (sQuery) {
             var oModel = this.getView().getModel("dashboard");
@@ -46,8 +55,75 @@ sap.ui.define([
             MessageToast.show("도움말은 추후 연결 예정입니다");
         },
 
+        /**
+         * 프로필 설정 Dialog를 연다.
+         */
         onProfile: function () {
-            MessageToast.show("프로필 메뉴는 추후 연결 예정입니다");
+            var oModel = this.getView().getModel("dashboard");
+            if (!oModel) {
+                return;
+            }
+
+            oModel.setProperty("/user/editName", this._normalizeNameKey(oModel.getProperty("/user/name")));
+            oModel.setProperty("/user/editModule", this._normalizeModuleKey(oModel.getProperty("/user/role")));
+            this._getProfileDialog().open();
+        },
+
+        /**
+         * Dialog 선택값을 프로필에 즉시 반영한다.
+         */
+        onProfileSave: function () {
+            var oModel = this.getView().getModel("dashboard");
+            if (!oModel) {
+                return;
+            }
+
+            var sName = oModel.getProperty("/user/editName") || "";
+            var sModule = oModel.getProperty("/user/editModule") || "";
+
+            if (!sName) {
+                MessageToast.show("이름을 선택해주세요");
+                return;
+            }
+
+            if (!sModule) {
+                MessageToast.show("모듈을 선택해주세요");
+                return;
+            }
+
+            oModel.setProperty("/user/name", sName);
+            oModel.setProperty("/user/role", sModule);
+            this._getProfileDialog().close();
+            MessageToast.show("프로필이 저장되었습니다");
+        },
+
+        _normalizeNameKey: function (sName) {
+            var aNames = ["김용민", "신성진", "박찬영"];
+            return aNames.indexOf(sName) >= 0 ? sName : "박찬영";
+        },
+
+        _normalizeModuleKey: function (sModule) {
+            var sValue = (sModule || "").replace(/\//g, ".").trim();
+            var aModules = ["SD", "PP", "MM", "FI.CO"];
+
+            if (aModules.indexOf(sValue) >= 0) {
+                return sValue;
+            }
+            if (/FI\.?CO/i.test(sValue)) {
+                return "FI.CO";
+            }
+            return "FI.CO";
+        },
+
+        onProfileCancel: function () {
+            this._getProfileDialog().close();
+        },
+
+        _getProfileDialog: function () {
+            if (!this._oProfileDialog) {
+                this._oProfileDialog = this.byId("profileDialog");
+            }
+            return this._oProfileDialog;
         },
 
         onRefresh: function () {
