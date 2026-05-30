@@ -3,7 +3,7 @@
 
   View: com.capstone.dashboard.fioridashboard.view.features.AiAssistant
   Controller: com.capstone.dashboard.fioridashboard.controller.features.AiAssistant
-
+  5/30 김용민 개발
   역할:
   - 오른쪽 하단 플로팅 AI 챗봇 버튼 + 버튼 위 비모달 채팅 패널.
 

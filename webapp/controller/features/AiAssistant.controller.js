@@ -3,7 +3,8 @@
  *
  * View: com.capstone.dashboard.fioridashboard.view.features.AiAssistant
  * Controller: com.capstone.dashboard.fioridashboard.controller.features.AiAssistant
- *
+ * [개발일지]
+ * 5/30 김용민
  * 역할:
  * - 오른쪽 하단 플로팅 버튼 위 비모달 채팅 패널 열기/닫기(토글).
  * - 패널 헤더 드래그로 위치 이동.
