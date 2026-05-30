@@ -1,3 +1,19 @@
+<!--
+  InventoryStatus.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.InventoryStatus
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.InventoryStatus
+
+  역할:
+  - 재고 KPI 카드 3개 (Total Materials, Stock Value, Shortage Rate).
+
+  대시보드 구조:
+  (예비) DashboardCanvas에 연결 가능 — 현재 Canvas는 SectionPlaceholder 사용 중
+
+  협업:
+  - KPI 카드 UI → 이 View
+  - 데이터: dashboard/summary (Main.controller.js + DashboardDataService)
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.InventoryStatus"
     xmlns:mvc="sap.ui.core.mvc"

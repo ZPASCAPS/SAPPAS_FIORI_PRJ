@@ -1,3 +1,24 @@
+<!--
+  DashboardMain.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.DashboardMain
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardMain
+
+  역할:
+  - 오른쪽 메인 영역 컨테이너. 헤더·툴바·캔버스·오버레이 View를 Nested View로 연결한다.
+
+  대시보드 구조:
+  Main.view.xml
+  └─ DashboardMain.view.xml
+      ├─ DashboardHeader.view.xml    (상단 검색·프로필)
+      ├─ DashboardToolbar.view.xml   (탭 제목·새로고침)
+      ├─ DashboardCanvas.view.xml    (중앙 콘텐츠)
+      ├─ AiAssistant.view.xml        (챗봇 오버레이)
+      └─ MaterialCreate.view.xml     (자재 등록 Dialog)
+
+  협업:
+  - 영역 추가/순서 변경 시 이 파일의 mvc:XMLView 목록만 수정한다.
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardMain"
     xmlns:mvc="sap.ui.core.mvc"

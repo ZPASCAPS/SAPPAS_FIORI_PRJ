@@ -1,14 +1,19 @@
 /**
  * Main.controller.js
  *
- * 역할:
- * - 메인 대시보드 전체 뼈대의 공통 초기화와 SAP OData 연동을 담당한다.
- * - dashboard / create JSONModel을 Component에 연결해 하위 Nested View가 공유한다.
+ * View: com.capstone.dashboard.fioridashboard.view.Main
+ * Controller: com.capstone.dashboard.fioridashboard.controller.Main
  *
- * 주요 기능:
- * - 대시보드 모델 초기화
- * - SAP BomStock 데이터 로딩 및 갱신
- * - OData create entity 자동 탐색
+ * 역할:
+ * - 통합 대시보드 공통 초기화. dashboard/create JSONModel을 Component에 등록한다.
+ * - SAP BomStock OData 로딩·갱신, create entity 탐색.
+ *
+ * 대시보드 구조:
+ * Main.view.xml (뼈대) — 하위 features View는 각자 Controller가 담당
+ *
+ * 협업:
+ * - 공통 모델·OData·EventBus(refreshData) → 이 Controller
+ * - 화면별 UI/이벤트 → features/ 하위 Controller (충돌 방지)
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
@@ -60,6 +65,8 @@ sap.ui.define([
                 ui: {
                     navKey: "DASHBOARD",
                     navLabel: "Dashboard",
+                    navDescription: "SAP 통합 프로세스 전체 현황을 확인합니다.",
+                    navIcon: "sap-icon://bbyd-dashboard",
                     createEntityLabel: "MaterialSet",
                     createEntityPath: "/MaterialSet",
                     dateRange: "Oct 18 - Nov 18",
@@ -69,8 +76,22 @@ sap.ui.define([
                 },
                 user: {
                     name: "박찬영",
-                    role: "FI/CO Analyst",
-                    initials: "PC"
+                    role: "FI.CO",
+                    editName: "박찬영",
+                    editModule: "FI.CO"
+                },
+                profileOptions: {
+                    names: [
+                        { key: "김용민", text: "김용민" },
+                        { key: "신성진", text: "신성진" },
+                        { key: "박찬영", text: "박찬영" }
+                    ],
+                    modules: [
+                        { key: "SD", text: "SD" },
+                        { key: "PP", text: "PP" },
+                        { key: "MM", text: "MM" },
+                        { key: "FI.CO", text: "FI.CO" }
+                    ]
                 },
                 summary: {
                     totalMaterials: 0,

@@ -1,3 +1,18 @@
+<!--
+  ProcessFlow.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.ProcessFlow
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.ProcessFlow
+
+  역할:
+  - Sales Distribution 카드 (채널별 금액 + 도넛 차트 영역).
+
+  대시보드 구조:
+  (예비) Serve/Document Flow 탭 등에 연결 가능 — 현재 미사용
+
+  협업:
+  - 차트·카드 UI → 이 View / 데이터: dashboard/distribution
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.ProcessFlow"
     xmlns:mvc="sap.ui.core.mvc"

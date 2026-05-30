@@ -1,3 +1,18 @@
+<!--
+  StockActivity.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.StockActivity
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.StockActivity
+
+  역할:
+  - Stock Activity 주간 막대 차트 카드 (재고 충족률).
+
+  대시보드 구조:
+  (예비) Stock Monitor 탭에 연결 가능 — 현재 미사용
+
+  협업:
+  - 차트 UI → 이 View / 데이터: dashboard/subscribers
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.StockActivity"
     xmlns:mvc="sap.ui.core.mvc"

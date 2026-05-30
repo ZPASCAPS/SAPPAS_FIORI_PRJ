@@ -1,8 +1,15 @@
 /**
  * OrderImpact.controller.js
  *
+ * View: com.capstone.dashboard.fioridashboard.view.features.OrderImpact
+ * Controller: com.capstone.dashboard.fioridashboard.controller.features.OrderImpact
+ *
  * 역할:
- * - Sales Overview 차트 영역의 UI 이벤트를 처리한다.
+ * - Sales Overview 막대 차트. Filter 버튼 등 UI 이벤트.
+ *
+ * 대시보드 구조: (예비) SD Sales 탭 — 현재 미사용
+ *
+ * 협업: UI → OrderImpact.view.xml / 데이터 → dashboard/salesOverview
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",

@@ -1,12 +1,16 @@
 /**
  * MaterialCreate.controller.js
  *
- * 역할:
- * - SAP OData 자재 추가 Dialog의 열기/저장/취소를 처리한다.
+ * View: com.capstone.dashboard.fioridashboard.view.features.MaterialCreate
+ * Controller: com.capstone.dashboard.fioridashboard.controller.features.MaterialCreate
  *
- * 주요 기능:
- * - EventBus로 열기 요청 수신
- * - SAP OData create 호출 후 대시보드 데이터 새로고침 요청
+ * 역할:
+ * - SAP OData 자재 등록 Dialog. EventBus 수신, create 호출, refreshData 발행.
+ *
+ * 대시보드 구조: DashboardMain → MaterialCreate (Dialog 오버레이)
+ *
+ * 협업:
+ * - 폼 UI → MaterialCreate.view.xml / OData 저장 → 이 Controller
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",

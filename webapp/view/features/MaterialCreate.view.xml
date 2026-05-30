@@ -1,3 +1,19 @@
+<!--
+  MaterialCreate.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.MaterialCreate
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.MaterialCreate
+
+  역할:
+  - SAP OData 자재(BomStock) 등록 Dialog 폼 UI.
+
+  대시보드 구조:
+  DashboardMain → MaterialCreate (오버레이 Dialog, EventBus로 열림)
+
+  협업:
+  - 입력 필드·Dialog UI → 이 View
+  - OData create·저장 → MaterialCreate.controller.js
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.MaterialCreate"
     xmlns:mvc="sap.ui.core.mvc"

@@ -1,8 +1,15 @@
 /**
  * StatusSummary.controller.js
  *
+ * View: com.capstone.dashboard.fioridashboard.view.features.StatusSummary
+ * Controller: com.capstone.dashboard.fioridashboard.controller.features.StatusSummary
+ *
  * 역할:
- * - 재고 상태 요약(전체/정상/확인/부족) 스트립 표시 영역을 담당한다.
+ * - 자재 상태 pill (전체/정상/확인/부족). dashboard/counts 바인딩.
+ *
+ * 대시보드 구조: (예비) Canvas 연결용 — 현재 미사용
+ *
+ * 협업: UI → StatusSummary.view.xml
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller"

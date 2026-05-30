@@ -1,7 +1,24 @@
+<!--
+  DashboardHeader.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.DashboardHeader
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader
+
+  역할:
+  - 상단 헤더: 메뉴, 전역 검색, 알림, 프로필, 프로필 설정 Dialog.
+
+  대시보드 구조:
+  Main → DashboardMain → DashboardHeader (최상단 가로 바)
+
+  협업:
+  - 검색·프로필·Dialog UI → 이 View
+  - 검색 필터·프로필 저장 로직 → DashboardHeader.controller.js
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
 
     <HBox class="nxHeader" width="100%" alignItems="Center">
         <Button
@@ -43,10 +60,13 @@
                 press=".onHelp"
                 class="nxIconBtn" />
             <HBox alignItems="Center" class="nxProfile">
-                <Avatar
-                    displaySize="XS"
-                    initials="{dashboard>/user/initials}"
-                    class="nxProfileAvatar" />
+                <VBox class="nxProfileAvatarWrap" alignItems="Center" justifyContent="Center">
+                    <Image
+                        src="images/pas-profile.png"
+                        densityAware="false"
+                        class="nxProfileAvatarImg"
+                        alt="PAS" />
+                </VBox>
                 <VBox class="nxProfileInfo">
                     <Text text="{dashboard>/user/name}" class="nxProfileName" wrapping="false" />
                     <Text text="{dashboard>/user/role}" class="nxProfileRole" wrapping="false" />
@@ -60,4 +80,58 @@
             </HBox>
         </HBox>
     </HBox>
+
+    <Dialog
+        id="profileDialog"
+        title="프로필 설정"
+        contentWidth="25rem"
+        draggable="true"
+        resizable="false"
+        class="nxProfileDialog">
+        <content>
+            <VBox class="nxProfileDialogContent">
+                <HBox alignItems="Center" class="nxProfileDialogPreview">
+                    <VBox class="nxProfileAvatarWrap nxProfileAvatarWrapLarge" alignItems="Center" justifyContent="Center">
+                        <Image
+                            src="images/pas-profile.png"
+                            densityAware="false"
+                            class="nxProfileAvatarImg"
+                            alt="PAS" />
+                    </VBox>
+                    <VBox class="nxProfileDialogPreviewInfo">
+                        <Text text="{dashboard>/user/editName}" class="nxProfileName" />
+                        <Text text="{dashboard>/user/editModule}" class="nxProfileRole" />
+                    </VBox>
+                </HBox>
+                <VBox class="nxProfileDialogField">
+                    <Label text="이름" class="nxProfileDialogLabel" />
+                    <Select
+                        selectedKey="{dashboard>/user/editName}"
+                        width="100%"
+                        forceSelection="false"
+                        class="nxProfileDialogSelect"
+                        items="{dashboard>/profileOptions/names}">
+                        <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                    </Select>
+                </VBox>
+                <VBox class="nxProfileDialogField">
+                    <Label text="모듈" class="nxProfileDialogLabel" />
+                    <Select
+                        selectedKey="{dashboard>/user/editModule}"
+                        width="100%"
+                        forceSelection="false"
+                        class="nxProfileDialogSelect"
+                        items="{dashboard>/profileOptions/modules}">
+                        <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                    </Select>
+                </VBox>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="저장" type="Emphasized" press=".onProfileSave" />
+        </beginButton>
+        <endButton>
+            <Button text="취소" press=".onProfileCancel" />
+        </endButton>
+    </Dialog>
 </mvc:View>

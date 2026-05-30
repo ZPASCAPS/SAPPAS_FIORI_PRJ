@@ -1,3 +1,18 @@
+<!--
+  MaterialShortage.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.MaterialShortage
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.MaterialShortage
+
+  역할:
+  - SAP Material Integrations 테이블 (자재 연동 목록·Rate·Profit).
+
+  대시보드 구조:
+  (예비) MM Materials / Worklist 탭에 연결 가능 — 현재 미사용
+
+  협업:
+  - 테이블 UI → 이 View / 데이터: dashboard/integrations
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.MaterialShortage"
     xmlns:mvc="sap.ui.core.mvc"

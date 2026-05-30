@@ -2,13 +2,13 @@
  * DashboardDataService.js
  *
  * 역할:
- * - SAP BomStock OData 데이터를 대시보드 JSONModel 구조로 변환한다.
- * - KPI, 차트, 테이블 등 화면 표시용 데이터를 생성한다.
+ * - SAP BomStock OData → dashboard JSONModel 변환 (KPI, 차트, 테이블).
+ * - 검색 필터 applySearchFilter.
  *
- * 주요 기능:
- * - OData 항목 매핑 및 상태 분류
- * - summary / salesOverview / subscribers / distribution / integrations 갱신
- * - 검색 필터 적용
+ * 대시보드 구조: Main.controller.js·DashboardHeader에서 호출. features View는 바인딩만 사용.
+ *
+ * 협업:
+ * - OData 매핑·집계 로직 → 이 Service (View/Controller에 OData 직접 넣지 않음)
  */
 sap.ui.define([], function () {
     "use strict";

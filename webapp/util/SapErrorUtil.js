@@ -2,7 +2,11 @@
  * SapErrorUtil.js
  *
  * 역할:
- * - SAP OData 오류 응답에서 사용자에게 보여줄 메시지를 추출한다.
+ * - SAP OData 오류 응답에서 사용자 메시지 추출.
+ *
+ * 대시보드 구조: Main.controller.js, MaterialCreate.controller.js 등에서 사용.
+ *
+ * 협업: OData error handling 공통 → 이 util만 수정.
  */
 sap.ui.define([], function () {
     "use strict";
