@@ -34,7 +34,7 @@ sap.ui.define([
                     {
                         sender: "AI 비서",
                         icon: "sap-icon://activate-blueprints",
-                        text: "안녕하세요! AI비서 파스텔입니다. 무엇을 도와드릴까요?\n\n[가능한 업무]\n1. 판매오더 생성 (예: 미아점에 히트택 10개 주문해 줘)\n2. 재고 조회 (예: 히트택 재고 몇 개야?)",
+                        text: "안녕하세요! AI 비서 파스텔입니다. 무엇을 도와드릴까요?\n\n[가능한 업무]\n1. 판매오더 생성\n2. 구매오더 생성\n3. 전표 요약",
                         time: this._getCurrentTime(),
                         isUser: false 
                     }

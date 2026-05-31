@@ -97,24 +97,31 @@ sap.ui.define([], function () {
             
             // 2. 구매오더 생성 로직
             if (sProcessedText.includes("구매") || sProcessedText.includes("발주")) {
-                oCallbacks.onProcess("AI 비서", "sap-icon://purchasing", "구매오더 생성 업무로 파악했습니다. 분석을 시작합니다...");
+                oCallbacks.onProcess("AI 비서", "sap-icon://purchasing", "구매오더 생성 업무로 파악했습니다. 분석을 시작합니다.");
                 // 💡 원본(sRawText) 대신 번역된 문장(sProcessedText)을 넘겨줍니다.
                 this._handlePurchaseOrder(sProcessedText, oModel, oCallbacks);
 
             // 3. 판매오더 생성 로직
             } else if (sProcessedText.includes("주문") || sProcessedText.includes("판매")) {
-                oCallbacks.onProcess("AI 비서", "sap-icon://sales-order", "판매오더 생성 업무로 파악했습니다. 분석을 시작합니다...");
+                oCallbacks.onProcess("AI 비서", "sap-icon://sales-order", "판매오더 생성 업무로 파악했습니다. 분석을 시작합니다.");
                 this._handleSalesOrder(sProcessedText, oModel, oCallbacks);
 
             // 4. 재고 조회 로직
             } else if (sProcessedText.includes("재고") || sProcessedText.includes("몇 개") || sProcessedText.includes("수량")) {
-                oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 조회 업무로 파악했습니다. 분석을 시작합니다...");
+                oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 조회 업무로 파악했습니다. 분석을 시작합니다.");
                 this._handleInventoryCheck(sProcessedText, oModel, oCallbacks);
+
+            // 3. 판매오더 요약/조회 로직 (CDS View 연동)
+            } else if (sProcessedText.includes("요약") || sProcessedText.includes("조회") || sProcessedText.includes("알려줘")) {
+                oCallbacks.onProcess("AI 비서", "sap-icon://sys-find", "전표 조회 업무로 파악했습니다. 요약 데이터를 검색합니다.");
+                this._handleOrderSummary(sProcessedText, oModel, oCallbacks);
 
             // 5. 예외 처리
             } else {
                 oCallbacks.onError("AI 비서", "sap-icon://sys-help-2", "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n'주문해 줘', '발주해 줘' 또는 '재고 알려줘' 처럼 목적을 명확히 말씀해 주세요!");
             }
+
+           
         },
 
         // ==========================================================
@@ -212,6 +219,63 @@ sap.ui.define([], function () {
                     oCallbacks.onError("AI 비서", "sap-icon://error", "SAP 시스템 연동 중 오류가 발생했습니다.");
                 }
             });
+        },
+
+        /**
+         * 전표 요약/조회 로직 (CDS View 연동)
+         */
+        _handleOrderSummary: function (sProcessedText, oModel, oCallbacks) {
+            // 1. 정규식: 문장에서 연속된 숫자(전표번호)만 쏙 뽑아냅니다.
+            var oOrderNumRegex = /(\d+)/; 
+            var aMatch = sProcessedText.match(oOrderNumRegex);
+            var sOrderNum = aMatch ? aMatch[1] : null;
+
+            if (!sOrderNum) {
+                oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "조회할 전표 번호를 찾지 못했어요. '322번 전표 요약해줘' 처럼 번호를 정확히 말씀해 주세요!");
+                return;
+            }
+
+            // 2. SAP의 전표번호는 항상 10자리입니다. 
+            var sPaddedNum = sOrderNum.padStart(10, '0');
+
+            // 3. CDS View로 OData READ(GET) 요청을 보냅니다.
+            var sPath = "/Z_C_OrderSummary('" + sPaddedNum + "')";
+
+            oModel.read(sPath, {
+                success: function (oData) {
+                    
+                    // 💡 날짜 포맷팅: SAP에서 넘어온 날짜를 2026.05.31 형태로 변환
+                    var sDate = "알 수 없음";
+                    if (oData.CreationDate) {
+                        var oDate = new Date(oData.CreationDate);
+                        var sYear = oDate.getFullYear();
+                        var sMonth = String(oDate.getMonth() + 1).padStart(2, '0');
+                        var sDay = String(oDate.getDate()).padStart(2, '0');
+                        sDate = sYear + "." + sMonth + "." + sDay;
+                    }
+
+                    // 💡 챗봇 응답 메시지 조립 (요청하신 예시 포맷 적용)
+                    var sSummary = "요청하신 " + sOrderNum + "번 판매오더의 요약입니다.\n" +
+                                   "해당 전표는 " + sDate + "에 만들어졌고, 고객번호는 " + oData.Customer + "이며, " +
+                                   "총 금액은 " + oData.TotalAmount + " " + oData.Currency + "입니다.\n\n" +
+                                   "[ 상세 정보 ]\n" +
+                                   "▪ 고객번호 : " + oData.Customer + "\n" +
+                                   "▪ 총 금액 : " + oData.TotalAmount + " " + oData.Currency + "\n" +
+                                   "▪ 판매문서 유형 : " + oData.DocType + "\n" +
+                                   "▪ 판매조직 : " + oData.SalesOrg + "\n" +
+                                   "▪ 유통경로 : " + oData.DistChannel + "\n" +
+                                   "▪ 제품군(디비전) : " + oData.Division;
+                                   
+                    oCallbacks.onSuccess("AI 비서", "sap-icon://accept", sSummary);
+                },
+                error: function (oError) {
+                    // 전표가 없거나 에러가 났을 때
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "SAP 시스템에 " + sOrderNum + "번 전표가 존재하지 않거나 읽기 권한이 없습니다.");
+                }
+            });
         }
+
+
+
     };
 });
