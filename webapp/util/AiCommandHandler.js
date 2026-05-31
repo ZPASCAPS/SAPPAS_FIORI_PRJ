@@ -7,29 +7,113 @@ sap.ui.define([], function () {
     "use strict";
 
     return {
+        // ==========================================================
+        // 📚 자연어 -> SAP 코드 매핑 사전 (Dictionary)
+        // 여기에 공장 3개, 완제품 4개, 원자재 12개를 모두 등록해 주시면 됩니다!
+        // ==========================================================
+        _mappingDict: {
+            // [공급업체 / 공장]
+            "도레이": "UP-V-E-TOR",
+            "토레이": "UP-V-E-TOR",
+            "도레이 공장": "UP-V-E-TOR",
+            "도레이공장": "UP-V-E-TOR",
+            
+            // [고객 / 매장]
+            "미아점": "UP-C-I-MIA",
+            "미아": "UP-C-I-MIA",
+            "신세계점": "UP-C-I-SSG",
+            "신세계": "UP-C-I-SSG",
+            "강남점": "UP-C-I-GAN",
+            "강남": "UP-C-I-GAN",
+            "롯데백화점": "UP-C-I-LOT",
+            "롯데점": "UP-C-I-LOT",
+            "롯데": "UP-C-I-LOT",
+
+
+            // [원자재]
+            "폴리에스터": "UP-R-PES-001",
+            "폴리애스터": "UP-R-PES-001",
+            "코튼": "UP-R-COT-002",
+            "면": "UP-R-COT-002",
+            "레이온": "UP-R-RAY-001",
+            "래이온": "UP-R-RAY-001",
+            "나일론": "UP-R-NYL-001",
+            "아크릴": "UP-R-ACR-001",
+            "폴리우레탄": "UP-R-PUR-001",
+            "폴리우래탄": "UP-R-PUR-001",
+
+            "바지지퍼": "UP-R-PZP-001",
+            "바지 지퍼": "UP-R-PZP-001",
+            "가방지퍼": "UP-R-BZP-001",
+            "가방 지퍼": "UP-R-BZP-001",
+            "바지단추": "UP-R-PBT-001",
+            "바지 단추": "UP-R-PBT-001",
+            "셔츠단추": "UP-R-SBT-001",
+            "셔츠 단추": "UP-R-SBT-001",
+
+            
+            // [완제품]
+            "히트택": "UP-F-HIT-001",
+            "히트텍": "UP-F-HIT-001",
+            "바지": "UP-F-PNT-001",
+            "와이드핏치노팬츠": "UP-F-PNT-001",
+            "팬츠": "UP-F-PNT-001",
+            "치노팬츠": "UP-F-PNT-001",
+            "셔츠": "UP-F-SHT-001",
+            "가방": "UP-F-BAG-001"
+            
+            // ... 이곳에 계속해서 추가해 주세요 ...
+        },
+
+        /**
+         * [NEW] 사용자의 한글 문장에서 사전의 단어를 찾아 SAP 코드로 몰래 바꿔주는 전처리 함수
+         */
+        _preprocessText: function (sText) {
+            var sResult = sText;
+            
+            // 글자 수가 긴 단어부터 치환하도록 정렬 (예: "도레이 공장"이 "도레이"보다 먼저 치환되게 방지)
+            var aDictKeys = Object.keys(this._mappingDict).sort(function(a, b) { 
+                return b.length - a.length; 
+            });
+
+            // 문장에서 한글 명칭을 찾아 SAP 코드로 변경
+            for (var i = 0; i < aDictKeys.length; i++) {
+                var sKey = aDictKeys[i];
+                var sCode = this._mappingDict[sKey];
+                // 자바스크립트의 split-join 기법을 통해 일괄 치환(Replace All)
+                sResult = sResult.split(sKey).join(sCode);
+            }
+
+            return sResult;
+        },
+
         /**
          * 사용자의 메시지를 분석하고 적절한 함수로 분기(Routing)합니다.
          */
         processCommand: function (sRawText, oModel, oCallbacks) {
             
-            // 1. 판매오더 생성 로직
-            if (sRawText.includes("주문") || sRawText.includes("판매")) {
-                oCallbacks.onProcess("AI 비서", "sap-icon://sales-order", "판매오더 생성 업무로 파악했습니다. 분석을 시작합니다...");
-                this._handleSalesOrder(sRawText, oModel, oCallbacks);
-
-            // 2. 재고 조회 로직
-            } else if (sRawText.includes("재고") || sRawText.includes("몇 개") || sRawText.includes("수량")) {
-                oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 조회 업무로 파악했습니다. 분석을 시작합니다...");
-                this._handleInventoryCheck(sRawText, oModel, oCallbacks);
-
-            // 3. (예시) 구매오더 생성 등 추가될 로직 자리
-           } else if (sRawText.includes("구매") || sRawText.includes("발주")) {
+            // 💡 1. 가장 먼저! 한글 문장을 SAP 코드가 섞인 문장으로 전처리(번역)합니다.
+            var sProcessedText = this._preprocessText(sRawText);
+            
+            // 2. 구매오더 생성 로직
+            if (sProcessedText.includes("구매") || sProcessedText.includes("발주")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://purchasing", "구매오더 생성 업무로 파악했습니다. 분석을 시작합니다...");
-                this._handlePurchaseOrder(sRawText, oModel, oCallbacks);
+                // 💡 원본(sRawText) 대신 번역된 문장(sProcessedText)을 넘겨줍니다.
+                this._handlePurchaseOrder(sProcessedText, oModel, oCallbacks);
 
-            // 4. 예외 처리
+            // 3. 판매오더 생성 로직
+            } else if (sProcessedText.includes("주문") || sProcessedText.includes("판매")) {
+                oCallbacks.onProcess("AI 비서", "sap-icon://sales-order", "판매오더 생성 업무로 파악했습니다. 분석을 시작합니다...");
+                this._handleSalesOrder(sProcessedText, oModel, oCallbacks);
+
+            // 4. 재고 조회 로직
+            } else if (sProcessedText.includes("재고") || sProcessedText.includes("몇 개") || sProcessedText.includes("수량")) {
+                oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 조회 업무로 파악했습니다. 분석을 시작합니다...");
+                this._handleInventoryCheck(sProcessedText, oModel, oCallbacks);
+
+            // 5. 예외 처리
             } else {
-                oCallbacks.onError("AI 비서", "sap-icon://sys-help-2", "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n'주문해 줘' 또는 '재고 알려줘' 처럼 목적을 명확히 말씀해 주세요!");
+                oCallbacks.onError("AI 비서", "sap-icon://sys-help-2", "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n'주문해 줘', '발주해 줘' 또는 '재고 알려줘' 처럼 목적을 명확히 말씀해 주세요!");
             }
         },
 
