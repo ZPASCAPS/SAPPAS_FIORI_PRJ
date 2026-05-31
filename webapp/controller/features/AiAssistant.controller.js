@@ -21,20 +21,20 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/format/DateFormat"
-], function (Controller, JSONModel, DateFormat) {
+    "sap/ui/core/format/DateFormat",
+    "com/capstone/dashboard/fioridashboard/util/AiCommandHandler" // 💡 분리된 로직 모듈 임포트
+], function (Controller, JSONModel, DateFormat, AiCommandHandler) {
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.AiAssistant", {
         
         onInit: function () {
-            // --- 1. 사용자 제공 원본 챗봇 데이터 모델 ---
             var oData = {
                 chat: [
                     {
                         sender: "AI 비서",
                         icon: "sap-icon://activate-blueprints",
-                        text: "안녕하세요! 용민님의 SCM 지능형 비서입니다. 무엇을 도와드릴까요?\n\n[가능한 업무]\n1. 판매오더 생성 (예: 미아점에 히트택 10개 주문해 줘)\n2. 재고 조회 (예: 히트택 재고 몇 개야?)",
+                        text: "안녕하세요! AI비서 파스텔입니다. 무엇을 도와드릴까요?\n\n[가능한 업무]\n1. 판매오더 생성 (예: 미아점에 히트택 10개 주문해 줘)\n2. 재고 조회 (예: 히트택 재고 몇 개야?)",
                         time: this._getCurrentTime(),
                         isUser: false 
                     }
@@ -43,7 +43,6 @@ sap.ui.define([
             var oModel = new JSONModel(oData);
             this.getView().setModel(oModel, "chatModel");
 
-            // --- 2. 챗봇 패널 드래그 관련 변수 설정 ---
             this._oDragState = null;
             this._bDragBound = false;
             this._fnMouseMove = this._onDragMove.bind(this);
@@ -60,10 +59,6 @@ sap.ui.define([
         onExit: function () {
             this._unbindChatbotDrag();
         },
-
-        // ==========================================================
-        // 챗봇 비즈니스 로직 (사용자 원본 코드 100% 유지)
-        // ==========================================================
 
         _getCurrentTime: function() {
             var oDateFormat = DateFormat.getDateTimeInstance({pattern: "HH:mm"});
@@ -83,7 +78,6 @@ sap.ui.define([
             });
             oModel.setProperty("/chat", aChat);
 
-            // 스크롤 맨 아래로 자동 이동 로직
             setTimeout(function() {
                 var oScroll = this.getView().byId("chatScrollContainer");
                 if (oScroll) {
@@ -92,91 +86,40 @@ sap.ui.define([
             }.bind(this), 50);
         },
 
+        /**
+         * 사용자가 메세지 전송 시 실행
+         * 화면에 메세지를 띄우고, 로직 분석은 AiCommandHandler에게 통째로 넘깁니다.
+         */
         onSendVoiceCommand: function () {
             var oInput = this.getView().byId("chatInput");
             var sRawText = oInput.getValue();
 
             if (!sRawText || sRawText.trim() === "") return;
 
-            // 내가 보낸 메세지 등록
+            // 1. 내가 보낸 메세지 화면에 그리기
             this._addMessage("용민(사용자)", "sap-icon://employee", sRawText, true);
             oInput.setValue("");
 
-            // 라우터 로직
-            if (sRawText.includes("주문") || sRawText.includes("발주") || sRawText.includes("판매")) {
-                this._addMessage("AI 비서", "sap-icon://sales-order", "판매오더 생성 업무로 파악했습니다. 분석을 시작합니다...", false);
-                this._handleSalesOrder(sRawText); 
-
-            } else if (sRawText.includes("재고") || sRawText.includes("몇 개") || sRawText.includes("수량")) {
-                this._addMessage("AI 비서", "sap-icon://product", "재고 조회 업무로 파악했습니다. 분석을 시작합니다...", false);
-                this._handleInventoryCheck(sRawText); 
-
-            } else {
-                this._addMessage("AI 비서", "sap-icon://sys-help-2", "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n'주문해 줘' 또는 '재고 알려줘' 처럼 목적을 명확히 말씀해 주세요!", false);
-            }
-        },
-
-        _handleSalesOrder: function(sRawText) {
-            var oDateRegex     = /\d{4}\.\d{2}\.\d{2}/;
-            var oCustomerRegex = /UP-C-[A-Z0-9-]+/;
-            var oMaterialRegex = /UP-F-[A-Z0-9-]+/;
-            var oQtyRegex      = /(\d+)\s*(개|박스|주문|수량|오더)/;
-
-            var aDateMatch     = sRawText.match(oDateRegex);
-            var aCustomerMatch = sRawText.match(oCustomerRegex);
-            var aMaterialMatch = sRawText.match(oMaterialRegex);
-            var aQtyMatch      = sRawText.match(oQtyRegex);
-
-            var sReqDate  = aDateMatch ? aDateMatch[0] : null;
-            var sCustomer = aCustomerMatch ? aCustomerMatch[0] : null;
-            var sMaterial = aMaterialMatch ? aMaterialMatch[0] : null;
-            var sQuantity = aQtyMatch ? aQtyMatch[1] : null;
-
-            if (!sReqDate || !sCustomer || !sMaterial || !sQuantity) {
-                var sErrorMsg = "판매오더를 생성하기엔 정보가 부족합니다. 다시 확인해 주세요!\n\n" +
-                                "▪ 날짜: " + (sReqDate || "❌ 미인식") + "\n" +
-                                "▪ 고객: " + (sCustomer || "❌ 미인식") + "\n" +
-                                "▪ 자재: " + (sMaterial || "❌ 미인식") + "\n" +
-                                "▪ 수량: " + (sQuantity ? sQuantity + " 개" : "❌ 미인식");
-                this._addMessage("AI 비서", "sap-icon://sys-cancel", sErrorMsg, false);
-                return;
-            }
-
-            var sCleanDate = sReqDate.replace(/\./g, "");
-            
-            // 사용자 원본 Payload 및 OData 로직 100% 복구
-            var oPayload = {
-                "ActionType": "CREATE_SO",      
-                "ReqDate": sCleanDate,          
-                "Customer": sCustomer,          
-                "Material": sMaterial,          
-                "Quantity": sQuantity,          
-                "DocType": "TA",                
-                "SalesOrg": "1010",             
-                "DistChan": "10",               
-                "Division": "00",               
-                "ReturnMessage": ""             
-            };
-
+            // 2. 챗봇 OData 모델 가져오기
             var oModel = this.getOwnerComponent().getModel("aiModel");
             var that = this; 
 
-            oModel.create("/AiCommandSet", oPayload, {
-                success: function (oData) {
-                    that._addMessage("AI 비서", "sap-icon://accept", "🎉 임무 완료!\n\n" + oData.ReturnMessage, false);
+            // 3. 🚀 분리된 모듈(AiCommandHandler)로 분석 및 실행 위임
+            AiCommandHandler.processCommand(sRawText, oModel, {
+                onProcess: function (sSender, sIcon, sText) {
+                    that._addMessage(sSender, sIcon, sText, false);
                 },
-                error: function (oError) {
-                    that._addMessage("AI 비서", "sap-icon://error", "SAP 시스템 연동 중 오류가 발생했습니다.", false);
+                onSuccess: function (sSender, sIcon, sText) {
+                    that._addMessage(sSender, sIcon, sText, false);
+                },
+                onError: function (sSender, sIcon, sText) {
+                    that._addMessage(sSender, sIcon, sText, false);
                 }
             });
         },
 
-        _handleInventoryCheck: function(sRawText) {
-            this._addMessage("AI 비서", "sap-icon://database", "🔍 (테스트) 삐빅! 재고를 조회하는 모드로 진입했습니다. 곧 CDS View와 연결될 예정입니다!", false);
-        },
-
         // ==========================================================
-        // UI 이벤트 및 드래그 앤 드롭 관련 로직
+        // 이하 UI 드래그 앤 드롭 로직 유지 (건드리지 않음)
         // ==========================================================
         onToggleChatbot: function () {
             var oPanel = this.byId("chatbotPanel");
