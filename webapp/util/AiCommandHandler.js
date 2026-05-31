@@ -39,9 +39,9 @@ sap.ui.define([], function () {
         
         _handleSalesOrder: function (sRawText, oModel, oCallbacks) {
             var oDateRegex     = /\d{4}\.\d{2}\.\d{2}/;
-            var oCustomerRegex = /UP-C-[A-Z0-9-]+/;
-            var oMaterialRegex = /UP-F-[A-Z0-9-]+/;
-            var oQtyRegex      = /(\d+)\s*(개|박스|주문|수량|오더)/;
+            var oCustomerRegex = /UP-C-[A-Z0-9-]+/i;
+            var oMaterialRegex = /UP-F-[A-Z0-9-]+/i;
+            var oQtyRegex      = /(\d+)\s*(개|박스|주문|수량|오더)/i;
 
             var aDateMatch     = sRawText.match(oDateRegex);
             var aCustomerMatch = sRawText.match(oCustomerRegex);
@@ -70,10 +70,6 @@ sap.ui.define([], function () {
                 "Customer": sCustomer,          
                 "Material": sMaterial,          
                 "Quantity": sQuantity,          
-                "DocType": "TA",                
-                "SalesOrg": "1010",             
-                "DistChan": "10",               
-                "Division": "00",               
                 "ReturnMessage": ""             
             };
 
@@ -93,10 +89,10 @@ sap.ui.define([], function () {
         },
 
         _handlePurchaseOrder: function (sRawText, oModel, oCallbacks) {
-            // 정규식 정의 (공급업체, 자재, 수량)
+            // 정규식 정의
             var oVendorRegex   = /UP-V-[A-Z0-9-]+/i;
-            var oMaterialRegex = /UP-[A-Z]-[A-Z0-9-]+/i; 
-            var oQtyRegex      = /(\d+)\s*(개|박스|수량|발주|구매)/;
+            var oMaterialRegex = /UP-R-[A-Z0-9-]+/i; 
+            var oQtyRegex      = /(\d+)\s*(개|박스|수량|EA|ea)/i; // 단위 엄격 제한
 
             var aVendorMatch   = sRawText.match(oVendorRegex);
             var aMaterialMatch = sRawText.match(oMaterialRegex);
@@ -115,19 +111,18 @@ sap.ui.define([], function () {
                 return;
             }
 
-            // OData Payload 구성
+            // 💡 통일된 Payload: ReturnMessage 필드 추가 (백엔드에서 채워서 돌려줌)
             var oPayload = {
-                "ActionType": "CREATE_PO",  
                 "Vendor": sVendor,          
                 "Material": sMaterial,      
-                "Quantity": sQuantity,      
-                "ReturnMessage": ""         
+                "Quantity": sQuantity,
+                "ReturnMessage": "" 
             };
 
-            // OData 호출
-            oModel.create("/AiCommandSet", oPayload, {
+            // 💡 판매오더와 동일하게 ReturnMessage를 그대로 띄우도록 통일!
+            oModel.create("/PurchaseOrderSet", oPayload, {
                 success: function (oData) {
-                    oCallbacks.onSuccess("AI 비서", "sap-icon://accept", "🎉 구매오더(PO) 생성 완료!\n\n" + (oData.ReturnMessage || "성공적으로 발주되었습니다."));
+                    oCallbacks.onSuccess("AI 비서", "sap-icon://accept", "🎉 임무 완료!\n\n" + oData.ReturnMessage);
                 },
                 error: function (oError) {
                     oCallbacks.onError("AI 비서", "sap-icon://error", "SAP 시스템 연동 중 오류가 발생했습니다.");
