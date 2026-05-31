@@ -3,7 +3,8 @@
  *
  * View: com.capstone.dashboard.fioridashboard.view.features.AiAssistant
  * Controller: com.capstone.dashboard.fioridashboard.controller.features.AiAssistant
- *
+ * [개발일지]
+ * 5/30 김용민
  * 역할:
  * - 오른쪽 하단 플로팅 버튼 위 비모달 채팅 패널 열기/닫기(토글).
  * - 패널 헤더 드래그로 위치 이동.
@@ -13,14 +14,35 @@
  * 협업:
  * - 챗봇 UI → AiAssistant.view.xml / 대화 API·드래그 → 이 Controller
  */
+/**
+ * 파일명: AiAssistant.controller.js
+ * 역할: 챗봇 패널의 드래그 기능과 사용자의 자연어 분석(Regex), OData 연동(AiCommand) 및 UI 렌더링 로직을 통합 관리합니다.
+ */
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
-], function (Controller) {
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/format/DateFormat",
+    "com/capstone/dashboard/fioridashboard/util/AiCommandHandler" // 💡 분리된 로직 모듈 임포트
+], function (Controller, JSONModel, DateFormat, AiCommandHandler) {
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.AiAssistant", {
-
+        
         onInit: function () {
+            var oData = {
+                chat: [
+                    {
+                        sender: "AI 비서",
+                        icon: "sap-icon://activate-blueprints",
+                        text: "안녕하세요! AI비서 파스텔입니다. 무엇을 도와드릴까요?\n\n[가능한 업무]\n1. 판매오더 생성 (예: 미아점에 히트택 10개 주문해 줘)\n2. 재고 조회 (예: 히트택 재고 몇 개야?)",
+                        time: this._getCurrentTime(),
+                        isUser: false 
+                    }
+                ]
+            };
+            var oModel = new JSONModel(oData);
+            this.getView().setModel(oModel, "chatModel");
+
             this._oDragState = null;
             this._bDragBound = false;
             this._fnMouseMove = this._onDragMove.bind(this);
@@ -38,17 +60,71 @@ sap.ui.define([
             this._unbindChatbotDrag();
         },
 
+        _getCurrentTime: function() {
+            var oDateFormat = DateFormat.getDateTimeInstance({pattern: "HH:mm"});
+            return oDateFormat.format(new Date());
+        },
+
+        _addMessage: function(sSender, sIcon, sText, bIsUser) {
+            var oModel = this.getView().getModel("chatModel");
+            var aChat = oModel.getProperty("/chat");
+            
+            aChat.push({
+                sender: sSender,
+                icon: sIcon,
+                text: sText,
+                time: this._getCurrentTime(),
+                isUser: bIsUser
+            });
+            oModel.setProperty("/chat", aChat);
+
+            setTimeout(function() {
+                var oScroll = this.getView().byId("chatScrollContainer");
+                if (oScroll) {
+                    oScroll.scrollTo(0, 99999, 200); 
+                }
+            }.bind(this), 50);
+        },
+
         /**
-         * 챗봇 패널 표시/숨김 토글 (배경 화면은 계속 사용 가능)
+         * 사용자가 메세지 전송 시 실행
+         * 화면에 메세지를 띄우고, 로직 분석은 AiCommandHandler에게 통째로 넘깁니다.
          */
+        onSendVoiceCommand: function () {
+            var oInput = this.getView().byId("chatInput");
+            var sRawText = oInput.getValue();
+
+            if (!sRawText || sRawText.trim() === "") return;
+
+            // 1. 내가 보낸 메세지 화면에 그리기
+            this._addMessage("용민(사용자)", "sap-icon://employee", sRawText, true);
+            oInput.setValue("");
+
+            // 2. 챗봇 OData 모델 가져오기
+            var oModel = this.getOwnerComponent().getModel("aiModel");
+            var that = this; 
+
+            // 3. 🚀 분리된 모듈(AiCommandHandler)로 분석 및 실행 위임
+            AiCommandHandler.processCommand(sRawText, oModel, {
+                onProcess: function (sSender, sIcon, sText) {
+                    that._addMessage(sSender, sIcon, sText, false);
+                },
+                onSuccess: function (sSender, sIcon, sText) {
+                    that._addMessage(sSender, sIcon, sText, false);
+                },
+                onError: function (sSender, sIcon, sText) {
+                    that._addMessage(sSender, sIcon, sText, false);
+                }
+            });
+        },
+
+        // ==========================================================
+        // 이하 UI 드래그 앤 드롭 로직 유지 (건드리지 않음)
+        // ==========================================================
         onToggleChatbot: function () {
             var oPanel = this.byId("chatbotPanel");
-            if (!oPanel) {
-                return;
-            }
-
+            if (!oPanel) return;
             oPanel.setVisible(!oPanel.getVisible());
-
             if (oPanel.getVisible()) {
                 setTimeout(this._bindChatbotDrag.bind(this), 0);
             }
@@ -56,25 +132,14 @@ sap.ui.define([
 
         onCloseChatbot: function () {
             var oPanel = this.byId("chatbotPanel");
-            if (oPanel) {
-                oPanel.setVisible(false);
-            }
+            if (oPanel) oPanel.setVisible(false);
         },
 
-        /**
-         * visible=false 일 때 DOM이 없어 최초 바인딩이 실패할 수 있음 → 열릴 때 재시도
-         */
         _bindChatbotDrag: function () {
             var oHeader = this.byId("chatbotPanelHeader");
             var oHeaderDom = oHeader && oHeader.getDomRef();
-
-            if (!oHeaderDom) {
-                return;
-            }
-
-            if (this._bDragBound) {
-                return;
-            }
+            if (!oHeaderDom) return;
+            if (this._bDragBound) return;
 
             oHeaderDom.addEventListener("mousedown", this._fnDragStart);
             oHeaderDom.addEventListener("touchstart", this._fnDragStart, { passive: false });
@@ -84,12 +149,10 @@ sap.ui.define([
         _unbindChatbotDrag: function () {
             var oHeader = this.byId("chatbotPanelHeader");
             var oHeaderDom = oHeader && oHeader.getDomRef();
-
             if (oHeaderDom) {
                 oHeaderDom.removeEventListener("mousedown", this._fnDragStart);
                 oHeaderDom.removeEventListener("touchstart", this._fnDragStart);
             }
-
             document.removeEventListener("mousemove", this._fnMouseMove);
             document.removeEventListener("mouseup", this._fnMouseUp);
             document.removeEventListener("touchmove", this._fnTouchMove);
@@ -105,7 +168,7 @@ sap.ui.define([
         },
 
         _isCloseButtonTarget: function (oTarget) {
-            return oTarget && oTarget.closest && oTarget.closest(".nxChatbotPanelClose");
+            return oTarget && oTarget.closest && oTarget.closest(".sapUiSmallMarginEnd"); 
         },
 
         _applyPanelPosition: function (oDom, iLeft, iTop) {
@@ -119,10 +182,7 @@ sap.ui.define([
         _startDrag: function (iClientX, iClientY, oTarget) {
             var oDom = this._getPanelDom();
             var oRect;
-
-            if (!oDom || this._isCloseButtonTarget(oTarget)) {
-                return;
-            }
+            if (!oDom || this._isCloseButtonTarget(oTarget)) return;
 
             oRect = oDom.getBoundingClientRect();
             this._applyPanelPosition(oDom, oRect.left, oRect.top);
@@ -144,16 +204,11 @@ sap.ui.define([
         _onDragStart: function (oEvent) {
             var iX = oEvent.clientX;
             var iY = oEvent.clientY;
-
             if (oEvent.touches && oEvent.touches.length) {
                 iX = oEvent.touches[0].clientX;
                 iY = oEvent.touches[0].clientY;
             }
-
-            if (oEvent.button !== undefined && oEvent.button !== 0) {
-                return;
-            }
-
+            if (oEvent.button !== undefined && oEvent.button !== 0) return;
             oEvent.preventDefault();
             this._startDrag(iX, iY, oEvent.target);
         },
@@ -172,21 +227,14 @@ sap.ui.define([
 
         _moveDrag: function (iClientX, iClientY) {
             var oDom = this._getPanelDom();
-            var iDeltaX;
-            var iDeltaY;
-            var iNewLeft;
-            var iNewTop;
-            var iMaxLeft;
-            var iMaxTop;
-
-            if (!this._oDragState || !oDom) {
-                return;
-            }
+            var iDeltaX, iDeltaY, iNewLeft, iNewTop, iMaxLeft, iMaxTop;
+            if (!this._oDragState || !oDom) return;
 
             iDeltaX = iClientX - this._oDragState.startX;
             iDeltaY = iClientY - this._oDragState.startY;
             iNewLeft = this._oDragState.startLeft + iDeltaX;
             iNewTop = this._oDragState.startTop + iDeltaY;
+            
             iMaxLeft = window.innerWidth - oDom.offsetWidth - 8;
             iMaxTop = window.innerHeight - oDom.offsetHeight - 8;
 
@@ -198,10 +246,7 @@ sap.ui.define([
 
         _onDragEnd: function () {
             var oDom = this._getPanelDom();
-
-            if (!this._oDragState) {
-                return;
-            }
+            if (!this._oDragState) return;
 
             this._oDragState = null;
             document.removeEventListener("mousemove", this._fnMouseMove);
@@ -209,9 +254,7 @@ sap.ui.define([
             document.removeEventListener("touchmove", this._fnTouchMove);
             document.removeEventListener("touchend", this._fnTouchEnd);
 
-            if (oDom) {
-                oDom.classList.remove("nxChatbotPanelDragging");
-            }
+            if (oDom) oDom.classList.remove("nxChatbotPanelDragging");
         }
     });
 });

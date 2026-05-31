@@ -22,6 +22,13 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "aiService": {
+        "uri": "/sap/opu/odata/sap/ZSCM_AI_SRV_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
     }
   },
@@ -70,6 +77,11 @@
           "bundleName": "com.capstone.dashboard.fioridashboard.i18n.i18n",
           "fallbackLocale": ""
         }
+      },
+      "aiModel": {
+        "dataSource": "aiService",
+        "preload": true,
+        "settings": {}
       }
     },
     "resources": {
