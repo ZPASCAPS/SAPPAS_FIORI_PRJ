@@ -13,7 +13,7 @@ sap.ui.define([], function () {
         processCommand: function (sRawText, oModel, oCallbacks) {
             
             // 1. 판매오더 생성 로직
-            if (sRawText.includes("주문") || sRawText.includes("발주") || sRawText.includes("판매")) {
+            if (sRawText.includes("주문") || sRawText.includes("판매")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://sales-order", "판매오더 생성 업무로 파악했습니다. 분석을 시작합니다...");
                 this._handleSalesOrder(sRawText, oModel, oCallbacks);
 
@@ -23,9 +23,9 @@ sap.ui.define([], function () {
                 this._handleInventoryCheck(sRawText, oModel, oCallbacks);
 
             // 3. (예시) 구매오더 생성 등 추가될 로직 자리
-            // } else if (sRawText.includes("구매") || sRawText.includes("PO")) {
-            //     oCallbacks.onProcess("AI 비서", "sap-icon://purchasing", "구매오더 생성 업무로 파악했습니다...");
-            //     this._handlePurchaseOrder(sRawText, oModel, oCallbacks);
+           } else if (sRawText.includes("구매") || sRawText.includes("발주")) {
+                oCallbacks.onProcess("AI 비서", "sap-icon://purchasing", "구매오더 생성 업무로 파악했습니다. 분석을 시작합니다...");
+                this._handlePurchaseOrder(sRawText, oModel, oCallbacks);
 
             // 4. 예외 처리
             } else {
@@ -90,6 +90,49 @@ sap.ui.define([], function () {
         _handleInventoryCheck: function (sRawText, oModel, oCallbacks) {
             // 차후 OData 연동을 위해 분리해둠
             oCallbacks.onSuccess("AI 비서", "sap-icon://database", "🔍 (테스트) 삐빅! 재고를 조회하는 모드로 진입했습니다. 곧 CDS View와 연결될 예정입니다!");
+        },
+
+        _handlePurchaseOrder: function (sRawText, oModel, oCallbacks) {
+            // 정규식 정의 (공급업체, 자재, 수량)
+            var oVendorRegex   = /UP-V-[A-Z0-9-]+/i;
+            var oMaterialRegex = /UP-[A-Z]-[A-Z0-9-]+/i; 
+            var oQtyRegex      = /(\d+)\s*(개|박스|수량|발주|구매)/;
+
+            var aVendorMatch   = sRawText.match(oVendorRegex);
+            var aMaterialMatch = sRawText.match(oMaterialRegex);
+            var aQtyMatch      = sRawText.match(oQtyRegex);
+
+            var sVendor   = aVendorMatch ? aVendorMatch[0].toUpperCase() : null;
+            var sMaterial = aMaterialMatch ? aMaterialMatch[0].toUpperCase() : null;
+            var sQuantity = aQtyMatch ? aQtyMatch[1] : null;
+
+            if (!sVendor || !sMaterial || !sQuantity) {
+                var sErrorMsg = "구매오더를 생성하기엔 정보가 부족합니다. 다시 확인해 주세요!\n\n" +
+                                "▪ 공급업체: " + (sVendor || "❌ 미인식") + "\n" +
+                                "▪ 자재: " + (sMaterial || "❌ 미인식") + "\n" +
+                                "▪ 수량: " + (sQuantity ? sQuantity + " 개" : "❌ 미인식");
+                oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", sErrorMsg);
+                return;
+            }
+
+            // OData Payload 구성
+            var oPayload = {
+                "ActionType": "CREATE_PO",  
+                "Vendor": sVendor,          
+                "Material": sMaterial,      
+                "Quantity": sQuantity,      
+                "ReturnMessage": ""         
+            };
+
+            // OData 호출
+            oModel.create("/AiCommandSet", oPayload, {
+                success: function (oData) {
+                    oCallbacks.onSuccess("AI 비서", "sap-icon://accept", "🎉 구매오더(PO) 생성 완료!\n\n" + (oData.ReturnMessage || "성공적으로 발주되었습니다."));
+                },
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "SAP 시스템 연동 중 오류가 발생했습니다.");
+                }
+            });
         }
     };
 });
