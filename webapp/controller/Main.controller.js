@@ -71,7 +71,7 @@ sap.ui.define([
                     createEntityPath: "/MaterialSet",
                     dateRange: "Oct 18 - Nov 18",
                     period: "MONTHLY",
-                    notificationCount: 6,
+                    notificationCount: 5,
                     lastUpdated: "2025.05.20 10:30 기준"
                 },
                 user: {
@@ -92,6 +92,24 @@ sap.ui.define([
                         { key: "MM", text: "MM" },
                         { key: "FI.CO", text: "FI.CO" }
                     ]
+                },
+                notifications: [
+                    { id: "N1", title: "재고 부족 경고", description: "자재 MAT-001 · 재고 임계치 미달 · 10분 전", icon: "sap-icon://alert", read: false },
+                    { id: "N2", title: "수주 연동 완료", description: "SO-20250520-014 · SD 연동 성공 · 25분 전", icon: "sap-icon://sales-order", read: false },
+                    { id: "N3", title: "생산 오더 지연", description: "PO-7782 · PP 일정 2시간 지연 · 1시간 전", icon: "sap-icon://factory", read: false },
+                    { id: "N4", title: "마스터 데이터 점검", description: "MM 자재 3건 정합성 확인 필요 · 2시간 전", icon: "sap-icon://validate", read: false },
+                    { id: "N5", title: "재무 마감 알림", description: "FI/CO 월마감 D-3 · 3시간 전", icon: "sap-icon://money-bills", read: false },
+                    { id: "N6", title: "OData 연결 정상", description: "SAP BOM Stock 서비스 응답 정상 · 5시간 전", icon: "sap-icon://connected", read: true }
+                ],
+                helpItems: [
+                    { key: "TCODE_GUIDE", title: "T-code Guide", description: "자주 사용하는 T-code 안내" },
+                    { key: "ERROR_HELPER", title: "Error Helper", description: "SAP 오류 메시지 해결 방법" },
+                    { key: "ODATA_STATUS", title: "OData Status", description: "OData 서비스 연결 상태 확인" },
+                    { key: "SYSTEM_LOG", title: "System Log", description: "시스템 로그 및 이벤트 기록" }
+                ],
+                settings: {
+                    autoRefresh: false,
+                    showNotifications: true
                 },
                 summary: {
                     totalMaterials: 0,

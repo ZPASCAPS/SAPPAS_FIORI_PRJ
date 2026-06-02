@@ -5,14 +5,14 @@
   Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader
 
   역할:
-  - 상단 헤더: 메뉴, 전역 검색, 알림, 프로필, 프로필 설정 Dialog.
+  - 상단 헤더: 로고, 전역 검색, 모듈 네비(SD/MM/PP/FI), 알림, 도움말, 설정, 프로필.
 
   대시보드 구조:
   Main → DashboardMain → DashboardHeader (최상단 가로 바)
 
   협업:
   - 검색·프로필·Dialog UI → 이 View
-  - 검색 필터·프로필 저장 로직 → DashboardHeader.controller.js
+  - 검색 필터·프로필 저장·네비 로직 → DashboardHeader.controller.js
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader"
@@ -21,28 +21,80 @@
     xmlns:core="sap.ui.core">
 
     <HBox class="nxHeader" width="100%" alignItems="Center">
-        <Button
-            icon="sap-icon://menu2"
-            type="Transparent"
-            tooltip="메뉴"
-            press=".onMenuPress"
-            class="nxHeaderMenuBtn" />
+        <HBox class="nxHeaderBrand" alignItems="Center">
+            <Image
+                src="images/pascal-logo.png"
+                densityAware="false"
+                decorative="false"
+                alt="Pascal"
+                press=".onLogoPress"
+                class="nxHeaderLogo" />
+        </HBox>
 
         <HBox class="nxHeaderSearchArea" alignItems="Center">
             <HBox class="nxSearchWrap" alignItems="Center">
-                <SearchField
+                <Input
                     id="globalSearch"
-                    width="100%"
-                    placeholder="검색 (오더, 자재, 재고, 리포트 등)"
-                    search=".onSearch"
+                    placeholder="검색어를 입력하세요."
+                    submit=".onSearchSubmit"
                     liveChange=".onSearch"
-                    class="nxSearchField" />
+                    class="nxSearchInput" />
+                <Button
+                    icon="sap-icon://search"
+                    type="Transparent"
+                    tooltip="검색"
+                    press=".onSearchIconPress"
+                    class="nxSearchIconBtn" />
             </HBox>
+        </HBox>
+
+        <HBox class="nxHeaderModuleNav" alignItems="Center">
+            <Button
+                text="SD"
+                icon="sap-icon://sales-order"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'SD_SALES' ? 'nxModuleNavBlock nxModuleNavBlockActive' : 'nxModuleNavBlock' }">
+                <customData>
+                    <core:CustomData key="navKey" value="SD_SALES" />
+                </customData>
+            </Button>
+            <Button
+                text="MM"
+                icon="sap-icon://product"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleNavBlock nxModuleNavBlockActive' : 'nxModuleNavBlock' }">
+                <customData>
+                    <core:CustomData key="navKey" value="MM_MATERIALS" />
+                </customData>
+            </Button>
+            <Button
+                text="PP"
+                icon="sap-icon://factory"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'PP_PRODUCTION' ? 'nxModuleNavBlock nxModuleNavBlockActive' : 'nxModuleNavBlock' }">
+                <customData>
+                    <core:CustomData key="navKey" value="PP_PRODUCTION" />
+                </customData>
+            </Button>
+            <Button
+                text="FI"
+                icon="sap-icon://money-bills"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleNavBlock nxModuleNavBlockActive' : 'nxModuleNavBlock' }">
+                <customData>
+                    <core:CustomData key="navKey" value="FI_CO_FINANCE" />
+                </customData>
+            </Button>
         </HBox>
 
         <HBox alignItems="Center" class="nxHeaderActions">
             <HBox alignItems="Center" class="nxNotifyBtnWrap">
                 <Button
+                    id="notificationBtn"
                     icon="sap-icon://bell"
                     type="Transparent"
                     tooltip="알림"
@@ -54,10 +106,18 @@
                     class="nxNotifyBadge" />
             </HBox>
             <Button
+                id="helpBtn"
                 icon="sap-icon://sys-help"
                 type="Transparent"
                 tooltip="도움말"
                 press=".onHelp"
+                class="nxIconBtn" />
+            <Button
+                id="settingsBtn"
+                icon="sap-icon://action-settings"
+                type="Transparent"
+                tooltip="설정"
+                press=".onSettings"
                 class="nxIconBtn" />
             <HBox alignItems="Center" class="nxProfile">
                 <VBox class="nxProfileAvatarWrap" alignItems="Center" justifyContent="Center">
@@ -80,6 +140,91 @@
             </HBox>
         </HBox>
     </HBox>
+
+    <Popover
+        id="notificationPopover"
+        title="알림"
+        placement="Bottom"
+        contentWidth="22rem"
+        contentHeight="18rem"
+        showHeader="true"
+        class="nxHeaderPopover">
+        <content>
+            <VBox width="100%">
+                <List
+                    id="notificationList"
+                    items="{dashboard>/notifications}"
+                    showSeparators="Inner"
+                    noDataText="새 알림이 없습니다"
+                    class="nxNotificationList">
+                    <StandardListItem
+                        title="{dashboard>title}"
+                        description="{dashboard>description}"
+                        icon="{dashboard>icon}"
+                        type="Active"
+                        press=".onNotificationItemPress" />
+                </List>
+                <HBox justifyContent="End" alignItems="Center" class="nxPopoverFooter">
+                    <Button text="모두 읽음" type="Transparent" press=".onMarkAllNotificationsRead" />
+                </HBox>
+            </VBox>
+        </content>
+    </Popover>
+
+    <Popover
+        id="helpPopover"
+        title="도움말"
+        placement="Bottom"
+        contentWidth="19rem"
+        showHeader="true"
+        class="nxHeaderPopover">
+        <content>
+            <List
+                items="{dashboard>/helpItems}"
+                showSeparators="Inner"
+                class="nxHelpList">
+                <StandardListItem
+                    title="{dashboard>title}"
+                    description="{dashboard>description}"
+                    icon="sap-icon://sys-help-2"
+                    type="Active"
+                    press=".onHelpItemPress" />
+            </List>
+        </content>
+    </Popover>
+
+    <Popover
+        id="settingsPopover"
+        title="설정"
+        placement="Bottom"
+        contentWidth="20rem"
+        showHeader="true"
+        class="nxHeaderPopover">
+        <content>
+            <VBox class="nxSettingsPopoverContent" width="100%">
+                <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
+                    <VBox>
+                        <Text text="자동 새로고침" class="nxSettingsLabel" />
+                        <Text text="5분마다 SAP 데이터 갱신" class="nxSettingsHint" />
+                    </VBox>
+                    <Switch state="{dashboard>/settings/autoRefresh}" change=".onAutoRefreshChange" />
+                </HBox>
+                <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
+                    <VBox>
+                        <Text text="알림 표시" class="nxSettingsLabel" />
+                        <Text text="헤더 알림 배지 표시" class="nxSettingsHint" />
+                    </VBox>
+                    <Switch state="{dashboard>/settings/showNotifications}" change=".onShowNotificationsChange" />
+                </HBox>
+                <Button
+                    text="대시보드 설정"
+                    icon="sap-icon://grid"
+                    type="Transparent"
+                    press=".onOpenDashboardSettings"
+                    class="nxSettingsActionBtn" />
+            </VBox>
+        </content>
+    </Popover>
 
     <Dialog
         id="profileDialog"
