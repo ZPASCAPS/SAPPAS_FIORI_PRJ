@@ -17,7 +17,7 @@ sap.ui.define([], function () {
             "토레이": "UP-V-E-TOR",
             "도레이 공장": "UP-V-E-TOR",
             "도레이공장": "UP-V-E-TOR",
-            
+
             // [고객 / 매장]
             "미아점": "UP-C-I-MIA",
             "미아": "UP-C-I-MIA",
@@ -51,7 +51,7 @@ sap.ui.define([], function () {
             "셔츠단추": "UP-R-SBT-001",
             "셔츠 단추": "UP-R-SBT-001",
 
-            
+
             // [완제품]
             "히트택": "UP-F-HIT-001",
             "히트텍": "UP-F-HIT-001",
@@ -61,7 +61,7 @@ sap.ui.define([], function () {
             "치노팬츠": "UP-F-PNT-001",
             "셔츠": "UP-F-SHT-001",
             "가방": "UP-F-BAG-001"
-            
+
             // ... 이곳에 계속해서 추가해 주세요 ...
         },
 
@@ -70,10 +70,10 @@ sap.ui.define([], function () {
          */
         _preprocessText: function (sText) {
             var sResult = sText;
-            
+
             // 글자 수가 긴 단어부터 치환하도록 정렬 (예: "도레이 공장"이 "도레이"보다 먼저 치환되게 방지)
-            var aDictKeys = Object.keys(this._mappingDict).sort(function(a, b) { 
-                return b.length - a.length; 
+            var aDictKeys = Object.keys(this._mappingDict).sort(function (a, b) {
+                return b.length - a.length;
             });
 
             // 문장에서 한글 명칭을 찾아 SAP 코드로 변경
@@ -90,78 +90,99 @@ sap.ui.define([], function () {
         /**
          * 사용자의 메시지를 분석하고 적절한 함수로 분기(Routing)합니다.
          */
-        processCommand: function (sRawText, oModel, oInventoryModel,oCallbacks) {
-            
+        processCommand: function (sRawText, oModel, oInventoryModel, oCallbacks) {
+
             // 💡 1. 가장 먼저! 한글 문장을 SAP 코드가 섞인 문장으로 전처리(번역)합니다.
             var sProcessedText = this._preprocessText(sRawText);
-            
+
             // 2. 구매오더 생성 로직
             if (sProcessedText.includes("구매") || sProcessedText.includes("발주")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://purchasing", "구매오더 생성 업무로 파악했습니다. 분석을 시작합니다.");
                 // 💡 원본(sRawText) 대신 번역된 문장(sProcessedText)을 넘겨줍니다.
                 this._handlePurchaseOrder(sProcessedText, oModel, oCallbacks);
 
-            // 3. 판매오더 생성 로직
+                // 3. 판매오더 생성 로직
             } else if (sProcessedText.includes("주문") || sProcessedText.includes("판매")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://sales-order", "판매오더 생성 업무로 파악했습니다. 분석을 시작합니다.");
                 this._handleSalesOrder(sProcessedText, oModel, oCallbacks);
 
-            // 4. 재고 조회 로직
-            } else if (sProcessedText.includes("재고") || sProcessedText.includes("몇 개") || sProcessedText.includes("수량")) {
-                oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 조회 업무로 파악했습니다. 분석을 시작합니다.");
-                this._handleInventoryCheck(sProcessedText, oInventoryModel, oCallbacks); // 💡 수정됨
+                // 4. 재고 조회 로직
+            } else if (sProcessedText.includes("재고") || sProcessedText.includes("몇 개") || sProcessedText.includes("수량") || sProcessedText.includes("품절")) {
+                oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 현황을 분석하고 있습니다...");
 
-            // 3. 판매오더 요약/조회 로직 (CDS View 연동)
+                // 💡 수정 1: "이상" 조건이 가장 먼저 실행되도록 순서를 맨 위로 올립니다.
+                if (sProcessedText.includes("이상")) {
+                    var aMatch = sProcessedText.match(/(\d+)\s*개\s*이상/);
+                    var iTargetQty = aMatch ? parseInt(aMatch[1]) : 100; // 숫자가 없으면 기본값 100
+                    this._handleBulkStockCheck(oInventoryModel, iTargetQty, oCallbacks);
+
+
+                } else if (sProcessedText.includes("이하")) {
+                    var aMatchBelow = sProcessedText.match(/(\d+)\s*개\s*이하/);
+                    var iTargetBelowQty = aMatchBelow ? parseInt(aMatchBelow[1]) : 10; // 기본값은 예시로 10개
+                    this._handleLowStockBelowCheck(oInventoryModel, iTargetBelowQty, oCallbacks);
+
+                    // 💡 수정 2: "0개"를 검사할 때, 100개나 500개가 걸리지 않도록 정규식을 씁니다.
+                    // (^|[^0-9])0\s*개 -> 앞에 숫자가 없는 순수한 0개만 인식
+                } else if (sProcessedText.match(/(^|[^0-9])0\s*개/) || sProcessedText.includes("품절") || sProcessedText.includes("없는")) {
+                    this._handleZeroStockCheck(oInventoryModel, oCallbacks);
+
+                    // 기본: 특정 단일 자재 조회 (예: 폴리에스터 재고 몇 개야?)
+                } else {
+                    this._handleInventoryCheck(sProcessedText, oInventoryModel, oCallbacks);
+                }
+
+                // 3. 판매오더 요약/조회 로직 (CDS View 연동)
             } else if (sProcessedText.includes("요약") || sProcessedText.includes("조회") || sProcessedText.includes("알려줘")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://sys-find", "전표 조회 업무로 파악했습니다. 요약 데이터를 검색합니다.");
                 this._handleOrderSummary(sProcessedText, oModel, oCallbacks);
 
-            // 5. 예외 처리
+                // 5. 예외 처리
             } else {
                 oCallbacks.onError("AI 비서", "sap-icon://sys-help-2", "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n'주문해 줘', '발주해 줘' 또는 '재고 알려줘' 처럼 목적을 명확히 말씀해 주세요!");
             }
 
-           
+
         },
 
         // ==========================================================
         // 세부 비즈니스 로직 함수들
         // ==========================================================
-        
+
         _handleSalesOrder: function (sRawText, oModel, oCallbacks) {
-            var oDateRegex     = /\d{4}\.\d{2}\.\d{2}/;
+            var oDateRegex = /\d{4}\.\d{2}\.\d{2}/;
             var oCustomerRegex = /UP-C-[A-Z0-9-]+/i;
             var oMaterialRegex = /UP-F-[A-Z0-9-]+/i;
-            var oQtyRegex      = /(\d+)\s*(개|박스|주문|수량|오더)/i;
+            var oQtyRegex = /(\d+)\s*(개|박스|주문|수량|오더)/i;
 
-            var aDateMatch     = sRawText.match(oDateRegex);
+            var aDateMatch = sRawText.match(oDateRegex);
             var aCustomerMatch = sRawText.match(oCustomerRegex);
             var aMaterialMatch = sRawText.match(oMaterialRegex);
-            var aQtyMatch      = sRawText.match(oQtyRegex);
+            var aQtyMatch = sRawText.match(oQtyRegex);
 
-            var sReqDate  = aDateMatch ? aDateMatch[0] : null;
+            var sReqDate = aDateMatch ? aDateMatch[0] : null;
             var sCustomer = aCustomerMatch ? aCustomerMatch[0] : null;
             var sMaterial = aMaterialMatch ? aMaterialMatch[0] : null;
             var sQuantity = aQtyMatch ? aQtyMatch[1] : null;
 
             if (!sReqDate || !sCustomer || !sMaterial || !sQuantity) {
                 var sErrorMsg = "판매오더를 생성하기엔 정보가 부족합니다. 다시 확인해 주세요!\n\n" +
-                                "▪ 날짜: " + (sReqDate || "❌ 미인식") + "\n" +
-                                "▪ 고객: " + (sCustomer || "❌ 미인식") + "\n" +
-                                "▪ 자재: " + (sMaterial || "❌ 미인식") + "\n" +
-                                "▪ 수량: " + (sQuantity ? sQuantity + " 개" : "❌ 미인식");
+                    "▪ 날짜: " + (sReqDate || "❌ 미인식") + "\n" +
+                    "▪ 고객: " + (sCustomer || "❌ 미인식") + "\n" +
+                    "▪ 자재: " + (sMaterial || "❌ 미인식") + "\n" +
+                    "▪ 수량: " + (sQuantity ? sQuantity + " 개" : "❌ 미인식");
                 oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", sErrorMsg);
                 return;
             }
 
             var sCleanDate = sReqDate.replace(/\./g, "");
             var oPayload = {
-                "ActionType": "CREATE_SO",      
-                "ReqDate": sCleanDate,          
-                "Customer": sCustomer,          
-                "Material": sMaterial,          
-                "Quantity": sQuantity,          
-                "ReturnMessage": ""             
+                "ActionType": "CREATE_SO",
+                "ReqDate": sCleanDate,
+                "Customer": sCustomer,
+                "Material": sMaterial,
+                "Quantity": sQuantity,
+                "ReturnMessage": ""
             };
 
             oModel.create("/AiCommandSet", oPayload, {
@@ -197,19 +218,19 @@ sap.ui.define([], function () {
                 new sap.ui.model.Filter("Material", "EQ", sMaterial)
             ];
 
-            oInventoryModel.read("/Z_C_InventoryStatus", { 
+            oInventoryModel.read("/Z_C_InventoryStatus", {
                 filters: aFilters,
                 success: function (oData) {
                     var aResults = oData.results;
-                    
+
                     if (aResults && aResults.length > 0) {
                         var iTotalStock = 0;
-                        
+
                         // 💡 여러 저장위치(0001, 0002 등)에 흩어진 가용재고를 모두 찾아 합산합니다.
-                        for(var i = 0; i < aResults.length; i++) {
+                        for (var i = 0; i < aResults.length; i++) {
                             iTotalStock += parseFloat(aResults[i].AvailableStock || 0);
                         }
-                        
+
                         var sSummary = sKoreanName + "(" + sMaterial + ")의 현재 가용재고는 " + iTotalStock + "개 입니다.";
                         oCallbacks.onSuccess("AI 비서", "sap-icon://accept", "📦 재고 조회 완료!\n\n" + sSummary);
                     } else {
@@ -225,33 +246,33 @@ sap.ui.define([], function () {
 
         _handlePurchaseOrder: function (sRawText, oModel, oCallbacks) {
             // 정규식 정의
-            var oVendorRegex   = /UP-V-[A-Z0-9-]+/i;
-            var oMaterialRegex = /UP-R-[A-Z0-9-]+/i; 
-            var oQtyRegex      = /(\d+)\s*(개|박스|수량|EA|ea)/i; // 단위 엄격 제한
+            var oVendorRegex = /UP-V-[A-Z0-9-]+/i;
+            var oMaterialRegex = /UP-R-[A-Z0-9-]+/i;
+            var oQtyRegex = /(\d+)\s*(개|박스|수량|EA|ea)/i; // 단위 엄격 제한
 
-            var aVendorMatch   = sRawText.match(oVendorRegex);
+            var aVendorMatch = sRawText.match(oVendorRegex);
             var aMaterialMatch = sRawText.match(oMaterialRegex);
-            var aQtyMatch      = sRawText.match(oQtyRegex);
+            var aQtyMatch = sRawText.match(oQtyRegex);
 
-            var sVendor   = aVendorMatch ? aVendorMatch[0].toUpperCase() : null;
+            var sVendor = aVendorMatch ? aVendorMatch[0].toUpperCase() : null;
             var sMaterial = aMaterialMatch ? aMaterialMatch[0].toUpperCase() : null;
             var sQuantity = aQtyMatch ? aQtyMatch[1] : null;
 
             if (!sVendor || !sMaterial || !sQuantity) {
                 var sErrorMsg = "구매오더를 생성하기엔 정보가 부족합니다. 다시 확인해 주세요!\n\n" +
-                                "▪ 공급업체: " + (sVendor || "❌ 미인식") + "\n" +
-                                "▪ 자재: " + (sMaterial || "❌ 미인식") + "\n" +
-                                "▪ 수량: " + (sQuantity ? sQuantity + " 개" : "❌ 미인식");
+                    "▪ 공급업체: " + (sVendor || "❌ 미인식") + "\n" +
+                    "▪ 자재: " + (sMaterial || "❌ 미인식") + "\n" +
+                    "▪ 수량: " + (sQuantity ? sQuantity + " 개" : "❌ 미인식");
                 oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", sErrorMsg);
                 return;
             }
 
             // 💡 통일된 Payload: ReturnMessage 필드 추가 (백엔드에서 채워서 돌려줌)
             var oPayload = {
-                "Vendor": sVendor,          
-                "Material": sMaterial,      
+                "Vendor": sVendor,
+                "Material": sMaterial,
                 "Quantity": sQuantity,
-                "ReturnMessage": "" 
+                "ReturnMessage": ""
             };
 
             // 💡 판매오더와 동일하게 ReturnMessage를 그대로 띄우도록 통일!
@@ -270,7 +291,7 @@ sap.ui.define([], function () {
          */
         _handleOrderSummary: function (sProcessedText, oModel, oCallbacks) {
             // 1. 정규식: 문장에서 연속된 숫자(전표번호)만 쏙 뽑아냅니다.
-            var oOrderNumRegex = /(\d+)/; 
+            var oOrderNumRegex = /(\d+)/;
             var aMatch = sProcessedText.match(oOrderNumRegex);
             var sOrderNum = aMatch ? aMatch[1] : null;
 
@@ -287,7 +308,7 @@ sap.ui.define([], function () {
 
             oModel.read(sPath, {
                 success: function (oData) {
-                    
+
                     // 💡 날짜 포맷팅: SAP에서 넘어온 날짜를 2026.05.31 형태로 변환
                     var sDate = "알 수 없음";
                     if (oData.CreationDate) {
@@ -300,16 +321,16 @@ sap.ui.define([], function () {
 
                     // 💡 챗봇 응답 메시지 조립 (요청하신 예시 포맷 적용)
                     var sSummary = "요청하신 " + sOrderNum + "번 판매오더의 요약입니다.\n" +
-                                   "해당 전표는 " + sDate + "에 만들어졌고, 고객번호는 " + oData.Customer + "이며, " +
-                                   "총 금액은 " + oData.TotalAmount + " " + oData.Currency + "입니다.\n\n" +
-                                   "[ 상세 정보 ]\n" +
-                                   "▪ 고객번호 : " + oData.Customer + "\n" +
-                                   "▪ 총 금액 : " + oData.TotalAmount + " " + oData.Currency + "\n" +
-                                   "▪ 판매문서 유형 : " + oData.DocType + "\n" +
-                                   "▪ 판매조직 : " + oData.SalesOrg + "\n" +
-                                   "▪ 유통경로 : " + oData.DistChannel + "\n" +
-                                   "▪ 제품군(디비전) : " + oData.Division;
-                                   
+                        "해당 전표는 " + sDate + "에 만들어졌고, 고객번호는 " + oData.Customer + "이며, " +
+                        "총 금액은 " + oData.TotalAmount + " " + oData.Currency + "입니다.\n\n" +
+                        "[ 상세 정보 ]\n" +
+                        "▪ 고객번호 : " + oData.Customer + "\n" +
+                        "▪ 총 금액 : " + oData.TotalAmount + " " + oData.Currency + "\n" +
+                        "▪ 판매문서 유형 : " + oData.DocType + "\n" +
+                        "▪ 판매조직 : " + oData.SalesOrg + "\n" +
+                        "▪ 유통경로 : " + oData.DistChannel + "\n" +
+                        "▪ 제품군(디비전) : " + oData.Division;
+
                     oCallbacks.onSuccess("AI 비서", "sap-icon://accept", sSummary);
                 },
                 error: function (oError) {
@@ -317,8 +338,142 @@ sap.ui.define([], function () {
                     oCallbacks.onError("AI 비서", "sap-icon://error", "SAP 시스템에 " + sOrderNum + "번 전표가 존재하지 않거나 읽기 권한이 없습니다.");
                 }
             });
-        }
+        },
 
+
+        //조건 1: 가용재고가 0개(품절)인 품목 조회
+        _handleZeroStockCheck: function (oInventoryModel, oCallbacks) {
+            var that = this;
+            oInventoryModel.read("/Z_C_InventoryStatus", {
+                success: function (oData) {
+                    var aResults = oData.results;
+                    var aZeroItems = [];
+                    var oCodeToNameMap = {};
+
+                    for (var sKey in that._mappingDict) {
+                        oCodeToNameMap[that._mappingDict[sKey]] = sKey;
+                    }
+
+                    aResults.forEach(function (item) {
+                        var iStock = parseFloat(item.AvailableStock || 0);
+                        if (iStock === 0) {
+                            var sKoreanName = oCodeToNameMap[item.Material] || item.Material;
+                            if (!aZeroItems.includes(sKoreanName)) {
+                                aZeroItems.push(sKoreanName + " (" + item.Material + ")");
+                            }
+                        }
+                    });
+
+                    if (aZeroItems.length > 0) {
+                        var sMsg = "🚨 현재 가용재고가 0개인 품목 리스트입니다:\n\n" +
+                            aZeroItems.map(function (item) { return "▪ " + item; }).join("\n");
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://warning", sMsg);
+                    } else {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", "✅ 현재 품절되거나 재고가 0개인 자재가 없습니다. 아주 안정적인 상태입니다!");
+                    }
+                },
+                error: function () {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "재고 데이터를 읽어오는 중 오류가 발생했습니다.");
+                }
+            });
+        },
+
+
+        //조건 2: 특정 수량(예: 100개) 이상인 품목 조회
+        _handleBulkStockCheck: function (oInventoryModel, iTargetQty, oCallbacks) {
+            var that = this;
+            oInventoryModel.read("/Z_C_InventoryStatus", {
+                success: function (oData) {
+                    var aResults = oData.results;
+                    var aRichItems = [];
+                    var oCodeToNameMap = {};
+
+                    for (var sKey in that._mappingDict) {
+                        oCodeToNameMap[that._mappingDict[sKey]] = sKey;
+                    }
+
+                    aResults.forEach(function (item) {
+                        var iStock = parseFloat(item.AvailableStock || 0);
+                        if (iStock >= iTargetQty) {
+                            var sKoreanName = oCodeToNameMap[item.Material] || item.Material;
+                            if (!aRichItems.includes(sKoreanName)) {
+                                aRichItems.push(sKoreanName + " (" + item.Material + ") : " + iStock + "개");
+                            }
+                        }
+                    });
+
+                    if (aRichItems.length > 0) {
+                        var sMsg = "✅ 재고가 " + iTargetQty + "개 이상인 품목 리스트입니다:\n\n" +
+                            aRichItems.map(function (item) { return "▪ " + item; }).join("\n");
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", sMsg);
+                    } else {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://warning2", "🚨 가용재고가 " + iTargetQty + "개 이상인 자재가 하나도 없습니다.");
+                    }
+                },
+                error: function () {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "재고 데이터를 읽어오는 중 오류가 발생했습니다.");
+                }
+            });
+        },
+
+        _handleLowStockBelowCheck: function (oInventoryModel, iTargetQty, oCallbacks) {
+            var that = this;
+            oInventoryModel.read("/Z_C_InventoryStatus", {
+                success: function (oData) {
+                    var aResults = oData.results;
+                    var aLowItems = [];
+                    var oCodeToNameMap = {};
+
+                    // 코드 ↔ 한글명 매핑 테이블 생성
+                    for (var sKey in that._mappingDict) {
+                        if (that._mappingDict.hasOwnProperty(sKey)) {
+                            oCodeToNameMap[that._mappingDict[sKey]] = sKey;
+                        }
+                    }
+
+                    aResults.forEach(function (item) {
+                        var iStock = parseFloat(item.AvailableStock || 0);
+
+                        // 필요에 따라 iStock > 0 조건을 넣을지 말지 결정
+                        // "0개 포함한 이하"라면 iStock <= iTargetQty 만,
+                        // "0개는 품절 로직에서 따로 처리"라면 iStock > 0 && iStock <= iTargetQty
+                        if (iStock > 0 && iStock <= iTargetQty) {
+                            var sKoreanName = oCodeToNameMap[item.Material] || item.Material;
+                            var sEntry = sKoreanName + " (" + item.Material + ") : " + iStock + "개";
+
+                            if (!aLowItems.includes(sEntry)) {
+                                aLowItems.push(sEntry);
+                            }
+                        }
+                    });
+
+                    if (aLowItems.length > 0) {
+                        var sMsg =
+                            "재고가 " + iTargetQty + "개 이하인 품목 리스트입니다:\n\n" +
+                            aLowItems
+                                .map(function (item) {
+                                    return "▪ " + item;
+                                })
+                                .join("\n");
+
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://alert", sMsg);
+                    } else {
+                        oCallbacks.onSuccess(
+                            "AI 비서",
+                            "sap-icon://accept",
+                            "현재 재고가 " + iTargetQty + "개 이하인 품목은 없습니다."
+                        );
+                    }
+                },
+                error: function () {
+                    oCallbacks.onError(
+                        "AI 비서",
+                        "sap-icon://error",
+                        "재고 데이터를 읽어오는 중 오류가 발생했습니다."
+                    );
+                }
+            });
+        }
 
 
     };
