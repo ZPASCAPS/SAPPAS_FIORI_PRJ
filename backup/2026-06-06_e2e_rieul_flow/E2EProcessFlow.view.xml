@@ -1,0 +1,115 @@
+<!--
+  E2EProcessFlow.view.xml  (B공간 — E2E Process Flow)
+
+  View: com.capstone.dashboard.fioridashboard.view.features.E2EProcessFlow
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow
+
+  역할:
+  - 메인 대시보드 오른쪽(B) 영역. E2E Process Flow 순서도를 단계적으로 구현한다.
+  - 공통 dashboard JSONModel은 Main.controller.js에서 제공한다.
+
+  대시보드 구조:
+  Main → DashboardMain → DashboardCanvas → E2EProcessFlow (B공간)
+
+  협업:
+  - 프로세스 플로우 UI·이벤트 → 이 View + E2EProcessFlow.controller.js
+  - 공통 데이터 필드 → Main.controller.js (dashboard/spaces/e2eProcessFlow)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    height="100%"
+    width="100%">
+
+    <VBox class="nxSpaceCard nxSpaceCardB" height="100%" width="100%" renderType="Bare">
+        <HBox
+            class="nxSpaceCardHeader nxSpaceCardHeaderSplit"
+            alignItems="Center"
+            justifyContent="SpaceBetween"
+            width="100%">
+            <Title text="E2E Process Flow (MTO)" level="H4" class="nxSpaceCardTitle" />
+            <HBox alignItems="Center" class="nxFlowLegend" renderType="Bare">
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+                    <VBox class="nxLegendDot nxLegendDotComplete" />
+                    <Text text="완료" class="nxLegendLabel" />
+                </HBox>
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+                    <VBox class="nxLegendDot nxLegendDotProgress" />
+                    <Text text="진행중" class="nxLegendLabel" />
+                </HBox>
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+                    <VBox class="nxLegendDot nxLegendDotScheduled" />
+                    <Text text="예정" class="nxLegendLabel" />
+                </HBox>
+            </HBox>
+        </HBox>
+
+        <VBox class="nxSpaceCardBody nxSpaceCardBodyB" width="100%">
+            <VBox class="nxSpaceInnerEmpty nxSpaceFlowCanvas" width="100%">
+                <html:div class="nxE2EFlowBoard">
+                    <html:svg class="nxE2EFlowTrack" viewBox="0 0 900 520" preserveAspectRatio="none" aria-hidden="true">
+                        <html:path
+                            class="nxE2ETrackGlow"
+                            d="M 150 95 L 750 95 Q 815 95 815 160 L 815 230 Q 815 295 750 295 L 150 295 Q 85 295 85 360 L 85 425 Q 85 475 145 475 L 750 475" />
+                        <html:path
+                            class="nxE2ETrackBase"
+                            d="M 150 95 L 750 95 Q 815 95 815 160 L 815 230 Q 815 295 750 295 L 150 295 Q 85 295 85 360 L 85 425 Q 85 475 145 475 L 750 475" />
+                        <html:path
+                            class="nxE2ETrackHighlight"
+                            d="M 150 95 L 750 95 Q 815 95 815 160 L 815 230 Q 815 295 750 295 L 150 295 Q 85 295 85 360 L 85 425 Q 85 475 145 475 L 750 475" />
+                    </html:svg>
+
+                    <html:div class="nxE2EFlowGrid">
+                        <html:div class="nxE2ENode nxE2ENode1">
+                            <html:span class="nxE2ENodeNo">1</html:span>
+                            <html:span class="nxE2ENodeIcon">SO</html:span>
+                            <html:span class="nxE2ENodeText">Sales Order</html:span>
+                        </html:div>
+                        <html:div class="nxE2ENode nxE2ENode2">
+                            <html:span class="nxE2ENodeNo">2</html:span>
+                            <html:span class="nxE2ENodeIcon">PO</html:span>
+                            <html:span class="nxE2ENodeText">Planned Order</html:span>
+                        </html:div>
+                        <html:div class="nxE2ENode nxE2ENode3">
+                            <html:span class="nxE2ENodeNo">3</html:span>
+                            <html:span class="nxE2ENodeIcon">PR</html:span>
+                            <html:span class="nxE2ENodeText">Purchase Requisition</html:span>
+                        </html:div>
+                        <html:div class="nxE2ENode nxE2ENode4">
+                            <html:span class="nxE2ENodeNo">4</html:span>
+                            <html:span class="nxE2ENodeIcon">PO</html:span>
+                            <html:span class="nxE2ENodeText">Purchase Order</html:span>
+                        </html:div>
+                        <html:div class="nxE2ENode nxE2ENode5">
+                            <html:span class="nxE2ENodeNo">5</html:span>
+                            <html:span class="nxE2ENodeIcon">GR</html:span>
+                            <html:span class="nxE2ENodeText">Goods Receipt</html:span>
+                        </html:div>
+                        <html:div class="nxE2ENode nxE2ENode6">
+                            <html:span class="nxE2ENodeNo">6</html:span>
+                            <html:span class="nxE2ENodeIcon">PP</html:span>
+                            <html:span class="nxE2ENodeText">Production Order</html:span>
+                        </html:div>
+                        <html:div class="nxE2ENode nxE2ENode7">
+                            <html:span class="nxE2ENodeNo">7</html:span>
+                            <html:span class="nxE2ENodeIcon">GR</html:span>
+                            <html:span class="nxE2ENodeText">Goods Receipt</html:span>
+                        </html:div>
+                        <html:div class="nxE2ENode nxE2ENode8">
+                            <html:span class="nxE2ENodeNo">8</html:span>
+                            <html:span class="nxE2ENodeIcon">SH</html:span>
+                            <html:span class="nxE2ENodeText">Shipment</html:span>
+                        </html:div>
+                        <html:div class="nxE2ENode nxE2ENode9">
+                            <html:span class="nxE2ENodeNo">9</html:span>
+                            <html:span class="nxE2ENodeIcon">BI</html:span>
+                            <html:span class="nxE2ENodeText">Billing</html:span>
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </VBox>
+        </VBox>
+    </VBox>
+</mvc:View>

@@ -1,0 +1,9 @@
+<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step04PurchaseOrder" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" height="100%" width="100%">
+    <VBox class="e2eStepCell" alignItems="Center" justifyContent="Center" width="100%" height="100%" renderType="Bare">
+        <VBox id="stepNode" class="{= 'e2eStepNode e2eStepNodeClickable e2eStepNode--' + ${dashboard>/e2eProcessFlow/steps/step04/status} }" alignItems="Center" justifyContent="Center" renderType="Bare">
+            <Text text="{dashboard>/e2eProcessFlow/steps/step04/number}" class="e2eStepNumber" />
+            <core:Icon src="{dashboard>/e2eProcessFlow/steps/step04/icon}" size="2rem" class="e2eStepIcon" />
+            <Text text="{dashboard>/e2eProcessFlow/steps/step04/title}" class="e2eStepTitle" />
+        </VBox>
+    </VBox>
+</mvc:View>

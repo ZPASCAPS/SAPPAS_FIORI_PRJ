@@ -10,7 +10,10 @@
 
   대시보드 구조:
   Main.view.xml
-  └─ DashboardMain.view.xml   (전체 너비)
+  └─ DashboardMain.view.xml
+      └─ DashboardCanvas.view.xml
+          ├─ (DASHBOARD) OrderInquiry + E2EProcessFlow
+          └─ (기타 모듈) SectionPlaceholder
 
   협업:
   - 레이아웃 변경 시 이 파일만 수정한다.

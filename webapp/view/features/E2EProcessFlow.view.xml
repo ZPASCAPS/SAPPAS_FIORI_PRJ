@@ -1,0 +1,55 @@
+<!--
+  E2EProcessFlow.view.xml — E2E Supply Chain Dashboard (B공간)
+
+  View: com.capstone.dashboard.fioridashboard.view.features.E2EProcessFlow
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow
+
+  역할:
+  - 프로세스 제목·범례 툴바(고정) + 본문 콘텐츠 영역(빈 캔버스).
+  - Step 그리드는 제거됨. 추후 features/e2e/StepXX 를 이 영역에 다시 배치 가능.
+
+  대시보드 구조:
+  Main → DashboardMain → DashboardCanvas → E2EProcessFlow
+
+  협업:
+  - 레이아웃·프레임 → 이 View + E2EProcessFlow.controller.js + style.css
+  - Step UI (예비) → view/features/e2e/StepXX*.view.xml + controller
+  - 공통 데이터 → Main.controller.js (dashboard/e2eProcessFlow)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    height="100%"
+    width="100%">
+
+    <VBox class="nxSpaceCard nxSpaceCardB e2eDashboardRoot" height="100%" width="100%" renderType="Bare">
+        <HBox
+            class="nxSpaceCardHeader nxSpaceCardHeaderSplit e2eDashboardHeader e2eDashboardHeaderSticky"
+            alignItems="Center"
+            justifyContent="SpaceBetween"
+            width="100%">
+            <Title text="{dashboard>/e2eProcessFlow/title}" level="H4" class="nxSpaceCardTitle" />
+            <HBox alignItems="Center" class="nxFlowLegend e2eFlowLegendToolbar" renderType="Bare">
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+                    <VBox class="nxLegendDot nxLegendDotComplete" />
+                    <Text text="완료" class="nxLegendLabel" />
+                </HBox>
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+                    <VBox class="nxLegendDot nxLegendDotProgress" />
+                    <Text text="진행중" class="nxLegendLabel" />
+                </HBox>
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+                    <VBox class="nxLegendDot nxLegendDotScheduled" />
+                    <Text text="예정" class="nxLegendLabel" />
+                </HBox>
+            </HBox>
+        </HBox>
+
+        <VBox class="nxSpaceCardBody nxSpaceCardBodyB e2eDashboardBody" width="100%">
+            <VBox class="e2eFlowStage" width="100%" renderType="Bare">
+                <VBox class="e2eFlowCanvas e2eFlowCanvasEmpty" width="100%" renderType="Bare" />
+            </VBox>
+        </VBox>
+    </VBox>
+</mvc:View>
