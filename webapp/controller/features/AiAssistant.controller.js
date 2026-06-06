@@ -103,10 +103,11 @@ sap.ui.define([
             // 2. 챗봇 OData 모델 가져오기
             var oModel = this.getOwnerComponent().getModel("aiModel");
             var oInventoryModel = this.getOwnerComponent().getModel("inventoryModel"); // 💡 재고조회기능추가
+            var oTrackerModel = this.getOwnerComponent().getModel("trackerModel"); // 💡 추가!
             var that = this; 
 
             // 3. 🚀 분리된 모듈(AiCommandHandler)로 분석 및 실행 위임
-            AiCommandHandler.processCommand(sRawText, oModel, oInventoryModel, {
+            AiCommandHandler.processCommand(sRawText, oModel, oInventoryModel, oTrackerModel, {
                 onProcess: function (sSender, sIcon, sText) {
                     that._addMessage(sSender, sIcon, sText, false);
                 },

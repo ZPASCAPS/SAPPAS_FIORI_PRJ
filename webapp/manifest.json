@@ -36,7 +36,15 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "trackerSource": {
+        "uri": "/sap/opu/odata/sap/Z_C_E2E_ORDERTRACKER_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
+
     }
   },
   "sap.ui": {
@@ -93,6 +101,10 @@
       },
       "inventoryModel": {
         "dataSource": "inventorySource",
+        "preload": true
+      },
+      "trackerModel": {
+        "dataSource": "trackerSource",
         "preload": true
       }
     },

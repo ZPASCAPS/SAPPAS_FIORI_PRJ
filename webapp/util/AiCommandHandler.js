@@ -90,7 +90,7 @@ sap.ui.define([], function () {
         /**
          * 사용자의 메시지를 분석하고 적절한 함수로 분기(Routing)합니다.
          */
-        processCommand: function (sRawText, oModel, oInventoryModel, oCallbacks) {
+        processCommand: function (sRawText, oModel, oInventoryModel, oTrackerModel, oCallbacks) {
 
             // 💡 1. 가장 먼저! 한글 문장을 SAP 코드가 섞인 문장으로 전처리(번역)합니다.
             var sProcessedText = this._preprocessText(sRawText);
@@ -106,6 +106,22 @@ sap.ui.define([], function () {
                 oCallbacks.onProcess("AI 비서", "sap-icon://sales-order", "판매오더 생성 업무로 파악했습니다. 분석을 시작합니다.");
                 this._handleSalesOrder(sProcessedText, oModel, oCallbacks);
 
+
+            // 🚀 4. [신규] 전표 추적 로직 (우선순위를 높여서 다른 단어에 안 뺏기게 함!)
+            } else if (sProcessedText.includes("추적") || sProcessedText.includes("흐름")) {
+                oCallbacks.onProcess("AI 비서", "sap-icon://chain-link", "전표 연결 흐름을 추적하고 있습니다...");
+                
+                var aMatch = sProcessedText.match(/\d+/);
+                var sOrderNum = aMatch ? aMatch[0] : null;
+                
+                if (sOrderNum) {
+                    // 모델 파라미터가 정확히 넘어가는지 확인 (oTrackerModel)
+                    this._handleOrderTracking(sOrderNum, oTrackerModel, oCallbacks);
+                } else {
+                    oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "어떤 판매오더를 추적할지 찾지 못했어요. '320번 추적해 줘'처럼 번호를 말씀해 주세요.");
+                }    
+
+                
                 // 4. 재고 조회 로직
             } else if (sProcessedText.includes("재고") || sProcessedText.includes("몇 개") || sProcessedText.includes("수량") || sProcessedText.includes("품절")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 현황을 분석하고 있습니다...");
@@ -127,7 +143,6 @@ sap.ui.define([], function () {
                 } else if (sProcessedText.match(/(^|[^0-9])0\s*개/) || sProcessedText.includes("품절") || sProcessedText.includes("없는")) {
                     this._handleZeroStockCheck(oInventoryModel, oCallbacks);
 
-                    // 기본: 특정 단일 자재 조회 (예: 폴리에스터 재고 몇 개야?)
                 } else {
                     this._handleInventoryCheck(sProcessedText, oInventoryModel, oCallbacks);
                 }
@@ -139,8 +154,19 @@ sap.ui.define([], function () {
 
                 // 5. 예외 처리
             } else {
-                oCallbacks.onError("AI 비서", "sap-icon://sys-help-2", "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n'주문해 줘', '발주해 줘' 또는 '재고 알려줘' 처럼 목적을 명확히 말씀해 주세요!");
-            }
+    oCallbacks.onError(
+        "AI 비서",
+        "sap-icon://sys-help-2",
+        "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n\n" +
+        "사용 가능한 지시에 대해 알려드릴게요.\n" +
+        "- 판매오더 생성 [주문]\n" +
+        "- 판매오더 요약 [요약]\n" +
+        "- 판매오더 추적 [추적]\n" +
+        "- 구매오더 생성 [발주]\n" +
+        "- 가용재고 조회 [재고]\n\n" +
+        "지시를 하실 키워드 [두글자]를 입력해주시면 명령 가이드를 드립니다."
+    );
+}
 
 
         },
@@ -471,6 +497,78 @@ sap.ui.define([], function () {
                         "sap-icon://error",
                         "재고 데이터를 읽어오는 중 오류가 발생했습니다."
                     );
+                }
+            });
+        },
+        _handleOrderTracking: function (sOrderNum, oTrackerModel, oCallbacks) {
+            // SAP 영업오더 번호는 10자리이므로 앞에 0을 채워줍니다 (예: 320 -> 0000000320)
+            var sPaddedOrder = sOrderNum.padStart(10, '0');
+            
+            // 필터 생성
+            var aFilters = [ new sap.ui.model.Filter("SalesOrder", "EQ", sPaddedOrder) ];
+
+            oTrackerModel.read("/Z_C_E2E_OrderTracker", {
+                filters: aFilters,
+                success: function (oData) {
+                    var aResults = oData.results;
+                    
+                    if (aResults && aResults.length > 0) {
+                        
+                        // 💡 1. 중복 데이터를 하나로 묶기 위한 그룹화 (Grouping) 객체 생성
+                        var oGroupedData = {};
+
+                        aResults.forEach(function(item) {
+                            var sMat = item.Material;
+                            
+                            // 해당 품목이 처음 나왔다면 기본 뼈대 생성
+                            if (!oGroupedData[sMat]) {
+                                oGroupedData[sMat] = {
+                                    SalesOrder: item.SalesOrder,
+                                    Material: item.Material,
+                                    PlannedOrder: item.PlannedOrder || "없음",
+                                    PurchaseRequisitions: [], // PR은 여러 개일 수 있으므로 배열로!
+                                    PurchaseOrder: item.PurchaseOrder || "없음",
+                                    ProductionOrder: item.ProductionOrder || "없음",
+                                    OutboundDelivery: item.OutboundDelivery || "없음",
+                                    BillingDocument: item.BillingDocument || "없음",
+                                    FIDocument: item.FIDocument || "없음",
+                                    ClearingDocument: item.ClearingDocument || "없음"
+                                };
+                            }
+                            
+                            // 구매요청(PR) 번호가 존재하고, 아직 배열에 없다면 추가
+                            if (item.PurchaseRequisition && !oGroupedData[sMat].PurchaseRequisitions.includes(item.PurchaseRequisition)) {
+                                oGroupedData[sMat].PurchaseRequisitions.push(item.PurchaseRequisition);
+                            }
+                        });
+
+                        // 💡 2. 묶여진 데이터를 기반으로 챗봇 메시지 조립
+                        var sMsg = "";
+                        
+                        for (var key in oGroupedData) {
+                            var oGroup = oGroupedData[key];
+                            
+                            // 구매요청 배열을 쉼표로 예쁘게 연결 (값이 없으면 "없음")
+                            var sPRString = oGroup.PurchaseRequisitions.length > 0 ? oGroup.PurchaseRequisitions.join(", ") : "없음";
+                            
+                            sMsg += "📌 판매오더 " + sOrderNum + "번 추적 결과입니다. (품목 : " + oGroup.Material + ")\n\n";
+                            sMsg += "- 판매오더 : " + oGroup.SalesOrder + "\n";
+                            sMsg += "- 계획오더 : " + oGroup.PlannedOrder + "\n";
+                            sMsg += "- 구매요청 : " + sPRString + "\n"; // 쉼표로 연결된 PR 출력
+                            sMsg += "- 구매오더 : " + oGroup.PurchaseOrder + "\n";
+                            sMsg += "- 생산오더 : " + oGroup.ProductionOrder + "\n";
+                            sMsg += "- 출하문서 : " + oGroup.OutboundDelivery + "\n";
+                            sMsg += "- 송장/회계 : " + oGroup.BillingDocument + " / " + oGroup.FIDocument + "\n";
+                            sMsg += "- 입금전기 : " + oGroup.ClearingDocument + "\n\n";
+                        }
+                        
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", sMsg);
+                    } else {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://warning2", sOrderNum + "번 오더에 대한 추적 데이터가 없습니다.");
+                    }
+                },
+                error: function () {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "추적 데이터를 불러오는 중 오류가 발생했습니다.");
                 }
             });
         }
