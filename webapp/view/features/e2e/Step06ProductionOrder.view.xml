@@ -1,9 +1,10 @@
-<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step06ProductionOrder" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" height="100%" width="100%">
-    <VBox class="e2eStepCell" alignItems="Center" justifyContent="Center" width="100%" height="100%" renderType="Bare">
-        <VBox id="stepNode" class="{= 'e2eStepNode e2eStepNodeClickable e2eStepNode--' + ${dashboard>/e2eProcessFlow/steps/step06/status} }" alignItems="Center" justifyContent="Center" renderType="Bare">
-            <Text text="{dashboard>/e2eProcessFlow/steps/step06/number}" class="e2eStepNumber" />
-            <core:Icon src="{dashboard>/e2eProcessFlow/steps/step06/icon}" size="2rem" class="e2eStepIcon" />
-            <Text text="{dashboard>/e2eProcessFlow/steps/step06/title}" class="e2eStepTitle" />
-        </VBox>
+<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step06ProductionOrder" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <VBox class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos05" renderType="Bare">
+        <HBox alignItems="Center" justifyContent="SpaceBetween">
+            <Text text="6. Production Order" class="e2eMtoCardTitle" />
+            <ObjectStatus text="예정" state="None" class="e2eMtoCardStatus" />
+        </HBox>
+        <Text text="ProdChk-001" class="e2eMtoCardDoc" />
+        <Text text="작업장 M001" class="e2eMtoCardDetail" />
     </VBox>
 </mvc:View>
