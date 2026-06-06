@@ -27,16 +27,24 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.AiAssistant", {
-        
+
         onInit: function () {
             var oData = {
                 chat: [
                     {
                         sender: "AI 비서",
                         icon: "sap-icon://activate-blueprints",
-                        text: "안녕하세요! AI 비서 파스텔입니다. 무엇을 도와드릴까요?\n\n[가능한 업무]\n1. 판매오더 생성\n2. 구매오더 생성\n3. 전표 요약",
+                        text:
+                            "안녕하세요! AI 비서 파스텔입니다☺️ \n무엇을 도와드릴까요?\n\n" +
+                            "<가능한 업무>\n" +
+                            "- 판매오더 생성 [주문]\n" +
+                            "- 판매오더 요약 [요약]\n" +
+                            "- 판매오더 추적 [추적]\n" +
+                            "- 구매오더 생성 [발주]\n" +
+                            "- 가용재고 조회 [재고]\n\n" +
+                            "지시를 하실 업무 키워드 [두글자]를 입력해주시면 명령 가이드를 드립니다.",
                         time: this._getCurrentTime(),
-                        isUser: false 
+                        isUser: false
                     }
                 ]
             };
@@ -60,15 +68,15 @@ sap.ui.define([
             this._unbindChatbotDrag();
         },
 
-        _getCurrentTime: function() {
-            var oDateFormat = DateFormat.getDateTimeInstance({pattern: "HH:mm"});
+        _getCurrentTime: function () {
+            var oDateFormat = DateFormat.getDateTimeInstance({ pattern: "HH:mm" });
             return oDateFormat.format(new Date());
         },
 
-        _addMessage: function(sSender, sIcon, sText, bIsUser) {
+        _addMessage: function (sSender, sIcon, sText, bIsUser) {
             var oModel = this.getView().getModel("chatModel");
             var aChat = oModel.getProperty("/chat");
-            
+
             aChat.push({
                 sender: sSender,
                 icon: sIcon,
@@ -78,10 +86,10 @@ sap.ui.define([
             });
             oModel.setProperty("/chat", aChat);
 
-            setTimeout(function() {
+            setTimeout(function () {
                 var oScroll = this.getView().byId("chatScrollContainer");
                 if (oScroll) {
-                    oScroll.scrollTo(0, 99999, 200); 
+                    oScroll.scrollTo(0, 99999, 200);
                 }
             }.bind(this), 50);
         },
@@ -102,10 +110,12 @@ sap.ui.define([
 
             // 2. 챗봇 OData 모델 가져오기
             var oModel = this.getOwnerComponent().getModel("aiModel");
-            var that = this; 
+            var oInventoryModel = this.getOwnerComponent().getModel("inventoryModel"); // 💡 재고조회기능추가
+            var oTrackerModel = this.getOwnerComponent().getModel("trackerModel"); // 💡 추가!
+            var that = this;
 
             // 3. 🚀 분리된 모듈(AiCommandHandler)로 분석 및 실행 위임
-            AiCommandHandler.processCommand(sRawText, oModel, {
+            AiCommandHandler.processCommand(sRawText, oModel, oInventoryModel, oTrackerModel, {
                 onProcess: function (sSender, sIcon, sText) {
                     that._addMessage(sSender, sIcon, sText, false);
                 },
@@ -168,7 +178,7 @@ sap.ui.define([
         },
 
         _isCloseButtonTarget: function (oTarget) {
-            return oTarget && oTarget.closest && oTarget.closest(".sapUiSmallMarginEnd"); 
+            return oTarget && oTarget.closest && oTarget.closest(".sapUiSmallMarginEnd");
         },
 
         _applyPanelPosition: function (oDom, iLeft, iTop) {
@@ -234,7 +244,7 @@ sap.ui.define([
             iDeltaY = iClientY - this._oDragState.startY;
             iNewLeft = this._oDragState.startLeft + iDeltaX;
             iNewTop = this._oDragState.startTop + iDeltaY;
-            
+
             iMaxLeft = window.innerWidth - oDom.offsetWidth - 8;
             iMaxTop = window.innerHeight - oDom.offsetHeight - 8;
 

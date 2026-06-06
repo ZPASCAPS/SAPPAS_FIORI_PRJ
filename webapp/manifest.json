@@ -29,7 +29,22 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "inventorySource": {
+        "uri": "/sap/opu/odata/sap/Z_C_INVENTORYSTATUS_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "trackerSource": {
+        "uri": "/sap/opu/odata/sap/Z_C_E2E_ORDERTRACKER_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
+
     }
   },
   "sap.ui": {
@@ -83,6 +98,14 @@
         "dataSource": "aiService",
         "preload": true,
         "settings": {}
+      },
+      "inventoryModel": {
+        "dataSource": "inventorySource",
+        "preload": true
+      },
+      "trackerModel": {
+        "dataSource": "trackerSource",
+        "preload": true
       }
     },
     "resources": {
