@@ -29,6 +29,13 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "inventorySource": {
+        "uri": "/sap/opu/odata/sap/Z_C_INVENTORYSTATUS_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
     }
   },
@@ -83,6 +90,10 @@
         "dataSource": "aiService",
         "preload": true,
         "settings": {}
+      },
+      "inventoryModel": {
+        "dataSource": "inventorySource",
+        "preload": true
       }
     },
     "resources": {

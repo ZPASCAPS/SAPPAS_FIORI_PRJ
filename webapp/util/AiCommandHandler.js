@@ -90,7 +90,7 @@ sap.ui.define([], function () {
         /**
          * 사용자의 메시지를 분석하고 적절한 함수로 분기(Routing)합니다.
          */
-        processCommand: function (sRawText, oModel, oCallbacks) {
+        processCommand: function (sRawText, oModel, oInventoryModel,oCallbacks) {
             
             // 💡 1. 가장 먼저! 한글 문장을 SAP 코드가 섞인 문장으로 전처리(번역)합니다.
             var sProcessedText = this._preprocessText(sRawText);
@@ -109,7 +109,7 @@ sap.ui.define([], function () {
             // 4. 재고 조회 로직
             } else if (sProcessedText.includes("재고") || sProcessedText.includes("몇 개") || sProcessedText.includes("수량")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 조회 업무로 파악했습니다. 분석을 시작합니다.");
-                this._handleInventoryCheck(sProcessedText, oModel, oCallbacks);
+                this._handleInventoryCheck(sProcessedText, oInventoryModel, oCallbacks); // 💡 수정됨
 
             // 3. 판매오더 요약/조회 로직 (CDS View 연동)
             } else if (sProcessedText.includes("요약") || sProcessedText.includes("조회") || sProcessedText.includes("알려줘")) {
@@ -174,9 +174,53 @@ sap.ui.define([], function () {
             });
         },
 
-        _handleInventoryCheck: function (sRawText, oModel, oCallbacks) {
-            // 차후 OData 연동을 위해 분리해둠
-            oCallbacks.onSuccess("AI 비서", "sap-icon://database", "🔍 (테스트) 삐빅! 재고를 조회하는 모드로 진입했습니다. 곧 CDS View와 연결될 예정입니다!");
+        _handleInventoryCheck: function (sProcessedText, oInventoryModel, oCallbacks) {
+            var oMaterialRegex = /UP-[A-Z]-[A-Z0-9-]+/i;
+            var aMatch = sProcessedText.match(oMaterialRegex);
+            var sMaterial = aMatch ? aMatch[0].toUpperCase() : null;
+
+            if (!sMaterial) {
+                oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "어떤 품목의 재고를 조회할지 찾지 못했어요.\n'폴리에스터 재고 알려줘' 처럼 정확히 말씀해 주세요!");
+                return;
+            }
+
+            var sKoreanName = sMaterial;
+            for (var key in this._mappingDict) {
+                if (this._mappingDict[key] === sMaterial) {
+                    sKoreanName = key;
+                    break;
+                }
+            }
+
+            // 💡 프론트엔드 필터: 자재코드만 던집니다. (공장은 이미 CDS에서 1010으로 고정됨)
+            var aFilters = [
+                new sap.ui.model.Filter("Material", "EQ", sMaterial)
+            ];
+
+            oInventoryModel.read("/Z_C_InventoryStatus", { 
+                filters: aFilters,
+                success: function (oData) {
+                    var aResults = oData.results;
+                    
+                    if (aResults && aResults.length > 0) {
+                        var iTotalStock = 0;
+                        
+                        // 💡 여러 저장위치(0001, 0002 등)에 흩어진 가용재고를 모두 찾아 합산합니다.
+                        for(var i = 0; i < aResults.length; i++) {
+                            iTotalStock += parseFloat(aResults[i].AvailableStock || 0);
+                        }
+                        
+                        var sSummary = sKoreanName + "(" + sMaterial + ")의 현재 가용재고는 " + iTotalStock + "개 입니다.";
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", "📦 재고 조회 완료!\n\n" + sSummary);
+                    } else {
+                        var sZeroMsg = sKoreanName + "(" + sMaterial + ")의 현재 가용재고는 0개 입니다. (데이터 없음)";
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://warning2", "📦 재고 조회 완료!\n\n" + sZeroMsg);
+                    }
+                },
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "SAP 시스템에서 재고 데이터를 불러오는 중 오류가 발생했습니다.");
+                }
+            });
         },
 
         _handlePurchaseOrder: function (sRawText, oModel, oCallbacks) {
