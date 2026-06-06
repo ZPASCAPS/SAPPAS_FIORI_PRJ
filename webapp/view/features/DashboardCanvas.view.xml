@@ -5,14 +5,10 @@
   Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardCanvas
 
   역할:
-  - 중앙 대시보드 본문. 사이드바 navKey에 따라 SectionPlaceholder 등 콘텐츠를 표시한다.
-
-  대시보드 구조:
-  Main → DashboardMain → DashboardCanvas (가장 큰 흰색 콘텐츠 영역)
-
-  협업:
-  - 탭별 실제 차트·KPI 추가 시 이 View에 mvc:XMLView를 연결한다.
-  - 현재는 모든 탭이 SectionPlaceholder.view.xml 안내 화면을 사용한다.
+  - 중앙 대시보드 본문. navKey에 따라 콘텐츠를 전환한다.
+  - DASHBOARD: A공간 + B공간
+  - MM_MATERIALS: MmCockpit (Controller에서 지연 로드)
+  - 그 외 모듈: SectionPlaceholder
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardCanvas"
@@ -21,14 +17,42 @@
     height="100%"
     width="100%">
 
-    <ScrollContainer
-        class="nxContentScroll"
-        vertical="true"
-        horizontal="false"
-        height="100%"
-        width="100%">
-        <VBox class="nxContent nxDashboardCanvas" width="100%">
-            <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.SectionPlaceholder" />
-        </VBox>
-    </ScrollContainer>
+    <VBox class="nxDashboardCanvasRoot" height="100%" width="100%" renderType="Bare">
+        <HBox
+            class="nxDashboardSplit"
+            visible="{= ${dashboard>/ui/navKey} === 'DASHBOARD' }"
+            height="100%"
+            width="100%"
+            renderType="Bare">
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.OrderInquiry"
+                class="nxSpaceA" />
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.E2EProcessFlow"
+                class="nxSpaceB" />
+        </HBox>
+
+        <ScrollContainer
+            id="mmCockpitScroll"
+            class="nxContentScroll nxModuleCanvas nxMmCockpitCanvas"
+            visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <VBox id="mmCockpitHost" class="nxContent nxModuleCanvasBody" width="100%" renderType="Bare" />
+        </ScrollContainer>
+
+        <ScrollContainer
+            class="nxContentScroll nxModuleCanvas"
+            visible="{= ${dashboard>/ui/navKey} !== 'DASHBOARD' &amp;&amp; ${dashboard>/ui/navKey} !== 'MM_MATERIALS' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <VBox class="nxContent nxModuleCanvasBody" width="100%">
+                <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.SectionPlaceholder" />
+            </VBox>
+        </ScrollContainer>
+    </VBox>
 </mvc:View>

@@ -1,0 +1,43 @@
+<!--
+  OrderInquiry.view.xml  (A공간 — 오더 조회)
+
+  View: com.capstone.dashboard.fioridashboard.view.features.OrderInquiry
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.OrderInquiry
+
+  역할:
+  - 메인 대시보드 왼쪽(A) 영역. 오더 조회 UI를 단계적으로 구현한다.
+  - 공통 dashboard JSONModel은 Main.controller.js에서 제공한다.
+
+  대시보드 구조:
+  Main → DashboardMain → DashboardCanvas → OrderInquiry (A공간)
+
+  협업:
+  - 오더 조회 UI·이벤트 → 이 View + OrderInquiry.controller.js
+  - 공통 데이터 필드 → Main.controller.js (dashboard/spaces/orderInquiry)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.OrderInquiry"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    height="100%"
+    width="100%">
+
+    <VBox class="nxSpaceCard nxSpaceCardA" height="100%" width="100%" renderType="Bare">
+        <HBox class="nxSpaceCardHeader" alignItems="Center" width="100%">
+            <Title text="오더 조회" level="H4" class="nxSpaceCardTitle" />
+        </HBox>
+
+        <VBox class="nxSpaceCardBody nxSpaceCardBodyA" width="100%">
+            <SearchField
+                placeholder="오더 번호 검색"
+                width="100%"
+                class="nxSpaceSearch" />
+            <Button
+                text="조회"
+                type="Emphasized"
+                width="100%"
+                class="nxSpaceSearchBtn" />
+            <VBox class="nxSpaceInnerEmpty nxSpaceInnerEmptyA" width="100%" />
+        </VBox>
+    </VBox>
+</mvc:View>

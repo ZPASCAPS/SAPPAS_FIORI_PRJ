@@ -42,7 +42,7 @@ sap.ui.define([
         WORKLIST: "처리할 작업 목록과 자재 연동 상태를 확인합니다.",
         ALERTS: "시스템 알림, 경고, 재고 이상 징후를 확인합니다.",
         SD_SALES: "수주·매출 현황과 판매 프로세스를 확인합니다.",
-        MM_MATERIALS: "자재 마스터와 재고 연동 정보를 확인합니다.",
+        MM_MATERIALS: "MM Extended 관제 콕핏 — 재고·이동·사급·보류 리스크를 확인합니다.",
         PP_PRODUCTION: "생산 프로세스 흐름과 재고 활동을 확인합니다.",
         FI_CO_FINANCE: "재무·회계 관련 매출 및 재고 가치를 확인합니다.",
         STOCK_MONITOR: "재고 KPI와 충족률 추이를 모니터링합니다.",
