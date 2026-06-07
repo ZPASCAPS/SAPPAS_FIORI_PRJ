@@ -3277,3 +3277,4078 @@ html, body, body > div, #container, #container-uiarea,
         min-height: 4.75rem;
     }
 }
+
+/* E2E MTO dashboard: actual rendered 11-step 4 / 3 / 4 flow. */
+.e2eMtoStage {
+    min-height: 25rem !important;
+    overflow: hidden !important;
+}
+
+.e2eMtoFlowGrid {
+    height: 100% !important;
+    min-height: 23rem !important;
+    padding: 0.85rem 1.25rem !important;
+    box-sizing: border-box !important;
+    background: #FFFFFF !important;
+    border: 1px solid #EEF2F7 !important;
+    border-radius: 0.85rem !important;
+    overflow: hidden !important;
+}
+
+.e2eMtoFlowRow {
+    width: 100% !important;
+    min-height: 6.45rem !important;
+    gap: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.e2eMtoFlowRow + .e2eMtoFlowRow {
+    margin-top: 0.35rem !important;
+}
+
+.e2eMtoFlowRowMiddle {
+    padding-right: 8% !important;
+}
+
+.e2eMtoProcessCard {
+    flex: 0 0 136px !important;
+    width: 136px !important;
+    min-width: 136px !important;
+    max-width: 136px !important;
+    min-height: 4.45rem !important;
+    padding: 0.42rem 0.5rem !important;
+    background: #FFFFFF !important;
+    border: 2px solid #E5E7EB !important;
+    border-radius: 0.7rem !important;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.07) !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+}
+
+.e2eMtoCardDone {
+    border-color: #86EFAC !important;
+    background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%) !important;
+}
+
+.e2eMtoCardActive {
+    border-color: #FBBF24 !important;
+    background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 100%) !important;
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.22), 0 4px 12px rgba(245, 158, 11, 0.15) !important;
+}
+
+.e2eMtoCardPending {
+    border-color: #E5E7EB !important;
+    background: #F9FAFB !important;
+}
+
+.e2eMtoFlowLink {
+    flex: 0 1 4.8rem !important;
+    min-width: 2.2rem !important;
+    max-width: 4.8rem !important;
+    position: relative !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.e2eMtoFlowLink::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0.45rem !important;
+    right: 0.45rem !important;
+    top: 50% !important;
+    height: 4px !important;
+    border-radius: 999px !important;
+    transform: translateY(-50%) !important;
+    background: repeating-linear-gradient(90deg, #CBD5E1 0 5px, transparent 5px 9px) !important;
+}
+
+.e2eMtoFlowLinkDone::before {
+    background: #22C55E !important;
+}
+
+.e2eMtoFlowLinkActive::before {
+    background: #F59E0B !important;
+}
+
+.e2eMtoFlowLinkMrp::before {
+    background: #9DCCFF !important;
+}
+
+.e2eMtoFlowArrow,
+.e2eMtoFlowArrow .sapMText {
+    position: relative !important;
+    z-index: 1 !important;
+    padding: 0 0.18rem !important;
+    background: #FFFFFF !important;
+    color: inherit !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+}
+
+.e2eMtoFlowLinkLabel,
+.e2eMtoFlowLinkLabel .sapMText {
+    position: absolute !important;
+    top: 1.55rem !important;
+    font-size: 0.52rem !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+}
+
+.e2eMtoFlowLinkMrp .e2eMtoFlowLinkLabel,
+.e2eMtoFlowLinkMrp .e2eMtoFlowLinkLabel .sapMText {
+    color: #0070F2 !important;
+}
+
+.e2eMtoFlowLinkActive .e2eMtoFlowLinkLabel,
+.e2eMtoFlowLinkActive .e2eMtoFlowLinkLabel .sapMText {
+    color: #F59E0B !important;
+}
+
+.e2eMtoCardTitle,
+.e2eMtoCardTitle .sapMText {
+    font-size: 0.55rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    line-height: 1.15 !important;
+}
+
+.e2eMtoCardDoc,
+.e2eMtoCardDoc .sapMText {
+    font-size: 0.5rem !important;
+    font-weight: 800 !important;
+    color: #0070F2 !important;
+    margin-top: 0.25rem !important;
+}
+
+.e2eMtoCardDetail,
+.e2eMtoCardDetail .sapMText {
+    font-size: 0.47rem !important;
+    color: #6B7280 !important;
+    line-height: 1.15 !important;
+    margin-top: 0.2rem !important;
+}
+
+.e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.45rem !important;
+    font-weight: 800 !important;
+}
+
+/* Fixed-size MTO view: keep order panel and process values stable by viewport ratio. */
+.nxDashboardSplit {
+    min-width: 1180px !important;
+    overflow-x: auto !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceA {
+    flex: 0 0 260px !important;
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceB {
+    flex: 0 0 900px !important;
+    width: 900px !important;
+    min-width: 900px !important;
+    max-width: 900px !important;
+}
+
+.nxSpaceCardA,
+.nxSpaceCardB {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.e2eFlowStage {
+    overflow: hidden !important;
+}
+
+.e2eMtoFlowGrid {
+    position: relative !important;
+    width: 860px !important;
+    min-width: 860px !important;
+    max-width: 860px !important;
+    height: 23.4rem !important;
+    min-height: 23.4rem !important;
+    padding: 0.9rem 1rem !important;
+    margin: 0 auto !important;
+}
+
+.e2eMtoFlowGrid::before,
+.e2eMtoFlowGrid::after {
+    content: "" !important;
+    position: absolute !important;
+    width: 8px !important;
+    border-radius: 999px !important;
+    background: repeating-linear-gradient(180deg, #CBD5E1 0 9px, transparent 9px 15px) !important;
+    z-index: 0 !important;
+}
+
+.e2eMtoFlowGrid::before {
+    right: 3.35rem !important;
+    top: 6.2rem !important;
+    height: 4.8rem !important;
+}
+
+.e2eMtoFlowGrid::after {
+    left: 3.35rem !important;
+    top: 14rem !important;
+    height: 4.4rem !important;
+}
+
+.e2eMtoFlowRow {
+    position: relative !important;
+    z-index: 1 !important;
+    min-height: 6.35rem !important;
+}
+
+.e2eMtoFlowRow + .e2eMtoFlowRow {
+    margin-top: 0.55rem !important;
+}
+
+.e2eMtoFlowRowTop,
+.e2eMtoFlowRowBottom {
+    justify-content: flex-start !important;
+}
+
+.e2eMtoFlowRowMiddle {
+    justify-content: flex-end !important;
+    padding-right: 3.2rem !important;
+}
+
+.e2eMtoProcessCard {
+    flex: 0 0 126px !important;
+    width: 126px !important;
+    min-width: 126px !important;
+    max-width: 126px !important;
+    min-height: 4.5rem !important;
+    padding: 0.42rem 0.5rem !important;
+}
+
+.e2eMtoFlowLink {
+    flex: 0 0 54px !important;
+    width: 54px !important;
+    min-width: 54px !important;
+    max-width: 54px !important;
+}
+
+.e2eMtoFlowRowMiddle .e2eMtoFlowLink {
+    flex-basis: 70px !important;
+    width: 70px !important;
+    min-width: 70px !important;
+    max-width: 70px !important;
+}
+
+.e2eMtoFlowLink::before {
+    left: 0.15rem !important;
+    right: 0.15rem !important;
+    height: 8px !important;
+}
+
+.e2eMtoFlowLinkDone::before {
+    background: #22C55E !important;
+}
+
+.e2eMtoFlowLinkActive::before {
+    background: #F59E0B !important;
+}
+
+.e2eMtoFlowLinkPending::before {
+    background: repeating-linear-gradient(90deg, #CBD5E1 0 9px, transparent 9px 15px) !important;
+}
+
+.e2eMtoFlowLinkMrp::before {
+    background: #60A5FA !important;
+}
+
+.e2eMtoFlowArrow,
+.e2eMtoFlowArrow .sapMText {
+    font-size: 1.15rem !important;
+    font-weight: 900 !important;
+}
+
+.e2eMtoFlowLinkDone .e2eMtoFlowArrow,
+.e2eMtoFlowLinkDone .e2eMtoFlowArrow .sapMText {
+    color: #16A34A !important;
+}
+
+.e2eMtoFlowLinkActive .e2eMtoFlowArrow,
+.e2eMtoFlowLinkActive .e2eMtoFlowArrow .sapMText {
+    color: #F59E0B !important;
+}
+
+.e2eMtoFlowLinkPending .e2eMtoFlowArrow,
+.e2eMtoFlowLinkPending .e2eMtoFlowArrow .sapMText {
+    color: #9CA3AF !important;
+}
+
+.e2eMtoCardTitle,
+.e2eMtoCardTitle .sapMText {
+    font-size: 0.52rem !important;
+}
+
+.e2eMtoCardDoc,
+.e2eMtoCardDoc .sapMText {
+    font-size: 0.48rem !important;
+}
+
+.e2eMtoCardDetail,
+.e2eMtoCardDetail .sapMText {
+    font-size: 0.45rem !important;
+}
+
+/* Dashboard ratio refinement: fixed content, screen-fit panels. */
+.nxDashboardSplit {
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+    gap: 0.75rem !important;
+    padding: 0.75rem 1rem 3.5rem !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceA {
+    flex: 0 0 150px !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceB {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+}
+
+.nxSpaceCardHeader {
+    padding: 0.75rem 0.875rem 0.65rem !important;
+}
+
+.nxSpaceCardBodyA {
+    padding: 0.75rem 0.75rem 1rem !important;
+}
+
+.nxSpaceSearch .sapMSF,
+.nxSpaceSearch .sapMSFF {
+    height: 2rem !important;
+}
+
+.nxSpaceSearchBtn {
+    height: 2rem !important;
+}
+
+.e2eDashboardRoot {
+    max-width: 640px !important;
+}
+
+.e2eDashboardHeader {
+    min-height: 2.75rem !important;
+}
+
+.e2eFlowLegendToolbar {
+    gap: 0.65rem !important;
+}
+
+.e2eFlowStage {
+    align-items: center !important;
+}
+
+.e2eMtoFlowGrid {
+    width: 590px !important;
+    min-width: 590px !important;
+    max-width: 590px !important;
+    height: 18.75rem !important;
+    min-height: 18.75rem !important;
+    padding: 0.72rem 0.9rem !important;
+}
+
+.e2eMtoFlowGrid::before,
+.e2eMtoFlowGrid::after {
+    width: 6px !important;
+    background: repeating-linear-gradient(180deg, #CBD5E1 0 7px, transparent 7px 12px) !important;
+}
+
+.e2eMtoFlowGrid::before {
+    right: 2.65rem !important;
+    top: 5.25rem !important;
+    height: 3.15rem !important;
+}
+
+.e2eMtoFlowGrid::after {
+    left: 2.65rem !important;
+    top: 11.65rem !important;
+    height: 3.15rem !important;
+}
+
+.e2eMtoFlowRow {
+    min-height: 5.25rem !important;
+}
+
+.e2eMtoFlowRow + .e2eMtoFlowRow {
+    margin-top: 0.42rem !important;
+}
+
+.e2eMtoFlowRowTop,
+.e2eMtoFlowRowBottom {
+    justify-content: center !important;
+}
+
+.e2eMtoFlowRowMiddle {
+    justify-content: center !important;
+    padding-right: 0 !important;
+}
+
+.e2eMtoFlowRowTop::after,
+.e2eMtoFlowRowMiddle::before {
+    position: absolute !important;
+    color: #94A3B8 !important;
+    font-size: 1.25rem !important;
+    font-weight: 900 !important;
+    z-index: 2 !important;
+}
+
+.e2eMtoFlowRowTop::after {
+    content: "↓" !important;
+    right: 2.25rem !important;
+    bottom: -1.25rem !important;
+}
+
+.e2eMtoFlowRowMiddle::before {
+    content: "↓" !important;
+    left: 2.25rem !important;
+    bottom: -1.25rem !important;
+}
+
+.e2eMtoProcessCard {
+    flex: 0 0 94px !important;
+    width: 94px !important;
+    min-width: 94px !important;
+    max-width: 94px !important;
+    min-height: 3.65rem !important;
+    padding: 0.32rem 0.38rem !important;
+    border-radius: 0.55rem !important;
+}
+
+.e2eMtoFlowLink {
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+}
+
+.e2eMtoFlowRowMiddle .e2eMtoFlowLink {
+    flex-basis: 56px !important;
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+}
+
+.e2eMtoFlowLink::before {
+    left: 0.1rem !important;
+    right: 0.1rem !important;
+    height: 5px !important;
+}
+
+.e2eMtoFlowLinkPending::before {
+    background: repeating-linear-gradient(90deg, #CBD5E1 0 7px, transparent 7px 12px) !important;
+}
+
+.e2eMtoFlowArrow,
+.e2eMtoFlowArrow .sapMText {
+    font-size: 0.95rem !important;
+    padding: 0 0.12rem !important;
+}
+
+.e2eMtoFlowLinkLabel,
+.e2eMtoFlowLinkLabel .sapMText {
+    top: 1.05rem !important;
+    font-size: 0.44rem !important;
+}
+
+.e2eMtoCardTitle,
+.e2eMtoCardTitle .sapMText {
+    font-size: 0.43rem !important;
+    line-height: 1.1 !important;
+}
+
+.e2eMtoCardDoc,
+.e2eMtoCardDoc .sapMText {
+    font-size: 0.4rem !important;
+    margin-top: 0.18rem !important;
+}
+
+.e2eMtoCardDetail,
+.e2eMtoCardDetail .sapMText {
+    font-size: 0.38rem !important;
+    margin-top: 0.15rem !important;
+}
+
+.e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.36rem !important;
+}
+
+/* Final dashboard proportion and connector override. */
+.nxDashboardSplit {
+    align-items: stretch !important;
+    gap: 0.8rem !important;
+    padding: 0.75rem 1rem 1.25rem !important;
+    overflow: hidden !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceA {
+    flex: 0 0 220px !important;
+    width: 220px !important;
+    min-width: 220px !important;
+    max-width: 220px !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceB {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+}
+
+.e2eDashboardRoot {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.e2eDashboardBody {
+    align-items: center !important;
+}
+
+.e2eFlowStage {
+    width: 100% !important;
+    align-items: center !important;
+}
+
+.e2eMtoFlowGrid {
+    width: 720px !important;
+    min-width: 720px !important;
+    max-width: 720px !important;
+    height: 22rem !important;
+    min-height: 22rem !important;
+    padding: 1.05rem 1.25rem !important;
+    margin: 0 auto !important;
+}
+
+.e2eMtoFlowRow {
+    min-height: 6rem !important;
+}
+
+.e2eMtoFlowRow + .e2eMtoFlowRow {
+    margin-top: 0.65rem !important;
+}
+
+.e2eMtoFlowRowTop,
+.e2eMtoFlowRowBottom,
+.e2eMtoFlowRowMiddle {
+    justify-content: center !important;
+    padding-right: 0 !important;
+}
+
+.e2eMtoProcessCard {
+    flex: 0 0 112px !important;
+    width: 112px !important;
+    min-width: 112px !important;
+    max-width: 112px !important;
+    min-height: 4.25rem !important;
+    padding: 0.38rem 0.48rem !important;
+}
+
+.e2eMtoFlowLink {
+    flex: 0 0 50px !important;
+    width: 50px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    position: relative !important;
+}
+
+.e2eMtoFlowRowMiddle .e2eMtoFlowLink {
+    flex: 0 0 82px !important;
+    width: 82px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+}
+
+.e2eMtoFlowLink::before {
+    left: 0.15rem !important;
+    right: 0.15rem !important;
+    top: 44% !important;
+    height: 7px !important;
+    border-radius: 999px !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoFlowLinkDone::before {
+    background: #22C55E !important;
+}
+
+.e2eMtoFlowLinkActive::before {
+    background: #F59E0B !important;
+}
+
+.e2eMtoFlowLinkPending::before {
+    background: repeating-linear-gradient(90deg, #CBD5E1 0 8px, transparent 8px 13px) !important;
+}
+
+.e2eMtoFlowLinkMrp::before {
+    background: #60A5FA !important;
+}
+
+.e2eMtoFlowArrow,
+.e2eMtoFlowArrow .sapMText {
+    display: block !important;
+    margin-top: 1.35rem !important;
+    padding: 0 !important;
+    background: transparent !important;
+    font-size: 1.25rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+}
+
+.e2eMtoFlowLinkDone .e2eMtoFlowArrow,
+.e2eMtoFlowLinkDone .e2eMtoFlowArrow .sapMText {
+    color: #16A34A !important;
+}
+
+.e2eMtoFlowLinkActive .e2eMtoFlowArrow,
+.e2eMtoFlowLinkActive .e2eMtoFlowArrow .sapMText {
+    color: #D97706 !important;
+}
+
+.e2eMtoFlowLinkPending .e2eMtoFlowArrow,
+.e2eMtoFlowLinkPending .e2eMtoFlowArrow .sapMText {
+    color: #94A3B8 !important;
+}
+
+.e2eMtoFlowLinkMrp {
+    background: rgba(219, 234, 254, 0.7) !important;
+    border-radius: 0.7rem !important;
+}
+
+.e2eMtoFlowLinkMrp .e2eMtoFlowArrow,
+.e2eMtoFlowLinkMrp .e2eMtoFlowArrow .sapMText {
+    color: #0070F2 !important;
+}
+
+.e2eMtoFlowLinkLabel,
+.e2eMtoFlowLinkLabel .sapMText {
+    top: 0.42rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 0.52rem !important;
+    font-weight: 900 !important;
+}
+
+.e2eMtoFlowGrid::before,
+.e2eMtoFlowGrid::after {
+    width: 7px !important;
+    border-radius: 999px !important;
+    background: repeating-linear-gradient(180deg, #CBD5E1 0 8px, transparent 8px 13px) !important;
+}
+
+.e2eMtoFlowGrid::before {
+    right: 3.35rem !important;
+    top: 6.15rem !important;
+    height: 4.25rem !important;
+}
+
+.e2eMtoFlowGrid::after {
+    left: 3.35rem !important;
+    top: 14.1rem !important;
+    height: 4.05rem !important;
+}
+
+.e2eMtoFlowRowTop::after,
+.e2eMtoFlowRowMiddle::before {
+    color: #94A3B8 !important;
+    font-size: 1.55rem !important;
+    font-weight: 900 !important;
+}
+
+.e2eMtoFlowRowTop::after {
+    right: 3rem !important;
+    bottom: -1.6rem !important;
+}
+
+.e2eMtoFlowRowMiddle::before {
+    left: 3rem !important;
+    bottom: -1.6rem !important;
+}
+
+.e2eMtoCardTitle,
+.e2eMtoCardTitle .sapMText {
+    font-size: 0.5rem !important;
+}
+
+.e2eMtoCardDoc,
+.e2eMtoCardDoc .sapMText {
+    font-size: 0.46rem !important;
+}
+
+.e2eMtoCardDetail,
+.e2eMtoCardDetail .sapMText {
+    font-size: 0.42rem !important;
+}
+
+.e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.4rem !important;
+}
+
+/* 2:8 dashboard layout with filled order summary and enlarged process flow. */
+.nxDashboardSplit {
+    display: flex !important;
+    gap: 1rem !important;
+    padding: 0.75rem 1rem 1rem !important;
+    overflow: hidden !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceA {
+    flex: 2 1 0 !important;
+    width: auto !important;
+    min-width: 18rem !important;
+    max-width: none !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceB {
+    flex: 8 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+}
+
+.nxSpaceCardA,
+.nxSpaceCardB,
+.e2eDashboardRoot {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.nxSpaceCardBodyA {
+    padding: 1rem 1.25rem 1.25rem !important;
+    gap: 0.85rem !important;
+}
+
+.nxOrderResultPanel {
+    margin-top: 0.75rem !important;
+    padding-top: 1rem !important;
+    border-top: 1px solid #E5E7EB !important;
+    gap: 1.05rem !important;
+}
+
+.nxOrderResultHeader {
+    gap: 0.55rem !important;
+}
+
+.nxOrderIcon,
+.nxOrderIcon .sapMText {
+    color: #0B74F0 !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+}
+
+.nxOrderNumber,
+.nxOrderNumber .sapMText {
+    color: #0F172A !important;
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+}
+
+.nxOrderStageBlock {
+    gap: 0.45rem !important;
+}
+
+.nxOrderLabel,
+.nxOrderLabel .sapMText,
+.nxOrderDetailLabel,
+.nxOrderDetailLabel .sapMText {
+    color: #64748B !important;
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+}
+
+.nxOrderStageText,
+.nxOrderStageText .sapMText {
+    color: #0064D9 !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+}
+
+.nxOrderProgressBar {
+    position: relative !important;
+    height: 1.55rem !important;
+    margin-top: 0.35rem !important;
+    background: linear-gradient(90deg, #D9F2FF 0%, #EAF7FF 100%) !important;
+    border-radius: 999px !important;
+    overflow: visible !important;
+}
+
+.nxOrderProgressFill {
+    width: 42% !important;
+    height: 0.75rem !important;
+    margin-left: 0 !important;
+    border-radius: 999px !important;
+    background: #0B74F0 !important;
+}
+
+.nxOrderProgressDot {
+    width: 0.35rem !important;
+    height: 0.35rem !important;
+    margin-left: auto !important;
+    margin-right: 1.35rem !important;
+    border-radius: 50% !important;
+    background: #0B74F0 !important;
+}
+
+.nxOrderProgressInfo,
+.nxOrderProgressInfo .sapMText {
+    position: absolute !important;
+    right: 0 !important;
+    top: 50% !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    border-radius: 50% !important;
+    transform: translateY(-50%) !important;
+    background: #0B74F0 !important;
+    color: #FFFFFF !important;
+    text-align: center !important;
+    line-height: 1.25rem !important;
+    font-weight: 800 !important;
+}
+
+.nxOrderDetailList {
+    gap: 0 !important;
+}
+
+.nxOrderDetailRow {
+    min-height: 2.65rem !important;
+    padding: 0.55rem 0 !important;
+    border-bottom: 1px dashed #E5E7EB !important;
+    gap: 0.75rem !important;
+}
+
+.nxOrderDetailValue,
+.nxOrderDetailValue .sapMText {
+    color: #0F172A !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    text-align: right !important;
+}
+
+.nxOrderProductName,
+.nxOrderProductName .sapMText {
+    max-width: 12rem !important;
+    white-space: normal !important;
+}
+
+.nxOrderAmount,
+.nxOrderAmount .sapMText {
+    color: #0064D9 !important;
+}
+
+.e2eDashboardBody {
+    align-items: stretch !important;
+    padding: 1rem 1.25rem 1.25rem !important;
+}
+
+.e2eFlowStage {
+    width: 100% !important;
+    height: 100% !important;
+    align-items: stretch !important;
+}
+
+.e2eMtoFlowGrid {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 34rem !important;
+    padding: 2rem 2.5rem !important;
+    margin: 0 !important;
+}
+
+.e2eMtoFlowRow {
+    min-height: 8.2rem !important;
+}
+
+.e2eMtoFlowRow + .e2eMtoFlowRow {
+    margin-top: 1.1rem !important;
+}
+
+.e2eMtoProcessCard {
+    flex: 0 0 150px !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    min-height: 5.45rem !important;
+    padding: 0.62rem 0.7rem !important;
+    border-radius: 0.75rem !important;
+}
+
+.e2eMtoFlowLink {
+    flex: 0 1 9% !important;
+    width: auto !important;
+    min-width: 4.5rem !important;
+    max-width: 8rem !important;
+}
+
+.e2eMtoFlowRowMiddle .e2eMtoFlowLink {
+    flex: 0 1 14% !important;
+    width: auto !important;
+    min-width: 6rem !important;
+    max-width: 11rem !important;
+}
+
+.e2eMtoFlowLink::before {
+    height: 8px !important;
+}
+
+.e2eMtoFlowGrid::before {
+    right: 4.2rem !important;
+    top: 11.15rem !important;
+    height: 5.25rem !important;
+}
+
+.e2eMtoFlowGrid::after {
+    left: 4.2rem !important;
+    top: 22.1rem !important;
+    height: 5.25rem !important;
+}
+
+.e2eMtoFlowRowTop::after {
+    right: 3.8rem !important;
+    bottom: -2.05rem !important;
+}
+
+.e2eMtoFlowRowMiddle::before {
+    left: 3.8rem !important;
+    bottom: -2.05rem !important;
+}
+
+.e2eMtoCardTitle,
+.e2eMtoCardTitle .sapMText {
+    font-size: 0.62rem !important;
+}
+
+.e2eMtoCardDoc,
+.e2eMtoCardDoc .sapMText {
+    font-size: 0.58rem !important;
+}
+
+.e2eMtoCardDetail,
+.e2eMtoCardDetail .sapMText {
+    font-size: 0.52rem !important;
+}
+
+.e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.48rem !important;
+}
+
+/* Reference-style absolute MTO flow: wide 4 / 3 / 4 S layout. */
+.e2eDashboardBody {
+    padding: 0.85rem 1rem 1rem !important;
+}
+
+.e2eFlowStage {
+    min-height: 35rem !important;
+}
+
+.e2eMtoReferenceGrid {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    height: 34rem !important;
+    min-height: 34rem !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E8EDF4 !important;
+    border-radius: 0.9rem !important;
+}
+
+.e2eMtoReferenceGrid::before,
+.e2eMtoReferenceGrid::after {
+    content: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    position: absolute !important;
+    z-index: 3 !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    min-height: 5rem !important;
+    padding: 0.55rem 0.65rem !important;
+}
+
+.e2eStepPos01 { left: 4.5% !important; top: 4.2rem !important; }
+.e2eStepPos02 { left: 25.4% !important; top: 4.2rem !important; }
+.e2eStepPos03 { left: 49.2% !important; top: 4.2rem !important; }
+.e2eStepPos04 { right: 6.2% !important; top: 4.2rem !important; }
+
+.e2eStepPos05 { right: 9.7% !important; top: 14.1rem !important; }
+.e2eStepPos06 { left: 45.4% !important; top: 14.1rem !important; }
+.e2eStepPos07 { left: 18.4% !important; top: 14.1rem !important; }
+
+.e2eStepPos08 { left: 8.5% !important; top: 24rem !important; }
+.e2eStepPos09 { left: 31.6% !important; top: 24rem !important; }
+.e2eStepPos10 { left: 55% !important; top: 24rem !important; }
+.e2eStepPos11 { right: 6.2% !important; top: 24rem !important; }
+
+.e2eMtoConnector {
+    position: absolute !important;
+    z-index: 2 !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.e2eMtoConnector::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 50% !important;
+    height: 8px !important;
+    border-radius: 999px !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoConnectorDone::before {
+    background: #22C55E !important;
+}
+
+.e2eMtoConnectorActive::before {
+    background: #F59E0B !important;
+}
+
+.e2eMtoConnectorPending::before {
+    background: repeating-linear-gradient(90deg, #CBD5E1 0 8px, transparent 8px 14px) !important;
+}
+
+.e2eMtoConnectorMrp {
+    background: rgba(219, 234, 254, 0.92) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.12) !important;
+}
+
+.e2eMtoConnectorMrp::before {
+    background: #60A5FA !important;
+    left: 0.35rem !important;
+    right: 0.35rem !important;
+}
+
+.e2eMtoConnectorVertical {
+    width: 3.8rem !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    left: 50% !important;
+    right: auto !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 8px !important;
+    height: auto !important;
+    transform: translateX(-50%) !important;
+    background: repeating-linear-gradient(180deg, #CBD5E1 0 8px, transparent 8px 14px) !important;
+}
+
+.e2eMtoConnector .e2eMtoFlowArrow,
+.e2eMtoConnector .e2eMtoFlowArrow .sapMText {
+    position: relative !important;
+    z-index: 3 !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0.08rem 0.32rem !important;
+    background: #FFFFFF !important;
+    font-size: 1.2rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    background: transparent !important;
+    color: #0070F2 !important;
+    margin-top: 1.45rem !important;
+}
+
+.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText {
+    color: #16A34A !important;
+}
+
+.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText {
+    color: #D97706 !important;
+}
+
+.e2eMtoConnectorPending .e2eMtoFlowArrow,
+.e2eMtoConnectorPending .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    color: #94A3B8 !important;
+}
+
+.e2eMtoConnector .e2eMtoFlowLinkLabel,
+.e2eMtoConnector .e2eMtoFlowLinkLabel .sapMText {
+    position: absolute !important;
+    top: 0.35rem !important;
+    left: 50% !important;
+    z-index: 4 !important;
+    transform: translateX(-50%) !important;
+    background: transparent !important;
+    white-space: nowrap !important;
+    font-size: 0.55rem !important;
+    font-weight: 900 !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel,
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel .sapMText {
+    color: #0070F2 !important;
+}
+
+.e2eMtoConnectorActive .e2eMtoFlowLinkLabel,
+.e2eMtoConnectorActive .e2eMtoFlowLinkLabel .sapMText {
+    color: #D97706 !important;
+}
+
+.e2eCon12 { left: calc(4.5% + 155px) !important; top: 4.65rem !important; width: calc(25.4% - 4.5% - 160px) !important; height: 4rem !important; }
+.e2eCon23 { left: calc(25.4% + 155px) !important; top: 6rem !important; width: calc(49.2% - 25.4% - 160px) !important; height: 2rem !important; }
+.e2eCon34 { left: calc(49.2% + 155px) !important; top: 6rem !important; right: calc(6.2% + 155px) !important; height: 2rem !important; }
+.e2eCon45 { right: calc(6.2% + 52px) !important; top: 9.5rem !important; height: 5.1rem !important; }
+
+.e2eCon56 { right: calc(9.7% + 155px) !important; top: 15.65rem !important; width: calc(100% - 9.7% - 45.4% - 305px) !important; height: 2rem !important; }
+.e2eCon67 { left: calc(18.4% + 155px) !important; top: 15.65rem !important; width: calc(45.4% - 18.4% - 160px) !important; height: 2rem !important; }
+.e2eCon78 { left: calc(8.5% + 32px) !important; top: 19.4rem !important; height: 5.1rem !important; }
+
+.e2eCon89 { left: calc(8.5% + 155px) !important; top: 25.55rem !important; width: calc(31.6% - 8.5% - 160px) !important; height: 2rem !important; }
+.e2eCon910 { left: calc(31.6% + 155px) !important; top: 25.55rem !important; width: calc(55% - 31.6% - 160px) !important; height: 2rem !important; }
+.e2eCon1011 { left: calc(55% + 155px) !important; top: 25.55rem !important; right: calc(6.2% + 155px) !important; height: 2rem !important; }
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    font-size: 0.62rem !important;
+    line-height: 1.15 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDoc,
+.e2eMtoReferenceGrid .e2eMtoCardDoc .sapMText {
+    font-size: 0.58rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDetail,
+.e2eMtoReferenceGrid .e2eMtoCardDetail .sapMText {
+    font-size: 0.52rem !important;
+}
+
+/* Column-aligned reference layout: 1-7-8 and 4-5-11 share vertical columns. */
+.e2eStepPos01 { left: 5% !important; top: 4rem !important; }
+.e2eStepPos02 { left: 29% !important; top: 4rem !important; }
+.e2eStepPos03 { left: 53% !important; top: 4rem !important; }
+.e2eStepPos04 { left: 77% !important; right: auto !important; top: 4rem !important; }
+
+.e2eStepPos07 { left: 5% !important; top: 14rem !important; }
+.e2eStepPos06 { left: 41% !important; top: 14rem !important; }
+.e2eStepPos05 { left: 77% !important; right: auto !important; top: 14rem !important; }
+
+.e2eStepPos08 { left: 5% !important; top: 24rem !important; }
+.e2eStepPos09 { left: 29% !important; top: 24rem !important; }
+.e2eStepPos10 { left: 53% !important; top: 24rem !important; }
+.e2eStepPos11 { left: 77% !important; right: auto !important; top: 24rem !important; }
+
+.e2eMtoConnector::before {
+    height: 6px !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    width: 6px !important;
+}
+
+.e2eCon12 {
+    left: calc(5% + 155px) !important;
+    top: 4.45rem !important;
+    width: calc(29% - 5% - 160px) !important;
+    height: 4.15rem !important;
+}
+
+.e2eCon23 {
+    left: calc(29% + 155px) !important;
+    top: 5.8rem !important;
+    width: calc(53% - 29% - 160px) !important;
+    height: 2rem !important;
+}
+
+.e2eCon34 {
+    left: calc(53% + 155px) !important;
+    right: auto !important;
+    top: 5.8rem !important;
+    width: calc(77% - 53% - 160px) !important;
+    height: 2rem !important;
+}
+
+.e2eCon45 {
+    left: calc(77% + 56px) !important;
+    right: auto !important;
+    top: 9.15rem !important;
+    height: 5.45rem !important;
+}
+
+.e2eCon56 {
+    left: calc(41% + 155px) !important;
+    right: auto !important;
+    top: 15.55rem !important;
+    width: calc(77% - 41% - 160px) !important;
+    height: 2rem !important;
+}
+
+.e2eCon67 {
+    left: calc(5% + 155px) !important;
+    top: 15.55rem !important;
+    width: calc(41% - 5% - 160px) !important;
+    height: 2rem !important;
+}
+
+.e2eCon78 {
+    left: calc(5% + 56px) !important;
+    top: 19.15rem !important;
+    height: 5.45rem !important;
+}
+
+.e2eCon89 {
+    left: calc(5% + 155px) !important;
+    top: 25.55rem !important;
+    width: calc(29% - 5% - 160px) !important;
+    height: 2rem !important;
+}
+
+.e2eCon910 {
+    left: calc(29% + 155px) !important;
+    top: 25.55rem !important;
+    width: calc(53% - 29% - 160px) !important;
+    height: 2rem !important;
+}
+
+.e2eCon1011 {
+    left: calc(53% + 155px) !important;
+    right: auto !important;
+    top: 25.55rem !important;
+    width: calc(77% - 53% - 160px) !important;
+    height: 2rem !important;
+}
+
+.e2eMtoConnectorMrp {
+    height: 4.15rem !important;
+}
+
+.e2eMtoMrpSpin,
+.e2eMtoMrpSpin .sapMText {
+    position: absolute !important;
+    left: 50% !important;
+    top: 0.52rem !important;
+    z-index: 5 !important;
+    color: #0070F2 !important;
+    font-size: 1.1rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    transform: translateX(-50%) !important;
+    animation: e2eMtoMrpRotate 1.1s linear infinite !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel,
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel .sapMText {
+    top: 1.45rem !important;
+    line-height: 1.05 !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    margin-top: 2.6rem !important;
+}
+
+@keyframes e2eMtoMrpRotate {
+    from {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}
+
+/* Make the MRP execution indicator visibly animate like a small GIF spinner. */
+.e2eMtoConnectorMrp::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 0.16rem !important;
+    z-index: 6 !important;
+    width: 0.85rem !important;
+    height: 0.85rem !important;
+    border: 2px solid rgba(0, 112, 242, 0.22) !important;
+    border-top-color: #0070F2 !important;
+    border-right-color: #0070F2 !important;
+    border-radius: 50% !important;
+    transform: translateX(-50%) !important;
+    animation: e2eMtoMrpSpinner 0.8s linear infinite !important;
+    pointer-events: none !important;
+}
+
+/* Replace the old dashboard title strip with a compact date-query toolbar. */
+.nxDashboardFilterBar {
+    min-height: 2.35rem !important;
+    height: 2.35rem !important;
+    padding: 0.18rem 1rem !important;
+    background: #FFFFFF !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    box-sizing: border-box !important;
+}
+
+.nxDashboardFilterControls,
+.nxDashboardFilterActions {
+    gap: 0.55rem !important;
+}
+
+.nxDashboardDateRange .sapMInputBaseContentWrapper,
+.nxDashboardPeriodSelect .sapMSlt {
+    height: 1.75rem !important;
+    min-height: 1.75rem !important;
+    border-radius: 0.25rem !important;
+    background: #FFFFFF !important;
+}
+
+.nxDashboardDateRange .sapMInputBaseInner,
+.nxDashboardPeriodSelect .sapMSltLabel {
+    height: 1.75rem !important;
+    line-height: 1.75rem !important;
+    font-size: 0.78rem !important;
+    color: #111827 !important;
+}
+
+.nxDashboardRunBtn .sapMBtnInner,
+.nxDashboardUtilityBtn .sapMBtnInner {
+    height: 1.75rem !important;
+    min-width: 3.25rem !important;
+    border-radius: 0.25rem !important;
+    font-size: 0.78rem !important;
+}
+
+.nxDashboardRunBtn .sapMBtnInner {
+    background: #0B74F0 !important;
+    border-color: #0B74F0 !important;
+}
+
+.nxDashboardUtilityBtn .sapMBtnInner {
+    background: #FFFFFF !important;
+    border: 1px solid #D1D5DB !important;
+    color: #111827 !important;
+}
+
+.nxDashboardSplit {
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.75rem !important;
+}
+
+.nxSpaceCard {
+    min-height: calc(100vh - 8.25rem) !important;
+}
+
+.nxDashboardSplit > .sapUiView.nxSpaceA,
+.nxDashboardSplit > .sapUiView.nxSpaceB {
+    min-height: calc(100vh - 8.25rem) !important;
+}
+
+/* Keep status labels inside process cards even with long headers. */
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    position: absolute !important;
+    overflow: hidden !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard > .sapMFlexBox:first-child {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: 1.35rem !important;
+    padding-right: 2.75rem !important;
+    box-sizing: border-box !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: left !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    min-width: 2.45rem !important;
+    max-width: 2.45rem !important;
+    margin-left: 0 !important;
+    text-align: right !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatus,
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    display: inline-block !important;
+    width: auto !important;
+    max-width: 2.45rem !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    writing-mode: horizontal-tb !important;
+    text-align: right !important;
+}
+
+.e2eStepPos03 .e2eMtoCardTitle,
+.e2eStepPos03 .e2eMtoCardTitle .sapMText,
+.e2eStepPos08 .e2eMtoCardTitle,
+.e2eStepPos08 .e2eMtoCardTitle .sapMText {
+    white-space: normal !important;
+    max-width: 100% !important;
+}
+
+/* Fix cramped status/title overlap: use a real two-column header layout. */
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    width: 215px !important;
+    min-width: 215px !important;
+    max-width: 215px !important;
+    padding: 0.7rem 0.75rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard > .sapMFlexBox:first-child {
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    column-gap: 0.65rem !important;
+    align-items: start !important;
+    width: 100% !important;
+    min-height: 1.35rem !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    text-align: left !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus {
+    position: static !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    justify-self: end !important;
+    text-align: right !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    max-width: none !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    line-height: 1.15 !important;
+}
+
+.e2eStepPos03 .e2eMtoCardTitle,
+.e2eStepPos03 .e2eMtoCardTitle .sapMText,
+.e2eStepPos08 .e2eMtoCardTitle,
+.e2eStepPos08 .e2eMtoCardTitle .sapMText {
+    max-width: none !important;
+}
+
+.e2eStepPos09 .e2eMtoCardTitle,
+.e2eStepPos09 .e2eMtoCardTitle .sapMText {
+    padding-left: 0.95rem !important;
+    text-indent: -0.95rem !important;
+}
+
+/* Ensure long-title cards always show their status label. */
+.e2eStepPos03,
+.e2eStepPos08 {
+    width: 235px !important;
+    min-width: 235px !important;
+    max-width: 235px !important;
+}
+
+.e2eStepPos03 > .sapMFlexBox:first-child,
+.e2eStepPos08 > .sapMFlexBox:first-child {
+    grid-template-columns: minmax(0, 1fr) 2.7rem !important;
+}
+
+.e2eStepPos03 .e2eMtoCardStatus,
+.e2eStepPos08 .e2eMtoCardStatus {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 2.7rem !important;
+    max-width: 2.7rem !important;
+    overflow: visible !important;
+}
+
+.e2eStepPos03 .e2eMtoCardStatus .sapMObjStatusText,
+.e2eStepPos08 .e2eMtoCardStatus .sapMObjStatusText {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: inherit !important;
+    white-space: nowrap !important;
+}
+
+/* Place status for long-title cards in the right middle badge area. */
+.e2eStepPos03,
+.e2eStepPos08 {
+    position: absolute !important;
+}
+
+.e2eStepPos03 > .sapMFlexBox:first-child,
+.e2eStepPos08 > .sapMFlexBox:first-child {
+    display: block !important;
+    padding-right: 0 !important;
+}
+
+.e2eStepPos03 .e2eMtoCardStatus,
+.e2eStepPos08 .e2eMtoCardStatus {
+    position: absolute !important;
+    top: 2.35rem !important;
+    right: 0.72rem !important;
+    z-index: 6 !important;
+    min-width: 2.2rem !important;
+    max-width: 2.2rem !important;
+    height: 1rem !important;
+    text-align: right !important;
+    overflow: visible !important;
+}
+
+.e2eStepPos03 .e2eMtoCardStatus .sapMObjStatusText,
+.e2eStepPos08 .e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.58rem !important;
+    font-weight: 800 !important;
+    line-height: 1rem !important;
+}
+
+.e2eStepPos03 .e2eMtoCardStatus .sapMObjStatusText {
+    color: #16A34A !important;
+}
+
+.e2eStepPos08 .e2eMtoCardStatus .sapMObjStatusText {
+    color: #111827 !important;
+}
+
+/* Clear status colors and lightweight progress cues on each process card. */
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    overflow: hidden !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    height: 0.22rem !important;
+    border-radius: 0.65rem 0.65rem 0 0 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDone::before {
+    background: #22C55E !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardActive::before {
+    background: #F59E0B !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardPending::before {
+    background: #111827 !important;
+    opacity: 0.22 !important;
+}
+
+.e2eMtoCardDone .e2eMtoCardStatus .sapMObjStatusText {
+    color: #16A34A !important;
+}
+
+.e2eMtoCardActive .e2eMtoCardStatus .sapMObjStatusText {
+    color: #D97706 !important;
+}
+
+.e2eMtoCardPending .e2eMtoCardStatus .sapMObjStatusText {
+    color: #111827 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText::before {
+    content: "" !important;
+    display: inline-block !important;
+    width: 0.36rem !important;
+    height: 0.36rem !important;
+    margin-right: 0.24rem !important;
+    border-radius: 50% !important;
+    vertical-align: 0.04rem !important;
+}
+
+.e2eMtoCardDone .e2eMtoCardStatus .sapMObjStatusText::before {
+    background: #22C55E !important;
+}
+
+.e2eMtoCardActive .e2eMtoCardStatus .sapMObjStatusText::before {
+    background: #F59E0B !important;
+}
+
+.e2eMtoCardPending .e2eMtoCardStatus .sapMObjStatusText::before {
+    background: #111827 !important;
+}
+
+/* Pending connectors: hollow capsule dash style, with taller vertical links. */
+.e2eMtoConnectorPending::before {
+    height: 0.55rem !important;
+    border: 2px dashed #C6D0DB !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    width: 0.55rem !important;
+    border: 2px dashed #C6D0DB !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eCon45 {
+    top: 11.25rem !important;
+    height: 5.6rem !important;
+}
+
+.e2eCon78 {
+    top: 24.05rem !important;
+    height: 5.6rem !important;
+}
+
+.e2eMtoMrpSpin,
+.e2eMtoMrpSpin .sapMText {
+    opacity: 0 !important;
+}
+
+@keyframes e2eMtoMrpSpinner {
+    from {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}
+
+/* image_12-style thin schematic refinement. */
+.e2eDashboardHeader .nxSpaceCardTitle,
+.e2eDashboardHeader .nxSpaceCardTitle .sapMTitle {
+    color: #16835F !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+}
+
+.e2eFlowLegendToolbar .nxLegendDot {
+    width: 0.42rem !important;
+    height: 0.42rem !important;
+}
+
+.e2eFlowLegendToolbar .nxLegendLabel,
+.e2eFlowLegendToolbar .nxLegendLabel .sapMText {
+    font-size: 0.62rem !important;
+    color: #4B5563 !important;
+}
+
+.e2eMtoReferenceGrid {
+    height: 31rem !important;
+    min-height: 31rem !important;
+    border-color: #E7EDF4 !important;
+    border-width: 1px !important;
+    box-shadow: none !important;
+}
+
+.e2eMtoSideNav {
+    position: absolute !important;
+    top: 50% !important;
+    z-index: 8 !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #D7DEE8 !important;
+    border-radius: 50% !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoSideNavPrev {
+    left: -1rem !important;
+}
+
+.e2eMtoSideNavNext {
+    right: -1rem !important;
+}
+
+.e2eMtoSideNavIcon,
+.e2eMtoSideNavIcon .sapMText {
+    color: #9AA4B2 !important;
+    font-size: 1.45rem !important;
+    font-weight: 400 !important;
+    line-height: 1 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    width: 138px !important;
+    min-width: 138px !important;
+    max-width: 138px !important;
+    min-height: 4.4rem !important;
+    padding: 0.48rem 0.58rem !important;
+    border-width: 1px !important;
+    border-radius: 0.55rem !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+}
+
+.e2eMtoCardDone {
+    border-color: #86E7B0 !important;
+    background: #FFFFFF !important;
+}
+
+.e2eMtoCardActive {
+    border-color: #F2C14E !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 0 0 1px rgba(242, 193, 78, 0.16), 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+}
+
+.e2eMtoCardPending {
+    border-color: #E5EAF0 !important;
+    background: #FFFFFF !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    font-size: 0.56rem !important;
+    color: #111827 !important;
+    font-weight: 800 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDoc,
+.e2eMtoReferenceGrid .e2eMtoCardDoc .sapMText {
+    font-size: 0.52rem !important;
+    color: #0070F2 !important;
+    font-weight: 800 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDetail,
+.e2eMtoReferenceGrid .e2eMtoCardDetail .sapMText {
+    font-size: 0.48rem !important;
+    color: #6B7280 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.42rem !important;
+    font-weight: 800 !important;
+}
+
+.e2eStepPos01 { left: 6% !important; top: 4.1rem !important; }
+.e2eStepPos02 { left: 30% !important; top: 4.1rem !important; }
+.e2eStepPos03 { left: 54% !important; top: 4.1rem !important; }
+.e2eStepPos04 { left: 78% !important; top: 4.1rem !important; }
+
+.e2eStepPos07 { left: 6% !important; top: 13.1rem !important; }
+.e2eStepPos06 { left: 42% !important; top: 13.1rem !important; }
+.e2eStepPos05 { left: 78% !important; top: 13.1rem !important; }
+
+.e2eStepPos08 { left: 6% !important; top: 22.2rem !important; }
+.e2eStepPos09 { left: 30% !important; top: 22.2rem !important; }
+.e2eStepPos10 { left: 54% !important; top: 22.2rem !important; }
+.e2eStepPos11 { left: 78% !important; top: 22.2rem !important; }
+
+.e2eMtoConnector::before {
+    height: 3px !important;
+    left: 25% !important;
+    right: 25% !important;
+}
+
+.e2eMtoConnectorDone::before {
+    background: #22B86F !important;
+}
+
+.e2eMtoConnectorActive::before {
+    background: #EAA11A !important;
+}
+
+.e2eMtoConnectorPending::before {
+    left: 18% !important;
+    right: 18% !important;
+    top: 50% !important;
+    height: 0.95rem !important;
+    border: 1px dotted #C9D1DA !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.e2eMtoConnectorPending::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 18% !important;
+    right: 18% !important;
+    top: calc(50% - 0.475rem) !important;
+    bottom: calc(50% - 0.475rem) !important;
+    border-left: 1px dotted #C9D1DA !important;
+    border-right: 1px dotted #C9D1DA !important;
+    pointer-events: none !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    width: 3px !important;
+    left: 50% !important;
+    background: transparent !important;
+    border-left: 1px dotted #C9D1DA !important;
+}
+
+.e2eMtoConnectorVertical::after {
+    content: "" !important;
+    position: absolute !important;
+    left: calc(50% - 0.45rem) !important;
+    right: calc(50% - 0.45rem) !important;
+    top: 20% !important;
+    bottom: 20% !important;
+    border-top: 1px dotted #C9D1DA !important;
+    border-bottom: 1px dotted #C9D1DA !important;
+    pointer-events: none !important;
+}
+
+.e2eMtoConnector .e2eMtoFlowArrow,
+.e2eMtoConnector .e2eMtoFlowArrow .sapMText {
+    font-size: 0.82rem !important;
+    padding: 0 0.18rem !important;
+    background: #FFFFFF !important;
+}
+
+.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText {
+    color: #22B86F !important;
+}
+
+.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText {
+    color: #EAA11A !important;
+}
+
+.e2eMtoConnectorPending .e2eMtoFlowArrow,
+.e2eMtoConnectorPending .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    color: #AEB8C4 !important;
+}
+
+.e2eMtoConnector .e2eMtoFlowLinkLabel,
+.e2eMtoConnector .e2eMtoFlowLinkLabel .sapMText {
+    font-size: 0.45rem !important;
+}
+
+.e2eMtoConnectorMrp {
+    height: 3.05rem !important;
+    border: 1px solid #C8E2FF !important;
+    border-radius: 0.65rem !important;
+    background: rgba(224, 241, 255, 0.75) !important;
+    box-shadow: none !important;
+}
+
+.e2eMtoConnectorMrp::before {
+    left: 18% !important;
+    right: 18% !important;
+    top: 68% !important;
+    height: 3px !important;
+    background: #60A5FA !important;
+}
+
+.e2eMtoMrpSpin,
+.e2eMtoMrpSpin .sapMText {
+    top: 0.42rem !important;
+    font-size: 0.9rem !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel,
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel .sapMText {
+    top: 0.42rem !important;
+    left: 59% !important;
+    width: 2.2rem !important;
+    color: #0070F2 !important;
+    font-size: 0.46rem !important;
+    white-space: normal !important;
+    text-align: center !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    margin-top: 2.25rem !important;
+    color: #0070F2 !important;
+}
+
+.e2eCon12 {
+    left: calc(6% + 150px + 1.5rem) !important;
+    top: 4.8rem !important;
+    width: 5.5rem !important;
+}
+
+.e2eCon23 {
+    left: calc(30% + 150px + 2.5rem) !important;
+    top: 5.45rem !important;
+    width: 5rem !important;
+}
+
+.e2eCon34 {
+    left: calc(54% + 150px + 2.5rem) !important;
+    top: 5.45rem !important;
+    width: 5rem !important;
+}
+
+.e2eCon45 {
+    left: calc(78% + 54px) !important;
+    top: 8.25rem !important;
+    height: 5.5rem !important;
+}
+
+.e2eCon56 {
+    left: calc(42% + 150px + 6rem) !important;
+    top: 14.55rem !important;
+    width: 12rem !important;
+}
+
+.e2eCon67 {
+    left: calc(6% + 150px + 6rem) !important;
+    top: 14.55rem !important;
+    width: 12rem !important;
+}
+
+.e2eCon78 {
+    left: calc(6% + 54px) !important;
+    top: 17.45rem !important;
+    height: 5.5rem !important;
+}
+
+.e2eCon89 {
+    left: calc(6% + 150px + 2.5rem) !important;
+    top: 23.65rem !important;
+    width: 5rem !important;
+}
+
+.e2eCon910 {
+    left: calc(30% + 150px + 2.5rem) !important;
+    top: 23.65rem !important;
+    width: 5rem !important;
+}
+
+.e2eCon1011 {
+    left: calc(54% + 150px + 2.5rem) !important;
+    top: 23.65rem !important;
+    width: 5rem !important;
+}
+
+/* Strict minimal S-shape wireframe: continuous thin arrows, no dotted boxes. */
+.e2eDashboardHeader .nxSpaceCardTitle,
+.e2eDashboardHeader .nxSpaceCardTitle .sapMTitle {
+    color: #0F6B4F !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+}
+
+.e2eMtoSideNav {
+    display: none !important;
+}
+
+.e2eMtoReferenceGrid {
+    height: 31rem !important;
+    min-height: 31rem !important;
+    border: 1px solid #E6EBF2 !important;
+    border-radius: 0.9rem !important;
+    background: #FFFFFF !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    width: 150px !important;
+    min-width: 150px !important;
+    max-width: 150px !important;
+    min-height: 4.65rem !important;
+    border-width: 1px !important;
+    border-radius: 0.55rem !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    font-size: 0.58rem !important;
+    font-weight: 800 !important;
+    text-align: left !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus {
+    margin-left: 0.35rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.43rem !important;
+    font-weight: 800 !important;
+    text-align: right !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDoc,
+.e2eMtoReferenceGrid .e2eMtoCardDoc .sapMText {
+    color: #0070F2 !important;
+    font-size: 0.54rem !important;
+    font-weight: 800 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDetail,
+.e2eMtoReferenceGrid .e2eMtoCardDetail .sapMText {
+    color: #6B7280 !important;
+    font-size: 0.49rem !important;
+}
+
+.e2eStepPos01 { left: 6% !important; top: 4.2rem !important; }
+.e2eStepPos02 { left: 30% !important; top: 4.2rem !important; }
+.e2eStepPos03 { left: 54% !important; top: 4.2rem !important; }
+.e2eStepPos04 { left: 78% !important; top: 4.2rem !important; }
+
+.e2eStepPos05 { left: 78% !important; top: 13.4rem !important; }
+.e2eStepPos06 { left: 42% !important; top: 13.4rem !important; }
+.e2eStepPos07 { left: 6% !important; top: 13.4rem !important; }
+
+.e2eStepPos08 { left: 6% !important; top: 22.6rem !important; }
+.e2eStepPos09 { left: 30% !important; top: 22.6rem !important; }
+.e2eStepPos10 { left: 54% !important; top: 22.6rem !important; }
+.e2eStepPos11 { left: 78% !important; top: 22.6rem !important; }
+
+.e2eMtoConnector {
+    height: 1.6rem !important;
+}
+
+.e2eMtoConnector::after {
+    content: none !important;
+}
+
+.e2eMtoConnector::before {
+    left: 0 !important;
+    right: 0 !important;
+    top: 50% !important;
+    height: 2px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoConnectorDone::before {
+    background: #20B26B !important;
+}
+
+.e2eMtoConnectorActive::before {
+    background: #E99A13 !important;
+}
+
+.e2eMtoConnectorPending::before {
+    background: transparent !important;
+    border-top: 2px dotted #C8D0DA !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    left: 50% !important;
+    right: auto !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 0 !important;
+    height: auto !important;
+    background: transparent !important;
+    border-left: 2px dotted #C8D0DA !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoConnector .e2eMtoFlowArrow,
+.e2eMtoConnector .e2eMtoFlowArrow .sapMText {
+    position: absolute !important;
+    z-index: 4 !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin: 0 !important;
+    padding: 0 0.14rem !important;
+    background: #FFFFFF !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    top: 50% !important;
+}
+
+.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText {
+    color: #20B26B !important;
+}
+
+.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText {
+    color: #E99A13 !important;
+}
+
+.e2eMtoConnectorPending .e2eMtoFlowArrow,
+.e2eMtoConnectorPending .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    color: #9EA8B5 !important;
+}
+
+.e2eMtoConnectorMrp {
+    height: 2.6rem !important;
+    border: 1px solid #BFDFFF !important;
+    border-radius: 0.55rem !important;
+    background: #EAF5FF !important;
+    box-shadow: none !important;
+}
+
+.e2eMtoConnectorMrp::before {
+    left: 0.55rem !important;
+    right: 0.55rem !important;
+    top: 68% !important;
+    height: 2px !important;
+    background: #60A5FA !important;
+    border: none !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel,
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel .sapMText {
+    top: 0.35rem !important;
+    left: 50% !important;
+    width: auto !important;
+    color: #0070F2 !important;
+    font-size: 0.52rem !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    top: 86% !important;
+    color: #0070F2 !important;
+}
+
+.e2eCon12 {
+    left: calc(6% + 160px + 1.2rem) !important;
+    top: 5.15rem !important;
+    width: 5.8rem !important;
+}
+
+.e2eCon23 {
+    left: calc(30% + 160px + 1.8rem) !important;
+    top: 5.75rem !important;
+    width: 5.2rem !important;
+}
+
+.e2eCon34 {
+    left: calc(54% + 160px + 1.8rem) !important;
+    top: 5.75rem !important;
+    width: 5.2rem !important;
+}
+
+.e2eCon45 {
+    left: calc(78% + 66px) !important;
+    top: 8.85rem !important;
+    height: 5.3rem !important;
+    width: 1.5rem !important;
+}
+
+.e2eCon56 {
+    left: calc(42% + 160px + 6rem) !important;
+    top: 14.98rem !important;
+    width: 11.5rem !important;
+}
+
+.e2eCon67 {
+    left: calc(6% + 160px + 6rem) !important;
+    top: 14.98rem !important;
+    width: 11.5rem !important;
+}
+
+.e2eCon78 {
+    left: calc(6% + 66px) !important;
+    top: 18.1rem !important;
+    height: 5.3rem !important;
+    width: 1.5rem !important;
+}
+
+.e2eCon89 {
+    left: calc(6% + 160px + 1.8rem) !important;
+    top: 24.18rem !important;
+    width: 5.2rem !important;
+}
+
+.e2eCon910 {
+    left: calc(30% + 160px + 1.8rem) !important;
+    top: 24.18rem !important;
+    width: 5.2rem !important;
+}
+
+.e2eCon1011 {
+    left: calc(54% + 160px + 1.8rem) !important;
+    top: 24.18rem !important;
+    width: 5.2rem !important;
+}
+
+/* Order inquiry typography: align result text scale with the panel title. */
+.nxSpaceCardA .nxSpaceCardTitle,
+.nxSpaceCardA .nxSpaceCardTitle .sapMTitle {
+    font-size: 0.98rem !important;
+    font-weight: 800 !important;
+}
+
+.nxOrderNumber,
+.nxOrderNumber .sapMText,
+.nxOrderStageText,
+.nxOrderStageText .sapMText,
+.nxOrderDetailValue,
+.nxOrderDetailValue .sapMText {
+    font-size: 0.98rem !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+}
+
+.nxOrderLabel,
+.nxOrderLabel .sapMText,
+.nxOrderDetailLabel,
+.nxOrderDetailLabel .sapMText {
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+}
+
+.nxOrderIcon,
+.nxOrderIcon .sapMText {
+    font-size: 0.98rem !important;
+}
+
+.nxOrderDetailRow {
+    min-height: 2.45rem !important;
+    padding: 0.48rem 0 !important;
+}
+
+.nxOrderProductName,
+.nxOrderProductName .sapMText {
+    max-width: 11.5rem !important;
+}
+
+/* Expanded image_15-style E2E canvas: black title, larger cards, bold connectors. */
+.e2eDashboardHeader .nxSpaceCardTitle,
+.e2eDashboardHeader .nxSpaceCardTitle .sapMTitle {
+    color: #111827 !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+}
+
+.e2eDashboardRoot {
+    height: 100% !important;
+}
+
+.e2eDashboardBody {
+    flex: 1 1 auto !important;
+    height: 100% !important;
+    padding: 0.85rem 1rem 1rem !important;
+    align-items: stretch !important;
+}
+
+.e2eFlowStage {
+    flex: 1 1 auto !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.e2eMtoReferenceGrid {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 43rem !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 0.9rem !important;
+    background: #FFFFFF !important;
+    overflow: hidden !important;
+}
+
+.e2eMtoSideNav {
+    display: flex !important;
+    position: absolute !important;
+    top: 50% !important;
+    z-index: 8 !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #D6DEE8 !important;
+    border-radius: 50% !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoSideNavPrev {
+    left: -1rem !important;
+}
+
+.e2eMtoSideNavNext {
+    right: -1rem !important;
+}
+
+.e2eMtoSideNavIcon,
+.e2eMtoSideNavIcon .sapMText {
+    color: #9AA4B2 !important;
+    font-size: 1.5rem !important;
+    line-height: 1 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    min-height: 6rem !important;
+    padding: 0.7rem 0.8rem !important;
+    border-width: 1px !important;
+    border-radius: 0.65rem !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.07) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    color: #111827 !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    text-align: left !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus {
+    margin-left: 0.45rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.5rem !important;
+    font-weight: 800 !important;
+    text-align: right !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDoc,
+.e2eMtoReferenceGrid .e2eMtoCardDoc .sapMText {
+    color: #0070F2 !important;
+    font-size: 0.62rem !important;
+    font-weight: 800 !important;
+    margin-top: 0.35rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDetail,
+.e2eMtoReferenceGrid .e2eMtoCardDetail .sapMText {
+    color: #6B7280 !important;
+    font-size: 0.56rem !important;
+    margin-top: 0.28rem !important;
+}
+
+.e2eStepPos01 { left: 5.2% !important; top: 4.4rem !important; }
+.e2eStepPos02 { left: 29.4% !important; top: 4.4rem !important; }
+.e2eStepPos03 { left: 53.6% !important; top: 4.4rem !important; }
+.e2eStepPos04 { left: 77.6% !important; top: 4.4rem !important; }
+
+.e2eStepPos05 { left: 77.6% !important; top: 17.2rem !important; }
+.e2eStepPos06 { left: 41.4% !important; top: 17.2rem !important; }
+.e2eStepPos07 { left: 5.2% !important; top: 17.2rem !important; }
+
+.e2eStepPos08 { left: 5.2% !important; top: 30rem !important; }
+.e2eStepPos09 { left: 29.4% !important; top: 30rem !important; }
+.e2eStepPos10 { left: 53.6% !important; top: 30rem !important; }
+.e2eStepPos11 { left: 77.6% !important; top: 30rem !important; }
+
+.e2eMtoConnector {
+    position: absolute !important;
+    height: 1.8rem !important;
+    z-index: 2 !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.e2eMtoConnector::after {
+    content: none !important;
+}
+
+.e2eMtoConnector::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 50% !important;
+    height: 4px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoConnectorDone::before {
+    background: #19B66B !important;
+}
+
+.e2eMtoConnectorActive::before {
+    background: #E99A13 !important;
+}
+
+.e2eMtoConnectorPending::before {
+    background: transparent !important;
+    border-top: 4px dotted #B8C2CE !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    left: 50% !important;
+    right: auto !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 0 !important;
+    height: auto !important;
+    background: transparent !important;
+    border-left: 4px dotted #B8C2CE !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoConnector .e2eMtoFlowArrow,
+.e2eMtoConnector .e2eMtoFlowArrow .sapMText {
+    position: absolute !important;
+    z-index: 4 !important;
+    left: 50% !important;
+    top: 50% !important;
+    margin: 0 !important;
+    padding: 0 0.16rem !important;
+    background: #FFFFFF !important;
+    font-size: 0.9rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.e2eMtoConnectorPending .e2eMtoFlowArrow,
+.e2eMtoConnectorPending .e2eMtoFlowArrow .sapMText {
+    top: calc(50% + 1rem) !important;
+    color: #8E99A8 !important;
+}
+
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    top: calc(50% + 1rem) !important;
+    color: #8E99A8 !important;
+}
+
+.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText {
+    color: #19B66B !important;
+}
+
+.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText {
+    color: #E99A13 !important;
+}
+
+.e2eMtoConnectorMrp {
+    width: 7rem !important;
+    height: 3rem !important;
+    border: 1px solid #BFDFFF !important;
+    border-radius: 0.6rem !important;
+    background: #EAF5FF !important;
+    box-shadow: none !important;
+}
+
+.e2eMtoConnectorMrp::before {
+    left: 0.7rem !important;
+    right: 0.7rem !important;
+    top: 70% !important;
+    height: 4px !important;
+    background: #60A5FA !important;
+    border: none !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel,
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel .sapMText {
+    top: 0.45rem !important;
+    left: 50% !important;
+    width: auto !important;
+    color: #0070F2 !important;
+    font-size: 0.58rem !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    top: 92% !important;
+    color: #0070F2 !important;
+}
+
+.e2eCon12 {
+    left: calc(5.2% + 190px + 1.1rem) !important;
+    top: 5.85rem !important;
+}
+
+.e2eCon23 {
+    left: calc(29.4% + 190px + 2rem) !important;
+    top: 6.45rem !important;
+    width: 6rem !important;
+}
+
+.e2eCon34 {
+    left: calc(53.6% + 190px + 2rem) !important;
+    top: 6.45rem !important;
+    width: 6rem !important;
+}
+
+.e2eCon45 {
+    left: calc(77.6% + 77px) !important;
+    top: 11.2rem !important;
+    width: 1.8rem !important;
+    height: 6.7rem !important;
+}
+
+.e2eCon56 {
+    left: calc(41.4% + 190px + 6rem) !important;
+    top: 19.55rem !important;
+    width: 12.5rem !important;
+}
+
+.e2eCon67 {
+    left: calc(5.2% + 190px + 6rem) !important;
+    top: 19.55rem !important;
+    width: 12.5rem !important;
+}
+
+.e2eCon78 {
+    left: calc(5.2% + 77px) !important;
+    top: 24rem !important;
+    width: 1.8rem !important;
+    height: 6.7rem !important;
+}
+
+.e2eCon89 {
+    left: calc(5.2% + 190px + 2rem) !important;
+    top: 32.35rem !important;
+    width: 6rem !important;
+}
+
+.e2eCon910 {
+    left: calc(29.4% + 190px + 2rem) !important;
+    top: 32.35rem !important;
+    width: 6rem !important;
+}
+
+.e2eCon1011 {
+    left: calc(53.6% + 190px + 2rem) !important;
+    top: 32.35rem !important;
+    width: 6rem !important;
+}
+
+/* Critical connector/card fixes: unbroken lines and horizontal status text. */
+.e2eMtoReferenceGrid .e2eMtoProcessCard > .sapMFlexBox:first-child {
+    align-items: flex-start !important;
+    flex-wrap: nowrap !important;
+    gap: 0.35rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus {
+    flex: 0 0 auto !important;
+    min-width: 2.35rem !important;
+    max-width: none !important;
+    text-align: right !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatus,
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    display: inline-block !important;
+    width: auto !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed !important;
+    line-height: 1.1 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDoc,
+.e2eMtoReferenceGrid .e2eMtoCardDoc .sapMText {
+    display: block !important;
+    text-align: center !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDetail,
+.e2eMtoReferenceGrid .e2eMtoCardDetail .sapMText {
+    display: block !important;
+    text-align: center !important;
+}
+
+.e2eMtoConnector::before {
+    left: 0 !important;
+    right: 0 !important;
+    top: 50% !important;
+    height: 4px !important;
+    border-radius: 999px !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoConnectorDone::before {
+    background: #19B66B !important;
+    border: 0 !important;
+}
+
+.e2eMtoConnectorActive::before {
+    background: #E99A13 !important;
+    border: 0 !important;
+}
+
+.e2eMtoConnectorPending::before {
+    background: transparent !important;
+    border: 0 !important;
+    border-top: 4px dotted #B8C2CE !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    left: 50% !important;
+    right: auto !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 0 !important;
+    height: auto !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-left: 4px dotted #B8C2CE !important;
+    border-radius: 0 !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoConnector .e2eMtoFlowArrow,
+.e2eMtoConnector .e2eMtoFlowArrow .sapMText {
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 0.95rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+}
+
+.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorPending .e2eMtoFlowArrow,
+.e2eMtoConnectorPending .e2eMtoFlowArrow .sapMText {
+    top: calc(50% + 1.05rem) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    top: 50% !important;
+    left: calc(50% + 1rem) !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eCon45 {
+    top: 12.05rem !important;
+    height: 3.95rem !important;
+}
+
+.e2eCon78 {
+    top: 24.85rem !important;
+    height: 3.95rem !important;
+}
+
+/* Absolute final constraints: no card touching, left-aligned 3-line cards. */
+.e2eMtoReferenceGrid .e2eMtoProcessCard > .sapMFlexBox:first-child {
+    width: 100% !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    color: #111827 !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
+    white-space: normal !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus {
+    display: block !important;
+    flex: 0 0 auto !important;
+    min-width: 2.8rem !important;
+    margin-left: 0.5rem !important;
+    text-align: right !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    display: inline-block !important;
+    width: auto !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    writing-mode: horizontal-tb !important;
+    color: inherit !important;
+    font-size: 0.5rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    text-align: right !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDoc,
+.e2eMtoReferenceGrid .e2eMtoCardDoc .sapMText {
+    display: block !important;
+    width: 100% !important;
+    color: #0070F2 !important;
+    font-size: 0.62rem !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    margin-top: 0.55rem !important;
+    text-align: left !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDetail,
+.e2eMtoReferenceGrid .e2eMtoCardDetail .sapMText {
+    display: block !important;
+    width: 100% !important;
+    color: #6B7280 !important;
+    font-size: 0.56rem !important;
+    line-height: 1.25 !important;
+    margin-top: 0.35rem !important;
+    text-align: left !important;
+}
+
+.e2eMtoConnector::before {
+    height: 4px !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+.e2eMtoConnectorPending::before {
+    border-top: 4px dotted #B8C2CE !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    border-left: 4px dotted #B8C2CE !important;
+}
+
+.e2eMtoConnector .e2eMtoFlowArrow,
+.e2eMtoConnector .e2eMtoFlowArrow .sapMText {
+    background: transparent !important;
+}
+
+.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorPending .e2eMtoFlowArrow,
+.e2eMtoConnectorPending .e2eMtoFlowArrow .sapMText {
+    top: calc(50% + 1.15rem) !important;
+    left: 100% !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    top: 50% !important;
+    left: calc(50% + 1.05rem) !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    left: 50% !important;
+    top: 92% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.e2eCon12 {
+    left: calc(5.2% + 180px + 2.7rem) !important;
+    top: 5.85rem !important;
+    width: 6.4rem !important;
+}
+
+.e2eCon23 {
+    left: calc(29.4% + 180px + 3.3rem) !important;
+    top: 6.45rem !important;
+    width: 4.7rem !important;
+}
+
+.e2eCon34 {
+    left: calc(53.6% + 180px + 3.3rem) !important;
+    top: 6.45rem !important;
+    width: 4.7rem !important;
+}
+
+.e2eCon45 {
+    left: calc(77.6% + 86px) !important;
+    top: 12.25rem !important;
+    width: 1.5rem !important;
+    height: 3.4rem !important;
+}
+
+.e2eCon56 {
+    left: calc(41.4% + 180px + 7.2rem) !important;
+    top: 19.55rem !important;
+    width: 10.3rem !important;
+}
+
+.e2eCon67 {
+    left: calc(5.2% + 180px + 7.2rem) !important;
+    top: 19.55rem !important;
+    width: 10.3rem !important;
+}
+
+.e2eCon78 {
+    left: calc(5.2% + 86px) !important;
+    top: 25.05rem !important;
+    width: 1.5rem !important;
+    height: 3.4rem !important;
+}
+
+.e2eCon89 {
+    left: calc(5.2% + 180px + 3.3rem) !important;
+    top: 32.35rem !important;
+    width: 4.7rem !important;
+}
+
+.e2eCon910 {
+    left: calc(29.4% + 180px + 3.3rem) !important;
+    top: 32.35rem !important;
+    width: 4.7rem !important;
+}
+
+.e2eCon1011 {
+    left: calc(53.6% + 180px + 3.3rem) !important;
+    top: 32.35rem !important;
+    width: 4.7rem !important;
+}
+
+/* Final strict spacing pass: keep every connector floating away from cards. */
+.e2eDashboardHeader .nxSpaceCardTitle,
+.e2eDashboardHeader .nxSpaceCardTitle .sapMTitle {
+    color: #111827 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard > .sapMFlexBox:first-child {
+    align-items: center !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText,
+.e2eMtoReferenceGrid .e2eMtoCardDoc,
+.e2eMtoReferenceGrid .e2eMtoCardDoc .sapMText,
+.e2eMtoReferenceGrid .e2eMtoCardDetail,
+.e2eMtoReferenceGrid .e2eMtoCardDetail .sapMText {
+    text-align: left !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus,
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    writing-mode: horizontal-tb !important;
+    text-align: right !important;
+}
+
+.e2eMtoConnector::before {
+    height: 4px !important;
+}
+
+.e2eMtoConnectorPending::before {
+    border-top: 4px dotted #B8C2CE !important;
+}
+
+.e2eMtoConnectorVertical::before {
+    border-left: 4px dotted #B8C2CE !important;
+}
+
+.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText,
+.e2eCon89 .e2eMtoFlowArrow,
+.e2eCon89 .e2eMtoFlowArrow .sapMText,
+.e2eCon910 .e2eMtoFlowArrow,
+.e2eCon910 .e2eMtoFlowArrow .sapMText,
+.e2eCon1011 .e2eMtoFlowArrow,
+.e2eCon1011 .e2eMtoFlowArrow .sapMText {
+    left: 100% !important;
+    top: calc(50% + 1.15rem) !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eCon56 .e2eMtoFlowArrow,
+.e2eCon56 .e2eMtoFlowArrow .sapMText,
+.e2eCon67 .e2eMtoFlowArrow,
+.e2eCon67 .e2eMtoFlowArrow .sapMText {
+    left: 0 !important;
+    top: calc(50% + 1.15rem) !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    left: calc(50% + 1.15rem) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eCon12 {
+    left: calc(5.2% + 180px + 3.1rem) !important;
+    width: 5.5rem !important;
+}
+
+.e2eCon23 {
+    left: calc(29.4% + 180px + 3.7rem) !important;
+    width: 3.9rem !important;
+}
+
+.e2eCon34 {
+    left: calc(53.6% + 180px + 3.7rem) !important;
+    width: 3.9rem !important;
+}
+
+.e2eCon45 {
+    left: calc(77.6% + 88px) !important;
+    top: 12.55rem !important;
+    height: 2.8rem !important;
+}
+
+.e2eCon56 {
+    left: calc(41.4% + 180px + 7.9rem) !important;
+    width: 8.9rem !important;
+}
+
+.e2eCon67 {
+    left: calc(5.2% + 180px + 7.9rem) !important;
+    width: 8.9rem !important;
+}
+
+.e2eCon78 {
+    left: calc(5.2% + 88px) !important;
+    top: 25.35rem !important;
+    height: 2.8rem !important;
+}
+
+.e2eCon89 {
+    left: calc(5.2% + 180px + 3.7rem) !important;
+    width: 3.9rem !important;
+}
+
+.e2eCon910 {
+    left: calc(29.4% + 180px + 3.7rem) !important;
+    width: 3.9rem !important;
+}
+
+.e2eCon1011 {
+    left: calc(53.6% + 180px + 3.7rem) !important;
+    width: 3.9rem !important;
+}
+
+/* Center connectors exactly in the gaps between process cards. */
+.e2eMtoConnector {
+    height: 1.8rem !important;
+}
+
+.e2eMtoConnector::before {
+    top: 50% !important;
+}
+
+.e2eCon12 {
+    left: calc(17.3% + 90px - 3.5rem) !important;
+    top: 5.9rem !important;
+    width: 7rem !important;
+    height: 3rem !important;
+}
+
+.e2eCon23 {
+    left: calc(41.5% + 90px - 2.4rem) !important;
+    top: 6.5rem !important;
+    width: 4.8rem !important;
+}
+
+.e2eCon34 {
+    left: calc(65.6% + 90px - 2.4rem) !important;
+    top: 6.5rem !important;
+    width: 4.8rem !important;
+}
+
+.e2eCon45 {
+    left: calc(77.6% + 90px - 0.75rem) !important;
+    top: 12.3rem !important;
+    width: 1.5rem !important;
+    height: 3.1rem !important;
+}
+
+.e2eCon56 {
+    left: calc(59.5% + 90px - 4rem) !important;
+    top: 19.3rem !important;
+    width: 8rem !important;
+}
+
+.e2eCon67 {
+    left: calc(23.3% + 90px - 4rem) !important;
+    top: 19.3rem !important;
+    width: 8rem !important;
+}
+
+.e2eCon78 {
+    left: calc(5.2% + 90px - 0.75rem) !important;
+    top: 25.1rem !important;
+    width: 1.5rem !important;
+    height: 3.1rem !important;
+}
+
+.e2eCon89 {
+    left: calc(17.3% + 90px - 2.4rem) !important;
+    top: 32.1rem !important;
+    width: 4.8rem !important;
+}
+
+.e2eCon910 {
+    left: calc(41.5% + 90px - 2.4rem) !important;
+    top: 32.1rem !important;
+    width: 4.8rem !important;
+}
+
+.e2eCon1011 {
+    left: calc(65.6% + 90px - 2.4rem) !important;
+    top: 32.1rem !important;
+    width: 4.8rem !important;
+}
+
+/* Align arrowheads directly under each connector center. */
+.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText,
+.e2eMtoConnectorPending .e2eMtoFlowArrow,
+.e2eMtoConnectorPending .e2eMtoFlowArrow .sapMText {
+    left: 50% !important;
+    top: calc(50% + 1.05rem) !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    left: calc(50% + 1.05rem) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    left: 50% !important;
+    top: calc(70% + 1.05rem) !important;
+    transform: translateX(-50%) !important;
+}
+
+/* Swap row-2 node positions: 5 in the middle, 6 on the right. */
+.e2eStepPos05 { left: 41.4% !important; top: 17.2rem !important; }
+.e2eStepPos06 { left: 77.6% !important; top: 17.2rem !important; }
+
+.e2eCon45 {
+    left: calc(77.6% + 88px) !important;
+    top: 12.55rem !important;
+    height: 2.8rem !important;
+}
+
+.e2eCon56 {
+    left: calc(41.4% + 180px + 7.9rem) !important;
+    top: 19.3rem !important;
+    width: 8.9rem !important;
+}
+
+/* Enlarge process card header text by roughly 3pt. */
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    font-size: 0.85rem !important;
+}
+
+/* Keep process headers readable: prefer one line, wrap with hanging indent only if needed. */
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    width: 190px !important;
+    min-width: 190px !important;
+    max-width: 190px !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoProcessCard > .sapMFlexBox:first-child {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: 0.45rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    min-width: 0 !important;
+    max-width: 8.1rem !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    line-height: 1.15 !important;
+    padding-left: 0 !important;
+    text-indent: 0 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus {
+    flex: 0 0 auto !important;
+    min-width: 2.4rem !important;
+}
+
+/* Keep specific medium-length headers and IDs from splitting awkwardly. */
+.e2eStepPos03 .e2eMtoCardTitle,
+.e2eStepPos03 .e2eMtoCardTitle .sapMText,
+.e2eStepPos05 .e2eMtoCardTitle,
+.e2eStepPos05 .e2eMtoCardTitle .sapMText {
+    max-width: 9.3rem !important;
+    white-space: nowrap !important;
+}
+
+.e2eStepPos05 .e2eMtoCardDoc,
+.e2eStepPos05 .e2eMtoCardDoc .sapMText {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus,
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+}
+
+/* Indent wrapped MIGO subtitle line for Goods Receipt headers. */
+.e2eStepPos06 .e2eMtoCardTitle,
+.e2eStepPos06 .e2eMtoCardTitle .sapMText,
+.e2eStepPos07 .e2eMtoCardTitle,
+.e2eStepPos07 .e2eMtoCardTitle .sapMText {
+    max-width: 8.35rem !important;
+    white-space: normal !important;
+    padding-left: 0.85rem !important;
+    text-indent: -0.85rem !important;
+}
+
+/* Keep delivery title on one line and indent Billing subtitle. */
+.e2eStepPos08 .e2eMtoCardTitle,
+.e2eStepPos08 .e2eMtoCardTitle .sapMText {
+    max-width: 10.25rem !important;
+    white-space: nowrap !important;
+}
+
+.e2eStepPos09 .e2eMtoCardTitle,
+.e2eStepPos09 .e2eMtoCardTitle .sapMText {
+    max-width: 8.55rem !important;
+    white-space: normal !important;
+    padding-left: 1.05rem !important;
+    text-indent: -1.05rem !important;
+}
+
+/* Restore 200px cards and recenter connectors based on the restored width. */
+.e2eMtoReferenceGrid .e2eMtoProcessCard {
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eMtoCardTitle .sapMText {
+    max-width: 8.6rem !important;
+}
+
+.e2eStepPos03 .e2eMtoCardTitle,
+.e2eStepPos03 .e2eMtoCardTitle .sapMText,
+.e2eStepPos05 .e2eMtoCardTitle,
+.e2eStepPos05 .e2eMtoCardTitle .sapMText {
+    max-width: 9.8rem !important;
+}
+
+.e2eStepPos06 .e2eMtoCardTitle,
+.e2eStepPos06 .e2eMtoCardTitle .sapMText,
+.e2eStepPos07 .e2eMtoCardTitle,
+.e2eStepPos07 .e2eMtoCardTitle .sapMText {
+    max-width: 8.8rem !important;
+}
+
+.e2eStepPos08 .e2eMtoCardTitle,
+.e2eStepPos08 .e2eMtoCardTitle .sapMText {
+    max-width: 10.8rem !important;
+}
+
+.e2eStepPos09 .e2eMtoCardTitle,
+.e2eStepPos09 .e2eMtoCardTitle .sapMText {
+    max-width: 9rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus,
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusText {
+    font-size: 0.58rem !important;
+}
+
+.e2eCon12 {
+    left: calc(17.3% + 100px - 3.5rem) !important;
+    top: 5.85rem !important;
+    width: 7rem !important;
+}
+
+.e2eCon23 {
+    left: calc(41.5% + 100px - 2.7rem) !important;
+    top: 6.5rem !important;
+    width: 5.4rem !important;
+}
+
+.e2eCon34 {
+    left: calc(65.6% + 100px - 2.7rem) !important;
+    top: 6.5rem !important;
+    width: 5.4rem !important;
+}
+
+.e2eCon45 {
+    left: calc(77.6% + 100px - 0.75rem) !important;
+    top: 12.55rem !important;
+    width: 1.5rem !important;
+    height: 2.8rem !important;
+}
+
+.e2eCon56 {
+    left: calc(59.5% + 100px - 4.5rem) !important;
+    top: 19.3rem !important;
+    width: 9rem !important;
+}
+
+.e2eCon67 {
+    left: calc(23.3% + 100px - 4.5rem) !important;
+    top: 19.3rem !important;
+    width: 9rem !important;
+}
+
+.e2eCon78 {
+    left: calc(5.2% + 100px - 0.75rem) !important;
+    top: 25.35rem !important;
+    width: 1.5rem !important;
+    height: 2.8rem !important;
+}
+
+.e2eCon89 {
+    left: calc(17.3% + 100px - 2.7rem) !important;
+    top: 32.1rem !important;
+    width: 5.4rem !important;
+}
+
+.e2eCon910 {
+    left: calc(41.5% + 100px - 2.7rem) !important;
+    top: 32.1rem !important;
+    width: 5.4rem !important;
+}
+
+.e2eCon1011 {
+    left: calc(65.6% + 100px - 2.7rem) !important;
+    top: 32.1rem !important;
+    width: 5.4rem !important;
+}
+
+/* Normalize MRP connector length and add rotating execution indicator. */
+.e2eCon12 {
+    left: calc(17.3% + 100px - 2.7rem) !important;
+    top: 5.85rem !important;
+    width: 5.4rem !important;
+}
+
+.e2eMtoConnectorMrp {
+    height: 3.2rem !important;
+}
+
+.e2eMtoConnectorMrp::before {
+    left: 0.6rem !important;
+    right: 0.6rem !important;
+    top: 68% !important;
+}
+
+.e2eMtoMrpSpin,
+.e2eMtoMrpSpin .sapMText {
+    position: absolute !important;
+    left: 50% !important;
+    top: 0.22rem !important;
+    z-index: 5 !important;
+    color: #0070F2 !important;
+    font-size: 0.9rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    transform: translateX(-50%) !important;
+    animation: e2eMtoMrpRotate 1.1s linear infinite !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel,
+.e2eMtoConnectorMrp .e2eMtoFlowLinkLabel .sapMText {
+    top: 1rem !important;
+}
+
+.e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    left: 50% !important;
+    top: calc(68% + 1.05rem) !important;
+    transform: translateX(-50%) !important;
+}
+
+@keyframes e2eMtoMrpRotate {
+    from {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}
+
+/* ===== E2E MTO definitive overrides (last-wins) ===== */
+
+/* Legend + card status colors */
+.nxLegendDotScheduled {
+    background: #111827 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDone .e2eMtoCardStatus .sapMObjStatusText,
+.e2eMtoCardDone .e2eMtoCardStatus .sapMObjStatusText {
+    color: #16A34A !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardActive .e2eMtoCardStatus .sapMObjStatusText,
+.e2eMtoCardActive .e2eMtoCardStatus .sapMObjStatusText {
+    color: #D97706 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardPending .e2eMtoCardStatus .sapMObjStatusText,
+.e2eMtoCardPending .e2eMtoCardStatus .sapMObjStatusText {
+    color: #111827 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus.sapMObjStatusSuccess .sapMObjStatusText,
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusSuccess .sapMObjStatusText {
+    color: #16A34A !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus.sapMObjStatusWarning .sapMObjStatusText,
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusWarning .sapMObjStatusText {
+    color: #D97706 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardStatus.sapMObjStatusNone .sapMObjStatusText,
+.e2eMtoReferenceGrid .e2eMtoCardStatus .sapMObjStatusNone .sapMObjStatusText {
+    color: #111827 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardDone .e2eMtoCardStatus .sapMObjStatusText::before,
+.e2eMtoCardDone .e2eMtoCardStatus .sapMObjStatusText::before {
+    background: #22C55E !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardActive .e2eMtoCardStatus .sapMObjStatusText::before,
+.e2eMtoCardActive .e2eMtoCardStatus .sapMObjStatusText::before {
+    background: #F59E0B !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoCardPending .e2eMtoCardStatus .sapMObjStatusText::before,
+.e2eMtoCardPending .e2eMtoCardStatus .sapMObjStatusText::before {
+    background: #111827 !important;
+}
+
+/* Cards 3 and 8: keep status in header top-right like other cards */
+.e2eMtoReferenceGrid .e2eStepPos03 > .sapMFlexBox:first-child,
+.e2eMtoReferenceGrid .e2eStepPos08 > .sapMFlexBox:first-child {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+    position: relative !important;
+    padding-right: 0 !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos03 .e2eMtoCardStatus,
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardStatus {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    flex: 0 0 auto !important;
+    align-self: flex-start !important;
+    min-width: 2.4rem !important;
+    max-width: none !important;
+    height: auto !important;
+    margin-left: 0.35rem !important;
+    text-align: right !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos03 .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eStepPos03 .e2eMtoCardTitle .sapMText {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 2.6rem) !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    line-height: 1.15 !important;
+    text-align: left !important;
+}
+
+/* Step 8: 2-line title — "8. 출하 /" + "Outbound Delivery" */
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitle .sapMText {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 2.6rem) !important;
+    white-space: pre-line !important;
+    word-break: keep-all !important;
+    line-height: 1.15 !important;
+    text-align: left !important;
+    padding-left: 1.1rem !important;
+    text-indent: -1.1rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos03 .e2eMtoCardStatus .sapMObjStatusText {
+    color: #16A34A !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardStatus .sapMObjStatusText {
+    color: #111827 !important;
+}
+
+/* Connector stroke: uniform 4px thickness (horizontal + vertical) */
+.e2eMtoReferenceGrid .e2eMtoConnector::before {
+    left: 0 !important;
+    right: 0 !important;
+    top: 50% !important;
+    bottom: auto !important;
+    width: auto !important;
+    height: 4px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorDone::before {
+    background: #19B66B !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorActive::before {
+    background: #E99A13 !important;
+}
+
+/* Pending/unprogressed: hollow capsule with dashed outline (reference style) */
+.e2eMtoReferenceGrid .e2eMtoConnectorPending::before {
+    left: 0 !important;
+    right: 0 !important;
+    top: 50% !important;
+    bottom: auto !important;
+    width: auto !important;
+    height: 0.5rem !important;
+    background: transparent !important;
+    border: 1.5px dashed #B8C8D8 !important;
+    border-radius: 999px !important;
+    box-sizing: border-box !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorPending::after {
+    content: none !important;
+    display: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical::before {
+    left: 50% !important;
+    right: auto !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 0.5rem !important;
+    height: auto !important;
+    background: transparent !important;
+    border: 1.5px dashed #B8C8D8 !important;
+    border-radius: 999px !important;
+    box-sizing: border-box !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Vertical connectors 4→5, 7→8: 3/5 of previous span */
+.e2eMtoReferenceGrid .e2eCon45 {
+    left: calc(77.6% + 100px - 0.75rem) !important;
+    top: 12.27rem !important;
+    width: 1.5rem !important;
+    height: 3.36rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon78 {
+    left: calc(5.2% + 100px - 0.75rem) !important;
+    top: 25.07rem !important;
+    width: 1.5rem !important;
+    height: 3.36rem !important;
+}
+
+/* Step 8 title: force exactly 2 lines (no wrap inside each line) */
+.e2eMtoReferenceGrid .e2eStepPos08 > .sapMFlexBox:first-child {
+    align-items: flex-start !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitleStack {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 2.6rem) !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitle .sapMText,
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitleLine2,
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitleLine2 .sapMText {
+    display: block !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    line-height: 1.15 !important;
+    text-align: left !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    text-indent: 0 !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitleLine2,
+.e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardTitleLine2 .sapMText {
+    padding-left: 1.1rem !important;
+}
+
+/* MRP badge: sync icon + 3-line label (reference layout) */
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp {
+    height: 4.4rem !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    bottom: 1.45rem !important;
+    height: 4px !important;
+    background: #93C5FD !important;
+    border: none !important;
+    border-radius: 999px !important;
+    transform: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoMrpBadge {
+    position: absolute !important;
+    top: 0 !important;
+    left: 50% !important;
+    z-index: 6 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.3rem !important;
+    padding: 0.3rem 0.5rem 0.3rem 0.38rem !important;
+    background: #EAF4FF !important;
+    border: 1px solid #BFDBFE !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.1) !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoMrpSpinIcon {
+    width: 1.05rem !important;
+    height: 1.05rem !important;
+    color: #0070F2 !important;
+    animation: e2eMtoMrpIconSpin 1.2s linear infinite !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoMrpSpinIcon::before {
+    font-size: 1.05rem !important;
+    line-height: 1.05rem !important;
+}
+
+@keyframes e2eMtoMrpIconSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.e2eMtoReferenceGrid .e2eMtoMrpLabelStack {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoMrpLabelLine,
+.e2eMtoReferenceGrid .e2eMtoMrpLabelLine .sapMText {
+    display: block !important;
+    color: #0070F2 !important;
+    font-size: 0.48rem !important;
+    font-weight: 800 !important;
+    line-height: 1.05 !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 0 !important;
+    transform: translateX(-50%) !important;
+    color: #0070F2 !important;
+    font-size: 0.88rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoMrpSpin,
+.e2eMtoReferenceGrid .e2eMtoMrpSpin .sapMText,
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp .e2eMtoFlowLinkLabel,
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp .e2eMtoFlowLinkLabel .sapMText {
+    display: none !important;
+}
+
+/* E2E right-side vertical process gauge */
+.e2eFlowBodySplit {
+    gap: 0.65rem !important;
+    align-items: stretch !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.e2eFlowBodySplit > .e2eFlowStage {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+
+.e2eMtoSideNavNext {
+    display: none !important;
+}
+
+.e2eProcessGaugePanel {
+    flex: 0 0 5rem !important;
+    width: 5rem !important;
+    min-width: 5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+    padding: 0.15rem 0 0.2rem !important;
+    box-sizing: border-box !important;
+}
+
+.e2eProcessGaugeHeader {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.2rem !important;
+    text-align: center !important;
+}
+
+.e2eProcessGaugeOrderNo,
+.e2eProcessGaugeOrderNo .sapMText {
+    color: #6B7280 !important;
+    font-size: 0.62rem !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    word-break: break-all !important;
+}
+
+.e2eProcessGaugeRatio,
+.e2eProcessGaugeRatio .sapMText {
+    color: #111827 !important;
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+}
+
+.e2eProcessGaugeStage,
+.e2eProcessGaugeStage .sapMText {
+    color: #0070F2 !important;
+    font-size: 0.62rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    word-break: keep-all !important;
+}
+
+.e2eProcessGaugeBarWrap {
+    position: relative !important;
+    flex: 1 1 auto !important;
+    min-height: 28rem !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 0.65rem !important;
+    background: #F9FAFB !important;
+    overflow: hidden !important;
+    padding: 0.28rem 0.22rem !important;
+    box-sizing: border-box !important;
+}
+
+.e2eProcessGaugeBarFill {
+    position: absolute !important;
+    left: 0.22rem !important;
+    right: 0.22rem !important;
+    top: 0.28rem !important;
+    bottom: auto !important;
+    height: var(--e2e-gauge-pct, 36%) !important;
+    border-radius: 0.45rem !important;
+    background: linear-gradient(180deg, #0070F2 0%, #89D1FF 100%) !important;
+    opacity: 0.38 !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+.e2eProcessGaugeSegments {
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+    gap: 0.14rem !important;
+}
+
+.e2eProcessGaugeStep {
+    flex: 1 1 0 !important;
+    min-height: 0.95rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 0.28rem !important;
+    border: 1px solid transparent !important;
+    box-sizing: border-box !important;
+}
+
+.e2eProcessGaugeStepNo,
+.e2eProcessGaugeStepNo .sapMText {
+    color: #6B7280 !important;
+    font-size: 0.42rem !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+}
+
+.e2eProcessGaugeStep--done {
+    background: #EAF5FF !important;
+    border-color: #89BCEB !important;
+}
+
+.e2eProcessGaugeStep--done .e2eProcessGaugeStepNo,
+.e2eProcessGaugeStep--done .e2eProcessGaugeStepNo .sapMText {
+    color: #0070F2 !important;
+}
+
+.e2eProcessGaugeStep--active {
+    background: #D1EFFF !important;
+    border-color: #0070F2 !important;
+    box-shadow: 0 0 0 2px rgba(0, 112, 242, 0.22) !important;
+}
+
+.e2eProcessGaugeStep--active .e2eProcessGaugeStepNo,
+.e2eProcessGaugeStep--active .e2eProcessGaugeStepNo .sapMText {
+    color: #0070F2 !important;
+}
+
+.e2eProcessGaugeStep--pending {
+    background: #FFFFFF !important;
+    border-color: #E5E7EB !important;
+}
+
+.e2eProcessGaugeStep--pending .e2eProcessGaugeStepNo,
+.e2eProcessGaugeStep--pending .e2eProcessGaugeStepNo .sapMText {
+    color: #9CA3AF !important;
+}
+
+/* Order Inquiry: Fiori-native typography (reference panel) */
+.nxSpaceCardA,
+.nxSpaceCardA .sapMText,
+.nxSpaceCardA .sapMTitle,
+.nxSpaceCardA .sapMBtnInner,
+.nxSpaceCardA .sapMSFI {
+    font-family: var(--sapFontFamily, "72", "72full", Arial, Helvetica, sans-serif) !important;
+    letter-spacing: 0 !important;
+}
+
+.nxSpaceCardA .nxSpaceCardTitle,
+.nxSpaceCardA .nxSpaceCardTitle .sapMTitle {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #1D2D3E !important;
+    line-height: 1.4 !important;
+}
+
+.nxSpaceCardA .nxSpaceCardBodyA {
+    padding: 1rem 1.25rem 1.25rem !important;
+    gap: 0.75rem !important;
+}
+
+.nxSpaceCardA .nxSpaceSearch .sapMSFI {
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    color: #32363A !important;
+}
+
+.nxSpaceCardA .nxSpaceSearchBtn .sapMBtnContent {
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+}
+
+.nxSpaceCardA .nxOrderResultPanel {
+    margin-top: 0.65rem !important;
+    padding-top: 0.95rem !important;
+    gap: 0.95rem !important;
+}
+
+.nxSpaceCardA .nxOrderResultHeader {
+    gap: 0.5rem !important;
+}
+
+.nxSpaceCardA .nxOrderIcon {
+    color: #0070F2 !important;
+    flex-shrink: 0 !important;
+}
+
+.nxSpaceCardA .nxOrderNumber,
+.nxSpaceCardA .nxOrderNumber .sapMText {
+    font-size: 1.125rem !important;
+    font-weight: 700 !important;
+    color: #1D2D3E !important;
+    line-height: 1.3 !important;
+}
+
+.nxSpaceCardA .nxOrderLabel,
+.nxSpaceCardA .nxOrderLabel .sapMText,
+.nxSpaceCardA .nxOrderDetailLabel,
+.nxSpaceCardA .nxOrderDetailLabel .sapMText {
+    font-size: 0.8125rem !important;
+    font-weight: 400 !important;
+    color: #6A6D70 !important;
+    line-height: 1.4 !important;
+}
+
+.nxSpaceCardA .nxOrderStageText,
+.nxSpaceCardA .nxOrderStageText .sapMText {
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: #0070F2 !important;
+    line-height: 1.35 !important;
+}
+
+.nxSpaceCardA .nxOrderDetailValue,
+.nxSpaceCardA .nxOrderDetailValue .sapMText {
+    font-size: 0.875rem !important;
+    font-weight: 700 !important;
+    color: #1D2D3E !important;
+    line-height: 1.4 !important;
+}
+
+.nxSpaceCardA .nxOrderAmount,
+.nxSpaceCardA .nxOrderAmount .sapMText {
+    color: #0070F2 !important;
+}
+
+.nxSpaceCardA .nxOrderProductName,
+.nxSpaceCardA .nxOrderProductName .sapMText {
+    max-width: 11rem !important;
+    line-height: 1.35 !important;
+    word-break: keep-all !important;
+}
+
+.nxSpaceCardA .nxOrderDetailRow {
+    min-height: 2.5rem !important;
+    padding: 0.5rem 0 !important;
+    border-bottom: 1px dashed #D9D9D9 !important;
+}
+
+.nxSpaceCardA .nxOrderProgressFill {
+    background: #0070F2 !important;
+}
+
+.nxSpaceCardA .nxOrderProgressDot,
+.nxSpaceCardA .nxOrderProgressInfo,
+.nxSpaceCardA .nxOrderProgressInfo .sapMText {
+    background: #0070F2 !important;
+}
+
+/* Horizontal connectors: half of inter-card gap, centered */
+.e2eMtoReferenceGrid .e2eCon12,
+.e2eMtoReferenceGrid .e2eCon23,
+.e2eMtoReferenceGrid .e2eCon34,
+.e2eMtoReferenceGrid .e2eCon89,
+.e2eMtoReferenceGrid .e2eCon910,
+.e2eMtoReferenceGrid .e2eCon1011 {
+    width: calc((24.2% - 200px) / 2) !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon12 {
+    left: calc(17.3% + 100px - (24.2% - 200px) / 4) !important;
+    top: 5.85rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon23 {
+    left: calc(41.5% + 100px - (24.2% - 200px) / 4) !important;
+    top: 6.5rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon34 {
+    left: calc(65.6% + 100px - (24% - 200px) / 4) !important;
+    top: 6.5rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon56,
+.e2eMtoReferenceGrid .e2eCon67 {
+    width: calc((36.2% - 200px) / 2) !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon67 {
+    left: calc(23.3% + 100px - (36.2% - 200px) / 4) !important;
+    top: 19.3rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon56 {
+    left: calc(59.5% + 100px - (36.2% - 200px) / 4) !important;
+    top: 19.3rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon89 {
+    left: calc(17.3% + 100px - (24.2% - 200px) / 4) !important;
+    top: 32.1rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon910 {
+    left: calc(41.5% + 100px - (24.2% - 200px) / 4) !important;
+    top: 32.1rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon1011 {
+    left: calc(65.6% + 100px - (24% - 200px) / 4) !important;
+    top: 32.1rem !important;
+}
+
+/* Align connectors, arrows, and MRP badge to card vertical center */
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon23,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon34 {
+    top: calc(4.4rem + 2.55rem) !important;
+    transform: translateY(-50%) !important;
+    height: 1.35rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon56,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon67 {
+    top: calc(17.2rem + 2.55rem) !important;
+    transform: translateY(-50%) !important;
+    height: 1.35rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon89,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon910,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon1011 {
+    top: calc(30rem + 2.55rem) !important;
+    transform: translateY(-50%) !important;
+    height: 1.35rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText,
+.e2eMtoReferenceGrid .e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText,
+.e2eMtoReferenceGrid .e2eMtoConnectorPending .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorPending .e2eMtoFlowArrow .sapMText {
+    position: absolute !important;
+    top: calc(50% + 0.42rem) !important;
+    left: 50% !important;
+    bottom: auto !important;
+    transform: translateX(-50%) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon12.e2eMtoConnectorMrp {
+    top: calc(4.4rem + 2.55rem) !important;
+    transform: translateY(-50%) !important;
+    height: 2.4rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoMrpBadge {
+    top: 0 !important;
+    transform: translate(-50%, calc(-100% - 0.15rem)) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp::before {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp .e2eMtoFlowArrow .sapMText {
+    top: calc(50% + 0.42rem) !important;
+    bottom: auto !important;
+}
+
+/* Step XMLView: full-grid anchor so e2eStepPos % coords resolve correctly */
+.e2eMtoReferenceGrid > .sapUiView {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    pointer-events: none !important;
+    z-index: 3 !important;
+}
+
+.e2eMtoReferenceGrid .sapUiView .e2eMtoProcessCard {
+    position: absolute !important;
+    pointer-events: auto !important;
+    z-index: 3 !important;
+}
+
+.e2eMtoSideNav,
+.e2eMtoSideNavPrev,
+.e2eMtoSideNavNext {
+    display: none !important;
+}

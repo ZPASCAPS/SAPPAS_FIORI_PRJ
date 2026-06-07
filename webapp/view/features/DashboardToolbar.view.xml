@@ -5,47 +5,63 @@
   Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardToolbar
 
   역할:
-  - 현재 탭 제목(navLabel), 기준 시각, 새로고침, 대시보드 설정 버튼 영역.
+  - DASHBOARD 탭 기간 필터(날짜/주기) 및 조회 실행 영역.
 
   대시보드 구조:
   Main → DashboardMain → DashboardToolbar (헤더 아래 회색 바)
 
   협업:
-  - 타이틀·버튼 UI → 이 View
-  - 새로고침 EventBus 발행 → DashboardToolbar.controller.js
+  - 필터 UI → 이 View
+  - 조회 실행 EventBus → DashboardToolbar.controller.js
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardToolbar"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
     xmlns="sap.m">
 
     <HBox
-        class="nxWelcomeRow"
+        class="nxWelcomeRow nxDashboardFilterBar"
         width="100%"
         alignItems="Center"
         justifyContent="SpaceBetween"
         visible="{= ${dashboard>/ui/navKey} === 'DASHBOARD' }">
-        <HBox alignItems="Center" class="nxWelcomeLine" width="100%">
-            <Text
-                text="{dashboard>/ui/navLabel}"
-                class="nxWelcomeText"
-                wrapping="false" />
+        <HBox alignItems="Center" class="nxDashboardFilterControls">
+            <DateRangeSelection
+                id="dashboardDateRange"
+                value="2025.05.01 - 2025.05.31"
+                placeholder="2025.05.01 - 2025.05.31"
+                displayFormat="yyyy.MM.dd"
+                valueFormat="yyyy.MM.dd"
+                width="13.5rem"
+                class="nxDashboardDateRange" />
+            <Select
+                id="dashboardPeriodSelect"
+                selectedKey="WEEK"
+                width="6.5rem"
+                class="nxDashboardPeriodSelect">
+                <core:Item key="DAY" text="일간" />
+                <core:Item key="WEEK" text="주간" />
+                <core:Item key="MONTH" text="월간" />
+            </Select>
         </HBox>
 
-        <HBox alignItems="Center" class="nxWelcomeActions">
-            <Text text="{dashboard>/ui/lastUpdated}" class="nxLastUpdated" />
+        <HBox alignItems="Center" class="nxWelcomeActions nxDashboardFilterActions">
             <Button
-                icon="sap-icon://refresh"
-                type="Transparent"
-                tooltip="새로고침"
-                press=".onRefresh"
-                class="nxWelcomeRefreshBtn" />
+                text="실행"
+                type="Emphasized"
+                press=".onExecuteDateQuery"
+                class="nxDashboardRunBtn" />
             <Button
-                text="대시보드 설정"
-                icon="sap-icon://grid"
+                text="저장"
                 type="Transparent"
-                press=".onDashboardSettings"
-                class="nxSettingsBtn" />
+                press=".onSaveDateQuery"
+                class="nxDashboardUtilityBtn" />
+            <Button
+                text="불러오기"
+                type="Transparent"
+                press=".onLoadDateQuery"
+                class="nxDashboardUtilityBtn" />
         </HBox>
     </HBox>
 </mvc:View>

@@ -1,55 +1,161 @@
-<!--
-  E2EProcessFlow.view.xml — E2E Supply Chain Dashboard (B공간)
-
-  View: com.capstone.dashboard.fioridashboard.view.features.E2EProcessFlow
-  Controller: com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow
-
-  역할:
-  - 프로세스 제목·범례 툴바(고정) + 본문 콘텐츠 영역(빈 캔버스).
-  - Step 그리드는 제거됨. 추후 features/e2e/StepXX 를 이 영역에 다시 배치 가능.
-
-  대시보드 구조:
-  Main → DashboardMain → DashboardCanvas → E2EProcessFlow
-
-  협업:
-  - 레이아웃·프레임 → 이 View + E2EProcessFlow.controller.js + style.css
-  - Step UI (예비) → view/features/e2e/StepXX*.view.xml + controller
-  - 공통 데이터 → Main.controller.js (dashboard/e2eProcessFlow)
--->
-<mvc:View
-    controllerName="com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    height="100%"
-    width="100%">
-
-    <VBox class="nxSpaceCard nxSpaceCardB e2eDashboardRoot" height="100%" width="100%" renderType="Bare">
-        <HBox
-            class="nxSpaceCardHeader nxSpaceCardHeaderSplit e2eDashboardHeader e2eDashboardHeaderSticky"
-            alignItems="Center"
-            justifyContent="SpaceBetween"
-            width="100%">
-            <Title text="{dashboard>/e2eProcessFlow/title}" level="H4" class="nxSpaceCardTitle" />
-            <HBox alignItems="Center" class="nxFlowLegend e2eFlowLegendToolbar" renderType="Bare">
-                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
-                    <VBox class="nxLegendDot nxLegendDotComplete" />
-                    <Text text="완료" class="nxLegendLabel" />
-                </HBox>
-                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
-                    <VBox class="nxLegendDot nxLegendDotProgress" />
-                    <Text text="진행중" class="nxLegendLabel" />
-                </HBox>
-                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
-                    <VBox class="nxLegendDot nxLegendDotScheduled" />
-                    <Text text="예정" class="nxLegendLabel" />
-                </HBox>
-            </HBox>
-        </HBox>
-
-        <VBox class="nxSpaceCardBody nxSpaceCardBodyB e2eDashboardBody" width="100%">
-            <VBox class="e2eFlowStage" width="100%" renderType="Bare">
-                <VBox class="e2eFlowCanvas e2eFlowCanvasEmpty" width="100%" renderType="Bare" />
-            </VBox>
-        </VBox>
-    </VBox>
-</mvc:View>
+<!--
+
+  E2EProcessFlow.view.xml — E2E Supply Chain Dashboard (B공간)
+
+
+
+  View: com.capstone.dashboard.fioridashboard.view.features.E2EProcessFlow
+
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow
+
+
+
+  역할:
+
+  - 프로세스 제목·범례 툴바(고정) + 본문 콘텐츠 영역(빈 캔버스).
+
+  - Step 카드 UI → features/e2e/StepXX.view.xml (e2eStepPos 그리드 클래스 포함).
+  - 메인 그리드 → mvc:XMLView 로 Step 모듈 연결.
+
+
+
+  대시보드 구조:
+
+  Main → DashboardMain → DashboardCanvas → E2EProcessFlow
+
+
+
+  협업:
+
+  - 레이아웃·프레임 → 이 View + E2EProcessFlow.controller.js + style.css
+
+  - Step UI (예비) → view/features/e2e/StepXX*.view.xml + controller
+
+  - 공통 데이터 → Main.controller.js (dashboard/e2eProcessFlow)
+
+-->
+
+<mvc:View
+
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow"
+
+    xmlns:mvc="sap.ui.core.mvc"
+
+    xmlns:core="sap.ui.core"
+
+    xmlns="sap.m"
+
+    height="100%"
+
+    width="100%">
+
+
+
+    <VBox class="nxSpaceCard nxSpaceCardB e2eDashboardRoot" height="100%" width="100%" renderType="Bare">
+
+        <HBox
+
+            class="nxSpaceCardHeader nxSpaceCardHeaderSplit e2eDashboardHeader e2eDashboardHeaderSticky"
+
+            alignItems="Center"
+
+            justifyContent="SpaceBetween"
+
+            width="100%">
+
+            <Title text="{dashboard>/e2eProcessFlow/title}" level="H4" class="nxSpaceCardTitle" />
+
+            <HBox alignItems="Center" class="nxFlowLegend e2eFlowLegendToolbar" renderType="Bare">
+
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+
+                    <VBox class="nxLegendDot nxLegendDotComplete" />
+
+                    <Text text="완료" class="nxLegendLabel" />
+
+                </HBox>
+
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+
+                    <VBox class="nxLegendDot nxLegendDotProgress" />
+
+                    <Text text="진행중" class="nxLegendLabel" />
+
+                </HBox>
+
+                <HBox alignItems="Center" class="nxLegendItem" renderType="Bare">
+
+                    <VBox class="nxLegendDot nxLegendDotScheduled" />
+
+                    <Text text="예정" class="nxLegendLabel" />
+
+                </HBox>
+
+            </HBox>
+
+        </HBox>
+
+
+
+        <VBox class="nxSpaceCardBody nxSpaceCardBodyB e2eDashboardBody" width="100%">
+
+            <HBox class="e2eFlowBodySplit" width="100%" renderType="Bare" alignItems="Stretch">
+
+            <VBox class="e2eFlowStage" width="100%" renderType="Bare">
+
+                <VBox class="e2eMtoFlowGrid e2eMtoReferenceGrid" width="100%" renderType="Bare">
+                    <VBox class="e2eMtoConnector e2eMtoConnectorMrp e2eCon12" renderType="Bare"><HBox class="e2eMtoMrpBadge" alignItems="Center" renderType="Bare"><core:Icon src="sap-icon://synchronize" class="e2eMtoMrpSpinIcon" /><VBox class="e2eMtoMrpLabelStack" renderType="Bare"><Text text="MRP" class="e2eMtoMrpLabelLine" /><Text text="실행" class="e2eMtoMrpLabelLine" /><Text text="중" class="e2eMtoMrpLabelLine" /></VBox></HBox><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorDone e2eCon23" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorActive e2eCon34" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorVertical e2eCon45" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon56" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon67" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorVertical e2eCon78" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon89" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon910" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon1011" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step01SalesOrder" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step02PlannedOrder" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step03PurchaseRequisition" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step04PurchaseOrder" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step06ProductionOrder" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step05GoodsReceipt" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step07GoodsReceipt" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step08Shipment" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step09Billing" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step10AccountingDocument" />
+                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step11PaymentPosting" />
+                </VBox>
+
+            </VBox>
+
+            <VBox class="e2eProcessGaugePanel" renderType="Bare">
+                <VBox class="e2eProcessGaugeHeader" renderType="Bare">
+                    <Text text="{dashboard>/e2eProcessFlow/processGauge/orderNumber}" class="e2eProcessGaugeOrderNo" />
+                    <Text text="{= ${dashboard>/e2eProcessFlow/processGauge/currentStep} + ' / ' + ${dashboard>/e2eProcessFlow/processGauge/totalSteps} }" class="e2eProcessGaugeRatio" />
+                    <Text text="{dashboard>/e2eProcessFlow/processGauge/stageText}" class="e2eProcessGaugeStage" />
+                </VBox>
+                <VBox
+                    class="e2eProcessGaugeBarWrap"
+                    renderType="Bare"
+                    style="{= '--e2e-gauge-pct:' + (${dashboard>/e2eProcessFlow/processGauge/currentStep} / ${dashboard>/e2eProcessFlow/processGauge/totalSteps} * 100) + '%' }">
+                    <VBox class="e2eProcessGaugeBarFill" renderType="Bare" />
+                    <VBox class="e2eProcessGaugeSegments" items="{dashboard>/e2eProcessFlow/processGauge/segments}">
+                        <items>
+                            <VBox class="{= 'e2eProcessGaugeStep e2eProcessGaugeStep--' + ${status} }" renderType="Bare">
+                                <Text text="{step}" class="e2eProcessGaugeStepNo" />
+                            </VBox>
+                        </items>
+                    </VBox>
+                </VBox>
+            </VBox>
+
+            </HBox>
+
+        </VBox>
+
+    </VBox>
+
+</mvc:View>
+
