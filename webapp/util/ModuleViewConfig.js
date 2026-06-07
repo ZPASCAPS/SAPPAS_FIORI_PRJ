@@ -11,9 +11,9 @@ sap.ui.define([], function () {
     var MODULE_KEYS = ["SD_SALES", "MM_MATERIALS", "PP_PRODUCTION", "FI_CO_FINANCE"];
 
     var PERIOD_OPTIONS = [
-        { key: "THIS_WEEK", text: "This week" },
-        { key: "THIS_MONTH", text: "This month" },
-        { key: "THIS_QUARTER", text: "This quarter" }
+        { key: "THIS_WEEK", text: "1주" },
+        { key: "THIS_MONTH", text: "1달" },
+        { key: "THIS_QUARTER", text: "1년" }
     ];
 
     var COMMON_SUB_TABS = [
@@ -47,7 +47,11 @@ sap.ui.define([], function () {
             subTabs: COMMON_SUB_TABS.slice(),
             kpis: COMMON_KPIS.map(function (oKpi) {
                 return JSON.parse(JSON.stringify(oKpi));
-            })
+            }),
+            settings: {
+                showKpiTrends: true,
+                includeTrendsInExport: true
+            }
         };
     }
 

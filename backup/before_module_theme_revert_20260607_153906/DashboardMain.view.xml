@@ -1,0 +1,51 @@
+<!--
+  DashboardMain.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.DashboardMain
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardMain
+
+  역할:
+  - 오른쪽 메인 영역 컨테이너. 헤더·툴바·캔버스·오버레이 View를 Nested View로 연결한다.
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardMain"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    height="100%"
+    width="100%">
+
+    <VBox class="nxPageRoot" height="100%" width="100%" renderType="Bare">
+        <VBox class="nxMain" height="100%" width="100%" renderType="Bare" justifyContent="Start" alignItems="Stretch">
+            <mvc:XMLView
+                width="100%"
+                class="{= (${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE') ? 'nxModuleThemeBg' : '' }"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardHeader" />
+            <mvc:XMLView
+                width="100%"
+                class="{= (${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE') ? 'nxModuleThemeBg' : '' }"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardModuleNav" />
+            <VBox
+                width="100%"
+                visible="{= ${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' }"
+                class="nxModuleShellSlot nxModuleThemeBg">
+                <mvc:XMLView
+                    width="100%"
+                    viewName="com.capstone.dashboard.fioridashboard.view.features.ModuleDashboardShell" />
+            </VBox>
+            <mvc:XMLView
+                width="100%"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardToolbar" />
+            <mvc:XMLView
+                width="100%"
+                height="100%"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardCanvas" />
+        </VBox>
+
+        <mvc:XMLView
+            viewName="com.capstone.dashboard.fioridashboard.view.features.AiAssistant"
+            class="nxOverlaySlot" />
+        <mvc:XMLView
+            viewName="com.capstone.dashboard.fioridashboard.view.features.MaterialCreate"
+            class="nxOverlaySlot" />
+    </VBox>
+</mvc:View>

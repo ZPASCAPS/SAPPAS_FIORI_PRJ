@@ -20,7 +20,11 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <HBox class="nxHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+    <HBox
+        class="{= 'nxHeader' + ((${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE') ? ' nxModuleThemeBg' : '') }"
+        width="100%"
+        alignItems="Center"
+        justifyContent="SpaceBetween">
         <HBox class="nxHeaderLeft" alignItems="Center">
             <HBox class="nxHeaderBrand" alignItems="Center">
                 <Image
@@ -56,12 +60,7 @@
         <HBox alignItems="Center" class="nxHeaderRight">
             <HBox class="nxHeaderSearchArea" alignItems="Center">
                 <HBox id="globalSearchWrap" class="nxSearchWrap" alignItems="Center">
-                    <Button
-                        icon="sap-icon://search"
-                        type="Transparent"
-                        tooltip="검색"
-                        press=".onSearchIconPress"
-                        class="nxSearchIconBtn" />
+                    <core:Icon src="sap-icon://search" size="1rem" class="nxSearchLeadingIcon" />
                     <Input
                         id="globalSearch"
                         value="{dashboard>/filters/query}"
@@ -86,13 +85,6 @@
                     type="Transparent"
                     tooltip="도움말"
                     press=".onHelp"
-                    class="nxIconBtn" />
-                <Button
-                    id="settingsBtn"
-                    icon="sap-icon://action-settings"
-                    type="Transparent"
-                    tooltip="설정"
-                    press=".onSettings"
                     class="nxIconBtn" />
             </HBox>
 
@@ -229,46 +221,40 @@
 
     <Popover
         id="settingsPopover"
+        title="설정"
         placement="Bottom"
-        contentWidth="22rem"
-        showHeader="false"
-        afterClose=".onSettingsPopoverAfterClose"
-        class="nxHeaderPopover nxHeaderSettingsPopover">
+        contentWidth="20rem"
+        showHeader="true"
+        class="nxHeaderPopover">
         <content>
-            <VBox width="100%" class="nxPopoverBody">
-                <VBox class="nxHeaderPopoverTitleRow">
-                    <Title text="설정" level="H5" class="nxHeaderPopoverTitle" />
-                </VBox>
-                <VBox class="nxSettingsPopoverContent" width="100%">
-                    <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
-                        <VBox class="nxSettingsRowText">
-                            <Text text="자동 새로고침" class="nxSettingsLabel" />
-                            <Text text="5분마다 SAP 데이터 갱신" class="nxSettingsHint" />
-                        </VBox>
-                        <Switch state="{dashboard>/settings/autoRefresh}" change=".onAutoRefreshChange" />
-                    </HBox>
-                    <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
-                        <VBox class="nxSettingsRowText">
-                            <Text text="알림 표시" class="nxSettingsLabel" />
-                            <Text text="헤더 알림 배지 표시" class="nxSettingsHint" />
-                        </VBox>
-                        <Switch state="{dashboard>/settings/showNotifications}" change=".onShowNotificationsChange" />
-                    </HBox>
-                    <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
-                        <VBox class="nxSettingsRowText">
-                            <Text text="다크 모드" class="nxSettingsLabel" />
-                            <Text text="어두운 테마로 화면 표시" class="nxSettingsHint" />
-                        </VBox>
-                        <Switch state="{dashboard>/settings/darkMode}" change=".onDarkModeChange" />
-                    </HBox>
-                </VBox>
+            <VBox class="nxSettingsPopoverContent" width="100%">
+                <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
+                    <VBox>
+                        <Text text="자동 새로고침" class="nxSettingsLabel" />
+                        <Text text="5분마다 SAP 데이터 갱신" class="nxSettingsHint" />
+                    </VBox>
+                    <Switch state="{dashboard>/settings/autoRefresh}" change=".onAutoRefreshChange" />
+                </HBox>
+                <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
+                    <VBox>
+                        <Text text="알림 표시" class="nxSettingsLabel" />
+                        <Text text="헤더 알림 배지 표시" class="nxSettingsHint" />
+                    </VBox>
+                    <Switch state="{dashboard>/settings/showNotifications}" change=".onShowNotificationsChange" />
+                </HBox>
+                <Button
+                    text="대시보드 설정"
+                    icon="sap-icon://grid"
+                    type="Transparent"
+                    press=".onOpenDashboardSettings"
+                    class="nxSettingsActionBtn" />
             </VBox>
         </content>
     </Popover>
 
     <Dialog
         id="profileDialog"
-        contentWidth="28rem"
+        contentWidth="26rem"
         stretch="false"
         draggable="true"
         resizable="false"
@@ -283,8 +269,7 @@
         </customHeader>
         <content>
             <VBox class="nxProfileDialogContent">
-                <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxProfileDialogPreview">
-                    <HBox alignItems="Center" class="nxProfileDialogPreviewMain">
+                <HBox alignItems="Center" class="nxProfileDialogPreview">
                     <VBox class="nxProfileAvatarWrap nxProfileAvatarWrapLarge" alignItems="Center" justifyContent="Center">
                         <Image
                             src="images/pas-profile.png"
@@ -296,18 +281,6 @@
                         <Text text="{dashboard>/user/editName}" class="nxProfileName" />
                         <Text text="{dashboard>/user/editModule}" class="nxProfileRole" />
                     </VBox>
-                    </HBox>
-                    <VBox alignItems="Center" justifyContent="Center" class="nxProfileDialogQrWrap">
-                        <Image
-                            id="profileBlogQr"
-                            src="{dashboard>/user/blogQrSrc}"
-                            densityAware="false"
-                            decorative="false"
-                            alt="블로그 QR 코드"
-                            tooltip="스캔 또는 클릭하면 블로그로 이동합니다"
-                            class="nxProfileDialogQr" />
-                        <Text text="블로그 QR" class="nxProfileDialogQrHint" />
-                    </VBox>
                 </HBox>
                 <VBox class="nxProfileDialogField">
                     <Label text="이름" class="nxProfileDialogLabel" />
@@ -315,7 +288,6 @@
                         selectedKey="{dashboard>/user/editName}"
                         width="100%"
                         forceSelection="false"
-                        change=".onProfileNameChange"
                         class="nxProfileDialogSelect"
                         items="{dashboard>/profileOptions/names}">
                         <core:Item key="{dashboard>key}" text="{dashboard>text}" />
