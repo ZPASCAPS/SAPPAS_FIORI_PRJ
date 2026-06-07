@@ -1,9 +1,13 @@
-<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step08Shipment" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" height="100%" width="100%">
-    <VBox class="e2eStepCell" alignItems="Center" justifyContent="Center" width="100%" height="100%" renderType="Bare">
-        <VBox id="stepNode" class="{= 'e2eStepNode e2eStepNodeClickable e2eStepNode--' + ${dashboard>/e2eProcessFlow/steps/step08/status} }" alignItems="Center" justifyContent="Center" renderType="Bare">
-            <Text text="{dashboard>/e2eProcessFlow/steps/step08/number}" class="e2eStepNumber" />
-            <core:Icon src="{dashboard>/e2eProcessFlow/steps/step08/icon}" size="2rem" class="e2eStepIcon" />
-            <Text text="{dashboard>/e2eProcessFlow/steps/step08/title}" class="e2eStepTitle" />
-        </VBox>
+<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step08Shipment" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <VBox class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos08" renderType="Bare">
+        <HBox alignItems="Start" justifyContent="SpaceBetween">
+            <VBox class="e2eMtoCardTitleStack" renderType="Bare">
+                <Text text="8. 출하 / Outbound" class="e2eMtoCardTitle" />
+                <Text text="Delivery" class="e2eMtoCardTitle e2eMtoCardTitleLine2" />
+            </VBox>
+            <ObjectStatus text="예정" state="None" class="e2eMtoCardStatus" />
+        </HBox>
+        <Text text="Del-80001234" class="e2eMtoCardDoc" />
+        <Text text="플랜트 1000" class="e2eMtoCardDetail" />
     </VBox>
 </mvc:View>

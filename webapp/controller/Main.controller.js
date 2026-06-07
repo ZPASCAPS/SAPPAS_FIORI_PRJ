@@ -161,7 +161,7 @@ sap.ui.define([
                     e2eProcessFlow: {}
                 },
                 e2eProcessFlow: {
-                    title: "프로세스",
+                    title: "E2E Process Flow (MTO)",
                     selectedStepId: null,
                     filters: {
                         region: "ALL",
@@ -192,6 +192,26 @@ sap.ui.define([
                             { key: "90", text: "90 days" }
                         ]
                     },
+                    processGauge: {
+                        orderNumber: "5000000010",
+                        currentStep: 4,
+                        totalSteps: 11,
+                        stageText: "Purchase Order",
+                        progressPercent: 36,
+                        segments: [
+                            { step: 1, status: "done" },
+                            { step: 2, status: "done" },
+                            { step: 3, status: "done" },
+                            { step: 4, status: "active" },
+                            { step: 5, status: "pending" },
+                            { step: 6, status: "pending" },
+                            { step: 7, status: "pending" },
+                            { step: 8, status: "pending" },
+                            { step: 9, status: "pending" },
+                            { step: 10, status: "pending" },
+                            { step: 11, status: "pending" }
+                        ]
+                    },
                     steps: {
                         step01: { id: "step01", number: 1, title: "Sales Order", icon: "sap-icon://target-group", status: "complete", showDetail: false, documents: [], keyInfo: "" },
                         step02: { id: "step02", number: 2, title: "Planned Order", icon: "sap-icon://shipping-status", status: "complete", showDetail: false, documents: [], keyInfo: "" },
@@ -201,7 +221,9 @@ sap.ui.define([
                         step06: { id: "step06", number: 6, title: "Production Order", icon: "sap-icon://shipping-status", status: "complete", showDetail: false, documents: [], keyInfo: "" },
                         step07: { id: "step07", number: 7, title: "Goods Receipt", icon: "sap-icon://outbox", status: "complete", showDetail: false, documents: [], keyInfo: "" },
                         step08: { id: "step08", number: 8, title: "Shipment", icon: "sap-icon://retail-store", status: "complete", showDetail: false, documents: [], keyInfo: "" },
-                        step09: { id: "step09", number: 9, title: "Billing", icon: "sap-icon://money-bills", status: "complete", showDetail: false, documents: [], keyInfo: "" }
+                        step09: { id: "step09", number: 9, title: "Billing", icon: "sap-icon://money-bills", status: "complete", showDetail: false, documents: [], keyInfo: "" },
+                        step10: { id: "step10", number: 10, title: "회계전표", icon: "sap-icon://account", status: "pending", showDetail: false, documents: [], keyInfo: "" },
+                        step11: { id: "step11", number: 11, title: "입금 전기", icon: "sap-icon://payment-approval", status: "pending", showDetail: false, documents: [], keyInfo: "" }
                     },
                     kpis: [
                         { id: "K1", label: "On-time delivery", value: "56%", state: "Success", progress: 56 },

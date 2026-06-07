@@ -1,10 +1,10 @@
-<!-- Step01 ??ê¸€?˜ìŠ¤ ?í˜• ?¸ë“œ (ë²ˆí˜¸ + ?„ì´ì½?+ ?¼ë²¨) -->
-<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step01SalesOrder" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" height="100%" width="100%">
-    <VBox class="e2eStepCell" alignItems="Center" justifyContent="Center" width="100%" height="100%" renderType="Bare">
-        <VBox id="stepNode" class="{= 'e2eStepNode e2eStepNodeClickable e2eStepNode--' + ${dashboard>/e2eProcessFlow/steps/step01/status} }" alignItems="Center" justifyContent="Center" renderType="Bare">
-            <Text text="{dashboard>/e2eProcessFlow/steps/step01/number}" class="e2eStepNumber" />
-            <core:Icon src="{dashboard>/e2eProcessFlow/steps/step01/icon}" size="2rem" class="e2eStepIcon" />
-            <Text text="{dashboard>/e2eProcessFlow/steps/step01/title}" class="e2eStepTitle" />
-        </VBox>
+<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step01SalesOrder" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <VBox class="e2eMtoProcessCard e2eMtoCardDone e2eStepPos01" renderType="Bare">
+        <HBox alignItems="Center" justifyContent="SpaceBetween">
+            <Text text="1. Sales Order" class="e2eMtoCardTitle" />
+            <ObjectStatus text="??" state="Success" class="e2eMtoCardStatus" />
+        </HBox>
+        <Text text="SO-5000000010" class="e2eMtoCardDoc" />
+        <Text text="2026.06.15" class="e2eMtoCardDetail" />
     </VBox>
 </mvc:View>

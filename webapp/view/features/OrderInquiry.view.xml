@@ -18,6 +18,7 @@
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.OrderInquiry"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
     xmlns="sap.m"
     height="100%"
     width="100%">
@@ -30,6 +31,7 @@
         <VBox class="nxSpaceCardBody nxSpaceCardBodyA" width="100%">
             <SearchField
                 placeholder="오더 번호 검색"
+                value="5000000010"
                 width="100%"
                 class="nxSpaceSearch" />
             <Button
@@ -37,7 +39,49 @@
                 type="Emphasized"
                 width="100%"
                 class="nxSpaceSearchBtn" />
-            <VBox class="nxSpaceInnerEmpty nxSpaceInnerEmptyA" width="100%" />
+            <VBox class="nxOrderResultPanel" width="100%" renderType="Bare">
+                <HBox class="nxOrderResultHeader" alignItems="Center" renderType="Bare">
+                    <core:Icon src="sap-icon://order-status" class="nxOrderIcon" size="1.25rem" />
+                    <Text text="5000000010" class="nxOrderNumber" />
+                </HBox>
+
+                <VBox class="nxOrderStageBlock" width="100%" renderType="Bare">
+                    <Text text="현재 단계" class="nxOrderLabel" />
+                    <Text text="4 / 9 · Purchase Order" class="nxOrderStageText" />
+                    <HBox class="nxOrderProgressBar" alignItems="Center" renderType="Bare">
+                        <VBox class="nxOrderProgressFill" />
+                        <VBox class="nxOrderProgressDot" />
+                        <Text text="i" class="nxOrderProgressInfo" />
+                    </HBox>
+                </VBox>
+
+                <VBox class="nxOrderDetailList" width="100%" renderType="Bare">
+                    <HBox class="nxOrderDetailRow" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                        <Text text="예상 소요" class="nxOrderDetailLabel" />
+                        <Text text="12일 (예상)" class="nxOrderDetailValue" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                        <Text text="고객" class="nxOrderDetailLabel" />
+                        <Text text="(주) 한국페인트" class="nxOrderDetailValue" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                        <Text text="제품명" class="nxOrderDetailLabel" />
+                        <Text text="UP-F-PNT-001 / 파스칼 프리미엄 페인트" class="nxOrderDetailValue nxOrderProductName" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                        <Text text="수량" class="nxOrderDetailLabel" />
+                        <Text text="100 EA" class="nxOrderDetailValue" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                        <Text text="금액" class="nxOrderDetailLabel" />
+                        <Text text="₩ 128,500,000" class="nxOrderDetailValue nxOrderAmount" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                        <Text text="생성일" class="nxOrderDetailLabel" />
+                        <Text text="2025.05.18" class="nxOrderDetailValue" />
+                    </HBox>
+                </VBox>
+            </VBox>
         </VBox>
     </VBox>
 </mvc:View>

@@ -27,6 +27,24 @@ sap.ui.define([
 
         onDashboardSettings: function () {
             MessageToast.show("대시보드 설정은 추후 연결 예정입니다");
+        },
+
+        onExecuteDateQuery: function () {
+            var oDateRange = this.byId("dashboardDateRange");
+            var oPeriod = this.byId("dashboardPeriodSelect");
+            var sRange = oDateRange && oDateRange.getValue();
+            var sPeriod = oPeriod && oPeriod.getSelectedItem() && oPeriod.getSelectedItem().getText();
+
+            MessageToast.show((sRange || "기간 미설정") + " · " + (sPeriod || "주기 미설정") + " 조회 실행");
+            sap.ui.getCore().getEventBus().publish("dashboard", "refreshData");
+        },
+
+        onSaveDateQuery: function () {
+            MessageToast.show("조회 조건을 저장했습니다");
+        },
+
+        onLoadDateQuery: function () {
+            MessageToast.show("저장된 조회 조건을 불러왔습니다");
         }
     });
 });
