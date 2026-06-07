@@ -1,0 +1,80 @@
+<!--
+  DashboardModuleNav.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.DashboardModuleNav
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardModuleNav
+
+  역할:
+  - 상단 헤더 아래 모듈 탭 바: DASHBOARD / SD / MM / PP / FI.
+
+  대시보드 구조:
+  Main → DashboardMain → DashboardModuleNav (헤더 바로 아래)
+
+  협업:
+  - 탭 UI·활성 스타일 → 이 View
+  - navKey 변경 → DashboardModuleNav.controller.js
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardModuleNav"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <HBox
+        class="{= 'nxModuleNavBar' + ((${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE') ? ' nxModuleZoneBg' : '') }"
+        width="100%"
+        alignItems="Center">
+        <HBox class="nxModuleNavBarInner" alignItems="Center">
+            <Button
+                text="Dashboard"
+                icon="sap-icon://bbyd-dashboard"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'DASHBOARD' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                <customData>
+                    <core:CustomData key="navKey" value="DASHBOARD" />
+                </customData>
+            </Button>
+            <Button
+                text="SD"
+                icon="sap-icon://sales-order"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'SD_SALES' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                <customData>
+                    <core:CustomData key="navKey" value="SD_SALES" />
+                </customData>
+            </Button>
+            <Button
+                text="MM"
+                icon="sap-icon://product"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                <customData>
+                    <core:CustomData key="navKey" value="MM_MATERIALS" />
+                </customData>
+            </Button>
+            <Button
+                text="PP"
+                icon="sap-icon://factory"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'PP_PRODUCTION' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                <customData>
+                    <core:CustomData key="navKey" value="PP_PRODUCTION" />
+                </customData>
+            </Button>
+            <Button
+                text="FI"
+                icon="sap-icon://money-bills"
+                type="Transparent"
+                press=".onModuleNavPress"
+                class="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                <customData>
+                    <core:CustomData key="navKey" value="FI_CO_FINANCE" />
+                </customData>
+            </Button>
+        </HBox>
+    </HBox>
+</mvc:View>

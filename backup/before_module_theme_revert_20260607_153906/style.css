@@ -1291,32 +1291,12 @@ html, body, body > div, #container, #container-uiarea,
     line-height: 1 !important;
 }
 
-.nxModuleSubTabsWrap {
-    position: relative;
-    width: 100%;
-    border-bottom: 1px solid #E5E7EB;
-    box-sizing: border-box;
-}
-
-.nxModuleSubTabIndicator {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 2px;
-    background: #111827;
-    border-radius: 1px;
-    pointer-events: none;
-    z-index: 1;
-    transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 .nxModuleSubTabs {
     gap: 2rem;
-    border-bottom: none;
-    padding: 0;
+    border-bottom: 1px solid #E5E7EB;
+    padding-bottom: 0;
     margin-bottom: 0;
     flex-wrap: nowrap;
-    box-sizing: border-box;
 }
 
 .nxModuleShellKpiBand {
@@ -1328,67 +1308,46 @@ html, body, body > div, #container, #container-uiarea,
     border-bottom: 1px solid #E5E7EB;
 }
 
-.nxModuleSubTab {
-    padding: 0 !important;
-    margin: 0 !important;
-    height: auto !important;
-    border-radius: 0 !important;
-    min-width: 0 !important;
-    outline: none !important;
-    box-shadow: none !important;
+/* SD/MM/PP/FI — 상단 툴바~KPI 구간 회색 (메인 Dashboard 탭 제외) */
+.nxModuleThemeBg,
+.nxModuleThemeBg.sapUiView,
+.nxModuleThemeBg > .sapUiView,
+.nxModuleThemeBg.nxHeader,
+.nxModuleThemeBg .nxHeader,
+.nxModuleThemeBg.nxModuleNavBar,
+.nxModuleThemeBg .nxModuleNavBar,
+.nxModuleShellSlot.nxModuleThemeBg,
+.nxModuleShellSlot.nxModuleThemeBg .nxModuleShell,
+.nxModuleShellSlot.nxModuleThemeBg .nxModuleShellTop,
+.nxModuleShellSlot.nxModuleThemeBg .nxModuleShellKpiBand {
+    background-color: #F3F4F6 !important;
+    background: #F3F4F6 !important;
 }
 
-.nxModuleSubTab.sapMBtn,
-.nxModuleSubTab.sapMBtn:focus,
-.nxModuleSubTab.sapMBtn:focus-visible,
-.nxModuleSubTab.sapMBtn.sapMFocus,
-.nxModuleSubTab.sapMBtn:active {
-    outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
+.nxModuleSubTab {
+    padding: 0 !important;
+    margin: 0 0 -1px 0 !important;
+    height: auto !important;
+    border-radius: 0 !important;
 }
 
 .nxModuleSubTab .sapMBtnInner {
     border: none !important;
+    border-bottom: 2px solid transparent !important;
     border-radius: 0 !important;
     background: transparent !important;
-    background-color: transparent !important;
     box-shadow: none !important;
-    outline: none !important;
-    padding: 0.85rem 0 !important;
+    padding: 0.65rem 0.15rem !important;
     min-height: 0 !important;
     height: auto !important;
-}
-
-.nxModuleSubTab .sapMBtnInner::before,
-.nxModuleSubTab .sapMBtnInner::after,
-.nxModuleSubTab:focus .sapMBtnInner::before,
-.nxModuleSubTab:focus .sapMBtnInner::after,
-.nxModuleSubTab .sapMBtnInner:focus::before,
-.nxModuleSubTab .sapMBtnInner:focus::after,
-.nxModuleSubTab .sapMBtnInner:focus-visible::before,
-.nxModuleSubTab .sapMBtnInner:focus-visible::after,
-.nxModuleSubTab .sapMBtnInner.sapMFocus::before,
-.nxModuleSubTab .sapMBtnInner.sapMFocus::after {
-    display: none !important;
-    content: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    outline: none !important;
 }
 
 .nxModuleSubTab .sapMBtnContent {
     font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
     font-size: 0.9375rem !important;
     font-weight: 500 !important;
-    color: #6B7280 !important;
+    color: #111827 !important;
     line-height: 1.25 !important;
-}
-
-.nxModuleSubTabs .nxModuleSubTab .sapMBtnInner,
-.nxModuleSubTabs .nxModuleSubTab .sapMBtnContent,
-.nxModuleSubTabs .nxModuleSubTab .sapMBtnContent .sapMText {
-    color: #6B7280 !important;
 }
 
 .nxModuleSubTab:hover .sapMBtnInner {
@@ -1398,25 +1357,25 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxModuleSubTab:hover .sapMBtnContent {
-    color: #374151 !important;
+    color: #111827 !important;
 }
 
 .nxModuleSubTab:focus,
 .nxModuleSubTab.sapMBtn:focus,
 .nxModuleSubTab .sapMBtnInner:focus,
-.nxModuleSubTab .sapMBtnInner:focus-visible,
 .nxModuleSubTab:focus .sapMBtnInner,
 .nxModuleSubTab .sapMBtnInner.sapMFocus,
 .nxModuleSubTab.sapMFocus .sapMBtnInner {
     outline: none !important;
-    outline-offset: 0 !important;
     box-shadow: none !important;
     border: none !important;
+    border-bottom: 2px solid transparent !important;
     background: transparent !important;
 }
 
 .nxModuleSubTabActive .sapMBtnInner {
     border: none !important;
+    border-bottom: 2px solid #111827 !important;
     background: transparent !important;
     outline: none !important;
     box-shadow: none !important;
@@ -1430,14 +1389,13 @@ html, body, body > div, #container, #container-uiarea,
 .nxModuleSubTabActive:focus,
 .nxModuleSubTabActive.sapMBtn:focus,
 .nxModuleSubTabActive .sapMBtnInner:focus,
-.nxModuleSubTabActive .sapMBtnInner:focus-visible,
 .nxModuleSubTabActive:focus .sapMBtnInner,
 .nxModuleSubTabActive .sapMBtnInner.sapMFocus,
 .nxModuleSubTabActive.sapMFocus .sapMBtnInner {
     outline: none !important;
-    outline-offset: 0 !important;
     box-shadow: none !important;
     border: none !important;
+    border-bottom: 2px solid #111827 !important;
     background: transparent !important;
 }
 
@@ -1782,13 +1740,6 @@ html, body, body > div, #container, #container-uiarea,
     font-synthesis: none !important;
     color: #9CA3AF !important;
     opacity: 1;
-}
-
-.nxSearchWrap > .nxSearchIconBtn {
-    margin: 0 !important;
-    flex: 0 0 auto !important;
-    min-width: 1.75rem !important;
-    width: 1.75rem !important;
 }
 
 .nxSearchIconBtn {
@@ -2217,42 +2168,8 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxSettingsPopoverContent {
-    padding: 0;
-    gap: 0;
-}
-
-.nxHeaderSettingsPopover .nxHeaderPopoverTitleRow,
-.nxModuleSettingsPopover .nxHeaderPopoverTitleRow {
-    padding: 1rem 1.25rem 0.75rem;
-}
-
-.nxHeaderSettingsPopover .nxSettingsPopoverContent,
-.nxModuleSettingsPopover .nxPopoverBody {
-    padding-bottom: 0.25rem;
-}
-
-.nxHeaderSettingsPopover .nxSettingsRow,
-.nxModuleSettingsPopover .nxSettingsRow {
-    width: 100%;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    margin: 0;
-    border-bottom: 1px solid #E5E7EB;
-    box-sizing: border-box;
-    align-items: center !important;
-}
-
-.nxHeaderSettingsPopover .nxSettingsRow:last-of-type,
-.nxModuleSettingsPopover .nxSettingsRow:last-of-type {
-    border-bottom: none;
-    padding-bottom: 1.25rem;
-}
-
-.nxSettingsRowText {
-    flex: 1 1 auto;
-    min-width: 0;
-    padding-right: 0.75rem;
-    gap: 0.2rem;
+    padding: 0.75rem 1rem 1rem;
+    gap: 0.85rem;
 }
 
 .nxSettingsRow {
@@ -2265,17 +2182,6 @@ html, body, body > div, #container, #container-uiarea,
 .nxSettingsRow:last-of-type {
     border-bottom: none;
     padding-bottom: 0;
-}
-
-.nxModuleSettingsPopover.sapMPopover,
-.nxHeaderSettingsPopover.sapMPopover {
-    border-radius: 0.75rem !important;
-    overflow: hidden !important;
-}
-
-.nxModuleSettingsPopover .sapMPopoverCont,
-.nxHeaderSettingsPopover .sapMPopoverCont {
-    padding: 0 !important;
 }
 
 .nxSettingsLabel {
@@ -2403,63 +2309,12 @@ html, body, body > div, #container, #container-uiarea,
 .nxProfileDialogPreview {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
     gap: 1rem !important;
     margin-bottom: 0.25rem !important;
     padding-bottom: 1rem !important;
     border-bottom: 1px solid #E5E7EB !important;
     width: 100% !important;
     box-sizing: border-box !important;
-}
-
-.nxProfileDialogPreviewMain {
-    display: flex !important;
-    align-items: center !important;
-    gap: 1rem !important;
-    min-width: 0 !important;
-    flex: 1 1 auto !important;
-}
-
-.nxProfileDialogQrWrap {
-    flex: 0 0 auto !important;
-    align-items: center !important;
-    gap: 0.35rem !important;
-    margin-left: 0.5rem !important;
-}
-
-.nxProfileDialogQr,
-.nxProfileDialogQr .sapMImg,
-.nxProfileDialogQr img {
-    width: 5rem !important;
-    height: 5rem !important;
-    max-width: 5rem !important;
-    max-height: 5rem !important;
-    object-fit: contain !important;
-    display: block !important;
-    border: 1px solid #E5E7EB !important;
-    border-radius: 0.5rem !important;
-    padding: 0.3rem !important;
-    background: #FFFFFF !important;
-    box-sizing: border-box !important;
-    cursor: pointer !important;
-}
-
-.nxProfileDialogQr:focus,
-.nxProfileDialogQr:focus-visible,
-.nxProfileDialogQr .sapMImgFocusable:focus {
-    outline: 2px solid #0070F2 !important;
-    outline-offset: 2px !important;
-}
-
-.nxProfileDialogQrHint,
-.nxProfileDialogQrHint .sapMText {
-    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
-    font-size: 0.6875rem !important;
-    font-weight: 500 !important;
-    color: #6B7280 !important;
-    line-height: 1.2 !important;
-    text-align: center !important;
-    white-space: nowrap !important;
 }
 
 .nxProfileDialogPreviewInfo {
@@ -7893,176 +7748,4 @@ html, body, body > div, #container, #container-uiarea,
 .e2eMtoSideNavPrev,
 .e2eMtoSideNavNext {
     display: none !important;
-}
-
-/* ── Dark mode (설정 > 다크 모드) ── */
-.nxDarkMode {
-    --nx-dm-page: #111827;
-    --nx-dm-surface: #1F2937;
-    --nx-dm-elevated: #374151;
-    --nx-dm-zone: #1F2937;
-    --nx-dm-border: #374151;
-    --nx-dm-text: #F9FAFB;
-    --nx-dm-text-secondary: #D1D5DB;
-    --nx-dm-text-muted: #9CA3AF;
-    --nx-dm-hover: #374151;
-}
-
-.nxDarkMode .nxPage,
-.nxDarkMode .nxMain,
-.nxDarkMode .nxDashboardBlank,
-.nxDarkMode .nxDashboardCanvas,
-.nxDarkMode .nxDashboardCanvasRoot,
-.nxDarkMode .nxModuleCanvas,
-.nxDarkMode .nxModuleCanvasBody,
-.nxDarkMode .nxModuleContentBody {
-    background: var(--nx-dm-page) !important;
-}
-
-.nxDarkMode .nxHeader,
-.nxDarkMode .nxModuleNavBar,
-.nxDarkMode .nxCard,
-.nxDarkMode .nxModuleCanvas .nxModuleCanvasBody,
-.nxDarkMode .nxPopoverBody,
-.nxDarkMode .nxHeaderPopoverTitleRow {
-    background: var(--nx-dm-surface) !important;
-    border-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxHeader {
-    border-bottom-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxModuleShellSlot,
-.nxDarkMode .nxModuleShell,
-.nxDarkMode .nxModuleShellTop,
-.nxDarkMode .nxModuleShellKpiBand {
-    background: var(--nx-dm-zone) !important;
-    border-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxHeaderAppName,
-.nxDarkMode .nxHeaderAppName .sapMText,
-.nxDarkMode .nxHeaderTeamName,
-.nxDarkMode .nxHeaderTeamName .sapMText,
-.nxDarkMode .nxModuleShellTitle,
-.nxDarkMode .nxModuleShellTitle .sapMTitle,
-.nxDarkMode .nxKpiValue .sapMTitle,
-.nxDarkMode .nxHeaderPopoverTitle,
-.nxDarkMode .nxHeaderPopoverTitle .sapMTitle,
-.nxDarkMode .nxSettingsLabel,
-.nxDarkMode .nxSettingsLabel .sapMText {
-    color: var(--nx-dm-text) !important;
-}
-
-.nxDarkMode .nxKpiLabel,
-.nxDarkMode .nxSettingsHint,
-.nxDarkMode .nxSettingsHint .sapMText,
-.nxDarkMode .nxModuleNavTab .sapMBtnContent,
-.nxDarkMode .nxModuleNavTab .sapMBtnIcon {
-    color: var(--nx-dm-text-muted) !important;
-}
-
-.nxDarkMode .nxHeaderDividerBar {
-    background: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxHeaderBrandBtn:hover .sapMBtnInner,
-.nxDarkMode .nxHeaderTeamSelectorBtn:hover .sapMBtnInner,
-.nxDarkMode .nxHeaderTeamSelector:hover .nxHeaderTeamSelectorBtn .sapMBtnInner,
-.nxDarkMode .nxModuleNavTab:hover .sapMBtnInner {
-    background: var(--nx-dm-hover) !important;
-}
-
-.nxDarkMode .nxModuleNavTab:hover .sapMBtnIcon,
-.nxDarkMode .nxModuleNavTab:hover .sapMBtnContent {
-    color: var(--nx-dm-text-secondary) !important;
-}
-
-.nxDarkMode .nxModuleNavTabActive .sapMBtnInner {
-    background: rgba(109, 40, 217, 0.25) !important;
-}
-
-.nxDarkMode .nxModuleNavTabActive .sapMBtnIcon,
-.nxDarkMode .nxModuleNavTabActive .sapMBtnContent {
-    color: #C4B5FD !important;
-}
-
-.nxDarkMode .nxModuleSubTabsWrap {
-    border-bottom-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxModuleSubTabIndicator {
-    background: var(--nx-dm-text) !important;
-}
-
-.nxDarkMode .nxModuleSubTab .sapMBtnContent,
-.nxDarkMode .nxModuleSubTabs .nxModuleSubTab .sapMBtnContent,
-.nxDarkMode .nxModuleSubTabs .nxModuleSubTab .sapMBtnContent .sapMText {
-    color: var(--nx-dm-text-muted) !important;
-}
-
-.nxDarkMode .nxModuleSubTabActive .sapMBtnContent {
-    color: var(--nx-dm-text) !important;
-}
-
-.nxDarkMode .nxModuleSubTab:hover .sapMBtnContent {
-    color: var(--nx-dm-text-secondary) !important;
-}
-
-.nxDarkMode .nxModulePeriodSelect .sapMSlt,
-.nxDarkMode .nxModuleSquareBtn .sapMBtnInner {
-    background: var(--nx-dm-elevated) !important;
-    border-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxModulePeriodSelect .sapMSltLabel,
-.nxDarkMode .nxModuleSquareBtn .sapMBtnIcon {
-    color: var(--nx-dm-text-secondary) !important;
-}
-
-.nxDarkMode .nxNotificationPopover.sapMPopover,
-.nxDarkMode .nxHelpPopover.sapMPopover,
-.nxDarkMode .nxSearchPopover.sapMPopover,
-.nxDarkMode .nxHeaderSettingsPopover.sapMPopover,
-.nxDarkMode .nxModuleSettingsPopover.sapMPopover {
-    background: var(--nx-dm-surface) !important;
-    border-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxNotificationPopover .sapMPopoverCont,
-.nxDarkMode .nxHelpPopover .sapMPopoverCont,
-.nxDarkMode .nxSearchPopover .sapMPopoverCont,
-.nxDarkMode .nxHeaderSettingsPopover .sapMPopoverCont,
-.nxDarkMode .nxModuleSettingsPopover .sapMPopoverCont {
-    background: var(--nx-dm-surface) !important;
-}
-
-.nxDarkMode .nxHeaderPopoverTitleRow,
-.nxDarkMode .nxHeaderPopoverTitleBar,
-.nxDarkMode .nxHeaderPopoverTitleBar.sapMBar {
-    background: var(--nx-dm-surface) !important;
-    border-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxSettingsRow {
-    border-bottom-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxCard {
-    border-bottom-color: var(--nx-dm-border) !important;
-    border-right-color: var(--nx-dm-border) !important;
-}
-
-.nxDarkMode .nxKpiCard:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-
-.nxDarkMode .nxKpiIconPurple { background: rgba(0, 112, 242, 0.2) !important; }
-.nxDarkMode .nxKpiIconBlue { background: rgba(59, 130, 246, 0.2) !important; }
-.nxDarkMode .nxKpiIconTeal { background: rgba(20, 184, 166, 0.2) !important; }
-
-.nxDarkMode .nxSidebar {
-    background: var(--nx-dm-surface) !important;
-    border-right-color: var(--nx-dm-border) !important;
 }

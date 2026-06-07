@@ -22,8 +22,9 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/m/MessageBox",
     "com/capstone/dashboard/fioridashboard/service/DashboardDataService",
-    "com/capstone/dashboard/fioridashboard/util/SapErrorUtil"
-], function (Controller, JSONModel, MessageToast, MessageBox, DashboardDataService, SapErrorUtil) {
+    "com/capstone/dashboard/fioridashboard/util/SapErrorUtil",
+    "com/capstone/dashboard/fioridashboard/util/DashboardThemeHelper"
+], function (Controller, JSONModel, MessageToast, MessageBox, DashboardDataService, SapErrorUtil, DashboardThemeHelper) {
     "use strict";
 
     var CREATE_ENTITY_CANDIDATES = [
@@ -94,7 +95,9 @@ sap.ui.define([
                     name: "박찬영",
                     role: "FI",
                     editName: "박찬영",
-                    editModule: "FI"
+                    editModule: "FI",
+                    blogUrl: "https://blog.naver.com/channy0210",
+                    blogQrSrc: "images/profile-blog-qr.png"
                 },
                 team: {
                     name: "HSAPIENT",
@@ -135,7 +138,8 @@ sap.ui.define([
                 ],
                 settings: {
                     autoRefresh: false,
-                    showNotifications: true
+                    showNotifications: true,
+                    darkMode: DashboardThemeHelper.load()
                 },
                 summary: {
                     totalMaterials: 0,
@@ -171,6 +175,10 @@ sap.ui.define([
                 counts: { all: 0, active: 0, warning: 0, shortage: 0 },
                 filters: {
                     query: ""
+                },
+                search: {
+                    results: [],
+                    resultCount: 0
                 },
                 allItems: [],
                 displayItems: [],
@@ -397,6 +405,7 @@ sap.ui.define([
             });
 
             oComponent.setModel(oDashboardModel, "dashboard");
+            DashboardThemeHelper.apply(oDashboardModel.getProperty("/settings/darkMode"));
             oComponent.setModel(new JSONModel({
                 Component: "",
                 ComponentText: "",

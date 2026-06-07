@@ -16,47 +16,18 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
-    "com/capstone/dashboard/fioridashboard/service/DashboardDataService"
-], function (Controller, MessageToast, DashboardDataService) {
+    "com/capstone/dashboard/fioridashboard/util/DashboardSearchHelper",
+    "com/capstone/dashboard/fioridashboard/util/ModuleViewConfig",
+    "com/capstone/dashboard/fioridashboard/util/DashboardThemeHelper",
+    "com/capstone/dashboard/fioridashboard/util/ProfileBlogConfig"
+], function (Controller, MessageToast, DashboardSearchHelper, ModuleViewConfig, DashboardThemeHelper, ProfileBlogConfig) {
     "use strict";
 
-    var NAV_LABELS = {
-        DASHBOARD: "Dashboard",
-        SD_SALES: "SD Sales",
-        MM_MATERIALS: "MM Materials",
-        PP_PRODUCTION: "PP Production",
-        FI_CO_FINANCE: "FI/CO Finance",
-        TCODE_GUIDE: "T-code Guide",
-        ERROR_HELPER: "Error Helper",
-        ODATA_STATUS: "OData Status",
-        SYSTEM_LOG: "System Log"
-    };
-
-    var NAV_DESCRIPTIONS = {
-        DASHBOARD: "SAP 통합 프로세스 전체 현황을 확인합니다.",
-        SD_SALES: "수주·매출 현황과 판매 프로세스를 확인합니다.",
-        MM_MATERIALS: "자재 마스터와 재고 연동 정보를 확인합니다.",
-        PP_PRODUCTION: "생산 프로세스 흐름과 재고 활동을 확인합니다.",
-        FI_CO_FINANCE: "재무·회계 관련 매출 및 재고 가치를 확인합니다.",
-        TCODE_GUIDE: "자주 사용하는 T-code 가이드를 확인합니다.",
-        ERROR_HELPER: "SAP 오류 메시지 해결 방법을 확인합니다.",
-        ODATA_STATUS: "OData 서비스 연결 상태를 확인합니다.",
-        SYSTEM_LOG: "시스템 로그와 이벤트 기록을 확인합니다."
-    };
-
-    var NAV_ICONS = {
-        DASHBOARD: "sap-icon://bbyd-dashboard",
-        SD_SALES: "sap-icon://sales-order",
-        MM_MATERIALS: "sap-icon://product",
-        PP_PRODUCTION: "sap-icon://factory",
-        FI_CO_FINANCE: "sap-icon://money-bills",
-        TCODE_GUIDE: "sap-icon://syntax",
-        ERROR_HELPER: "sap-icon://message-error",
-        ODATA_STATUS: "sap-icon://connected",
-        SYSTEM_LOG: "sap-icon://document-text"
-    };
-
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader", {
+
+        onInit: function () {
+            this._attachProfileQrHandler();
+        },
 
         onExit: function () {
             this._oProfileDialog = null;
@@ -64,15 +35,68 @@ sap.ui.define([
             this._oHelpPopover = null;
             this._oSettingsPopover = null;
             this._oTeamPopover = null;
+            this._oSearchPopover = null;
         },
 
         _applySearch: function (sQuery) {
             var oModel = this.getView().getModel("dashboard");
+            var oPopover = this.byId("searchPopover");
+            var oWrap = this.byId("globalSearchWrap");
+
             if (!oModel) {
                 return;
             }
-            oModel.setProperty("/filters/query", sQuery || "");
-            DashboardDataService.applySearchFilter(oModel);
+
+            sQuery = (sQuery || "").trim();
+            aResults = DashboardSearchHelper.applyFilter(oModel, sQuery);
+
+            if (!oPopover || !oWrap) {
+                return aResults;
+            }
+
+            if (sQuery) {
+                if (!oPopover.isOpen()) {
+                    oPopover.openBy(oWrap);
+                }
+            } else if (oPopover.isOpen()) {
+                oPopover.close();
+            }
+
+            return aResults;
+        },
+
+        onSearchResultPress: function (oEvent) {
+            var oContext = oEvent.getParameter("listItem") && oEvent.getParameter("listItem").getBindingContext("dashboard");
+            var oData = oContext && oContext.getObject();
+            var oPopover = this.byId("searchPopover");
+
+            if (!oData) {
+                return;
+            }
+
+            DashboardSearchHelper.handleResultPress(
+                this.getView().getModel("dashboard"),
+                oData,
+                this._setNavKey.bind(this),
+                this._applySearch.bind(this)
+            );
+
+            if (oData.type === "nav") {
+                MessageToast.show(oData.title + "(으)로 이동했습니다");
+            } else if (oData.type === "subTab") {
+                MessageToast.show(oData.title + " 탭으로 이동했습니다");
+            } else if (oData.type === "team") {
+                MessageToast.show("팀이 " + oData.title + "(으)로 변경되었습니다");
+            } else if (oData.type === "notification") {
+                MessageToast.show(oData.title);
+            } else if (oData.type === "material") {
+                MessageToast.show("자재 검색 결과를 반영했습니다");
+            }
+
+            if (oPopover && oPopover.isOpen()) {
+                oPopover.close();
+            }
+            this._clearSearchFocus();
         },
 
         onSearch: function (oEvent) {
@@ -83,12 +107,37 @@ sap.ui.define([
         },
 
         onSearchSubmit: function (oEvent) {
-            this._applySearch(oEvent.getParameter("value") || "");
+            var sQuery = (oEvent.getParameter("value") || "").trim();
+            var aResults = this._applySearch(sQuery);
+
+            if (!sQuery) {
+                return;
+            }
+
+            if (aResults && aResults.length) {
+                MessageToast.show("\"" + sQuery + "\" · " + aResults.length + "건");
+            } else {
+                MessageToast.show("\"" + sQuery + "\" 검색 결과가 없습니다");
+            }
         },
 
         onSearchIconPress: function () {
             var oInput = this.byId("globalSearch");
             this._applySearch(oInput ? oInput.getValue() : "");
+        },
+
+        _clearSearchFocus: function () {
+            var oWrap = this.byId("globalSearchWrap");
+            var oInput = this.byId("globalSearch");
+            var oInputDom = oInput && oInput.getFocusDomRef();
+            var oWrapDom = oWrap && oWrap.getDomRef();
+
+            if (oInputDom && oInputDom.blur) {
+                oInputDom.blur();
+            }
+            if (oWrapDom && oWrapDom.blur) {
+                oWrapDom.blur();
+            }
         },
 
         onTeamSelectorPress: function (oEvent) {
@@ -132,6 +181,20 @@ sap.ui.define([
             MessageToast.show("팀이 " + (sText || sKey) + "(으)로 변경되었습니다");
         },
 
+        onTeamPopoverAfterClose: function () {
+            setTimeout(this._clearTeamSelectorFocus.bind(this), 0);
+        },
+
+        _clearTeamSelectorFocus: function () {
+            ["teamSelectorBtn", "teamSelectorArrowBtn"].forEach(function (sId) {
+                var oControl = this.byId(sId);
+                var oDom = oControl && oControl.getDomRef();
+                if (oDom && oDom.blur) {
+                    oDom.blur();
+                }
+            }.bind(this));
+        },
+
         _selectTeamListItem: function (sKey) {
             var oList = this.byId("teamList");
             var aItems;
@@ -154,13 +217,21 @@ sap.ui.define([
 
         _setNavKey: function (sKey) {
             var oModel = this.getView().getModel("dashboard");
+            var oMeta;
+
             if (!oModel) {
                 return;
             }
+
+            oMeta = DashboardSearchHelper.getNavMeta(sKey);
             oModel.setProperty("/ui/navKey", sKey);
-            oModel.setProperty("/ui/navLabel", NAV_LABELS[sKey] || sKey);
-            oModel.setProperty("/ui/navDescription", NAV_DESCRIPTIONS[sKey] || "");
-            oModel.setProperty("/ui/navIcon", NAV_ICONS[sKey] || "sap-icon://home");
+            oModel.setProperty("/ui/navLabel", oMeta.label);
+            oModel.setProperty("/ui/navDescription", oMeta.description);
+            oModel.setProperty("/ui/navIcon", oMeta.icon);
+
+            if (ModuleViewConfig.isModuleKey(sKey)) {
+                ModuleViewConfig.syncModuleView(oModel, sKey);
+            }
         },
 
         _openPopover: function (sPopoverId, oSource) {
@@ -177,6 +248,32 @@ sap.ui.define([
 
         onNotifications: function (oEvent) {
             this._openPopover("notificationPopover", oEvent.getSource());
+        },
+
+        onNotificationPopoverAfterClose: function () {
+            setTimeout(function () {
+                this._clearIconBtnFocus("notificationBtn");
+            }.bind(this), 0);
+        },
+
+        onHelpPopoverAfterClose: function () {
+            setTimeout(function () {
+                this._clearIconBtnFocus("helpBtn");
+            }.bind(this), 0);
+        },
+
+        onSettingsPopoverAfterClose: function () {
+            setTimeout(function () {
+                this._clearIconBtnFocus("settingsBtn");
+            }.bind(this), 0);
+        },
+
+        _clearIconBtnFocus: function (sBtnId) {
+            var oBtn = this.byId(sBtnId);
+            var oDom = oBtn && oBtn.getDomRef();
+            if (oDom && oDom.blur) {
+                oDom.blur();
+            }
         },
 
         onNotificationItemPress: function (oEvent) {
@@ -239,6 +336,9 @@ sap.ui.define([
 
         onAutoRefreshChange: function (oEvent) {
             var bState = oEvent.getParameter("state");
+            if (bState) {
+                sap.ui.getCore().getEventBus().publish("dashboard", "refreshData");
+            }
             MessageToast.show(bState ? "자동 새로고침을 켰습니다" : "자동 새로고침을 껐습니다");
         },
 
@@ -256,9 +356,19 @@ sap.ui.define([
             MessageToast.show(bState ? "알림 표시를 켰습니다" : "알림 표시를 껐습니다");
         },
 
+        onDarkModeChange: function (oEvent) {
+            var oModel = this.getView().getModel("dashboard");
+            if (!oModel) {
+                return;
+            }
+            var bState = oEvent.getParameter("state");
+            oModel.setProperty("/settings/darkMode", bState);
+            DashboardThemeHelper.apply(bState);
+            MessageToast.show(bState ? "다크 모드를 켰습니다" : "다크 모드를 껐습니다");
+        },
+
         onOpenDashboardSettings: function () {
             this.byId("settingsPopover").close();
-            MessageToast.show("대시보드 설정은 화면 우측 상단 버튼에서 이용할 수 있습니다");
         },
 
         onProfile: function () {
@@ -269,7 +379,63 @@ sap.ui.define([
 
             oModel.setProperty("/user/editName", this._normalizeNameKey(oModel.getProperty("/user/name")));
             oModel.setProperty("/user/editModule", this._normalizeModuleKey(oModel.getProperty("/user/role")));
+            this._syncProfileBlog(oModel.getProperty("/user/editName"));
             this._getProfileDialog().open();
+            setTimeout(this._attachProfileQrHandler.bind(this), 0);
+        },
+
+        onProfileNameChange: function (oEvent) {
+            var sKey = oEvent.getParameter("selectedItem") && oEvent.getParameter("selectedItem").getKey();
+
+            if (sKey) {
+                this._syncProfileBlog(sKey);
+            }
+        },
+
+        _syncProfileBlog: function (sName) {
+            var oModel = this.getView().getModel("dashboard");
+            var oBlog = ProfileBlogConfig.getBlogByName(sName);
+
+            if (!oModel || !oBlog) {
+                return;
+            }
+
+            oModel.setProperty("/user/blogUrl", oBlog.url);
+            oModel.setProperty("/user/blogQrSrc", oBlog.qrSrc);
+        },
+
+        onProfileQrPress: function () {
+            var oModel = this.getView().getModel("dashboard");
+            var sUrl = oModel && oModel.getProperty("/user/blogUrl");
+
+            if (sUrl) {
+                sap.m.URLHelper.redirect(sUrl, true);
+            }
+        },
+
+        _attachProfileQrHandler: function () {
+            var oQrImage = this.byId("profileBlogQr");
+
+            if (!oQrImage || this._bProfileQrHandlerAttached) {
+                return;
+            }
+
+            oQrImage.attachBrowserEvent("click", this.onProfileQrPress.bind(this));
+            oQrImage.attachBrowserEvent("keydown", function (oEvent) {
+                if (oEvent.key === "Enter" || oEvent.key === " ") {
+                    oEvent.preventDefault();
+                    this.onProfileQrPress();
+                }
+            }.bind(this));
+
+            var oDom = oQrImage.getDomRef();
+            if (oDom) {
+                oDom.setAttribute("tabindex", "0");
+                oDom.setAttribute("role", "link");
+                oDom.setAttribute("aria-label", "블로그 QR 코드 — 스캔 또는 클릭");
+            }
+
+            this._bProfileQrHandlerAttached = true;
         },
 
         onProfileSave: function () {
@@ -293,6 +459,7 @@ sap.ui.define([
 
             oModel.setProperty("/user/name", sName);
             oModel.setProperty("/user/role", sModule);
+            this._syncProfileBlog(sName);
             this._getProfileDialog().close();
             MessageToast.show("프로필이 저장되었습니다");
         },
@@ -317,6 +484,26 @@ sap.ui.define([
 
         onProfileCancel: function () {
             this._getProfileDialog().close();
+        },
+
+        onProfileDialogAfterClose: function () {
+            setTimeout(this._clearProfileFocus.bind(this), 0);
+        },
+
+        _clearProfileFocus: function () {
+            var oProfileBtn = this.byId("profileMenuBtn");
+            var oBtnDom = oProfileBtn && oProfileBtn.getDomRef();
+
+            if (oBtnDom && oBtnDom.blur) {
+                oBtnDom.blur();
+            }
+
+            var oDialogDom = this._getProfileDialog().getDomRef();
+            if (oDialogDom) {
+                oDialogDom.querySelectorAll(":focus").forEach(function (el) {
+                    el.blur();
+                });
+            }
         },
 
         _getProfileDialog: function () {

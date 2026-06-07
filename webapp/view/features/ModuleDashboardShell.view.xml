@@ -15,49 +15,88 @@
     width="100%">
 
     <VBox class="nxModuleShell" width="100%">
-        <HBox class="nxModuleShellHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
-            <Title text="{dashboard>/moduleView/title}" level="H2" class="nxModuleShellTitle" />
-            <HBox alignItems="Center" class="nxModuleShellActions">
-                <Select
-                    selectedKey="{dashboard>/moduleView/period}"
-                    width="9.5rem"
-                    forceSelection="true"
-                    change=".onPeriodChange"
-                    class="nxModulePeriodSelect"
-                    items="{dashboard>/moduleView/periodOptions}">
-                    <core:Item key="{dashboard>key}" text="{dashboard>text}" />
-                </Select>
-                <Button icon="sap-icon://upload" type="Transparent" tooltip="내보내기" press=".onExport" class="nxModuleSquareBtn" />
-                <Button icon="sap-icon://action-settings" type="Transparent" tooltip="설정" press=".onModuleSettings" class="nxModuleSquareBtn" />
+        <VBox class="nxModuleShellTop" width="100%">
+            <HBox class="nxModuleShellHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+                <Title text="{dashboard>/moduleView/title}" level="H2" class="nxModuleShellTitle" />
+                <HBox alignItems="Center" class="nxModuleShellActions">
+                    <Select
+                        selectedKey="{dashboard>/moduleView/period}"
+                        width="9.5rem"
+                        forceSelection="true"
+                        change=".onPeriodChange"
+                        class="nxModulePeriodSelect"
+                        items="{dashboard>/moduleView/periodOptions}">
+                        <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                    </Select>
+                    <Button icon="sap-icon://upload" type="Transparent" tooltip="내보내기" press=".onExport" class="nxModuleSquareBtn" />
+                    <Button
+                        id="moduleSettingsBtn"
+                        icon="sap-icon://action-settings"
+                        type="Transparent"
+                        tooltip="설정"
+                        press=".onModuleSettings"
+                        class="nxModuleSquareBtn" />
+                </HBox>
             </HBox>
-        </HBox>
 
-        <HBox class="nxModuleSubTabs" width="100%" alignItems="End">
-            <Button text="Overview" type="Transparent" press=".onSubTabPress" class="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+            <VBox id="moduleSubTabsWrap" class="nxModuleSubTabsWrap" width="100%">
+            <HBox id="moduleSubTabsBar" class="nxModuleSubTabs" width="100%" alignItems="Center">
+            <Button
+                id="subTabOverview"
+                text="Overview"
+                type="Transparent"
+                press=".onSubTabPress"
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="OVERVIEW" /></customData>
             </Button>
-            <Button text="Operations" type="Transparent" press=".onSubTabPress" class="{= ${dashboard>/moduleView/activeSubTab} === 'OPERATIONS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+            <Button
+                id="subTabOperations"
+                text="Operations"
+                type="Transparent"
+                press=".onSubTabPress"
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'OPERATIONS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="OPERATIONS" /></customData>
             </Button>
-            <Button text="Source distribution" type="Transparent" press=".onSubTabPress" class="{= ${dashboard>/moduleView/activeSubTab} === 'DISTRIBUTION' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+            <Button
+                id="subTabDistribution"
+                text="Source distribution"
+                type="Transparent"
+                press=".onSubTabPress"
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'DISTRIBUTION' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="DISTRIBUTION" /></customData>
             </Button>
-            <Button text="Insurance" type="Transparent" press=".onSubTabPress" class="{= ${dashboard>/moduleView/activeSubTab} === 'INSURANCE' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+            <Button
+                id="subTabInsurance"
+                text="Insurance"
+                type="Transparent"
+                press=".onSubTabPress"
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'INSURANCE' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="INSURANCE" /></customData>
             </Button>
-            <Button text="Reports" type="Transparent" press=".onSubTabPress" class="{= ${dashboard>/moduleView/activeSubTab} === 'REPORTS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+            <Button
+                id="subTabReports"
+                text="Reports"
+                type="Transparent"
+                press=".onSubTabPress"
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'REPORTS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="REPORTS" /></customData>
             </Button>
-        </HBox>
+            </HBox>
+            </VBox>
+        </VBox>
 
-        <HBox class="nxModuleKpiRow" width="100%" alignItems="Stretch" visible="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' }">
+        <VBox
+            class="nxModuleShellKpiBand"
+            width="100%"
+            visible="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' }">
+            <HBox class="nxModuleKpiRow" width="100%" alignItems="Stretch">
             <VBox class="nxModuleKpiCard">
                 <Text text="{dashboard>/moduleView/kpis/0/label}" class="nxModuleKpiLabel" />
                 <HBox alignItems="Baseline" class="nxModuleKpiValueRow">
                     <Text text="{dashboard>/moduleView/kpis/0/valueMain}" class="nxModuleKpiValueMain" />
                     <Text text="{dashboard>/moduleView/kpis/0/valueSuffix}" class="nxModuleKpiValueSuffix" />
                 </HBox>
-                <HBox alignItems="Center" class="nxModuleKpiTrendRow">
+                <HBox alignItems="Center" class="nxModuleKpiTrendRow" visible="{= ${dashboard>/moduleView/settings/showKpiTrends} !== false }">
                     <Text text="{dashboard>/moduleView/kpis/0/trendHint}" class="nxModuleKpiTrendHint" />
                     <HBox alignItems="Center" class="{= ${dashboard>/moduleView/kpis/0/trendUp} ? 'nxModuleKpiTrend nxModuleKpiTrendUp' : 'nxModuleKpiTrend nxModuleKpiTrendDown' }">
                         <core:Icon src="{= ${dashboard>/moduleView/kpis/0/trendUp} ? 'sap-icon://trend-up' : 'sap-icon://trend-down' }" size="0.75rem" class="nxModuleKpiTrendIcon" />
@@ -71,7 +110,7 @@
                     <Text text="{dashboard>/moduleView/kpis/1/valueMain}" class="nxModuleKpiValueMain" />
                     <Text text="{dashboard>/moduleView/kpis/1/valueSuffix}" class="nxModuleKpiValueSuffix" />
                 </HBox>
-                <HBox alignItems="Center" class="nxModuleKpiTrendRow">
+                <HBox alignItems="Center" class="nxModuleKpiTrendRow" visible="{= ${dashboard>/moduleView/settings/showKpiTrends} !== false }">
                     <Text text="{dashboard>/moduleView/kpis/1/trendHint}" class="nxModuleKpiTrendHint" />
                     <HBox alignItems="Center" class="{= ${dashboard>/moduleView/kpis/1/trendUp} ? 'nxModuleKpiTrend nxModuleKpiTrendUp' : 'nxModuleKpiTrend nxModuleKpiTrendDown' }">
                         <core:Icon src="{= ${dashboard>/moduleView/kpis/1/trendUp} ? 'sap-icon://trend-up' : 'sap-icon://trend-down' }" size="0.75rem" class="nxModuleKpiTrendIcon" />
@@ -85,7 +124,7 @@
                     <Text text="{dashboard>/moduleView/kpis/2/valueMain}" class="nxModuleKpiValueMain" />
                     <Text text="{dashboard>/moduleView/kpis/2/valueSuffix}" class="nxModuleKpiValueSuffix" />
                 </HBox>
-                <HBox alignItems="Center" class="nxModuleKpiTrendRow">
+                <HBox alignItems="Center" class="nxModuleKpiTrendRow" visible="{= ${dashboard>/moduleView/settings/showKpiTrends} !== false }">
                     <Text text="{dashboard>/moduleView/kpis/2/trendHint}" class="nxModuleKpiTrendHint" />
                     <HBox alignItems="Center" class="{= ${dashboard>/moduleView/kpis/2/trendUp} ? 'nxModuleKpiTrend nxModuleKpiTrendUp' : 'nxModuleKpiTrend nxModuleKpiTrendDown' }">
                         <core:Icon src="{= ${dashboard>/moduleView/kpis/2/trendUp} ? 'sap-icon://trend-up' : 'sap-icon://trend-down' }" size="0.75rem" class="nxModuleKpiTrendIcon" />
@@ -99,7 +138,7 @@
                     <Text text="{dashboard>/moduleView/kpis/3/valueMain}" class="nxModuleKpiValueMain" />
                     <Text text="{dashboard>/moduleView/kpis/3/valueSuffix}" class="nxModuleKpiValueSuffix" />
                 </HBox>
-                <HBox alignItems="Center" class="nxModuleKpiTrendRow">
+                <HBox alignItems="Center" class="nxModuleKpiTrendRow" visible="{= ${dashboard>/moduleView/settings/showKpiTrends} !== false }">
                     <Text text="{dashboard>/moduleView/kpis/3/trendHint}" class="nxModuleKpiTrendHint" />
                     <HBox alignItems="Center" class="{= ${dashboard>/moduleView/kpis/3/trendUp} ? 'nxModuleKpiTrend nxModuleKpiTrendUp' : 'nxModuleKpiTrend nxModuleKpiTrendDown' }">
                         <core:Icon src="{= ${dashboard>/moduleView/kpis/3/trendUp} ? 'sap-icon://trend-up' : 'sap-icon://trend-down' }" size="0.75rem" class="nxModuleKpiTrendIcon" />
@@ -107,6 +146,37 @@
                     </HBox>
                 </HBox>
             </VBox>
-        </HBox>
+            </HBox>
+        </VBox>
     </VBox>
+
+    <Popover
+        id="moduleSettingsPopover"
+        placement="Bottom"
+        contentWidth="22rem"
+        showHeader="false"
+        afterClose=".onModuleSettingsAfterClose"
+        class="nxHeaderPopover nxModuleSettingsPopover">
+        <content>
+            <VBox width="100%" class="nxPopoverBody">
+                <VBox class="nxHeaderPopoverTitleRow">
+                    <Title text="모듈 설정" level="H5" class="nxHeaderPopoverTitle" />
+                </VBox>
+                <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
+                    <VBox class="nxSettingsRowText">
+                        <Text text="KPI 추세 표시" class="nxSettingsLabel" />
+                        <Text text="Overview KPI 카드 하단 추세" class="nxSettingsHint" />
+                    </VBox>
+                    <Switch state="{dashboard>/moduleView/settings/showKpiTrends}" change=".onShowKpiTrendsChange" />
+                </HBox>
+                <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxSettingsRow">
+                    <VBox class="nxSettingsRowText">
+                        <Text text="내보내기에 추세 포함" class="nxSettingsLabel" />
+                        <Text text="CSV 내보내기 시 추세 컬럼 포함" class="nxSettingsHint" />
+                    </VBox>
+                    <Switch state="{dashboard>/moduleView/settings/includeTrendsInExport}" change=".onIncludeTrendsInExportChange" />
+                </HBox>
+            </VBox>
+        </content>
+    </Popover>
 </mvc:View>
