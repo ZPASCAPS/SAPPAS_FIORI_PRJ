@@ -859,33 +859,198 @@ html, body, body > div, #container, #container-uiarea,
     flex-shrink: 0;
     width: 100%;
     max-width: 100%;
-    background: #F3F4F6;
+    background: #FFFFFF;
     border-bottom: 1px solid #E5E7EB;
     padding: 0 1.25rem;
-    height: 3.75rem;
-    min-height: 3.75rem;
-    max-height: 3.75rem;
+    height: 4.75rem;
+    min-height: 4.75rem;
+    max-height: 4.75rem;
     box-sizing: border-box;
     display: flex !important;
     align-items: center !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
     gap: 1rem;
+}
+
+.nxHeaderLeft {
+    flex: 0 1 auto;
+    min-width: 0;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.85rem;
+}
+
+.nxHeaderRight {
+    flex: 0 0 auto;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.65rem;
+    margin-left: auto;
+}
+
+.nxHeaderBrandBtn {
+    flex-shrink: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+}
+
+.nxHeaderBrandBtn .sapMBtnInner {
+    border: none !important;
+    background: transparent !important;
+    padding: 0.35rem 0.5rem 0.35rem 0 !important;
+    border-radius: 0.5rem !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+.nxHeaderBrandBtn:hover .sapMBtnInner,
+.nxHeaderBrandBtn:focus .sapMBtnInner {
+    background: #F9FAFB !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .nxHeaderBrand {
     flex-shrink: 0;
-    margin-right: 0.5rem;
-    min-height: 2rem;
+    gap: 0.625rem;
     display: flex !important;
     align-items: center !important;
+    padding: 0.35rem 0.5rem 0.35rem 0;
+    border-radius: 0.5rem;
+}
+
+.nxHeaderPictogram,
+.nxHeaderPictogram .sapMImg,
+.nxHeaderPictogram img,
+.nxHeaderMark,
+.nxHeaderMark .sapMImg,
+.nxHeaderMark img {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    max-width: 1.5rem !important;
+    max-height: 1.5rem !important;
+    object-fit: contain;
+    display: block;
+    margin: 0;
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.nxHeaderAppName,
+.nxHeaderAppName .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.125rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap;
+    letter-spacing: -0.025em;
+}
+
+.nxHeaderDividerBar {
+    flex-shrink: 0;
+    background: #E5E7EB !important;
+    min-width: 1px !important;
+    max-width: 1px !important;
+    margin: 0;
+    padding: 0;
+    align-self: center;
+}
+
+.nxHeaderDivider {
+    flex-shrink: 0;
+    width: 1px !important;
+    height: 1.75rem !important;
+    color: #E5E7EB !important;
+    margin: 0 0.15rem;
+}
+
+.nxHeaderTeamSelector {
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0;
+    border-radius: 0.5rem;
+}
+
+.nxHeaderTeamSelectorBtn {
+    flex-shrink: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+}
+
+.nxHeaderTeamSelectorBtn .sapMBtnInner {
+    border: none !important;
+    background: transparent !important;
+    padding: 0.35rem 0.25rem 0.35rem 0.5rem !important;
+    border-radius: 0.5rem 0 0 0.5rem !important;
+    height: auto !important;
+    min-height: 0 !important;
+    gap: 0.45rem !important;
+}
+
+.nxHeaderTeamSelectorBtn:hover .sapMBtnInner,
+.nxHeaderTeamSelectorBtn:focus .sapMBtnInner,
+.nxHeaderTeamSelector:hover .nxHeaderTeamSelectorBtn .sapMBtnInner,
+.nxHeaderTeamSelector:hover .nxTeamSelectorArrowBtn .sapMBtnInner {
+    background: #F3F4F6 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.nxHeaderTeamSelectorBtn .sapMBtnIcon {
+    color: #374151 !important;
+    font-size: 1rem !important;
+}
+
+.nxHeaderTeamSelectorBtn .sapMBtnContent {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.9375rem !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+}
+
+.nxTeamSelectorArrowBtn {
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+}
+
+.nxTeamSelectorArrowBtn .sapMBtnInner {
+    border: none !important;
+    background: transparent !important;
+    min-width: 1.25rem !important;
+    width: 1.25rem !important;
+    height: 2rem !important;
+    padding: 0 !important;
+    border-radius: 0 0.5rem 0.5rem 0 !important;
+}
+
+.nxTeamSelectorArrowBtn .sapMBtnIcon {
+    color: #9CA3AF !important;
+    font-size: 0.75rem !important;
+}
+
+.nxHeaderTeamName,
+.nxHeaderTeamName .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.0625rem !important;
+    font-weight: 700 !important;
+    color: #1A1F36 !important;
+    line-height: 1.3 !important;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
 }
 
 .nxHeaderLogo,
 .nxHeaderLogo .sapMImg,
 .nxHeaderLogo img {
     width: auto !important;
-    height: 1.75rem !important;
-    max-height: 1.75rem !important;
+    height: 2rem !important;
+    max-height: 2rem !important;
     max-width: 9rem !important;
     object-fit: contain;
     object-position: left center;
@@ -905,6 +1070,352 @@ html, body, body > div, #container, #container-uiarea,
     outline: none !important;
     box-shadow: none !important;
     border: none !important;
+}
+
+/* 모듈 탭 바 — 헤더 아래 두 번째 행 (CareOps 스타일) */
+.nxModuleNavBar {
+    flex-shrink: 0;
+    width: 100%;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 0 1.75rem;
+    height: 3.75rem;
+    min-height: 3.75rem;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nxModuleNavBarInner {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.65rem;
+}
+
+.nxModuleNavTab {
+    flex-shrink: 0;
+    position: relative;
+}
+
+.nxModuleNavTab .sapMBtnInner {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: 2.5rem !important;
+    min-height: 2.5rem !important;
+    padding: 0 1.25rem !important;
+    border: none !important;
+    border-radius: 0.75rem !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    gap: 0.5rem !important;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nxModuleNavTab .sapMBtnInner:focus,
+.nxModuleNavTab .sapMBtnInner:focus-visible,
+.nxModuleNavTab:focus .sapMBtnInner,
+.nxModuleNavTab.sapMFocus .sapMBtnInner {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.nxModuleNavTab .sapMBtnIcon {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 1rem !important;
+    color: #6B7280 !important;
+}
+
+.nxModuleNavTab .sapMBtnContent {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+    color: #6B7280 !important;
+}
+
+.nxModuleNavTab:hover .sapMBtnInner {
+    background: #F3F4F6 !important;
+}
+
+.nxModuleNavTab:hover .sapMBtnIcon,
+.nxModuleNavTab:hover .sapMBtnContent {
+    color: #374151 !important;
+}
+
+.nxModuleNavTabActive .sapMBtnInner {
+    background: #EDE9FE !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.nxModuleNavTabActive .sapMBtnIcon,
+.nxModuleNavTabActive .sapMBtnContent {
+    color: #6D28D9 !important;
+    font-weight: 700 !important;
+}
+
+.nxModuleNavTabActive:hover .sapMBtnInner {
+    background: #DDD6FE !important;
+}
+
+/* ── Module dashboard shell (CareOps Finances 상단) ── */
+.nxModuleShellSlot {
+    flex-shrink: 0;
+    width: 100%;
+    background: #FFFFFF;
+}
+
+.nxModuleShell {
+    background: #FFFFFF;
+    padding: 1.5rem 1.75rem 1.5rem;
+    box-sizing: border-box;
+}
+
+.nxModuleShellHeader {
+    margin-bottom: 1.25rem;
+}
+
+.nxModuleShellTitle,
+.nxModuleShellTitle .sapMTitle {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.75rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    letter-spacing: -0.03em;
+    line-height: 1.2 !important;
+}
+
+.nxModuleShellActions {
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.nxModulePeriodSelect .sapMSlt {
+    border-radius: 0.65rem !important;
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    height: 2.5rem;
+    min-width: 9rem;
+}
+
+.nxModulePeriodSelect .sapMSltLabel {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+}
+
+.nxModuleSquareBtn {
+    padding: 0 !important;
+    min-width: 2.5rem !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+}
+
+.nxModuleSquareBtn .sapMBtnInner {
+    border-radius: 0.65rem !important;
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    min-width: 2.5rem !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    min-height: 2.5rem !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.nxModuleSquareBtn .sapMBtnIcon {
+    color: #4B5563 !important;
+    position: static !important;
+    margin: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
+}
+
+.nxModuleSubTabs {
+    gap: 2rem;
+    border-bottom: 1px solid #E5E7EB;
+    padding-bottom: 0;
+    margin-bottom: 1.25rem;
+    flex-wrap: nowrap;
+}
+
+.nxModuleSubTab {
+    padding: 0 !important;
+    margin: 0 0 -1px 0 !important;
+    height: auto !important;
+    border-radius: 0 !important;
+}
+
+.nxModuleSubTab .sapMBtnInner {
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0.65rem 0.15rem !important;
+    min-height: 0 !important;
+    height: auto !important;
+}
+
+.nxModuleSubTab .sapMBtnContent {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.9375rem !important;
+    font-weight: 500 !important;
+    color: #9CA3AF !important;
+    line-height: 1.25 !important;
+}
+
+.nxModuleSubTab:hover .sapMBtnInner {
+    background: transparent !important;
+}
+
+.nxModuleSubTab:hover .sapMBtnContent {
+    color: #6B7280 !important;
+}
+
+.nxModuleSubTabActive .sapMBtnInner {
+    border-bottom-color: #111827 !important;
+    background: transparent !important;
+}
+
+.nxModuleSubTabActive .sapMBtnContent {
+    color: #111827 !important;
+    font-weight: 700 !important;
+}
+
+.nxModuleKpiRow {
+    gap: 0;
+    display: flex !important;
+    flex-wrap: nowrap;
+    background: #FAFAFA;
+    border-radius: 0.75rem;
+    padding: 1.25rem 0;
+    margin-top: 0.25rem;
+}
+
+.nxModuleKpiCard {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 1.75rem;
+    box-sizing: border-box;
+}
+
+.nxModuleKpiCard:not(:last-child) {
+    border-right: 1px solid #E5E7EB;
+}
+
+.nxModuleKpiCardLast {
+    padding-right: 0;
+}
+
+.nxModuleOverviewFill {
+    flex: 1 1 auto;
+    min-height: 0;
+    background: #FFFFFF;
+}
+
+.nxModuleKpiLabel,
+.nxModuleKpiLabel .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    margin-bottom: 0.5rem;
+}
+
+.nxModuleKpiValueRow {
+    gap: 0;
+    margin-bottom: 0.45rem;
+}
+
+.nxModuleKpiValueMain,
+.nxModuleKpiValueMain .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.75rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    letter-spacing: -0.03em;
+    line-height: 1.15 !important;
+}
+
+.nxModuleKpiValueSuffix,
+.nxModuleKpiValueSuffix .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.75rem !important;
+    font-weight: 800 !important;
+    color: #D1D5DB !important;
+    letter-spacing: -0.03em;
+    line-height: 1.15 !important;
+}
+
+.nxModuleKpiValue,
+.nxModuleKpiValue .sapMTitle {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.625rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    letter-spacing: -0.02em;
+    line-height: 1.2 !important;
+    margin-bottom: 0.35rem;
+}
+
+.nxModuleKpiTrendRow {
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.nxModuleKpiTrendHint,
+.nxModuleKpiTrendHint .sapMText {
+    font-size: 0.75rem !important;
+    color: #9CA3AF !important;
+}
+
+.nxModuleKpiTrend {
+    gap: 0.2rem;
+}
+
+.nxModuleKpiTrendUp .nxModuleKpiTrendIcon,
+.nxModuleKpiTrendUp .nxModuleKpiTrendText,
+.nxModuleKpiTrendUp .nxModuleKpiTrendText .sapMText {
+    color: #059669 !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+}
+
+.nxModuleKpiTrendDown .nxModuleKpiTrendIcon,
+.nxModuleKpiTrendDown .nxModuleKpiTrendText,
+.nxModuleKpiTrendDown .nxModuleKpiTrendText .sapMText {
+    color: #059669 !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+}
+
+.nxModuleContentBody {
+    padding: 1rem 1.75rem 1.5rem;
+    box-sizing: border-box;
+}
+
+.nxModuleContentBody .nxSectionPlaceholder {
+    min-height: 12rem;
+    padding: 1.5rem 0;
 }
 
 .nxHeaderModuleNav {
@@ -1017,25 +1528,32 @@ html, body, body > div, #container, #container-uiarea,
     flex: 0 0 auto;
     width: auto;
     min-width: 0;
+    margin: 0;
 }
 
 .nxSearchWrap {
     position: relative !important;
-    width: 28rem;
-    max-width: 36vw;
-    min-width: 14rem;
+    width: 15.5rem;
+    max-width: 20vw;
+    min-width: 11rem;
     background: #FFFFFF;
-    border: 1px solid #D1D5DB;
-    border-radius: 999px;
-    padding: 0 0.15rem 0 1.1rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.65rem;
+    padding: 0 0.65rem;
     height: 2.5rem;
     box-sizing: border-box;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    gap: 0;
+    gap: 0.45rem;
     overflow: hidden;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.nxSearchLeadingIcon {
+    flex-shrink: 0;
+    color: #9CA3AF !important;
 }
 
 .nxSearchInput,
@@ -1145,41 +1663,81 @@ html, body, body > div, #container, #container-uiarea,
     box-shadow: none !important;
 }
 
+.nxHeaderUtilityBtns {
+    flex-shrink: 0;
+    gap: 0.35rem;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+    height: 2.5rem;
+}
+
+.nxIconBtn {
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 2.5rem !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.nxIconBtn .sapMBtnInner {
+    border-radius: 0.65rem !important;
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    min-width: 2.5rem !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    min-height: 2.5rem !important;
+    padding: 0 !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.nxIconBtn:hover .sapMBtnInner {
+    background: #F9FAFB !important;
+    border-color: #D1D5DB !important;
+}
+
+.nxIconBtn .sapMBtnIcon {
+    color: #4B5563 !important;
+    font-size: 1rem !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+}
+
+.nxIconBtn .sapMBtnContent {
+    display: none !important;
+}
+
 .nxHeaderActions {
     flex-shrink: 0;
     gap: 0.35rem;
     display: flex !important;
     align-items: center !important;
-    margin-left: auto !important;
-}
-
-.nxIconBtn .sapMBtnInner {
-    border-radius: 0.55rem;
-    border: none !important;
-    background: transparent !important;
-}
-
-.nxIconBtn .sapMBtnIcon {
-    color: #4B5563 !important;
-    font-size: 1.05rem !important;
-}
-
-.nxNotifyBtnWrap {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    margin-right: 0.15rem;
+    margin: 0 !important;
 }
 
 .nxNotifyBadge {
     position: absolute;
-    top: 0.05rem;
-    right: 0.05rem;
-    min-width: 1rem;
-    height: 1rem;
+    top: 0.2rem;
+    right: 0.2rem;
+    min-width: 1.05rem;
+    height: 1.05rem;
     padding: 0 0.2rem;
     border-radius: 999px;
-    background: #0070F2;
+    background: #7C3AED;
     color: #FFFFFF !important;
     font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
     font-size: 0.625rem !important;
@@ -1192,10 +1750,12 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxProfile {
-    margin-left: 0.5rem;
-    padding: 0 0.35rem 0 1.15rem;
-    gap: 0.55rem;
+    margin-left: 0.25rem;
+    padding: 0.2rem 0.25rem 0.2rem 0.75rem;
+    gap: 0.5rem;
     border-left: 1px solid #E5E7EB;
+    height: 2.5rem;
+    box-sizing: border-box;
     display: flex !important;
     align-items: center !important;
     flex-shrink: 0;
@@ -1297,6 +1857,10 @@ html, body, body > div, #container, #container-uiarea,
     font-size: 0.85rem !important;
 }
 
+.nxTeamList .sapMSLIImgIcon {
+    color: #6D28D9 !important;
+}
+
 .nxHeaderPopover .sapMPopoverCont {
     padding: 0 !important;
 }
@@ -1365,37 +1929,137 @@ html, body, body > div, #container, #container-uiarea,
     background: #F9FAFB !important;
 }
 
+.nxProfileDialog.sapMDialog {
+    border-radius: 0.75rem !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 24rem !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.nxProfileDialog.sapMDialog > section.sapMDialogSection {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.nxProfileDialogHeaderBar,
+.nxProfileDialogHeaderBar.sapMBar {
+    height: 3rem !important;
+    min-height: 3rem !important;
+    padding: 0 1.5rem !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+.nxProfileDialogHeaderBar .sapMBarLeft,
+.nxProfileDialogHeaderBar .sapMBarPH {
+    height: 100% !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+.nxProfileDialogHeaderTitle,
+.nxProfileDialogHeaderTitle .sapMTitle {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    text-align: left !important;
+    line-height: 1.25 !important;
+}
+
 .nxProfileDialog .sapMDialogSection,
-.nxProfileDialog .sapMDialogScroll {
+.nxProfileDialog .sapMDialogScroll,
+.nxProfileDialog .sapMDialogScrollCont {
     padding: 0 !important;
+    background: #FFFFFF !important;
+    overflow: visible !important;
+    border-bottom: none !important;
+    height: auto !important;
 }
 
 .nxProfileDialog .sapMDialogFooter {
-    padding: 0.75rem 1.25rem 1rem !important;
+    padding: 1rem 1.5rem 1.5rem !important;
+    border-top: 1px solid #E5E7EB !important;
+    border-bottom: none !important;
+    background: #FFFFFF !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    min-height: 4rem !important;
+    flex-shrink: 0 !important;
+    border-radius: 0 0 0.75rem 0.75rem !important;
+}
+
+.nxProfileDialog .sapMDialogFooter .sapMIBar,
+.nxProfileDialog .sapMDialogFooter .sapMBar {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+.nxProfileDialog .sapMDialogFooter .sapMIBar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+}
+
+.nxProfileDialog .sapMDialogFooter .sapMBarLeft,
+.nxProfileDialog .sapMDialogFooter .sapMBarRight,
+.nxProfileDialog .sapMDialogFooter .sapMBarPH {
+    position: static !important;
+    float: none !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
 }
 
 .nxProfileDialogContent {
-    padding: 1.25rem 1.5rem 1rem;
-    gap: 0.75rem;
-    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 1.25rem 1.5rem 1.5rem !important;
+    gap: 1.25rem !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    background: #FFFFFF !important;
 }
 
 .nxProfileDialogPreview {
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-    padding-bottom: 1.1rem;
-    border-bottom: 1px solid #E5E7EB;
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    margin-bottom: 0.25rem !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 .nxProfileDialogPreviewInfo {
-    min-width: 0;
-    gap: 0.2rem;
-    padding-top: 0.15rem;
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    gap: 0.25rem !important;
+    padding-top: 0.15rem !important;
+    flex: 1 1 auto !important;
 }
 
 .nxProfileDialogField {
-    gap: 0.35rem;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.625rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 0.25rem !important;
 }
 
 .nxProfileDialogLabel,
@@ -1405,22 +2069,75 @@ html, body, body > div, #container, #container-uiarea,
     font-weight: 600 !important;
     color: #374151 !important;
     margin: 0 !important;
+    line-height: 1.4 !important;
 }
 
 .nxProfileDialogSelect {
     width: 100% !important;
-    margin-top: 0.15rem !important;
+    margin: 0 !important;
+    display: block !important;
+    padding-bottom: 0.125rem !important;
 }
 
 .nxProfileDialogSelect .sapMSlt {
     width: 100% !important;
-    height: 2.25rem !important;
+    height: auto !important;
+    min-height: 2.75rem !important;
+    padding: 0.5rem 2.25rem 0.5rem 0 !important;
+    border: 1px solid #D1D5DB !important;
+    border-radius: 0.5rem !important;
+    background: #FFFFFF !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: visible !important;
+}
+
+.nxProfileDialogSelect .sapMSlt:focus,
+.nxProfileDialogSelect .sapMSlt.sapMSltFocused {
+    border-color: #2563EB !important;
+    box-shadow: 0 0 0 1px #2563EB !important;
 }
 
 .nxProfileDialogSelect .sapMSltLabel {
     font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
     font-size: 0.875rem !important;
-    line-height: 2.25rem !important;
+    line-height: 1.5 !important;
+    height: auto !important;
+    min-height: 1.25rem !important;
+    padding: 0.125rem 0 0.125rem 0.75rem !important;
+    color: #111827 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    white-space: nowrap !important;
+    display: block !important;
+}
+
+.nxProfileDialogSelect .sapMSltArrow {
+    width: 2rem !important;
+    height: 2rem !important;
+    line-height: 2rem !important;
+    top: 50% !important;
+    right: 0.35rem !important;
+    margin-top: -1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.nxProfileDialogSaveBtn .sapMBtnInner,
+.nxProfileDialogCancelBtn .sapMBtnInner {
+    min-height: 2.25rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.nxProfileDialogSaveBtn:focus .sapMBtnInner,
+.nxProfileDialogSaveBtn .sapMBtnInner:focus,
+.nxProfileDialogCancelBtn:focus .sapMBtnInner,
+.nxProfileDialogCancelBtn .sapMBtnInner:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .nxContentScroll {
@@ -1943,6 +2660,26 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 @media (max-width: 900px) {
+    .nxModuleNavBar {
+        overflow-x: auto;
+    }
+
+    .nxModuleNavBarInner {
+        min-width: max-content;
+    }
+
+    .nxHeaderSearchArea {
+        display: none !important;
+    }
+
+    .nxHeaderLeft {
+        gap: 0.65rem;
+    }
+
+    .nxHeaderRight {
+        gap: 0.35rem;
+    }
+
     .nxHeaderModuleNav {
         display: none !important;
     }

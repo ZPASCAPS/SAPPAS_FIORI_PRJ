@@ -5,7 +5,7 @@
  * Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader
  *
  * 역할:
- * - 상단 헤더: 로고·모듈 네비, 전역 검색, 알림·도움말·설정 Popover, 프로필 Dialog.
+ * - 상단 헤더: 로고·PasCal, 팀 선택, 검색, 알림·도움말 Popover, 프로필 Dialog.
  *
  * 대시보드 구조: DashboardMain → DashboardHeader (최상단)
  *
@@ -63,6 +63,7 @@ sap.ui.define([
             this._oNotificationPopover = null;
             this._oHelpPopover = null;
             this._oSettingsPopover = null;
+            this._oTeamPopover = null;
         },
 
         _applySearch: function (sQuery) {
@@ -90,15 +91,65 @@ sap.ui.define([
             this._applySearch(oInput ? oInput.getValue() : "");
         },
 
-        onLogoPress: function () {
-            this._setNavKey("DASHBOARD");
+        onTeamSelectorPress: function (oEvent) {
+            var oPopover = this.byId("teamPopover");
+            var oModel = this.getView().getModel("dashboard");
+            var oList = this.byId("teamList");
+            var oOpener = this.byId("teamSelectorBtn") || oEvent.getSource();
+            var sKey;
+
+            if (!oPopover) {
+                return;
+            }
+
+            if (oPopover.isOpen()) {
+                oPopover.close();
+                return;
+            }
+
+            if (oModel && oList) {
+                sKey = oModel.getProperty("/team/key") || "HSAPIENT";
+                this._selectTeamListItem(sKey);
+            }
+
+            oPopover.openBy(oOpener);
         },
 
-        onModuleNavPress: function (oEvent) {
-            var oButton = oEvent.getSource();
-            var aCustom = oButton.getCustomData();
-            var sKey = (aCustom && aCustom[0] && aCustom[0].getValue()) || "DASHBOARD";
-            this._setNavKey(sKey);
+        onTeamSelect: function (oEvent) {
+            var oItem = oEvent.getParameter("listItem");
+            var oContext = oItem && oItem.getBindingContext("dashboard");
+            var sKey = oContext && oContext.getProperty("key");
+            var sText = oContext && oContext.getProperty("text");
+            var oModel = this.getView().getModel("dashboard");
+
+            if (!oModel || !sKey) {
+                return;
+            }
+
+            oModel.setProperty("/team/key", sKey);
+            oModel.setProperty("/team/name", sText || sKey);
+            this.byId("teamPopover").close();
+            MessageToast.show("팀이 " + (sText || sKey) + "(으)로 변경되었습니다");
+        },
+
+        _selectTeamListItem: function (sKey) {
+            var oList = this.byId("teamList");
+            var aItems;
+            var i;
+            var oContext;
+
+            if (!oList) {
+                return;
+            }
+
+            aItems = oList.getItems();
+            for (i = 0; i < aItems.length; i++) {
+                oContext = aItems[i].getBindingContext("dashboard");
+                if (oContext && oContext.getProperty("key") === sKey) {
+                    oList.setSelectedItem(aItems[i]);
+                    return;
+                }
+            }
         },
 
         _setNavKey: function (sKey) {
@@ -252,16 +303,16 @@ sap.ui.define([
         },
 
         _normalizeModuleKey: function (sModule) {
-            var sValue = (sModule || "").replace(/\//g, ".").trim();
-            var aModules = ["SD", "PP", "MM", "FI.CO"];
+            var sValue = (sModule || "").replace(/\//g, ".").trim().toUpperCase();
+            var aModules = ["SD", "PP", "MM", "FI"];
 
             if (aModules.indexOf(sValue) >= 0) {
                 return sValue;
             }
-            if (/FI\.?CO/i.test(sValue)) {
-                return "FI.CO";
+            if (/^FI(\.CO)?$/i.test(sValue) || /FI\.?CO/i.test(sValue)) {
+                return "FI";
             }
-            return "FI.CO";
+            return "FI";
         },
 
         onProfileCancel: function () {

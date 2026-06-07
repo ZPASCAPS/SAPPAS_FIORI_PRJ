@@ -82,12 +82,30 @@ sap.ui.define([
                     mmActiveCategoryLabel: "실사차이 상세 리스크",
                     mmDetailCountLabel: "총 3건"
                 },
+                moduleView: {
+                    title: "",
+                    period: "THIS_WEEK",
+                    periodOptions: [],
+                    activeSubTab: "OVERVIEW",
+                    subTabs: [],
+                    kpis: []
+                },
                 user: {
                     name: "박찬영",
-                    role: "FI.CO",
+                    role: "FI",
                     editName: "박찬영",
-                    editModule: "FI.CO"
+                    editModule: "FI"
                 },
+                team: {
+                    name: "HSAPIENT",
+                    key: "HSAPIENT"
+                },
+                teamOptions: [
+                    { key: "HSAPIENT", text: "HSAPIENT" },
+                    { key: "SAP_CORE", text: "SAP Core Team" },
+                    { key: "FI_CO", text: "FI/CO Team" },
+                    { key: "MM_PP", text: "MM/PP Team" }
+                ],
                 profileOptions: {
                     names: [
                         { key: "김용민", text: "김용민" },
@@ -98,7 +116,7 @@ sap.ui.define([
                         { key: "SD", text: "SD" },
                         { key: "PP", text: "PP" },
                         { key: "MM", text: "MM" },
-                        { key: "FI.CO", text: "FI.CO" }
+                        { key: "FI", text: "FI" }
                     ]
                 },
                 notifications: [

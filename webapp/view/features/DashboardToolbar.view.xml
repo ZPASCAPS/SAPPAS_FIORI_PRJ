@@ -19,7 +19,12 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
 
-    <HBox class="nxWelcomeRow" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+    <HBox
+        class="nxWelcomeRow"
+        width="100%"
+        alignItems="Center"
+        justifyContent="SpaceBetween"
+        visible="{= ${dashboard>/ui/navKey} === 'DASHBOARD' }">
         <HBox alignItems="Center" class="nxWelcomeLine" width="100%">
             <Text
                 text="{dashboard>/ui/navLabel}"
