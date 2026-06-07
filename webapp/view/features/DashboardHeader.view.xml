@@ -5,7 +5,7 @@
   Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader
 
   역할:
-  - 상단 헤더: 로고, 전역 검색, 모듈 네비(SD/MM/PP/FI), 알림, 도움말, 설정, 프로필.
+  - 상단 헤더: 로고·PasCal 브랜드, 팀 선택, 검색, 알림, 도움말, 프로필.
 
   대시보드 구조:
   Main → DashboardMain → DashboardHeader (최상단 가로 바)
@@ -20,105 +20,68 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <HBox class="nxHeader" width="100%" alignItems="Center">
-        <HBox class="nxHeaderBrand" alignItems="Center">
-            <Image
-                src="images/pascal-logo.png"
-                densityAware="false"
-                decorative="false"
-                alt="Pascal"
-                press=".onLogoPress"
-                class="nxHeaderLogo" />
-        </HBox>
+    <HBox class="nxHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+        <HBox class="nxHeaderLeft" alignItems="Center">
+            <HBox class="nxHeaderBrand" alignItems="Center">
+                <Image
+                    src="images/pascal-pictogram.svg"
+                    densityAware="false"
+                    decorative="true"
+                    alt="PasCal"
+                    class="nxHeaderPictogram" />
+                <Text text="PasCal" class="nxHeaderAppName" />
+            </HBox>
 
-        <HBox class="nxHeaderSearchArea" alignItems="Center">
-            <HBox class="nxSearchWrap" alignItems="Center">
-                <Input
-                    id="globalSearch"
-                    placeholder="검색어를 입력하세요."
-                    submit=".onSearchSubmit"
-                    liveChange=".onSearch"
-                    class="nxSearchInput" />
+            <VBox width="1px" height="1.75rem" class="nxHeaderDividerBar" />
+
+            <HBox alignItems="Center" class="nxHeaderTeamSelector">
                 <Button
-                    icon="sap-icon://search"
+                    id="teamSelectorBtn"
+                    text="{dashboard>/team/name}"
+                    icon="sap-icon://building"
                     type="Transparent"
-                    tooltip="검색"
-                    press=".onSearchIconPress"
-                    class="nxSearchIconBtn" />
+                    iconFirst="true"
+                    press=".onTeamSelectorPress"
+                    class="nxHeaderTeamSelectorBtn" />
+                <Button
+                    icon="sap-icon://slim-arrow-down"
+                    type="Transparent"
+                    tooltip="팀 선택"
+                    press=".onTeamSelectorPress"
+                    class="nxTeamSelectorArrowBtn" />
             </HBox>
         </HBox>
 
-        <HBox class="nxHeaderModuleNav" alignItems="Center">
-            <Button
-                text="SD"
-                icon="sap-icon://sales-order"
-                type="Transparent"
-                press=".onModuleNavPress"
-                class="{= ${dashboard>/ui/navKey} === 'SD_SALES' ? 'nxModuleNavBlock nxModuleNavBlockActive' : 'nxModuleNavBlock' }">
-                <customData>
-                    <core:CustomData key="navKey" value="SD_SALES" />
-                </customData>
-            </Button>
-            <Button
-                text="MM"
-                icon="sap-icon://product"
-                type="Transparent"
-                press=".onModuleNavPress"
-                class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleNavBlock nxModuleNavBlockActive' : 'nxModuleNavBlock' }">
-                <customData>
-                    <core:CustomData key="navKey" value="MM_MATERIALS" />
-                </customData>
-            </Button>
-            <Button
-                text="PP"
-                icon="sap-icon://factory"
-                type="Transparent"
-                press=".onModuleNavPress"
-                class="{= ${dashboard>/ui/navKey} === 'PP_PRODUCTION' ? 'nxModuleNavBlock nxModuleNavBlockActive' : 'nxModuleNavBlock' }">
-                <customData>
-                    <core:CustomData key="navKey" value="PP_PRODUCTION" />
-                </customData>
-            </Button>
-            <Button
-                text="FI"
-                icon="sap-icon://money-bills"
-                type="Transparent"
-                press=".onModuleNavPress"
-                class="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleNavBlock nxModuleNavBlockActive' : 'nxModuleNavBlock' }">
-                <customData>
-                    <core:CustomData key="navKey" value="FI_CO_FINANCE" />
-                </customData>
-            </Button>
-        </HBox>
+        <HBox alignItems="Center" class="nxHeaderRight">
+            <HBox class="nxHeaderSearchArea" alignItems="Center">
+                <HBox class="nxSearchWrap" alignItems="Center">
+                    <core:Icon src="sap-icon://search" size="1rem" class="nxSearchLeadingIcon" />
+                    <Input
+                        id="globalSearch"
+                        placeholder="검색어를 입력하세요."
+                        submit=".onSearchSubmit"
+                        liveChange=".onSearch"
+                        class="nxSearchInput" />
+                </HBox>
+            </HBox>
 
-        <HBox alignItems="Center" class="nxHeaderActions">
-            <HBox alignItems="Center" class="nxNotifyBtnWrap">
+            <HBox alignItems="Center" class="nxHeaderUtilityBtns">
                 <Button
                     id="notificationBtn"
                     icon="sap-icon://bell"
                     type="Transparent"
                     tooltip="알림"
                     press=".onNotifications"
-                    class="nxIconBtn nxNotifyBtn" />
-                <Text
-                    text="{dashboard>/ui/notificationCount}"
-                    visible="{= ${dashboard>/ui/notificationCount} > 0 }"
-                    class="nxNotifyBadge" />
+                    class="nxIconBtn" />
+                <Button
+                    id="helpBtn"
+                    icon="sap-icon://sys-help"
+                    type="Transparent"
+                    tooltip="도움말"
+                    press=".onHelp"
+                    class="nxIconBtn" />
             </HBox>
-            <Button
-                id="helpBtn"
-                icon="sap-icon://sys-help"
-                type="Transparent"
-                tooltip="도움말"
-                press=".onHelp"
-                class="nxIconBtn" />
-            <Button
-                id="settingsBtn"
-                icon="sap-icon://action-settings"
-                type="Transparent"
-                tooltip="설정"
-                press=".onSettings"
-                class="nxIconBtn" />
+
             <HBox alignItems="Center" class="nxProfile">
                 <VBox class="nxProfileAvatarWrap" alignItems="Center" justifyContent="Center">
                     <Image
@@ -194,6 +157,30 @@
     </Popover>
 
     <Popover
+        id="teamPopover"
+        title="팀 선택"
+        placement="Bottom"
+        contentWidth="16rem"
+        showHeader="true"
+        class="nxHeaderPopover nxTeamPopover">
+        <content>
+            <List
+                id="teamList"
+                mode="SingleSelectMaster"
+                includeItemInSelection="true"
+                items="{dashboard>/teamOptions}"
+                selectionChange=".onTeamSelect"
+                showSeparators="Inner"
+                class="nxTeamList">
+                <StandardListItem
+                    title="{dashboard>text}"
+                    icon="sap-icon://group"
+                    type="Active" />
+            </List>
+        </content>
+    </Popover>
+
+    <Popover
         id="settingsPopover"
         title="설정"
         placement="Bottom"
@@ -228,11 +215,17 @@
 
     <Dialog
         id="profileDialog"
-        title="프로필 설정"
-        contentWidth="25rem"
+        contentWidth="26rem"
         draggable="true"
         resizable="false"
         class="nxProfileDialog">
+        <customHeader>
+            <Bar class="nxProfileDialogHeaderBar">
+                <contentLeft>
+                    <Title text="프로필 설정" level="H5" class="nxProfileDialogHeaderTitle" />
+                </contentLeft>
+            </Bar>
+        </customHeader>
         <content>
             <VBox class="nxProfileDialogContent">
                 <HBox alignItems="Center" class="nxProfileDialogPreview">
@@ -273,10 +266,10 @@
             </VBox>
         </content>
         <beginButton>
-            <Button text="저장" type="Emphasized" press=".onProfileSave" />
+            <Button text="저장" type="Emphasized" press=".onProfileSave" class="nxProfileDialogSaveBtn" />
         </beginButton>
         <endButton>
-            <Button text="취소" press=".onProfileCancel" />
+            <Button text="취소" type="Transparent" press=".onProfileCancel" class="nxProfileDialogCancelBtn" />
         </endButton>
     </Dialog>
 </mvc:View>

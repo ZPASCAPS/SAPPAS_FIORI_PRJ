@@ -21,7 +21,9 @@
     xmlns:core="sap.ui.core">
 
     <VBox class="nxSectionPlaceholder">
-        <VBox class="nxSectionPlaceholderHero">
+        <VBox
+            class="nxSectionPlaceholderHero"
+            visible="{= ${dashboard>/ui/navKey} !== 'SD_SALES' &amp;&amp; ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'PP_PRODUCTION' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' }">
             <core:Icon
                 src="{dashboard>/ui/navIcon}"
                 size="2.5rem"
@@ -29,6 +31,13 @@
                 class="sapUiMediumMarginBottom" />
             <Title text="{dashboard>/ui/navLabel}" level="H2" class="nxSectionPlaceholderTitle" />
             <Text text="{dashboard>/ui/navDescription}" class="nxSectionPlaceholderDesc" />
+        </VBox>
+        <VBox
+            class="nxSectionPlaceholderModuleBody"
+            visible="{= ${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' }">
+            <Text
+                text="{= ${dashboard>/moduleView/activeSubTab} + ' 탭 콘텐츠가 이 영역에 표시됩니다.' }"
+                class="nxSectionPlaceholderDesc" />
         </VBox>
     </VBox>
 </mvc:View>

@@ -5,14 +5,14 @@
   Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardToolbar
 
   역할:
-  - 현재 탭 제목(navLabel), 기준 시각, 새로고침, 대시보드 설정 버튼 영역.
+  - DASHBOARD 탭 기간 필터(날짜/주기) 및 조회 실행 영역.
 
   대시보드 구조:
   Main → DashboardMain → DashboardToolbar (헤더 아래 회색 바)
 
   협업:
-  - 타이틀·버튼 UI → 이 View
-  - 새로고침 EventBus 발행 → DashboardToolbar.controller.js
+  - 필터 UI → 이 View
+  - 조회 실행 EventBus → DashboardToolbar.controller.js
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardToolbar"
@@ -20,7 +20,12 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
 
-    <HBox class="nxWelcomeRow nxDashboardFilterBar" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+    <HBox
+        class="nxWelcomeRow nxDashboardFilterBar"
+        width="100%"
+        alignItems="Center"
+        justifyContent="SpaceBetween"
+        visible="{= ${dashboard>/ui/navKey} === 'DASHBOARD' }">
         <HBox alignItems="Center" class="nxDashboardFilterControls">
             <DateRangeSelection
                 id="dashboardDateRange"
