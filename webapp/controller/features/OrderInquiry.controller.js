@@ -48,6 +48,10 @@ sap.ui.define([
          */
         onSearchOrder: function () {
             // 1. 화면에서 사용자가 입력한 값 가져오기 (XML의 Input ID와 일치해야 합니다)
+
+            console.log("🔥 [테스트] 조회 버튼이 정상적으로 클릭되었습니다!!!");
+
+            
             var oInput = this.byId("salesOrderInput"); 
             
             if (!oInput) {
