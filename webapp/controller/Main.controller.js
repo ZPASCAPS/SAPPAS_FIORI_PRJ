@@ -1,5 +1,5 @@
 /**
- * Main.controller.js
+ *  
  *
  * View: com.capstone.dashboard.fioridashboard.view.Main
  * Controller: com.capstone.dashboard.fioridashboard.controller.Main
@@ -414,7 +414,35 @@ sap.ui.define([
                 OrderQty: "1",
                 Remark: ""
             }), "create");
+
+
+            
+            // ===================================================================
+            // 💡 [여기서부터 추가!] E2E 프로세스 플로우용 공통 게시판(flowModel) 등록
+            // ===================================================================
+            var oInitialFlowData = {
+                SalesOrder: "대기중...",
+                PlannedOrder: "대기중...",
+                PurchaseReq: "대기중...",
+                PurchaseOrder: "대기중...",
+                POMigo: "대기중...",
+                ProductionOrder: "대기중...",
+                ProdMigo: "대기중...",
+                Delivery: "대기중...",
+                Billing: "대기중...",
+                FI: "대기중...",
+                Clearing: "대기중..."
+            };
+            var oFlowModel = new JSONModel(oInitialFlowData);
+            oComponent.setModel(oFlowModel, "flowModel");
+            // ===================================================================
+            // 💡 [여기까지 추가]
+            // ===================================================================
+
         },
+
+
+
 
         _bindEventBus: function () {
             this._oEventBus = sap.ui.getCore().getEventBus();

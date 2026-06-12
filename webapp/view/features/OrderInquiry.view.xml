@@ -30,12 +30,13 @@
 
         <VBox class="nxSpaceCardBody nxSpaceCardBodyA" width="100%">
             <SearchField
-                placeholder="오더 번호 검색"
-                value="5000000010"
+                id="salesOrderInput" 
+                placeholder="오더 번호 검색 (예: 320)"
                 width="100%"
                 class="nxSpaceSearch" />
             <Button
                 text="조회"
+                press=".onSearchOrder" 
                 type="Emphasized"
                 width="100%"
                 class="nxSpaceSearchBtn" />
