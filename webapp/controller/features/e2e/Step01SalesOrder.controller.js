@@ -17,22 +17,21 @@ sap.ui.define([
 ], function (Controller, MessageToast) {
     "use strict";
 
-    var STEP_KEY = "step01";
-
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.e2e.Step01SalesOrder", {
 
         onInit: function () {
-            // dashboard 모델은 Main.controller.js에서 Component에 등록됨
+            // 💡 화면(XML)이 중앙 칠판(flowModel)을 알아서 쳐다보고 있으므로
+            // 초기화 로직은 비워두셔도 완벽하게 동작합니다.
         },
 
         onAfterRendering: function () {
+            // 화면이 다 그려진 후 노드 클릭 이벤트 연결
             this._bindNodePress("stepNode");
         },
 
         _bindNodePress: function (sNodeId) {
-            if (this._bNodePressBound) {
-                return;
-            }
+            if (this._bNodePressBound) { return; }
+            
             var oNode = this.byId(sNodeId);
             if (oNode) {
                 oNode.attachBrowserEvent("click", this.onNodePress.bind(this));
@@ -41,30 +40,22 @@ sap.ui.define([
         },
 
         /**
-         * 노드 클릭 — 상세 placeholder 토글 및 선택 Step 갱신.
+         * 💡 노드를 클릭했을 때 실행되는 함수
+         * OData 통신(DB 조회)을 여기서 또 할 필요가 없습니다!
+         * 이미 OrderInquiry에서 flowModel에 다 담아놨기 때문입니다.
          */
         onNodePress: function () {
-            var oModel = this.getOwnerComponent().getModel("dashboard");
-            var sPath = "/e2eProcessFlow/steps/" + STEP_KEY;
-            var bShow = oModel.getProperty(sPath + "/showDetail");
+            // 중앙 칠판(flowModel)을 슬쩍 열어봅니다.
+            var oFlowModel = this.getOwnerComponent().getModel("flowModel");
+            var sSalesOrder = oFlowModel.getProperty("/SalesOrder");
 
-            oModel.setProperty("/e2eProcessFlow/selectedStepId", STEP_KEY);
-            oModel.setProperty(sPath + "/showDetail", !bShow);
-
-            if (!bShow) {
-                this.loadDocuments();
+            // 값이 있으면 클릭 시 알림창(Toast)만 가볍게 띄워줍니다.
+            if (sSalesOrder && sSalesOrder !== "대기중...") {
+                MessageToast.show("📌 선택된 판매오더: " + sSalesOrder);
+            } else {
+                MessageToast.show("아직 조회된 판매오더가 없습니다.");
             }
-
-            MessageToast.show("Step 1 — Sales Order selected");
-        },
-
-        /**
-         * TODO: SAP OData 연동 — Sales Order entity set read.
-         * Example: oModel.read("/A_SalesOrder", { success: fnMapToDocuments });
-         * 결과를 dashboard>/e2eProcessFlow/steps/step01/documents 에 setProperty.
-         */
-        loadDocuments: function () {
-            // Placeholder — team member implements OData binding here
         }
+
     });
 });

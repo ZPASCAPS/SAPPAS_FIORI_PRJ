@@ -1,10 +1,39 @@
-<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step06ProductionOrder" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+<!--<mvc:View 
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step06ProductionOrder" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    
     <VBox class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos05" renderType="Bare">
         <HBox alignItems="Center" justifyContent="SpaceBetween">
             <Text text="6. Production Order" class="e2eMtoCardTitle" />
             <ObjectStatus text="예정" state="None" class="e2eMtoCardStatus" />
         </HBox>
-        <Text text="ProdChk-001" class="e2eMtoCardDoc" />
+        
+        <Text text="{flowModel>/ProductionOrder}" class="e2eMtoCardDoc" />
+        
+        <Text text="작업장 M001" class="e2eMtoCardDetail" />
+    </VBox>
+</mvc:View>-->
+
+<mvc:View 
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step06ProductionOrder" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    
+    <VBox class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos05" renderType="Bare">
+        <HBox alignItems="Center" justifyContent="SpaceBetween">
+            <Text text="6. Production Order" class="e2eMtoCardTitle" />
+            
+            <ObjectStatus 
+                text="{= ${flowModel>/ProductionOrder} === '대기중...' || ${flowModel>/ProductionOrder} === '없음' || !${flowModel>/ProductionOrder} ? '예정' : '완료' }" 
+                state="{= ${flowModel>/ProductionOrder} === '대기중...' || ${flowModel>/ProductionOrder} === '없음' || !${flowModel>/ProductionOrder} ? 'None' : 'Success' }" 
+                class="e2eMtoCardStatus" />
+        </HBox>
+        
+        <Text text="{flowModel>/ProductionOrder}" class="e2eMtoCardDoc" />
+        
         <Text text="작업장 M001" class="e2eMtoCardDetail" />
     </VBox>
 </mvc:View>
