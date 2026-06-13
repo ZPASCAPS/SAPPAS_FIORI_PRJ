@@ -128,6 +128,49 @@ sap.ui.define([
             });
         },
 
+
+        /**
+         * [API 호출] PR 번호를 PO로 변환하는 백엔드 로직 실행
+         * @param {string} sPrNumber - 사용자가 입력한 PR 번호 (예: "0010000395")
+         */
+        _convertPrToPo: function (sPrNumber) {
+            // 1. OData 모델 가져오기 (manifest.json에 등록된 기본 모델)
+            // 만약 OData 모델 이름이 지정되어 있다면 getModel("모델명")으로 변경하세요.
+            var oModel = this.getOwnerComponent().getModel(); 
+
+            // 2. 백엔드로 보낼 파라미터 세팅 (SEGW에서 만든 PR_LIST)
+            var oPayload = {
+                PR_LIST: sPrNumber
+            };
+
+            // 3. 로딩 상태 메세지 띄우기
+            this._addMessage("AI 비서", "sap-icon://activate-blueprints", "요청하신 PR(" + sPrNumber + ")을 변환하고 있습니다. 잠시만 기다려주세요⏳...", false);
+
+            // 4. Function Import 호출
+            oModel.callFunction("/ConvertPrToPo", {
+                method: "POST", 
+                urlParameters: oPayload,
+                success: function (oData, response) {
+                    // 통신 성공 (200 OK)
+                    var sMessage = oData.MSG || (oData.ConvertPrToPo && oData.ConvertPrToPo.MSG);
+                    
+                    // 챗봇 말풍선에 성공 메시지 띄우기
+                    this._addMessage("AI 비서", "sap-icon://activate-blueprints", "✨ " + sMessage, false);
+                }.bind(this),
+                error: function (oError) {
+                    // 통신 실패 (500 에러 등)
+                    var sErrMsg = "백엔드 통신 중 에러가 발생했습니다.";
+                    try {
+                        var oErrorObj = JSON.parse(oError.responseText);
+                        sErrMsg = oErrorObj.error.message.value;
+                    } catch (e) { }
+
+                    // 챗봇 말풍선에 실패 메시지 띄우기
+                    this._addMessage("AI 비서", "sap-icon://error", "🚨 " + sErrMsg, false);
+                }.bind(this)
+            });
+        },
+
         // ==========================================================
         // 이하 UI 드래그 앤 드롭 로직 유지 (건드리지 않음)
         // ==========================================================
@@ -253,6 +296,10 @@ sap.ui.define([
 
             this._applyPanelPosition(oDom, iNewLeft, iNewTop);
         },
+
+
+
+
 
         _onDragEnd: function () {
             var oDom = this._getPanelDom();
