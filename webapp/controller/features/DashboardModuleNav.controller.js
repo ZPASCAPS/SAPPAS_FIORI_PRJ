@@ -6,12 +6,21 @@
  *
  * 역할:
  * - 상단 모듈 탭 바(Dashboard / SD / MM / PP / FI) 클릭 시 navKey·moduleView 갱신.
+ * - 활성 탭 슬라이딩 밑줄 표시 (ModuleDashboardShell 서브탭과 동일 패턴).
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "com/capstone/dashboard/fioridashboard/util/ModuleViewConfig"
 ], function (Controller, ModuleViewConfig) {
     "use strict";
+
+    var NAV_BTN_IDS = {
+        DASHBOARD: "moduleNavDashboard",
+        SD_SALES: "moduleNavSd",
+        MM_MATERIALS: "moduleNavMm",
+        PP_PRODUCTION: "moduleNavPp",
+        FI_CO_FINANCE: "moduleNavFi"
+    };
 
     var NAV_LABELS = {
         DASHBOARD: "Dashboard",
@@ -39,6 +48,117 @@ sap.ui.define([
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.DashboardModuleNav", {
 
+        onInit: function () {
+            var oModel = this.getView().getModel("dashboard");
+            var oView = this.getView();
+
+            if (oModel) {
+                oModel.attachPropertyChange(this._onDashboardPropertyChange, this);
+            }
+
+            oView.addEventDelegate({
+                onAfterRendering: this._onNavTabsAfterRendering
+            }, this);
+
+            this._fnNavTabResize = this._updateNavTabIndicator.bind(this, true);
+            window.addEventListener("resize", this._fnNavTabResize);
+        },
+
+        onExit: function () {
+            var oModel = this.getView().getModel("dashboard");
+
+            if (oModel) {
+                oModel.detachPropertyChange(this._onDashboardPropertyChange, this);
+            }
+
+            if (this._fnNavTabResize) {
+                window.removeEventListener("resize", this._fnNavTabResize);
+            }
+
+            this._oNavTabIndicator = null;
+            this._bNavTabIndicatorReady = false;
+        },
+
+        _onDashboardPropertyChange: function (oEvent) {
+            if (oEvent.getPath() === "/ui/navKey") {
+                this._updateNavTabIndicator(true);
+            }
+        },
+
+        _onNavTabsAfterRendering: function () {
+            this._ensureNavTabIndicator();
+
+            if (!this._bNavTabIndicatorReady) {
+                this._updateNavTabIndicator(false);
+                this._bNavTabIndicatorReady = true;
+            } else {
+                this._updateNavTabIndicator(true);
+            }
+        },
+
+        _ensureNavTabIndicator: function () {
+            var oWrap = this.byId("moduleNavTabsWrap");
+            var oDom = oWrap && oWrap.getDomRef();
+
+            if (!oDom || oDom.querySelector(".nxModuleNavTabIndicator")) {
+                this._oNavTabIndicator = oDom && oDom.querySelector(".nxModuleNavTabIndicator");
+                return;
+            }
+
+            this._oNavTabIndicator = document.createElement("div");
+            this._oNavTabIndicator.className = "nxModuleNavTabIndicator";
+            oDom.appendChild(this._oNavTabIndicator);
+        },
+
+        _getNavTabButton: function (sKey) {
+            var sId = NAV_BTN_IDS[sKey];
+            return sId ? this.byId(sId) : null;
+        },
+
+        _updateNavTabIndicator: function (bAnimate) {
+            var oModel = this.getView().getModel("dashboard");
+            var oWrap = this.byId("moduleNavTabsWrap");
+            var sActive = oModel && oModel.getProperty("/ui/navKey");
+            var oActiveBtn = this._getNavTabButton(sActive);
+            var oWrapDom = oWrap && oWrap.getDomRef();
+            var oBtnDom = oActiveBtn && oActiveBtn.getDomRef();
+            var oIndicator = this._oNavTabIndicator;
+            var oInner;
+            var oWrapRect;
+            var oBtnRect;
+            var nLeft;
+            var nWidth;
+
+            if (!oIndicator || !oWrapDom) {
+                return;
+            }
+
+            if (!oBtnDom) {
+                oIndicator.style.width = "0";
+                oIndicator.style.opacity = "0";
+                return;
+            }
+
+            oIndicator.style.opacity = "1";
+            oInner = oBtnDom.querySelector(".sapMBtnInner") || oBtnDom;
+            oWrapRect = oWrapDom.getBoundingClientRect();
+            oBtnRect = oInner.getBoundingClientRect();
+            nLeft = oBtnRect.left - oWrapRect.left;
+            nWidth = oBtnRect.width;
+
+            if (!bAnimate) {
+                oIndicator.style.transition = "none";
+            }
+
+            oIndicator.style.left = nLeft + "px";
+            oIndicator.style.width = nWidth + "px";
+
+            if (!bAnimate) {
+                void oIndicator.offsetWidth;
+                oIndicator.style.transition = "";
+            }
+        },
+
         onModuleNavPress: function (oEvent) {
             var oButton = oEvent.getSource();
             var aCustom = oButton.getCustomData();
@@ -59,6 +179,8 @@ sap.ui.define([
             if (ModuleViewConfig.isModuleKey(sKey)) {
                 ModuleViewConfig.syncModuleView(oModel, sKey);
             }
+
+            this._updateNavTabIndicator(true);
         }
     });
 });

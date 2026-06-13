@@ -31,6 +31,13 @@ sap.ui.define([], function () {
         { label: "Outstanding Invoices", valueMain: "$42", valueSuffix: ",800", trendHint: "per last week", trend: "11.3%", trendUp: false }
     ];
 
+    var MM_KPIS = [
+        { label: "Stock Value", valueMain: "98", valueSuffix: ".0 M", trendHint: "KRW · all plants", trend: "4.2%", trendUp: true },
+        { label: "Open PO Value", valueMain: "42", valueSuffix: ".8 M", trendHint: "per last month", trend: "6.1%", trendUp: false },
+        { label: "Safety Stock Breach", valueMain: "18", valueSuffix: " EA", trendHint: "below threshold", trend: "3", trendUp: false },
+        { label: "GR This Month", valueMain: "1,284", valueSuffix: " EA", trendHint: "goods receipt", trend: "9.4%", trendUp: true }
+    ];
+
     var MODULE_TITLES = {
         SD_SALES: "Sales and Distribution",
         MM_MATERIALS: "Materials Management",
@@ -39,13 +46,18 @@ sap.ui.define([], function () {
     };
 
     function buildModuleConfig(sNavKey) {
+        var aKpis = sNavKey === "MM_MATERIALS" ? MM_KPIS : COMMON_KPIS;
+        var aSubTabs = sNavKey === "MM_MATERIALS"
+            ? [{ key: "REPORTS", text: "Reports" }]
+            : COMMON_SUB_TABS.slice();
+
         return {
             title: MODULE_TITLES[sNavKey] || sNavKey,
             period: "THIS_WEEK",
             periodOptions: PERIOD_OPTIONS.slice(),
-            activeSubTab: "OVERVIEW",
-            subTabs: COMMON_SUB_TABS.slice(),
-            kpis: COMMON_KPIS.map(function (oKpi) {
+            activeSubTab: sNavKey === "MM_MATERIALS" ? "REPORTS" : "OVERVIEW",
+            subTabs: aSubTabs,
+            kpis: aKpis.map(function (oKpi) {
                 return JSON.parse(JSON.stringify(oKpi));
             }),
             settings: {

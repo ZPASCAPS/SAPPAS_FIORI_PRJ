@@ -1,0 +1,210 @@
+<!--
+  MmReports.view.xml
+
+  View: com.capstone.dashboard.fioridashboard.view.features.MmReports
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.MmReports
+
+  역할:
+  - MM Reports — SAP BomStock 실데이터 기반 차트 + 재고 테이블 (화려한 OVP 스타일)
+
+  데이터:
+  - dashboard>/mmReports/* (OData BomStockSet → DashboardDataService.refreshDashboard)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.MmReports"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    width="100%">
+
+    <VBox class="nxMmReports" width="100%" renderType="Bare">
+        <VBox class="nxMmReportsHero">
+            <HBox alignItems="Center" justifyContent="SpaceBetween" wrap="Wrap" class="nxMmReportsHeroTop">
+                <VBox class="nxMmReportsHeroText">
+                    <HBox alignItems="Center" class="nxMmReportsBadgeRow">
+                        <ObjectStatus
+                            text="LIVE SAP DATA"
+                            state="Success"
+                            icon="sap-icon://connected"
+                            class="nxMmReportsLiveBadge" />
+                        <ObjectStatus
+                            text="UNIQLO BOM"
+                            state="Information"
+                            class="sapUiTinyMarginBegin" />
+                    </HBox>
+                    <Title text="{dashboard>/mmReports/title}" level="H2" class="nxMmReportsHeroTitle" />
+                    <Text text="{dashboard>/mmReports/subtitle}" class="nxMmReportsHeroSub" />
+                    <Text text="{= ${dashboard>/mmReports/lastUpdated} + ' · ' + ${dashboard>/mmReports/dataSource} }" class="nxMmReportsHeroMeta" />
+                </VBox>
+                <VBox alignItems="End" class="nxMmReportsHeroActions">
+                    <Button text="SAP 새로고침" icon="sap-icon://refresh" type="Emphasized" press=".onRefreshPress" class="nxMmReportsRefreshBtn" />
+                    <Text text="MIGO 입고 후 이 버튼으로 재고 반영 확인" class="nxMmReportsHeroHint" />
+                </VBox>
+            </HBox>
+
+            <HBox class="nxMmReportsKpiBand" wrap="Wrap" items="{dashboard>/mmReports/kpis}">
+                <items>
+                    <VBox class="{= 'nxMmReportsKpi nxMmReportsKpi--' + ${dashboard>accent} }">
+                        <HBox alignItems="Center" justifyContent="SpaceBetween">
+                            <Text text="{dashboard>label}" class="nxMmReportsKpiLabel" />
+                            <core:Icon src="{dashboard>icon}" size="1.1rem" class="nxMmReportsKpiIcon" />
+                        </HBox>
+                        <ObjectNumber number="{dashboard>value}" unit="{dashboard>unit}" emphasized="true" class="nxMmReportsKpiNum" />
+                        <Text text="{dashboard>hint}" class="nxMmReportsKpiHint" />
+                    </VBox>
+                </items>
+            </HBox>
+        </VBox>
+
+        <Panel
+            expandable="true"
+            expanded="false"
+            class="nxMmReportsMigoPanel sapUiSmallMarginBeginEnd">
+            <headerToolbar>
+                <Toolbar>
+                    <core:Icon src="sap-icon://shipping-status" color="#0070F2" />
+                    <Title text="{dashboard>/mmReports/migoInfo/title}" level="H5" class="sapUiTinyMarginBegin" />
+                </Toolbar>
+            </headerToolbar>
+            <VBox class="sapUiSmallMargin">
+                <MessageStrip
+                    text="{dashboard>/mmReports/migoInfo/summary}"
+                    type="{dashboard>/mmReports/migoInfo/stripType}"
+                    showIcon="true"
+                    class="sapUiSmallMarginBottom" />
+                <VBox items="{dashboard>/mmReports/migoInfo/details}">
+                    <items>
+                        <HBox alignItems="Start" class="nxMmReportsMigoRow">
+                            <core:Icon src="sap-icon://circle-task-2" size="0.65rem" color="#0070F2" class="sapUiTinyMarginTop" />
+                            <Text text="{dashboard>text}" class="nxMmReportsMigoDetail sapUiTinyMarginBegin" />
+                        </HBox>
+                    </items>
+                </VBox>
+            </VBox>
+        </Panel>
+
+        <MessageStrip
+            text="SAP BomStock 데이터를 불러오는 중입니다. OData 연결 후 차트가 표시됩니다."
+            type="Information"
+            showIcon="true"
+            visible="{= !${dashboard>/mmReports/loaded} }"
+            class="sapUiSmallMarginBeginEnd" />
+
+        <HBox class="nxMmReportsGrid" width="100%" wrap="Wrap" renderType="Bare">
+            <VBox class="nxMmReportsCard nxMmReportsCard--pie">
+                <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                    <VBox>
+                        <Title text="{dashboard>/mmReports/pie/title}" level="H5" />
+                        <Text text="TypeLabel · StockQty 합계" class="nxMmReportsCardSub" />
+                    </VBox>
+                    <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--pie">
+                        <core:Icon src="sap-icon://pie-chart" size="1.1rem" color="#FFFFFF" />
+                    </VBox>
+                </HBox>
+                <core:HTML content="{dashboard>/mmReports/pie/chartHtml}" />
+            </VBox>
+
+            <VBox class="nxMmReportsCard nxMmReportsCard--bar">
+                <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                    <VBox>
+                        <Title text="{dashboard>/mmReports/bar/title}" level="H5" />
+                        <Text text="재고 수량 Top 6" class="nxMmReportsCardSub" />
+                    </VBox>
+                    <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--bar">
+                        <core:Icon src="sap-icon://horizontal-bar-chart" size="1.1rem" color="#FFFFFF" />
+                    </VBox>
+                </HBox>
+                <core:HTML content="{dashboard>/mmReports/bar/chartHtml}" />
+            </VBox>
+
+            <VBox class="nxMmReportsCard nxMmReportsCard--line">
+                <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                    <VBox>
+                        <Title text="{dashboard>/mmReports/line/title}" level="H5" />
+                        <Text text="RequiredQty 대비 충족률" class="nxMmReportsCardSub" />
+                    </VBox>
+                    <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--line">
+                        <core:Icon src="sap-icon://line-chart" size="1.1rem" color="#FFFFFF" />
+                    </VBox>
+                </HBox>
+                <core:HTML content="{dashboard>/mmReports/line/chartHtml}" />
+            </VBox>
+
+            <VBox class="nxMmReportsCard nxMmReportsCard--quad">
+                <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                    <VBox>
+                        <Title text="{dashboard>/mmReports/quadrant/title}" level="H5" />
+                        <Text text="재고 vs 리스크 버블" class="nxMmReportsCardSub" />
+                    </VBox>
+                    <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--quad">
+                        <core:Icon src="sap-icon://scatter-chart" size="1.1rem" color="#FFFFFF" />
+                    </VBox>
+                </HBox>
+                <core:HTML content="{dashboard>/mmReports/quadrant/chartHtml}" />
+            </VBox>
+
+            <VBox class="nxMmReportsCard nxMmReportsCardWide nxMmReportsCard--status">
+                <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                    <VBox>
+                        <Title text="{dashboard>/mmReports/status/title}" level="H5" />
+                        <Text text="정상 · 확인 · 부족 분포" class="nxMmReportsCardSub" />
+                    </VBox>
+                    <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--status">
+                        <core:Icon src="sap-icon://vertical-bar-chart" size="1.1rem" color="#FFFFFF" />
+                    </VBox>
+                </HBox>
+                <core:HTML content="{dashboard>/mmReports/status/chartHtml}" />
+            </VBox>
+        </HBox>
+
+        <Panel
+            expandable="true"
+            expanded="true"
+            class="nxMmReportsTablePanel sapUiSmallMargin">
+            <headerToolbar>
+                <Toolbar>
+                    <Title text="BOM Stock Detail (Top 12)" level="H5" />
+                    <ToolbarSpacer />
+                    <ObjectStatus text="SAP BomStockSet" state="Information" icon="sap-icon://database" />
+                </Toolbar>
+            </headerToolbar>
+            <Table
+                items="{dashboard>/mmReports/tableItems}"
+                growing="true"
+                class="nxMmReportsTable"
+                sticky="ColumnHeaders">
+                <columns>
+                    <Column><Text text="Component" /></Column>
+                    <Column><Text text="Material" /></Column>
+                    <Column><Text text="Parent" /></Column>
+                    <Column><Text text="Type" /></Column>
+                    <Column hAlign="End"><Text text="Stock" /></Column>
+                    <Column hAlign="End"><Text text="Required" /></Column>
+                    <Column hAlign="End"><Text text="Shortage" /></Column>
+                    <Column hAlign="Center"><Text text="Fill" /></Column>
+                    <Column hAlign="Center"><Text text="Status" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem class="nxMmReportsTableRow">
+                        <cells>
+                            <Text text="{dashboard>materialCode}" class="nxMmReportsCode" />
+                            <Text text="{dashboard>materialName}" />
+                            <Text text="{dashboard>parentMatnr}" />
+                            <ObjectStatus text="{dashboard>typeLabel}" state="Information" />
+                            <ObjectNumber number="{dashboard>stockQty}" unit="EA" emphasized="true" />
+                            <ObjectNumber number="{dashboard>requiredQty}" unit="EA" />
+                            <ObjectNumber
+                                number="{dashboard>shortageQty}"
+                                unit="EA"
+                                state="{= ${dashboard>shortageQty} > 0 ? 'Error' : 'None' }" />
+                            <ObjectStatus
+                                text="{dashboard>fillRate}"
+                                state="{= ${dashboard>statusState} === 'Error' ? 'Error' : (${dashboard>statusState} === 'Warning' ? 'Warning' : 'Success') }" />
+                            <ObjectStatus text="{dashboard>statusText}" state="{dashboard>statusState}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </Panel>
+    </VBox>
+</mvc:View>

@@ -23,8 +23,9 @@ sap.ui.define([
     "sap/m/MessageBox",
     "com/capstone/dashboard/fioridashboard/service/DashboardDataService",
     "com/capstone/dashboard/fioridashboard/util/SapErrorUtil",
-    "com/capstone/dashboard/fioridashboard/util/DashboardThemeHelper"
-], function (Controller, JSONModel, MessageToast, MessageBox, DashboardDataService, SapErrorUtil, DashboardThemeHelper) {
+    "com/capstone/dashboard/fioridashboard/util/DashboardThemeHelper",
+    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil"
+], function (Controller, JSONModel, MessageToast, MessageBox, DashboardDataService, SapErrorUtil, DashboardThemeHelper, MmChartHtmlUtil) {
     "use strict";
 
     var CREATE_ENTITY_CANDIDATES = [
@@ -403,6 +404,8 @@ sap.ui.define([
                 ],
                 mmDetailList: []
             });
+
+            MmChartHtmlUtil.enrichMmReports(oDashboardModel, []);
 
             oComponent.setModel(oDashboardModel, "dashboard");
             DashboardThemeHelper.apply(oDashboardModel.getProperty("/settings/darkMode"));

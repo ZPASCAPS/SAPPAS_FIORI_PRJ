@@ -473,9 +473,15 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxDashboardCanvasRoot > .nxDashboardSplit,
-.nxDashboardCanvasRoot > .nxModuleCanvas {
+.nxDashboardCanvasRoot > .nxModuleCanvas,
+.nxDashboardCanvasRoot > .nxModuleOverviewScroll {
     flex: 1 1 auto;
     min-height: 0;
+}
+
+.nxModuleOverviewBody {
+    min-height: 24rem;
+    padding-bottom: 1rem;
 }
 
 /* ── A/B 공간 분할 (오더 조회 | E2E Process Flow) ── */
@@ -811,6 +817,283 @@ html, body, body > div, #container, #container-uiarea,
     border: none !important;
 }
 
+/* MM module overview scroll */
+.nxModuleOverviewScroll {
+    background: #F5F6F7;
+}
+
+
+/* MM Reports — SAP BomStock 실데이터 (OVP 화려 스타일) */
+.nxMmReports {
+    padding: 0.75rem 1rem 1.5rem;
+    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmReportsHero {
+    background: linear-gradient(135deg, #0B1F4A 0%, #0A3D91 42%, #0070F2 100%);
+    border-radius: 0.85rem;
+    padding: 1.1rem 1.25rem 1rem;
+    margin-bottom: 0.85rem;
+    box-shadow: 0 14px 36px rgba(0, 87, 210, 0.28);
+    position: relative;
+    overflow: hidden;
+}
+
+.nxMmReportsHero::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -8%;
+    width: 18rem;
+    height: 18rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 68%);
+    pointer-events: none;
+}
+
+.nxMmReportsHeroTop {
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.nxMmReportsHeroTitle,
+.nxMmReportsHeroTitle .sapMTitle {
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    font-size: 1.45rem !important;
+    margin-top: 0.35rem;
+}
+
+.nxMmReportsHeroSub,
+.nxMmReportsHeroSub .sapMText {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-size: 0.82rem !important;
+    margin-top: 0.2rem;
+}
+
+.nxMmReportsHeroMeta,
+.nxMmReportsHeroMeta .sapMText {
+    color: rgba(255, 255, 255, 0.72) !important;
+    font-size: 0.72rem !important;
+    margin-top: 0.25rem;
+}
+
+.nxMmReportsBadgeRow {
+    gap: 0.35rem;
+}
+
+.nxMmReportsLiveBadge .sapMObjStatusText,
+.nxMmReportsLiveBadge .sapMObjStatusIcon {
+    font-weight: 700 !important;
+}
+
+.nxMmReportsHeroActions {
+    gap: 0.35rem;
+}
+
+.nxMmReportsRefreshBtn {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22) !important;
+}
+
+.nxMmReportsHeroHint,
+.nxMmReportsHeroHint .sapMText {
+    color: rgba(255, 255, 255, 0.78) !important;
+    font-size: 0.68rem !important;
+    text-align: right;
+}
+
+.nxMmReportsKpiBand {
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+.nxMmReportsKpi {
+    flex: 1 1 9.5rem;
+    min-width: 9rem;
+    padding: 0.7rem 0.85rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(6px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.nxMmReportsKpi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.nxMmReportsKpi--blue { background: linear-gradient(145deg, rgba(0, 112, 242, 0.35), rgba(255, 255, 255, 0.12)); }
+.nxMmReportsKpi--violet { background: linear-gradient(145deg, rgba(139, 92, 246, 0.38), rgba(255, 255, 255, 0.12)); }
+.nxMmReportsKpi--amber { background: linear-gradient(145deg, rgba(234, 194, 11, 0.38), rgba(255, 255, 255, 0.12)); }
+.nxMmReportsKpi--red { background: linear-gradient(145deg, rgba(187, 0, 0, 0.35), rgba(255, 255, 255, 0.12)); }
+
+.nxMmReportsKpiLabel,
+.nxMmReportsKpiLabel .sapMText {
+    font-size: 0.72rem !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 600 !important;
+}
+
+.nxMmReportsKpiIcon {
+    color: rgba(255, 255, 255, 0.9) !important;
+    opacity: 0.9;
+}
+
+.nxMmReportsKpiNum,
+.nxMmReportsKpiNum .sapMObjectNumberText,
+.nxMmReportsKpiNum .sapMObjectNumberUnit {
+    color: #FFFFFF !important;
+    font-size: 1.35rem !important;
+    font-weight: 800 !important;
+}
+
+.nxMmReportsKpiHint,
+.nxMmReportsKpiHint .sapMText {
+    font-size: 0.64rem !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+    margin-top: 0.15rem;
+}
+
+.nxMmReportsMigoPanel {
+    margin-bottom: 0.75rem !important;
+    border: 1px solid #BFDBFE !important;
+    border-radius: 0.65rem !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(0, 112, 242, 0.08) !important;
+}
+
+.nxMmReportsMigoRow {
+    margin-bottom: 0.35rem;
+}
+
+.nxMmReportsMigoDetail,
+.nxMmReportsMigoDetail .sapMText {
+    font-size: 0.78rem !important;
+    color: #374151 !important;
+    line-height: 1.45 !important;
+}
+
+.nxMmReportsGrid {
+    gap: 0.85rem;
+    padding: 0 0.15rem;
+}
+
+.nxMmReportsCard {
+    flex: 1 1 22rem;
+    min-width: 20rem;
+    max-width: calc(50% - 0.5rem);
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.85rem 0.95rem;
+    box-sizing: border-box;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nxMmReportsCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.nxMmReportsCard--pie::before { background: linear-gradient(90deg, #E6600D, #F59E0B); }
+.nxMmReportsCard--bar::before { background: linear-gradient(90deg, #0070F2, #5899DA); }
+.nxMmReportsCard--line::before { background: linear-gradient(90deg, #2563EB, #60A5FA); }
+.nxMmReportsCard--quad::before { background: linear-gradient(90deg, #36A41D, #10B981); }
+.nxMmReportsCard--status::before { background: linear-gradient(90deg, #8B5CF6, #0070F2); }
+
+.nxMmReportsCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0, 112, 242, 0.12);
+}
+
+.nxMmReportsCardWide {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+
+.nxMmReportsCardHead {
+    margin-bottom: 0.45rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.nxMmReportsCardHead .sapMTitle {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.nxMmReportsCardSub,
+.nxMmReportsCardSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmReportsCardIconWrap {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.55rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nxMmReportsCardIconWrap--pie { background: linear-gradient(135deg, #E6600D, #F59E0B); }
+.nxMmReportsCardIconWrap--bar { background: linear-gradient(135deg, #0070F2, #5899DA); }
+.nxMmReportsCardIconWrap--line { background: linear-gradient(135deg, #2563EB, #60A5FA); }
+.nxMmReportsCardIconWrap--quad { background: linear-gradient(135deg, #36A41D, #10B981); }
+.nxMmReportsCardIconWrap--status { background: linear-gradient(135deg, #8B5CF6, #0070F2); }
+
+.nxMmReportsTablePanel {
+    margin-top: 0.85rem !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 0.75rem !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07) !important;
+    overflow: hidden;
+}
+
+.nxMmReportsTablePanel .sapMPanelHdr,
+.nxMmReportsTablePanel .sapMTB {
+    background: linear-gradient(90deg, #F8FAFC, #FFFFFF) !important;
+    border-bottom: 1px solid #E5E7EB !important;
+}
+
+.nxMmReportsTable {
+    border: none !important;
+}
+
+.nxMmReportsTable .sapMListHdr {
+    background: #F9FAFB !important;
+}
+
+.nxMmReportsTableRow:hover {
+    background: #EFF6FF !important;
+}
+
+.nxMmReportsCode,
+.nxMmReportsCode .sapMText {
+    font-weight: 700 !important;
+    color: #0070F2 !important;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.78rem !important;
+}
+
 .nxNavPanel {
     width: 100%;
     min-width: 0;
@@ -1115,22 +1398,55 @@ html, body, body > div, #container, #container-uiarea,
     background: #FFFFFF;
     border-bottom: 1px solid #E5E7EB;
     padding: 0 1.75rem;
-    height: 3.75rem;
-    min-height: 3.75rem;
+    height: 3.25rem;
+    min-height: 3.25rem;
     box-sizing: border-box;
     display: flex !important;
     align-items: center !important;
 }
 
+.nxModuleNavTabsWrap {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #E5E7EB;
+    box-sizing: border-box;
+    padding-bottom: 0;
+}
+
+.nxModuleNavTabIndicator {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: #111827;
+    border-radius: 1px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: left 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.15s ease;
+}
+
 .nxModuleNavBarInner {
     display: flex !important;
     align-items: center !important;
-    gap: 0.65rem;
+    gap: 1.5rem;
+    border-bottom: none;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 .nxModuleNavTab {
     flex-shrink: 0;
     position: relative;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    min-width: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .nxModuleNavTab .sapMBtnInner {
@@ -1142,14 +1458,14 @@ html, body, body > div, #container, #container-uiarea,
     min-width: 0 !important;
     height: 2.5rem !important;
     min-height: 2.5rem !important;
-    padding: 0 1.25rem !important;
+    padding: 0 0.15rem !important;
     border: none !important;
-    border-radius: 0.75rem !important;
+    border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
     outline: none !important;
-    gap: 0.5rem !important;
-    transition: background 0.15s ease, color 0.15s ease;
+    gap: 0.45rem !important;
+    transition: color 0.15s ease;
 }
 
 .nxModuleNavTab .sapMBtnInner:focus,
@@ -1183,7 +1499,7 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxModuleNavTab:hover .sapMBtnInner {
-    background: #F3F4F6 !important;
+    background: transparent !important;
 }
 
 .nxModuleNavTab:hover .sapMBtnIcon,
@@ -1192,19 +1508,24 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxModuleNavTabActive .sapMBtnInner {
-    background: #EDE9FE !important;
+    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
 
 .nxModuleNavTabActive .sapMBtnIcon,
 .nxModuleNavTabActive .sapMBtnContent {
-    color: #6D28D9 !important;
+    color: #111827 !important;
     font-weight: 700 !important;
 }
 
 .nxModuleNavTabActive:hover .sapMBtnInner {
-    background: #DDD6FE !important;
+    background: transparent !important;
+}
+
+.nxModuleNavTabActive:hover .sapMBtnIcon,
+.nxModuleNavTabActive:hover .sapMBtnContent {
+    color: #111827 !important;
 }
 
 /* ── Module dashboard shell (CareOps Finances 상단) ── */
@@ -1222,12 +1543,12 @@ html, body, body > div, #container, #container-uiarea,
 
 .nxModuleShellTop {
     background: #F3F4F6;
-    padding: 1.5rem 1.75rem 0;
+    padding: 1.1rem 1.75rem 0;
     box-sizing: border-box;
 }
 
 .nxModuleShellHeader {
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.65rem;
 }
 
 .nxModuleShellTitle,
@@ -7575,7 +7896,7 @@ html, body, body > div, #container, #container-uiarea,
     right: 0.22rem !important;
     top: 0.28rem !important;
     bottom: auto !important;
-    height: var(--e2e-gauge-pct, 36%) !important;
+    min-height: 0.5rem !important;
     border-radius: 0.45rem !important;
     background: linear-gradient(180deg, #0070F2 0%, #89D1FF 100%) !important;
     opacity: 0.38 !important;
@@ -7980,12 +8301,20 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxDarkMode .nxModuleNavTabActive .sapMBtnInner {
-    background: rgba(109, 40, 217, 0.25) !important;
+    background: transparent !important;
 }
 
 .nxDarkMode .nxModuleNavTabActive .sapMBtnIcon,
 .nxDarkMode .nxModuleNavTabActive .sapMBtnContent {
-    color: #C4B5FD !important;
+    color: var(--nx-dm-text) !important;
+}
+
+.nxDarkMode .nxModuleNavTabsWrap {
+    border-bottom-color: var(--nx-dm-border) !important;
+}
+
+.nxDarkMode .nxModuleNavTabIndicator {
+    background: var(--nx-dm-text) !important;
 }
 
 .nxDarkMode .nxModuleSubTabsWrap {
