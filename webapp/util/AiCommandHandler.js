@@ -152,6 +152,13 @@ sap.ui.define([], function () {
                 oCallbacks.onProcess("AI 비서", "sap-icon://sys-find", "전표 조회 업무로 파악했습니다. 요약 데이터를 검색합니다.");
                 this._handleOrderSummary(sProcessedText, oModel, oCallbacks);
 
+
+                // 🚀 6. PR -> PO 변환 로직 (신규)
+            } else if (sProcessedText.includes("변환")) {
+                oCallbacks.onProcess("AI 비서", "sap-icon://transform", "PR(구매요청)을 PO(구매오더)로 변환하는 작업을 시작합니다⏳...");
+                this._handlePrToPoConversion(sProcessedText, oModel, oCallbacks);
+
+
                 // 5. 예외 처리
             } else {
     oCallbacks.onError(
@@ -571,8 +578,48 @@ sap.ui.define([], function () {
                     oCallbacks.onError("AI 비서", "sap-icon://error", "추적 데이터를 불러오는 중 오류가 발생했습니다.");
                 }
             });
-        }
+        },
 
+
+
+        /**
+         * [API 호출] PR 번호를 PO로 변환하는 백엔드 로직 실행
+         */
+        _handlePrToPoConversion: function (sProcessedText, oModel, oCallbacks) {
+            // 1. 문장에서 10자리 숫자(PR 번호)만 쏙 뽑아내기
+            var aMatch = sProcessedText.match(/(\d{10})/); 
+            var sPrNumber = aMatch ? aMatch[1] : null;
+
+            if (!sPrNumber) {
+                oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "변환할 PR 번호를 찾지 못했어요. '0010000395 변환해 줘' 처럼 10자리 번호를 말씀해 주세요.");
+                return;
+            }
+
+            // 2. 백엔드로 보낼 파라미터 세팅
+            var oPayload = {
+                PR_LIST: sPrNumber
+            };
+
+            // 3. Function Import 호출
+            oModel.callFunction("/ConvertPrToPo", {
+                method: "POST", 
+                urlParameters: oPayload,
+                success: function (oData) {
+                    // 성공 메시지 추출
+                    var sMessage = oData.MSG || (oData.ConvertPrToPo && oData.ConvertPrToPo.MSG) || "변환 성공!";
+                    oCallbacks.onSuccess("AI 비서", "sap-icon://accept", "✨ " + sMessage);
+                },
+                error: function (oError) {
+                    // 실패 메시지 추출
+                    var sErrMsg = "백엔드 통신 중 에러가 발생했습니다.";
+                    try {
+                        var oErrorObj = JSON.parse(oError.responseText);
+                        sErrMsg = oErrorObj.error.message.value;
+                    } catch (e) { }
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "🚨 " + sErrMsg);
+                }
+            });
+        }
 
     };
 });
