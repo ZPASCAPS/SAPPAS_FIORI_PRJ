@@ -1,13 +1,26 @@
-<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step08Shipment" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+<mvc:View 
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step08Shipment" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    
     <VBox class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos08" renderType="Bare">
+        
         <HBox alignItems="Start" justifyContent="SpaceBetween">
             <VBox class="e2eMtoCardTitleStack" renderType="Bare">
                 <Text text="8. 출하 / Outbound" class="e2eMtoCardTitle" />
                 <Text text="Delivery" class="e2eMtoCardTitle e2eMtoCardTitleLine2" />
             </VBox>
-            <ObjectStatus text="예정" state="None" class="e2eMtoCardStatus" />
+            
+            <ObjectStatus 
+                text="{= ${flowModel>/Delivery} === '대기중...' || ${flowModel>/Delivery} === '없음' || !${flowModel>/Delivery} ? '예정' : '완료' }" 
+                state="{= ${flowModel>/Delivery} === '대기중...' || ${flowModel>/Delivery} === '없음' || !${flowModel>/Delivery} ? 'None' : 'Success' }" 
+                class="e2eMtoCardStatus" />
         </HBox>
-        <Text text="Del-80001234" class="e2eMtoCardDoc" />
+        
+        <Text text="{flowModel>/Delivery}" class="e2eMtoCardDoc" />
+        
         <Text text="플랜트 1000" class="e2eMtoCardDetail" />
+        
     </VBox>
 </mvc:View>

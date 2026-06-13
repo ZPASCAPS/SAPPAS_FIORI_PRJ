@@ -107,6 +107,9 @@ sap.ui.define([
                         // 기준이 될 첫 번째 전표 데이터 추출
                         var oBase = aResults[0];
 
+                        console.log("🔥 백엔드 응답 원본 데이터:", oBase);             //0613 
+
+
                         // 💡 6. 공용 칠판(flowModel) 덮어쓰기! 
                         // 이 순간 오른쪽 1~11번 프로세스 뷰 화면이 자동으로 싹 바뀝니다.
                         oFlowModel.setData({
