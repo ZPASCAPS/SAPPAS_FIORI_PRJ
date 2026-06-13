@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step01SalesOrder" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+<!--<mvc:View controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step01SalesOrder" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
     <VBox class="e2eMtoProcessCard e2eMtoCardDone e2eStepPos01" renderType="Bare">
         <HBox alignItems="Center" justifyContent="SpaceBetween">
             <Text text="1. Sales Order" class="e2eMtoCardTitle" />
@@ -6,5 +6,24 @@
         </HBox>
         <Text text="SO-5000000010" class="e2eMtoCardDoc" />
         <Text text="2026.06.15" class="e2eMtoCardDetail" />
-    </VBox>
+    </VBox>                                                                   Step01SalesOrder.view.xml
+</mvc:View>-->
+
+<mvc:View 
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step01SalesOrder" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    
+    <VBox class="e2eMtoProcessCard e2eMtoCardDone e2eStepPos01" renderType="Bare">
+        <HBox alignItems="Center" justifyContent="SpaceBetween">
+            <Text text="1. Sales Order" class="e2eMtoCardTitle" />
+            <ObjectStatus text="??" state="Success" class="e2eMtoCardStatus" />
+        </HBox>
+        
+        <Text text="{flowModel>/SalesOrder}" class="e2eMtoCardDoc" />
+        
+        <Text text="2026.06.15" class="e2eMtoCardDetail" />
+    </VBox>                                                              
 </mvc:View>
+    
