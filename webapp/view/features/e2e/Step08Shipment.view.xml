@@ -4,18 +4,14 @@
     xmlns="sap.m" 
     xmlns:core="sap.ui.core">
     
-    <VBox class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos08" renderType="Bare">
+    <VBox id="e2eStepCard" class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos08" renderType="Bare">
         
         <HBox alignItems="Start" justifyContent="SpaceBetween">
             <VBox class="e2eMtoCardTitleStack" renderType="Bare">
                 <Text text="8. 출하 / Outbound" class="e2eMtoCardTitle" />
                 <Text text="Delivery" class="e2eMtoCardTitle e2eMtoCardTitleLine2" />
             </VBox>
-            
-            <ObjectStatus 
-                text="{= ${flowModel>/Delivery} === '대기중...' || ${flowModel>/Delivery} === '없음' || !${flowModel>/Delivery} ? '예정' : '완료' }" 
-                state="{= ${flowModel>/Delivery} === '대기중...' || ${flowModel>/Delivery} === '없음' || !${flowModel>/Delivery} ? 'None' : 'Success' }" 
-                class="e2eMtoCardStatus" />
+            <ObjectStatus id="e2eStepStatus" text="예정" state="None" class="e2eMtoCardStatus" />
         </HBox>
         
         <Text text="{flowModel>/Delivery}" class="e2eMtoCardDoc" />

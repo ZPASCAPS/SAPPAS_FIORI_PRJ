@@ -24,8 +24,9 @@ sap.ui.define([
     "com/capstone/dashboard/fioridashboard/service/DashboardDataService",
     "com/capstone/dashboard/fioridashboard/util/SapErrorUtil",
     "com/capstone/dashboard/fioridashboard/util/DashboardThemeHelper",
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil"
-], function (Controller, JSONModel, MessageToast, MessageBox, DashboardDataService, SapErrorUtil, DashboardThemeHelper, MmChartHtmlUtil) {
+    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil",
+    "com/capstone/dashboard/fioridashboard/util/E2EProgressHelper"
+], function (Controller, JSONModel, MessageToast, MessageBox, DashboardDataService, SapErrorUtil, DashboardThemeHelper, MmChartHtmlUtil, E2EProgressHelper) {
     "use strict";
 
     var CREATE_ENTITY_CANDIDATES = [
@@ -184,7 +185,23 @@ sap.ui.define([
                 allItems: [],
                 displayItems: [],
                 spaces: {
-                    orderInquiry: {},
+                    orderInquiry: {
+                        visible: false,
+                        orderNumber: "",
+                        currentStep: 0,
+                        totalSteps: 11,
+                        stageText: "",
+                        stageLabel: "",
+                        progressPercent: 0,
+                        estimatedDays: "",
+                        customer: "",
+                        productCode: "",
+                        productName: "",
+                        quantity: "",
+                        quantityUnit: "EA",
+                        amountDisplay: "",
+                        creationDate: ""
+                    },
                     e2eProcessFlow: {}
                 },
                 e2eProcessFlow: {
@@ -219,25 +236,17 @@ sap.ui.define([
                             { key: "90", text: "90 days" }
                         ]
                     },
+                    progressStep: 0,
+                    stepStatuses: E2EProgressHelper.buildStepStatuses(0),
+                    stepCardClasses: E2EProgressHelper.buildStepCardClasses(0),
+                    connectorClasses: E2EProgressHelper.buildConnectorClasses(0),
                     processGauge: {
-                        orderNumber: "5000000010",
-                        currentStep: 4,
-                        totalSteps: 11,
-                        stageText: "Purchase Order",
-                        progressPercent: 36,
-                        segments: [
-                            { step: 1, status: "done" },
-                            { step: 2, status: "done" },
-                            { step: 3, status: "done" },
-                            { step: 4, status: "active" },
-                            { step: 5, status: "pending" },
-                            { step: 6, status: "pending" },
-                            { step: 7, status: "pending" },
-                            { step: 8, status: "pending" },
-                            { step: 9, status: "pending" },
-                            { step: 10, status: "pending" },
-                            { step: 11, status: "pending" }
-                        ]
+                        orderNumber: "",
+                        currentStep: 0,
+                        totalSteps: E2EProgressHelper.TOTAL_STEPS,
+                        stageText: "",
+                        progressPercent: 0,
+                        segments: E2EProgressHelper.buildGaugeSegments(0)
                     },
                     steps: {
                         step01: { id: "step01", number: 1, title: "Sales Order", icon: "sap-icon://target-group", status: "complete", showDetail: false, documents: [], keyInfo: "" },
@@ -423,19 +432,7 @@ sap.ui.define([
             // ===================================================================
             // 💡 [여기서부터 추가!] E2E 프로세스 플로우용 공통 게시판(flowModel) 등록
             // ===================================================================
-            var oInitialFlowData = {
-                SalesOrder: "대기중...",
-                PlannedOrder: "대기중...",
-                PurchaseReq: "대기중...",
-                PurchaseOrder: "대기중...",
-                POMigo: "대기중...",
-                ProductionOrder: "대기중...",
-                ProdMigo: "대기중...",
-                Delivery: "대기중...",
-                Billing: "대기중...",
-                FI: "대기중...",
-                Clearing: "대기중..."
-            };
+            var oInitialFlowData = E2EProgressHelper.buildEmptyFlowData();
             var oFlowModel = new JSONModel(oInitialFlowData);
             oComponent.setModel(oFlowModel, "flowModel");
             // ===================================================================

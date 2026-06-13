@@ -104,28 +104,28 @@
             <VBox class="e2eFlowStage" width="100%" renderType="Bare">
 
                 <VBox class="e2eMtoFlowGrid e2eMtoReferenceGrid" width="100%" renderType="Bare">
-                    <VBox class="e2eMtoConnector e2eMtoConnectorMrp e2eCon12" renderType="Bare"><HBox class="e2eMtoMrpBadge" alignItems="Center" renderType="Bare"><core:Icon src="sap-icon://synchronize" class="e2eMtoMrpSpinIcon" /><VBox class="e2eMtoMrpLabelStack" renderType="Bare"><Text text="MRP" class="e2eMtoMrpLabelLine" /><Text text="실행" class="e2eMtoMrpLabelLine" /><Text text="중" class="e2eMtoMrpLabelLine" /></VBox></HBox><Text text="→" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorDone e2eCon23" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorActive e2eCon34" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorVertical e2eCon45" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon56" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon67" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorVertical e2eCon78" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon89" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon910" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox class="e2eMtoConnector e2eMtoConnectorPending e2eCon1011" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector12" class="e2eMtoConnector e2eMtoConnectorMrp e2eCon12 e2eMtoConnectorPending" renderType="Bare"><HBox class="e2eMtoMrpBadge" alignItems="Center" renderType="Bare"><core:Icon src="sap-icon://synchronize" class="e2eMtoMrpSpinIcon" /><VBox class="e2eMtoMrpLabelStack" renderType="Bare"><Text text="MRP" class="e2eMtoMrpLabelLine" /><Text text="실행" class="e2eMtoMrpLabelLine" /><Text text="중" class="e2eMtoMrpLabelLine" /></VBox></HBox><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector23" class="e2eMtoConnector e2eCon23 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector34" class="e2eMtoConnector e2eCon34 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector45" class="e2eMtoConnector e2eMtoConnectorVertical e2eCon45 e2eMtoConnectorPending" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector56" class="e2eMtoConnector e2eCon56 e2eMtoConnectorPending" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector67" class="e2eMtoConnector e2eCon67 e2eMtoConnectorPending" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector78" class="e2eMtoConnector e2eMtoConnectorVertical e2eCon78 e2eMtoConnectorPending" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector89" class="e2eMtoConnector e2eCon89 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector910" class="e2eMtoConnector e2eCon910 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector1011" class="e2eMtoConnector e2eCon1011 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
 
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step01SalesOrder" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step02PlannedOrder" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step03PurchaseRequisition" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step04PurchaseOrder" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step06ProductionOrder" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step05GoodsReceipt" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step07GoodsReceipt" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step08Shipment" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step09Billing" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step10AccountingDocument" />
-                    <mvc:XMLView viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step11PaymentPosting" />
+                    <mvc:XMLView id="e2eStepView01" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step01SalesOrder" />
+                    <mvc:XMLView id="e2eStepView02" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step02PlannedOrder" />
+                    <mvc:XMLView id="e2eStepView03" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step03PurchaseRequisition" />
+                    <mvc:XMLView id="e2eStepView04" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step04PurchaseOrder" />
+                    <mvc:XMLView id="e2eStepView06" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step06ProductionOrder" />
+                    <mvc:XMLView id="e2eStepView05" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step05GoodsReceipt" />
+                    <mvc:XMLView id="e2eStepView07" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step07GoodsReceipt" />
+                    <mvc:XMLView id="e2eStepView08" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step08Shipment" />
+                    <mvc:XMLView id="e2eStepView09" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step09Billing" />
+                    <mvc:XMLView id="e2eStepView10" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step10AccountingDocument" />
+                    <mvc:XMLView id="e2eStepView11" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step11PaymentPosting" />
                 </VBox>
 
             </VBox>
