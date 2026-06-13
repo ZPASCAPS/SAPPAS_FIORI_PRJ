@@ -4,16 +4,8 @@
   View: com.capstone.dashboard.fioridashboard.view.features.OrderInquiry
   Controller: com.capstone.dashboard.fioridashboard.controller.features.OrderInquiry
 
-  역할:
-  - 메인 대시보드 왼쪽(A) 영역. 오더 조회 UI를 단계적으로 구현한다.
-  - 공통 dashboard JSONModel은 Main.controller.js에서 제공한다.
-
-  대시보드 구조:
-  Main → DashboardMain → DashboardCanvas → OrderInquiry (A공간)
-
-  협업:
-  - 오더 조회 UI·이벤트 → 이 View + OrderInquiry.controller.js
-  - 공통 데이터 필드 → Main.controller.js (dashboard/spaces/orderInquiry)
+  데이터: dashboard>/spaces/orderInquiry (Main.controller.js)
+  OData: OrderInquiry.controller.js → Z_C_E2E_OrderTracker + Z_C_OrderSummary
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.OrderInquiry"
@@ -27,19 +19,80 @@
             <Title text="오더 조회" level="H4" class="nxSpaceCardTitle" />
         </HBox>
 
-        <VBox class="nxSpaceCardBody nxSpaceCardBodyA" width="100%">
+        <VBox class="nxSpaceCardBody nxSpaceCardBodyA" width="100%" renderType="Bare">
             <SearchField
                 id="salesOrderInput"
                 placeholder="오더 번호 검색"
                 width="100%"
-                class="nxSpaceSearch" />
+                class="nxSpaceSearch"
+                search=".onSearchOrder" />
             <Button
                 text="조회"
                 type="Emphasized"
                 press=".onSearchOrder"
                 width="100%"
                 class="nxSpaceSearchBtn" />
-            <VBox class="nxSpaceInnerEmpty nxSpaceInnerEmptyA" width="100%" />
+
+            <VBox
+                class="nxOrderResultPanel"
+                width="100%"
+                renderType="Bare"
+                visible="{dashboard>/spaces/orderInquiry/visible}">
+                <HBox class="nxOrderResultHeader" alignItems="Center" renderType="Bare">
+                    <Text text="📄" class="nxOrderIcon" />
+                    <Text text="{dashboard>/spaces/orderInquiry/orderNumber}" class="nxOrderNumber" />
+                </HBox>
+
+                <VBox class="nxOrderStageBlock" renderType="Bare" width="100%">
+                    <Text text="현재 단계" class="nxOrderLabel" />
+                    <Text text="{dashboard>/spaces/orderInquiry/stageLabel}" class="nxOrderStageText" />
+                    <VBox class="nxOrderProgressBar" renderType="Bare" width="100%">
+                        <HBox
+                            id="orderProgressFill"
+                            class="nxOrderProgressFill"
+                            width="{= ${dashboard>/spaces/orderInquiry/progressPercent} + '%' }"
+                            height="0.75rem"
+                            renderType="Bare" />
+                        <Text text="i" class="nxOrderProgressInfo" />
+                    </VBox>
+                </VBox>
+
+                <VBox class="nxOrderDetailList" width="100%" renderType="Bare">
+                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                        <Text text="예상 소요" class="nxOrderDetailLabel" />
+                        <Text text="{dashboard>/spaces/orderInquiry/estimatedDays}" class="nxOrderDetailValue" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                        <Text text="고객" class="nxOrderDetailLabel" />
+                        <Text text="{dashboard>/spaces/orderInquiry/customer}" class="nxOrderDetailValue" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                        <Text text="제품명" class="nxOrderDetailLabel" />
+                        <Text
+                            text="{= ${dashboard>/spaces/orderInquiry/productCode} + ' / ' + ${dashboard>/spaces/orderInquiry/productName} }"
+                            class="nxOrderDetailValue nxOrderProductName" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                        <Text text="수량" class="nxOrderDetailLabel" />
+                        <Text
+                            text="{= ${dashboard>/spaces/orderInquiry/quantity} + ' ' + ${dashboard>/spaces/orderInquiry/quantityUnit} }"
+                            class="nxOrderDetailValue" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                        <Text text="금액" class="nxOrderDetailLabel" />
+                        <Text text="{dashboard>/spaces/orderInquiry/amountDisplay}" class="nxOrderDetailValue nxOrderAmount" />
+                    </HBox>
+                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                        <Text text="생성일" class="nxOrderDetailLabel" />
+                        <Text text="{dashboard>/spaces/orderInquiry/creationDate}" class="nxOrderDetailValue" />
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <VBox
+                class="nxSpaceInnerEmpty nxSpaceInnerEmptyA"
+                width="100%"
+                visible="{= !${dashboard>/spaces/orderInquiry/visible} }" />
         </VBox>
     </VBox>
 </mvc:View>

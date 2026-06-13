@@ -4942,17 +4942,27 @@ html, body, body > div, #container, #container-uiarea,
     position: relative !important;
     height: 1.55rem !important;
     margin-top: 0.35rem !important;
-    background: linear-gradient(90deg, #D9F2FF 0%, #EAF7FF 100%) !important;
     border-radius: 999px !important;
-    overflow: visible !important;
+    background: linear-gradient(90deg, #D9F2FF 0%, #EAF7FF 100%) !important;
+    overflow: hidden !important;
 }
 
-.nxOrderProgressFill {
-    width: 42% !important;
+.nxOrderProgressFill,
+.nxOrderProgressFill.sapMFlexBox {
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    flex: none !important;
+    min-width: 0 !important;
     height: 0.75rem !important;
-    margin-left: 0 !important;
+    margin: 0 !important;
     border-radius: 999px !important;
     background: #0B74F0 !important;
+    transform: translateY(-50%) !important;
+    transition: width 0.35s ease !important;
+    max-width: calc(100% - 1.45rem) !important;
+    z-index: 1 !important;
+    box-sizing: border-box !important;
 }
 
 .nxOrderProgressDot {
@@ -8395,3 +8405,35 @@ html, body, body > div, #container, #container-uiarea,
     background: var(--nx-dm-surface) !important;
     border-right-color: var(--nx-dm-border) !important;
 }
+
+/* E2E Flow — dynamic progress semantic aliases (maps to existing card/connector styles) */
+.step-completed.e2eMtoProcessCard,
+.e2eMtoProcessCard.step-completed {
+    /* uses .e2eMtoCardDone */
+}
+
+.step-in-progress.e2eMtoProcessCard,
+.e2eMtoProcessCard.step-in-progress {
+    /* uses .e2eMtoCardActive */
+}
+
+.step-pending.e2eMtoProcessCard,
+.e2eMtoProcessCard.step-pending {
+    /* uses .e2eMtoCardPending */
+}
+
+.e2eMtoReferenceGrid .step-completed.e2eMtoConnector::before,
+.e2eMtoReferenceGrid .e2eMtoConnector.step-completed::before {
+    /* uses .e2eMtoConnectorDone */
+}
+
+.e2eMtoReferenceGrid .step-in-progress.e2eMtoConnector::before,
+.e2eMtoReferenceGrid .e2eMtoConnector.step-in-progress::before {
+    /* uses .e2eMtoConnectorActive */
+}
+
+.e2eMtoReferenceGrid .step-pending.e2eMtoConnector::before,
+.e2eMtoReferenceGrid .e2eMtoConnector.step-pending::before {
+    /* uses .e2eMtoConnectorPending */
+}
+

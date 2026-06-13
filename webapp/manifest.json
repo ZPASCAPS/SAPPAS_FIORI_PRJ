@@ -43,6 +43,13 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "orderSummarySource": {
+        "uri": "/sap/opu/odata/sap/Z_C_ORDERSUMMARY_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
 
     }
@@ -105,6 +112,10 @@
       },
       "trackerModel": {
         "dataSource": "trackerSource",
+        "preload": true
+      },
+      "orderSummaryModel": {
+        "dataSource": "orderSummarySource",
         "preload": true
       }
     },
