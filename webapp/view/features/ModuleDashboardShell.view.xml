@@ -46,6 +46,7 @@
                 text="Overview"
                 type="Transparent"
                 press=".onSubTabPress"
+                visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' }"
                 class="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="OVERVIEW" /></customData>
             </Button>
@@ -54,6 +55,7 @@
                 text="Operations"
                 type="Transparent"
                 press=".onSubTabPress"
+                visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' }"
                 class="{= ${dashboard>/moduleView/activeSubTab} === 'OPERATIONS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="OPERATIONS" /></customData>
             </Button>
@@ -62,6 +64,7 @@
                 text="Source distribution"
                 type="Transparent"
                 press=".onSubTabPress"
+                visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' }"
                 class="{= ${dashboard>/moduleView/activeSubTab} === 'DISTRIBUTION' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="DISTRIBUTION" /></customData>
             </Button>
@@ -70,6 +73,7 @@
                 text="Insurance"
                 type="Transparent"
                 press=".onSubTabPress"
+                visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' }"
                 class="{= ${dashboard>/moduleView/activeSubTab} === 'INSURANCE' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="INSURANCE" /></customData>
             </Button>

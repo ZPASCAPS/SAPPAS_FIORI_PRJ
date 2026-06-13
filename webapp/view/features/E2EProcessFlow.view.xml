@@ -138,9 +138,11 @@
                 </VBox>
                 <VBox
                     class="e2eProcessGaugeBarWrap"
-                    renderType="Bare"
-                    style="{= '--e2e-gauge-pct:' + (${dashboard>/e2eProcessFlow/processGauge/currentStep} / ${dashboard>/e2eProcessFlow/processGauge/totalSteps} * 100) + '%' }">
-                    <VBox class="e2eProcessGaugeBarFill" renderType="Bare" />
+                    renderType="Bare">
+                    <VBox
+                        class="e2eProcessGaugeBarFill"
+                        renderType="Bare"
+                        height="{= Math.round(${dashboard>/e2eProcessFlow/processGauge/currentStep} / ${dashboard>/e2eProcessFlow/processGauge/totalSteps} * 100) + '%' }" />
                     <VBox class="e2eProcessGaugeSegments" items="{dashboard>/e2eProcessFlow/processGauge/segments}">
                         <items>
                             <VBox class="{= 'e2eProcessGaugeStep e2eProcessGaugeStep--' + ${status} }" renderType="Bare">

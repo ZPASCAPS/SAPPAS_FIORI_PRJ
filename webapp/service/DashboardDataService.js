@@ -10,7 +10,9 @@
  * 협업:
  * - OData 매핑·집계 로직 → 이 Service (View/Controller에 OData 직접 넣지 않음)
  */
-sap.ui.define([], function () {
+sap.ui.define([
+    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil"
+], function (MmChartHtmlUtil) {
     "use strict";
 
     var REGION_KEYS = ["china", "ue", "usa", "canada", "other"];
@@ -295,6 +297,8 @@ sap.ui.define([], function () {
             oModel.setProperty("/distribution", buildDistribution(aItems));
             oModel.setProperty("/integrations", buildIntegrations(aItems));
             oModel.setProperty("/displayItems", aItems.slice(0, 8));
+
+            MmChartHtmlUtil.enrichMmReports(oModel, aItems);
 
             this.applySearchFilter(oModel);
         },
