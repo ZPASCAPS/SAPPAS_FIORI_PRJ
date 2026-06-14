@@ -446,6 +446,99 @@ sap.ui.define([
                         emptyMessage: "왼쪽 목록에서 항목을 선택하면 상세 정보가 표시됩니다."
                     },
                     selectedWorklistId: ""
+                },
+                mmInventory: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    materialSearch: "",
+                    statusFilter: "ALL",
+                    typeLabelFilter: "ALL",
+                    shortageOnly: false,
+                    statusOptions: [
+                        { key: "ALL", text: "전체" },
+                        { key: "OK", text: "OK" },
+                        { key: "SHORT", text: "SHORT" }
+                    ],
+                    typeLabelOptions: [{ key: "ALL", text: "전체" }],
+                    criteriaLabel: "전체 자재",
+                    lastUpdated: "데이터 없음",
+                    kpis: [],
+                    materials: [],
+                    selectedMaterialId: "",
+                    detail: {
+                        hasSelection: false,
+                        emptyMessage: "왼쪽 자재 목록에서 자재를 선택하면 상세 정보가 표시됩니다.",
+                        warningMessage: "",
+                        successMessage: ""
+                    },
+                    analysisCharts: []
+                },
+                mmPurchasing: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    poSearch: "",
+                    materialSearch: "",
+                    migoSearch: "",
+                    poLinkedFilter: "ALL",
+                    migoLinkedFilter: "ALL",
+                    shortageOnly: false,
+                    linkFilterOptions: [
+                        { key: "ALL", text: "전체" },
+                        { key: "LINKED", text: "연결됨" },
+                        { key: "NO_DATA", text: "데이터 없음" }
+                    ],
+                    criteriaLabel: "전체 Tracker",
+                    lastUpdated: "데이터 없음",
+                    pipeline: [],
+                    riskQueue: [],
+                    trackers: [],
+                    selectedTrackerId: "",
+                    detail: {
+                        hasSelection: false,
+                        emptyMessage: "Procurement Risk Queue 또는 Tracker Board에서 항목을 선택하면 상세 정보가 표시됩니다.",
+                        warningMessage: "",
+                        successMessage: "",
+                        footerNote: ""
+                    },
+                    analysisCards: []
+                },
+                mmGoodsMovement: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    migoSearch: "",
+                    poSearch: "",
+                    materialSearch: "",
+                    migoLinkedFilter: "ALL",
+                    shortageOnly: false,
+                    linkFilterOptions: [
+                        { key: "ALL", text: "전체" },
+                        { key: "LINKED", text: "연결됨" },
+                        { key: "NO_DATA", text: "데이터 없음" }
+                    ],
+                    criteriaLabel: "전체 MIGO/Tracker",
+                    lastUpdated: "데이터 없음",
+                    statusStrip: [],
+                    documentQueue: {
+                        linkedDocuments: [],
+                        missingDocuments: [],
+                        linkedCount: 0,
+                        missingCount: 0
+                    },
+                    movements: [],
+                    selectedMovementId: "",
+                    detail: {
+                        hasSelection: false,
+                        emptyMessage: "Movement Document Queue에서 항목을 선택하면 상세 정보가 표시됩니다.",
+                        warningMessage: "",
+                        successMessage: "",
+                        footerNote: ""
+                    },
+                    movementFlow: { hasFlow: false, emptyMessage: "", steps: [], missingFields: [] },
+                    stockPanel: { hasSelection: false, emptyMessage: "", dataAvailability: [] },
+                    analysisCards: []
                 }
             });
 

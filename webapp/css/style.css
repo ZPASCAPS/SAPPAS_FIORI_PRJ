@@ -1914,6 +1914,2192 @@ html, body, body > div, #container, #container-uiarea,
     }
 }
 
+/* ── MM Inventory — Material Stock Ledger (Teal/Green) ── */
+.nxMmInventoryScroll,
+.mmInventoryPage.nxMmInventoryScroll {
+    background: linear-gradient(180deg, #ECFDF5 0%, #F0FDF4 22%, #F9FAFB 100%);
+}
+
+.nxMmInventory,
+.mmInventoryPage {
+    padding: 0.65rem 1rem 1.25rem;
+    gap: 0.65rem;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    background: linear-gradient(180deg, #ECFDF5 0%, #F0FDF4 22%, #F9FAFB 100%);
+    min-height: 100%;
+}
+
+.nxMmInventoryBusy {
+    margin: 1rem auto;
+}
+
+.nxMmInventoryBody {
+    gap: 0.65rem;
+    width: 100%;
+    min-width: 0;
+}
+
+/* Header hero — Teal/Green Stock Ledger */
+.nxMmInventoryHero,
+.mmInventoryPage .mmInventoryHero {
+    background: linear-gradient(135deg, #064E3B 0%, #047857 38%, #14B8A6 100%);
+    border-radius: 0.85rem;
+    padding: 0.85rem 1.1rem 0.8rem;
+    box-shadow: 0 14px 36px rgba(4, 120, 87, 0.28);
+    position: relative;
+    overflow: hidden;
+}
+
+.nxMmInventoryHero::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -8%;
+    width: 16rem;
+    height: 16rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 68%);
+    pointer-events: none;
+}
+
+.nxMmInventoryHeroTop {
+    gap: 0.75rem;
+    position: relative;
+    z-index: 1;
+}
+
+.nxMmInventoryBadgeRow {
+    gap: 0.35rem;
+}
+
+.nxMmInventoryLiveBadge .sapMObjStatusText,
+.nxMmInventoryLiveBadge .sapMObjStatusIcon {
+    font-weight: 700 !important;
+}
+
+.nxMmInventoryHeroTitle,
+.nxMmInventoryHeroTitle .sapMTitle {
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    font-size: 1.35rem !important;
+    margin-top: 0.3rem;
+}
+
+.nxMmInventoryHeroSub,
+.nxMmInventoryHeroSub .sapMText {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-size: 0.82rem !important;
+    margin-top: 0.2rem;
+    line-height: 1.45 !important;
+}
+
+.nxMmInventoryHeroMeta,
+.nxMmInventoryHeroMeta .sapMText {
+    color: rgba(255, 255, 255, 0.72) !important;
+    font-size: 0.72rem !important;
+    margin-top: 0.25rem;
+}
+
+/* KPI band inside hero */
+.nxMmInventoryKpiBand {
+    gap: 0.55rem;
+    margin-top: 0.65rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.nxMmInventoryKpi {
+    flex: 1 1 calc(25% - 0.45rem);
+    min-width: 9rem;
+    min-height: 5rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(6px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    box-sizing: border-box;
+}
+
+.nxMmInventoryKpi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.nxMmInventoryKpi--teal {
+    background: linear-gradient(145deg, rgba(20, 184, 166, 0.42), rgba(255, 255, 255, 0.12));
+}
+
+.nxMmInventoryKpi--green {
+    background: linear-gradient(145deg, rgba(54, 164, 29, 0.42), rgba(255, 255, 255, 0.12));
+}
+
+.nxMmInventoryKpi--blue {
+    background: linear-gradient(145deg, rgba(20, 184, 166, 0.35), rgba(255, 255, 255, 0.12));
+}
+
+.nxMmInventoryKpi--danger {
+    background: linear-gradient(145deg, rgba(187, 0, 0, 0.38), rgba(255, 255, 255, 0.12));
+}
+
+.nxMmInventoryKpi--amber {
+    background: linear-gradient(145deg, rgba(234, 152, 11, 0.38), rgba(255, 255, 255, 0.12));
+}
+
+.nxMmInventoryKpiLabel,
+.nxMmInventoryKpiLabel .sapMText {
+    font-size: 0.72rem !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 600 !important;
+}
+
+.nxMmInventoryKpiIcon {
+    color: rgba(255, 255, 255, 0.9) !important;
+    opacity: 0.9;
+}
+
+.nxMmInventoryKpiNum,
+.nxMmInventoryKpiNum .sapMObjectNumberText,
+.nxMmInventoryKpiNum .sapMObjectNumberUnit {
+    color: #FFFFFF !important;
+    font-size: 1.35rem !important;
+    font-weight: 800 !important;
+    margin-top: 0.15rem;
+}
+
+.nxMmInventoryKpiHint,
+.nxMmInventoryKpiHint .sapMText {
+    font-size: 0.64rem !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+    margin-top: 0.15rem;
+}
+
+/* Main 70 / 30 layout */
+.nxMmInventoryMain {
+    gap: 0.75rem;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    width: 100%;
+    min-width: 0;
+}
+
+.nxMmInventoryListPane,
+.nxMmInventoryDetailPane {
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInventoryListPane .nxMmInventoryCard,
+.nxMmInventoryDetailPane .nxMmInventoryCard {
+    flex: 1;
+    min-height: 20rem;
+}
+
+.nxMmInventoryListPane {
+    flex: 7 1 0;
+    min-width: 0;
+}
+
+.nxMmInventoryDetailPane {
+    flex: 3 1 0;
+    min-width: 0;
+}
+
+/* Shared card shell (Reports-inspired) */
+.nxMmInventoryCard {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.85rem 0.85rem;
+    box-sizing: border-box;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    min-height: 22rem;
+}
+
+.nxMmInventoryCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #14B8A6, #36A41D);
+}
+
+.mmInventoryPage .nxMmInventoryTableCard::before {
+    background: linear-gradient(90deg, #0D9488, #14B8A6);
+}
+
+.mmInventoryPage .nxMmInventoryDetailCard::before {
+    background: linear-gradient(90deg, #36A41D, #10B981);
+}
+
+.nxMmInventoryTableCard::before {
+    background: linear-gradient(90deg, #0D9488, #14B8A6);
+}
+
+.nxMmInventoryDetailCard::before {
+    background: linear-gradient(90deg, #36A41D, #10B981);
+}
+
+.nxMmInventoryCardHead {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #F3F4F6;
+    gap: 0.5rem;
+}
+
+.nxMmInventoryCardHead .sapMTitle {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.nxMmInventoryCardSub,
+.nxMmInventoryCardSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmInventoryCardHeadActions {
+    gap: 0.45rem;
+    flex-shrink: 0;
+}
+
+.nxMmInventoryCardIconWrap {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.55rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.nxMmInventoryCardIconWrap--table { background: linear-gradient(135deg, #0D9488, #14B8A6); }
+.nxMmInventoryCardIconWrap--detail { background: linear-gradient(135deg, #36A41D, #10B981); }
+.mmInventoryPage .nxMmInventoryCardIconWrap--type { background: linear-gradient(135deg, #14B8A6, #5EEAD4); }
+.mmInventoryPage .nxMmInventoryCardIconWrap--fill { background: linear-gradient(135deg, #059669, #34D399); }
+.mmInventoryPage .nxMmInventoryCardIconWrap--status { background: linear-gradient(135deg, #047857, #14B8A6); }
+.mmInventoryPage .nxMmInventoryCardIconWrap--shortage { background: linear-gradient(135deg, #BB0000, #E9730C); }
+.nxMmInventoryCardIconWrap--type { background: linear-gradient(135deg, #14B8A6, #5EEAD4); }
+.nxMmInventoryCardIconWrap--fill { background: linear-gradient(135deg, #059669, #34D399); }
+.nxMmInventoryCardIconWrap--status { background: linear-gradient(135deg, #047857, #14B8A6); }
+.nxMmInventoryCardIconWrap--shortage { background: linear-gradient(135deg, #BB0000, #E9730C); }
+
+/* Material table */
+.nxMmInventoryTable {
+    border: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.nxMmInventoryTable .sapMListTbl {
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+
+.nxMmInventoryTable .sapMListTblHeader {
+    background: #F9FAFB !important;
+}
+
+.nxMmInventoryTable .sapMListTblCell {
+    font-size: 0.78rem !important;
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+    vertical-align: middle !important;
+}
+
+.nxMmInventoryTable .sapMListTblHeaderCell {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    color: #6B7280 !important;
+    background: #F9FAFB !important;
+}
+
+.mmInventoryPage .nxMmInventoryTableRow:hover,
+.mmInventoryPage .nxMmInventoryTableRow:hover .sapMListTblCell {
+    background: #D1FAE5 !important;
+}
+
+.mmInventoryPage .nxMmInventoryTable .sapMLIBSelected,
+.mmInventoryPage .nxMmInventoryTable .sapMLIBSelected .sapMListTblCell {
+    background: #A7F3D0 !important;
+}
+
+.nxMmInventoryTableRow:hover,
+.nxMmInventoryTableRow:hover .sapMListTblCell {
+    background: #D1FAE5 !important;
+}
+
+.nxMmInventoryTable .sapMLIBSelected,
+.nxMmInventoryTable .sapMLIBSelected .sapMListTblCell {
+    background: #A7F3D0 !important;
+}
+
+.mmInventoryPage .nxMmInventoryCode,
+.mmInventoryPage .nxMmInventoryCode .sapMText {
+    color: #0D9488 !important;
+}
+
+.nxMmInventoryCode,
+.nxMmInventoryCode .sapMText {
+    font-weight: 700 !important;
+    color: #0D9488 !important;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.76rem !important;
+}
+
+.nxMmInventoryCellEllipsis,
+.nxMmInventoryCellEllipsis .sapMText {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.nxMmInventoryTypeBadge .sapMObjStatusText {
+    font-size: 0.68rem !important;
+}
+
+.nxMmInventoryStatusBadge .sapMObjStatusText {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+}
+
+.nxMmInventoryFillCell {
+    padding: 0 0.15rem;
+}
+
+.nxMmInventoryFillBar {
+    max-width: 100%;
+}
+
+.nxMmInventoryFillBar .sapMPIBar {
+    min-height: 0.4rem !important;
+    border-radius: 0.25rem !important;
+}
+
+.nxMmInventoryFillBar .sapMPIText {
+    font-size: 0.65rem !important;
+}
+
+/* Detail panel */
+.nxMmInventoryDetailCard {
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInventoryDetailEmpty {
+    flex: 1;
+    min-height: 14rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.nxMmInventoryDetailEmptyText,
+.nxMmInventoryDetailEmptyText .sapMText {
+    font-size: 0.8rem !important;
+    color: #6B7280 !important;
+    max-width: 15rem;
+    line-height: 1.5 !important;
+}
+
+.nxMmInventoryDetailBody {
+    gap: 0.65rem;
+    flex: 1;
+}
+
+.nxMmInventoryDetailHead {
+    gap: 0.5rem;
+}
+
+.nxMmInventoryDetailHeadText {
+    min-width: 0;
+    flex: 1;
+}
+
+.nxMmInventoryDetailMatNo,
+.nxMmInventoryDetailMatNo .sapMText {
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    font-family: Consolas, "Courier New", monospace;
+}
+
+.nxMmInventoryDetailMatName,
+.nxMmInventoryDetailMatName .sapMText {
+    font-size: 0.78rem !important;
+    color: #6B7280 !important;
+    margin-top: 0.15rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxMmInventoryDetailStatusBadge .sapMObjStatusText {
+    font-weight: 700 !important;
+}
+
+.nxMmInventoryDetailStrip {
+    margin: 0 !important;
+}
+
+.nxMmInventoryDetailTiles {
+    gap: 0.5rem;
+}
+
+.mmInventoryPage .nxMmInventoryDetailTile {
+    background: #F0FDF4;
+    border-color: #BBF7D0;
+}
+
+.nxMmInventoryDetailTile {
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: 6.5rem;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    border-radius: 0.55rem;
+    padding: 0.5rem 0.6rem;
+    box-sizing: border-box;
+}
+
+.nxMmInventoryDetailTile--wide {
+    flex: 1 1 100%;
+}
+
+.nxMmInventoryDetailTileLabel,
+.nxMmInventoryDetailTileLabel .sapMText {
+    font-size: 0.64rem !important;
+    color: #9CA3AF !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.nxMmInventoryDetailTileValue,
+.nxMmInventoryDetailTileValue .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin-top: 0.15rem;
+}
+
+.nxMmInventoryDetailTileValue--danger,
+.nxMmInventoryDetailTileValue--danger .sapMText {
+    color: #BB0000 !important;
+}
+
+.mmInventoryPage .nxMmInventoryDetailFillSection,
+.nxMmInventoryDetailFillSection {
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 0.55rem;
+    padding: 0.6rem 0.7rem;
+    margin-top: 0.15rem;
+}
+
+.nxMmInventoryDetailFillHead {
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInventoryDetailFillLabel,
+.nxMmInventoryDetailFillLabel .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+.mmInventoryPage .nxMmInventoryDetailFillValue,
+.mmInventoryPage .nxMmInventoryDetailFillValue .sapMText,
+.nxMmInventoryDetailFillValue,
+.nxMmInventoryDetailFillValue .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    color: #047857 !important;
+}
+
+.nxMmInventoryDetailFillBar .sapMPIBar {
+    min-height: 0.55rem !important;
+    border-radius: 0.3rem !important;
+}
+
+.nxMmInventoryDetailSourceRow {
+    margin-top: 0.25rem;
+}
+
+.nxMmInventoryDetailSource,
+.nxMmInventoryDetailSource .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+}
+
+/* Analysis — unified panel (Stock Ledger 보조 분석) */
+.mmInventoryPage .nxMmInventoryAnalysisPanel,
+.nxMmInventoryAnalysisPanel {
+    width: 100%;
+    min-width: 0;
+    margin-top: 0.25rem;
+    background: #FFFFFF;
+    border: 1px solid #BBF7D0;
+    border-radius: 0.75rem;
+    padding: 0.8rem 0.9rem 0.9rem;
+    box-sizing: border-box;
+    box-shadow: 0 6px 18px rgba(4, 120, 87, 0.06);
+    position: relative;
+    overflow: hidden;
+    gap: 0.65rem;
+}
+
+.mmInventoryPage .nxMmInventoryAnalysisPanel::before,
+.nxMmInventoryAnalysisPanel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #14B8A6, #36A41D);
+}
+
+.nxMmInventoryAnalysisHead {
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid #F3F4F6;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.nxMmInventoryAnalysisTitle {
+    margin: 0 !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.nxMmInventoryAnalysisSub,
+.nxMmInventoryAnalysisSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmInventoryChartGrid.sapMVBox {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+.nxMmInventoryChartGrid > .sapMFlexItem {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100%;
+}
+
+.nxMmInventoryChartCard {
+    width: 100%;
+    max-width: none;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.65rem;
+    padding: 0.7rem 0.8rem 0.75rem;
+    box-sizing: border-box;
+    box-shadow: none;
+    position: relative;
+    overflow: hidden;
+    min-height: 15.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.nxMmInventoryChartCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+.mmInventoryPage .nxMmInventoryChartCard--type::before,
+.nxMmInventoryChartCard--type::before { background: linear-gradient(90deg, #0D9488, #14B8A6); }
+.mmInventoryPage .nxMmInventoryChartCard--fill::before,
+.nxMmInventoryChartCard--fill::before { background: linear-gradient(90deg, #059669, #34D399); }
+.mmInventoryPage .nxMmInventoryChartCard--status::before,
+.nxMmInventoryChartCard--status::before { background: linear-gradient(90deg, #047857, #10B981); }
+.mmInventoryPage .nxMmInventoryChartCard--shortage::before,
+.nxMmInventoryChartCard--shortage::before { background: linear-gradient(90deg, #BB0000, #E9730C); }
+
+.mmInventoryPage .nxMmInventoryChartCard {
+    background: #F0FDF4;
+    border-color: #D1FAE5;
+}
+
+.mmInventoryPage .nxMmInventoryChartCard:hover {
+    border-color: #6EE7B7;
+    box-shadow: 0 4px 14px rgba(4, 120, 87, 0.1);
+}
+
+.mmInventoryPage .nxMmInvAnalysisBarFill:not(.nxMmInvAnalysisBarFill--danger):not(.nxMmInvAnalysisBarFill--warn):not(.nxMmInvAnalysisBarFill--success) {
+    background: linear-gradient(90deg, #14B8A6, #36A41D) !important;
+}
+
+.nxMmInventoryChartCard--type::before { background: linear-gradient(90deg, #0D9488, #14B8A6); }
+.nxMmInventoryChartCard--fill::before { background: linear-gradient(90deg, #059669, #34D399); }
+.nxMmInventoryChartCard--status::before { background: linear-gradient(90deg, #047857, #10B981); }
+.nxMmInventoryChartCard--shortage::before { background: linear-gradient(90deg, #BB0000, #E9730C); }
+
+.nxMmInventoryChartCard:hover {
+    border-color: #6EE7B7;
+    box-shadow: 0 4px 14px rgba(4, 120, 87, 0.08);
+}
+
+.nxMmInventoryChartCard .nxMmInventoryCardHead {
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.nxMmInventoryChartBody {
+    flex: 1;
+    min-height: 10.5rem;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    border: 1px solid #F3F4F6;
+    padding: 0.85rem 0.9rem;
+    box-sizing: border-box;
+}
+
+.nxMmInventoryChartBody .sapUiHtml,
+.nxMmInventoryChartBody > .sapUiVBox {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.nxMmInventoryChartBody .nxMmInvAnalysisHost {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.nxMmInventoryChartBody .nxMmOverviewChartEmpty {
+    min-height: 7rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Inventory Analysis — chart primitives (full-width, left-aligned) */
+.nxMmInvAnalysisBarChart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.85rem;
+    padding: 0.2rem 0;
+    flex: 1;
+}
+
+.nxMmInvAnalysisBarRow {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    min-height: 2rem;
+}
+
+.nxMmInvAnalysisBarLabel {
+    flex: 0 0 6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #374151;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxMmInvAnalysisBarTrack {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 0.7rem;
+    background: #E5E7EB;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.nxMmInvAnalysisBarFill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #0070F2, #5899DA);
+    min-width: 4px;
+}
+
+.nxMmInvAnalysisBarFill--danger {
+    background: linear-gradient(90deg, #BB0000, #E9730C) !important;
+}
+
+.nxMmInvAnalysisBarFill--warn {
+    background: linear-gradient(90deg, #E9730C, #F59E0B) !important;
+}
+
+.nxMmInvAnalysisBarFill--success {
+    background: linear-gradient(90deg, #36A41D, #10B981) !important;
+}
+
+.nxMmInvAnalysisBarValue {
+    flex: 0 0 3.5rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-align: right;
+    color: #111827;
+}
+
+.nxMmInvAnalysisDonutWrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 0.35rem 0.15rem;
+    flex-wrap: nowrap;
+}
+
+.nxMmInvAnalysisDonut {
+    width: 9rem;
+    height: 9rem;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+}
+
+.nxMmInvAnalysisDonutHole {
+    position: absolute;
+    inset: 22%;
+    background: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+.nxMmInvAnalysisDonutValue {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.1;
+}
+
+.nxMmInvAnalysisDonutLabel {
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-top: 0.1rem;
+    text-align: center;
+    max-width: 4.5rem;
+    line-height: 1.2;
+}
+
+.nxMmInvAnalysisLegend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
+}
+
+.nxMmInvAnalysisLegendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.nxMmInvAnalysisLegendSwatch {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.nxMmInvAnalysisLegendText {
+    font-size: 0.75rem;
+    color: #374151;
+    font-weight: 500;
+}
+
+/* Host variants — vertical fill per card type */
+.nxMmInvAnalysisHost--type .nxMmInvAnalysisBarChart,
+.nxMmInvAnalysisHost--fill .nxMmInvAnalysisBarChart,
+.nxMmInvAnalysisHost--shortage .nxMmInvAnalysisBarChart {
+    min-height: 9rem;
+    justify-content: space-evenly;
+}
+
+.nxMmInvAnalysisHost--status {
+    align-items: center;
+    justify-content: center;
+}
+
+.nxMmInvAnalysisHost--status .nxMmInvAnalysisDonutWrap {
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .nxMmInventoryMain {
+        flex-direction: column;
+    }
+
+    .nxMmInventoryListPane,
+    .nxMmInventoryDetailPane {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .nxMmInventoryCard {
+        min-height: auto;
+    }
+
+    .nxMmInventoryDetailCard {
+        min-height: 16rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .nxMmInventoryKpi {
+        flex: 1 1 calc(50% - 0.35rem);
+    }
+
+    .nxMmInventoryChartGrid.sapMVBox {
+        grid-template-columns: 1fr;
+    }
+
+    .nxMmInventoryChartCard {
+        min-height: 14rem;
+    }
+
+    .nxMmInvAnalysisDonutWrap {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 560px) {
+    .nxMmInventory {
+        padding: 0.5rem 0.65rem 1rem;
+    }
+
+    .nxMmInventoryKpi {
+        flex: 1 1 100%;
+    }
+
+    .nxMmInventoryTable .sapMListTblCell {
+        font-size: 0.72rem !important;
+    }
+}
+
+/* ── MM Purchasing Control Tower ── */
+.nxMmPurchasingScroll {
+    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+}
+
+.nxMmPurchasing {
+    padding: 0.65rem 1rem 1.25rem;
+    gap: 0.65rem;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+    min-height: 100%;
+}
+
+.nxMmPurchasingBusy { margin: 1rem auto; }
+.nxMmPurchasingBody { gap: 0.65rem; width: 100%; min-width: 0; }
+
+.nxMmPurchasingHero {
+    background: linear-gradient(135deg, #0B1F4A 0%, #0A3D91 42%, #0070F2 100%);
+    border-radius: 0.85rem;
+    padding: 0.85rem 1.1rem 0.8rem;
+    box-shadow: 0 14px 36px rgba(0, 87, 210, 0.28);
+    position: relative;
+    overflow: hidden;
+}
+
+.nxMmPurchasingHero::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -8%;
+    width: 16rem;
+    height: 16rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 68%);
+    pointer-events: none;
+}
+
+.nxMmPurchasingHeroTop { gap: 0.75rem; position: relative; z-index: 1; }
+.nxMmPurchasingBadgeRow { gap: 0.35rem; }
+.nxMmPurchasingLiveBadge .sapMObjStatusText,
+.nxMmPurchasingLiveBadge .sapMObjStatusIcon { font-weight: 700 !important; }
+
+.nxMmPurchasingHeroTitle,
+.nxMmPurchasingHeroTitle .sapMTitle {
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    font-size: 1.35rem !important;
+    margin-top: 0.3rem;
+}
+
+.nxMmPurchasingHeroSub,
+.nxMmPurchasingHeroSub .sapMText {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-size: 0.82rem !important;
+    margin-top: 0.2rem;
+    line-height: 1.45 !important;
+}
+
+.nxMmPurchasingHeroMeta,
+.nxMmPurchasingHeroMeta .sapMText {
+    color: rgba(255, 255, 255, 0.72) !important;
+    font-size: 0.72rem !important;
+    margin-top: 0.25rem;
+}
+
+.nxMmPurchasingHeroActions { gap: 0.35rem; position: relative; z-index: 1; }
+.nxMmPurchasingRefreshBtn { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22) !important; }
+
+.nxMmPurchasingKpiBand {
+    gap: 0.5rem;
+    margin-top: 0.65rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.nxMmPurchasingKpi {
+    flex: 1 1 calc(20% - 0.45rem);
+    min-width: 8.5rem;
+    min-height: 5rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(6px);
+    box-sizing: border-box;
+}
+
+.nxMmPurchasingKpi--blue { background: linear-gradient(145deg, rgba(0, 112, 242, 0.35), rgba(255, 255, 255, 0.12)); }
+.nxMmPurchasingKpi--success { background: linear-gradient(145deg, rgba(54, 164, 29, 0.38), rgba(255, 255, 255, 0.12)); }
+.nxMmPurchasingKpi--danger { background: linear-gradient(145deg, rgba(187, 0, 0, 0.38), rgba(255, 255, 255, 0.12)); }
+
+.nxMmPurchasingKpiLabel,
+.nxMmPurchasingKpiLabel .sapMText {
+    font-size: 0.68rem !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 600 !important;
+}
+
+.nxMmPurchasingKpiIcon { color: rgba(255, 255, 255, 0.9) !important; }
+
+.nxMmPurchasingKpiNum,
+.nxMmPurchasingKpiNum .sapMObjectNumberText,
+.nxMmPurchasingKpiNum .sapMObjectNumberUnit {
+    color: #FFFFFF !important;
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmPurchasingKpiHint,
+.nxMmPurchasingKpiHint .sapMText {
+    font-size: 0.62rem !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmPurchasingMain {
+    gap: 0.75rem;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    width: 100%;
+    min-width: 0;
+}
+
+.nxMmPurchasingListPane,
+.nxMmPurchasingDetailPane {
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmPurchasingListPane { flex: 7 1 0; min-width: 0; }
+.nxMmPurchasingDetailPane { flex: 3 1 0; min-width: 0; }
+
+.nxMmPurchasingListPane .nxMmPurchasingCard,
+.nxMmPurchasingDetailPane .nxMmPurchasingCard {
+    flex: 1;
+    min-height: 20rem;
+}
+
+.nxMmPurchasingCard {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.85rem 0.85rem;
+    box-sizing: border-box;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.nxMmPurchasingCard::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0070F2, #5899DA);
+}
+
+.nxMmPurchasingTableCard::before { background: linear-gradient(90deg, #0070F2, #5899DA); }
+.nxMmPurchasingDetailCard::before { background: linear-gradient(90deg, #8B5CF6, #0070F2); }
+
+.nxMmPurchasingCardHead {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #F3F4F6;
+    gap: 0.5rem;
+}
+
+.nxMmPurchasingCardHead .sapMTitle {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.nxMmPurchasingCardSub,
+.nxMmPurchasingCardSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmPurchasingCardHeadActions { gap: 0.45rem; flex-shrink: 0; }
+
+.nxMmPurchasingCardIconWrap {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.55rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.nxMmPurchasingCardIconWrap--table { background: linear-gradient(135deg, #0070F2, #5899DA); }
+.nxMmPurchasingCardIconWrap--detail { background: linear-gradient(135deg, #8B5CF6, #0070F2); }
+.nxMmPurchasingCardIconWrap--po { background: linear-gradient(135deg, #0070F2, #5899DA); }
+.nxMmPurchasingCardIconWrap--migo { background: linear-gradient(135deg, #36A41D, #10B981); }
+.nxMmPurchasingCardIconWrap--material { background: linear-gradient(135deg, #2563EB, #60A5FA); }
+.nxMmPurchasingCardIconWrap--data { background: linear-gradient(135deg, #6B7280, #9CA3AF); }
+
+.nxMmPurchasingTable { border: none !important; width: 100% !important; min-width: 0 !important; }
+.nxMmPurchasingTable .sapMListTbl { width: 100% !important; table-layout: fixed !important; }
+.nxMmPurchasingTable .sapMListTblHeader { background: #F9FAFB !important; }
+.nxMmPurchasingTable .sapMListTblCell {
+    font-size: 0.78rem !important;
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+    vertical-align: middle !important;
+}
+.nxMmPurchasingTable .sapMListTblHeaderCell {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    color: #6B7280 !important;
+    background: #F9FAFB !important;
+}
+
+.nxMmPurchasingTableRow:hover,
+.nxMmPurchasingTableRow:hover .sapMListTblCell { background: #EFF6FF !important; }
+.nxMmPurchasingTable .sapMLIBSelected,
+.nxMmPurchasingTable .sapMLIBSelected .sapMListTblCell { background: #DBEAFE !important; }
+
+.nxMmPurchasingCode,
+.nxMmPurchasingCode .sapMText {
+    font-weight: 700 !important;
+    color: #0070F2 !important;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.76rem !important;
+}
+
+.nxMmPurchasingCellEllipsis,
+.nxMmPurchasingCellEllipsis .sapMText {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.nxMmPurchasingDetailEmpty {
+    flex: 1;
+    min-height: 14rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.nxMmPurchasingDetailEmptyText,
+.nxMmPurchasingDetailEmptyText .sapMText {
+    font-size: 0.8rem !important;
+    color: #6B7280 !important;
+    max-width: 15rem;
+    line-height: 1.5 !important;
+}
+
+.nxMmPurchasingDetailBody { gap: 0.65rem; flex: 1; }
+.nxMmPurchasingDetailPoNo,
+.nxMmPurchasingDetailPoNo .sapMText {
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    font-family: Consolas, "Courier New", monospace;
+}
+
+.nxMmPurchasingDetailMatNo,
+.nxMmPurchasingDetailMatNo .sapMText {
+    font-size: 0.78rem !important;
+    color: #6B7280 !important;
+    margin-top: 0.15rem;
+}
+
+.nxMmPurchasingDetailTiles { gap: 0.5rem; }
+
+.nxMmPurchasingDetailTile {
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: 6.5rem;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.55rem;
+    padding: 0.5rem 0.6rem;
+    box-sizing: border-box;
+}
+
+.nxMmPurchasingDetailTileLabel,
+.nxMmPurchasingDetailTileLabel .sapMText {
+    font-size: 0.64rem !important;
+    color: #9CA3AF !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.nxMmPurchasingDetailTileValue,
+.nxMmPurchasingDetailTileValue .sapMText {
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin-top: 0.15rem;
+}
+
+.nxMmPurchasingDetailTileValue--danger,
+.nxMmPurchasingDetailTileValue--danger .sapMText { color: #BB0000 !important; }
+
+.nxMmPurchasingDetailTileValue--muted,
+.nxMmPurchasingDetailTileValue--muted .sapMText {
+    color: #9CA3AF !important;
+    font-weight: 600 !important;
+}
+
+.nxMmPurchasingDetailFillSection {
+    background: #F0F9FF;
+    border: 1px solid #BAE6FD;
+    border-radius: 0.55rem;
+    padding: 0.6rem 0.7rem;
+    margin-top: 0.15rem;
+}
+
+.nxMmPurchasingDetailFillLabel,
+.nxMmPurchasingDetailFillLabel .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+.nxMmPurchasingDetailFillValue,
+.nxMmPurchasingDetailFillValue .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    color: #0070F2 !important;
+}
+
+.nxMmPurchasingDetailFillBar .sapMPIBar { min-height: 0.55rem !important; border-radius: 0.3rem !important; }
+
+.nxMmPurchasingDetailSource,
+.nxMmPurchasingDetailSource .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+}
+
+.nxMmPurchasingDetailFooterNote,
+.nxMmPurchasingDetailFooterNote .sapMText {
+    font-size: 0.68rem !important;
+    color: #6B7280 !important;
+    font-style: italic;
+    margin-top: 0.25rem;
+}
+
+.nxMmPurchasingAnalysisPanel {
+    width: 100%;
+    min-width: 0;
+    margin-top: 0.25rem;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.8rem 0.9rem 0.9rem;
+    box-sizing: border-box;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    position: relative;
+    overflow: hidden;
+    gap: 0.65rem;
+}
+
+.nxMmPurchasingAnalysisPanel::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0070F2, #36A41D);
+}
+
+.nxMmPurchasingAnalysisHead {
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid #F3F4F6;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.nxMmPurchasingAnalysisTitle {
+    margin: 0 !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.nxMmPurchasingAnalysisSub,
+.nxMmPurchasingAnalysisSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmPurchasingChartGrid.sapMVBox {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+.nxMmPurchasingChartGrid > .sapMFlexItem {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100%;
+}
+
+.nxMmPurchasingChartCard {
+    width: 100%;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.65rem;
+    padding: 0.7rem 0.8rem 0.75rem;
+    box-sizing: border-box;
+    min-height: 15.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.nxMmPurchasingChartCard::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+}
+
+.nxMmPurchasingChartCard--po::before { background: linear-gradient(90deg, #0070F2, #5899DA); }
+.nxMmPurchasingChartCard--migo::before { background: linear-gradient(90deg, #36A41D, #10B981); }
+.nxMmPurchasingChartCard--material::before { background: linear-gradient(90deg, #2563EB, #60A5FA); }
+.nxMmPurchasingChartCard--data::before { background: linear-gradient(90deg, #6B7280, #9CA3AF); }
+
+.nxMmPurchasingChartBody {
+    flex: 1;
+    min-height: 10.5rem;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    border: 1px solid #F3F4F6;
+    padding: 0.85rem 0.9rem;
+    box-sizing: border-box;
+}
+
+.nxMmPurchasingChartBody .sapUiHtml { width: 100% !important; min-width: 0 !important; }
+.nxMmPurchasingChartBody .nxMmInvAnalysisHost { width: 100%; align-items: stretch; justify-content: flex-start; }
+
+.nxMmPurchDataGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.nxMmPurchDataTile {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    padding: 0.55rem 0.65rem;
+}
+
+.nxMmPurchDataTile--ok { border-left: 3px solid #36A41D; }
+.nxMmPurchDataTile--na { border-left: 3px solid #D1D5DB; }
+
+.nxMmPurchDataTileLabel {
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #9CA3AF;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.nxMmPurchDataTileValue {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 0.15rem;
+}
+
+.nxMmPurchDataTile--na .nxMmPurchDataTileValue { color: #9CA3AF; }
+
+@media (max-width: 1200px) {
+    .nxMmPurchasingMain { flex-direction: column; }
+    .nxMmPurchasingListPane,
+    .nxMmPurchasingDetailPane { flex: 1 1 100%; width: 100%; }
+}
+
+@media (max-width: 900px) {
+    .nxMmPurchasingKpi { flex: 1 1 calc(50% - 0.35rem); }
+    .nxMmPurchasingChartGrid.sapMVBox { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+    .nxMmPurchasingKpi { flex: 1 1 100%; }
+    .nxMmPurchDataGrid { grid-template-columns: 1fr; }
+}
+
+/* ── MM Goods Movement Monitor ── */
+.nxMmGoodsMovementScroll {
+    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+}
+
+.nxMmGoodsMovement {
+    padding: 0.65rem 1rem 1.25rem;
+    gap: 0.65rem;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+    min-height: 100%;
+}
+
+.nxMmGoodsMovementBusy { margin: 1rem auto; }
+.nxMmGoodsMovementBody { gap: 0.65rem; width: 100%; min-width: 0; }
+
+.nxMmGoodsMovementHero {
+    background: linear-gradient(135deg, #0B1F4A 0%, #0A3D91 42%, #0070F2 100%);
+    border-radius: 0.85rem;
+    padding: 0.85rem 1.1rem 0.8rem;
+    box-shadow: 0 14px 36px rgba(0, 87, 210, 0.28);
+    position: relative;
+    overflow: hidden;
+}
+
+.nxMmGoodsMovementHero::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -8%;
+    width: 16rem;
+    height: 16rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 68%);
+    pointer-events: none;
+}
+
+.nxMmGoodsMovementHeroTop { gap: 0.75rem; position: relative; z-index: 1; }
+.nxMmGoodsMovementBadgeRow { gap: 0.35rem; }
+.nxMmGoodsMovementLiveBadge .sapMObjStatusText,
+.nxMmGoodsMovementLiveBadge .sapMObjStatusIcon { font-weight: 700 !important; }
+
+.nxMmGoodsMovementHeroTitle,
+.nxMmGoodsMovementHeroTitle .sapMTitle {
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    font-size: 1.35rem !important;
+    margin-top: 0.3rem;
+}
+
+.nxMmGoodsMovementHeroSub,
+.nxMmGoodsMovementHeroSub .sapMText {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-size: 0.82rem !important;
+    margin-top: 0.2rem;
+    line-height: 1.45 !important;
+}
+
+.nxMmGoodsMovementHeroMeta,
+.nxMmGoodsMovementHeroMeta .sapMText {
+    color: rgba(255, 255, 255, 0.72) !important;
+    font-size: 0.72rem !important;
+    margin-top: 0.25rem;
+}
+
+.nxMmGoodsMovementHeroActions { gap: 0.35rem; position: relative; z-index: 1; }
+.nxMmGoodsMovementRefreshBtn { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22) !important; }
+
+.nxMmGoodsMovementKpiBand {
+    gap: 0.5rem;
+    margin-top: 0.65rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.nxMmGoodsMovementKpi {
+    flex: 1 1 calc(20% - 0.45rem);
+    min-width: 8.5rem;
+    min-height: 5rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(6px);
+    box-sizing: border-box;
+}
+
+.nxMmGoodsMovementKpi--blue { background: linear-gradient(145deg, rgba(0, 112, 242, 0.35), rgba(255, 255, 255, 0.12)); }
+.nxMmGoodsMovementKpi--success { background: linear-gradient(145deg, rgba(54, 164, 29, 0.38), rgba(255, 255, 255, 0.12)); }
+.nxMmGoodsMovementKpi--danger { background: linear-gradient(145deg, rgba(187, 0, 0, 0.38), rgba(255, 255, 255, 0.12)); }
+.nxMmGoodsMovementKpi--amber { background: linear-gradient(145deg, rgba(230, 126, 34, 0.42), rgba(255, 255, 255, 0.12)); }
+
+.nxMmGoodsMovementKpiLabel,
+.nxMmGoodsMovementKpiLabel .sapMText {
+    font-size: 0.68rem !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 600 !important;
+}
+
+.nxMmGoodsMovementKpiIcon { color: rgba(255, 255, 255, 0.9) !important; }
+
+.nxMmGoodsMovementKpiNum,
+.nxMmGoodsMovementKpiNum .sapMObjectNumberText,
+.nxMmGoodsMovementKpiNum .sapMObjectNumberUnit {
+    color: #FFFFFF !important;
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmGoodsMovementKpiHint,
+.nxMmGoodsMovementKpiHint .sapMText {
+    font-size: 0.62rem !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmGoodsMovementMain {
+    gap: 0.75rem;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    width: 100%;
+    min-width: 0;
+}
+
+.nxMmGoodsMovementListPane,
+.nxMmGoodsMovementDetailPane {
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmGoodsMovementListPane { flex: 7 1 0; min-width: 0; }
+.nxMmGoodsMovementDetailPane { flex: 3 1 0; min-width: 0; }
+
+.nxMmGoodsMovementListPane .nxMmGoodsMovementCard,
+.nxMmGoodsMovementDetailPane .nxMmGoodsMovementCard {
+    flex: 1;
+    min-height: 20rem;
+}
+
+.nxMmGoodsMovementCard {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.85rem 0.85rem;
+    box-sizing: border-box;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.nxMmGoodsMovementCard::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0070F2, #5899DA);
+}
+
+.nxMmGoodsMovementTableCard::before { background: linear-gradient(90deg, #0070F2, #5899DA); }
+.nxMmGoodsMovementDetailCard::before { background: linear-gradient(90deg, #8B5CF6, #0070F2); }
+
+.nxMmGoodsMovementCardHead {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #F3F4F6;
+    gap: 0.5rem;
+}
+
+.nxMmGoodsMovementCardHead .sapMTitle {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.nxMmGoodsMovementCardSub,
+.nxMmGoodsMovementCardSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmGoodsMovementCardHeadActions { gap: 0.45rem; flex-shrink: 0; }
+
+.nxMmGoodsMovementCardIconWrap {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.55rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.nxMmGoodsMovementCardIconWrap--table { background: linear-gradient(135deg, #0070F2, #5899DA); }
+.nxMmGoodsMovementCardIconWrap--detail { background: linear-gradient(135deg, #8B5CF6, #0070F2); }
+.nxMmGoodsMovementCardIconWrap--migo { background: linear-gradient(135deg, #36A41D, #10B981); }
+.nxMmGoodsMovementCardIconWrap--material { background: linear-gradient(135deg, #2563EB, #60A5FA); }
+.nxMmGoodsMovementCardIconWrap--impact { background: linear-gradient(135deg, #E67E22, #F59E0B); }
+.nxMmGoodsMovementCardIconWrap--data { background: linear-gradient(135deg, #6B7280, #9CA3AF); }
+
+.nxMmGoodsMovementTable { border: none !important; width: 100% !important; min-width: 0 !important; }
+.nxMmGoodsMovementTable .sapMListTbl { width: 100% !important; table-layout: fixed !important; }
+.nxMmGoodsMovementTable .sapMListTblHeader { background: #F9FAFB !important; }
+.nxMmGoodsMovementTable .sapMListTblCell {
+    font-size: 0.78rem !important;
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+    vertical-align: middle !important;
+}
+.nxMmGoodsMovementTable .sapMListTblHeaderCell {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    color: #6B7280 !important;
+    background: #F9FAFB !important;
+}
+
+.nxMmGoodsMovementTableRow:hover,
+.nxMmGoodsMovementTableRow:hover .sapMListTblCell { background: #EFF6FF !important; }
+.nxMmGoodsMovementTable .sapMLIBSelected,
+.nxMmGoodsMovementTable .sapMLIBSelected .sapMListTblCell { background: #DBEAFE !important; }
+
+.nxMmGoodsMovementCode,
+.nxMmGoodsMovementCode .sapMText {
+    font-weight: 700 !important;
+    color: #0070F2 !important;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.76rem !important;
+}
+
+.nxMmGoodsMovementCellEllipsis,
+.nxMmGoodsMovementCellEllipsis .sapMText {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.nxMmGoodsMovementDetailEmpty {
+    flex: 1;
+    min-height: 14rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.nxMmGoodsMovementDetailEmptyText,
+.nxMmGoodsMovementDetailEmptyText .sapMText {
+    font-size: 0.8rem !important;
+    color: #6B7280 !important;
+    max-width: 15rem;
+    line-height: 1.5 !important;
+}
+
+.nxMmGoodsMovementDetailBody { gap: 0.65rem; flex: 1; }
+
+.nxMmGoodsMovementDetailMigoNo,
+.nxMmGoodsMovementDetailMigoNo .sapMText {
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    font-family: Consolas, "Courier New", monospace;
+}
+
+.nxMmGoodsMovementDetailMatNo,
+.nxMmGoodsMovementDetailMatNo .sapMText {
+    font-size: 0.78rem !important;
+    color: #6B7280 !important;
+    margin-top: 0.15rem;
+}
+
+.nxMmGoodsMovementDetailTiles { gap: 0.5rem; }
+
+.nxMmGoodsMovementDetailTile {
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: 6.5rem;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.55rem;
+    padding: 0.5rem 0.6rem;
+    box-sizing: border-box;
+}
+
+.nxMmGoodsMovementDetailTileLabel,
+.nxMmGoodsMovementDetailTileLabel .sapMText {
+    font-size: 0.64rem !important;
+    color: #9CA3AF !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.nxMmGoodsMovementDetailTileValue,
+.nxMmGoodsMovementDetailTileValue .sapMText {
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin-top: 0.15rem;
+}
+
+.nxMmGoodsMovementDetailTileValue--danger,
+.nxMmGoodsMovementDetailTileValue--danger .sapMText { color: #BB0000 !important; }
+
+.nxMmGoodsMovementDetailTileValue--muted,
+.nxMmGoodsMovementDetailTileValue--muted .sapMText {
+    color: #9CA3AF !important;
+    font-weight: 600 !important;
+}
+
+.nxMmGoodsMovementDetailFillSection {
+    background: #F0F9FF;
+    border: 1px solid #BAE6FD;
+    border-radius: 0.55rem;
+    padding: 0.6rem 0.7rem;
+    margin-top: 0.15rem;
+}
+
+.nxMmGoodsMovementDetailFillLabel,
+.nxMmGoodsMovementDetailFillLabel .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+.nxMmGoodsMovementDetailFillValue,
+.nxMmGoodsMovementDetailFillValue .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    color: #0070F2 !important;
+}
+
+.nxMmGoodsMovementDetailFillBar .sapMPIBar { min-height: 0.55rem !important; border-radius: 0.3rem !important; }
+
+.nxMmGoodsMovementDetailSource,
+.nxMmGoodsMovementDetailSource .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+}
+
+.nxMmGoodsMovementDetailFooterNote,
+.nxMmGoodsMovementDetailFooterNote .sapMText {
+    font-size: 0.68rem !important;
+    color: #6B7280 !important;
+    font-style: italic;
+    margin-top: 0.25rem;
+}
+
+.nxMmGoodsMovementAnalysisPanel {
+    width: 100%;
+    min-width: 0;
+    margin-top: 0.25rem;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.8rem 0.9rem 0.9rem;
+    box-sizing: border-box;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    position: relative;
+    overflow: hidden;
+    gap: 0.65rem;
+}
+
+.nxMmGoodsMovementAnalysisPanel::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0070F2, #36A41D);
+}
+
+.nxMmGoodsMovementAnalysisHead {
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid #F3F4F6;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.nxMmGoodsMovementAnalysisTitle {
+    margin: 0 !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.nxMmGoodsMovementAnalysisSub,
+.nxMmGoodsMovementAnalysisSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmGoodsMovementChartGrid.sapMVBox {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+.nxMmGoodsMovementChartGrid > .sapMFlexItem {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100%;
+}
+
+.nxMmGoodsMovementChartCard {
+    width: 100%;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.65rem;
+    padding: 0.7rem 0.8rem 0.75rem;
+    box-sizing: border-box;
+    min-height: 15.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.nxMmGoodsMovementChartCard::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+}
+
+.nxMmGoodsMovementChartCard--migo::before { background: linear-gradient(90deg, #36A41D, #10B981); }
+.nxMmGoodsMovementChartCard--material::before { background: linear-gradient(90deg, #2563EB, #60A5FA); }
+.nxMmGoodsMovementChartCard--impact::before { background: linear-gradient(90deg, #E67E22, #F59E0B); }
+.nxMmGoodsMovementChartCard--data::before { background: linear-gradient(90deg, #6B7280, #9CA3AF); }
+
+.nxMmGoodsMovementChartBody {
+    flex: 1;
+    min-height: 10.5rem;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    border: 1px solid #F3F4F6;
+    padding: 0.85rem 0.9rem;
+    box-sizing: border-box;
+}
+
+.nxMmGoodsMovementChartBody .sapUiHtml { width: 100% !important; min-width: 0 !important; }
+
+.nxMmGmImpactGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.nxMmGmImpactTile {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    padding: 0.55rem 0.65rem;
+}
+
+.nxMmGmImpactTile--ok { border-left: 3px solid #36A41D; }
+.nxMmGmImpactTile--warn { border-left: 3px solid #E67E22; }
+.nxMmGmImpactTile--danger { border-left: 3px solid #BB0000; }
+
+.nxMmGmImpactTileLabel {
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #9CA3AF;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.nxMmGmImpactTileValue {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #111827;
+    margin-top: 0.15rem;
+}
+
+@media (max-width: 1200px) {
+    .nxMmGoodsMovementMain { flex-direction: column; }
+    .nxMmGoodsMovementListPane,
+    .nxMmGoodsMovementDetailPane { flex: 1 1 100%; width: 100%; }
+}
+
+@media (max-width: 900px) {
+    .nxMmGoodsMovementKpi { flex: 1 1 calc(50% - 0.35rem); }
+    .nxMmGoodsMovementChartGrid.sapMVBox { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+    .nxMmGoodsMovementKpi { flex: 1 1 100%; }
+    .nxMmGmImpactGrid { grid-template-columns: 1fr; }
+}
+
+/* ── Purchasing Control Tower (differentiated layout) ── */
+.nxMmPurchTower .nxMmPurchTowerHero { padding-bottom: 0.75rem; }
+
+.nxMmPurchPipeline {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    margin-top: 0.15rem;
+}
+
+.nxMmPurchPipelineTitle { font-size: 0.85rem !important; font-weight: 700 !important; color: #111827 !important; margin-bottom: 0.5rem !important; }
+
+.nxMmPurchPipelineFlow { gap: 0.35rem; align-items: center; width: 100%; }
+.nxMmPurchPipelineStepWrap { align-items: center; flex: 1 1 calc(25% - 0.5rem); min-width: 9rem; }
+
+.nxMmPurchPipelineStep {
+    flex: 1;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.6rem;
+    padding: 0.55rem 0.65rem;
+    min-height: 4.5rem;
+    box-sizing: border-box;
+}
+
+.nxMmPurchPipelineStep--blue { border-left: 3px solid #0070F2; background: #EFF6FF; }
+.nxMmPurchPipelineStep--success { border-left: 3px solid #36A41D; background: #F0FDF4; }
+.nxMmPurchPipelineStep--danger { border-left: 3px solid #BB0000; background: #FEF2F2; }
+.nxMmPurchPipelineStep--neutral { border-left: 3px solid #D1D5DB; }
+
+.nxMmPurchPipelineStepLabel, .nxMmPurchPipelineStepLabel .sapMText { font-size: 0.68rem !important; font-weight: 700 !important; color: #374151 !important; }
+.nxMmPurchPipelineStepNum, .nxMmPurchPipelineStepNum .sapMObjectNumberText { font-size: 1.15rem !important; font-weight: 800 !important; color: #111827 !important; }
+.nxMmPurchPipelineStepHint, .nxMmPurchPipelineStepHint .sapMText { font-size: 0.62rem !important; color: #9CA3AF !important; }
+.nxMmPurchPipelineArrow { margin: 0 0.15rem; flex-shrink: 0; }
+
+.nxMmPurchWorkspace { gap: 0.65rem; align-items: stretch; flex-wrap: nowrap; width: 100%; min-width: 0; }
+.nxMmPurchRiskPane { flex: 35 1 0; min-width: 0; display: flex; flex-direction: column; }
+.nxMmPurchBoardPane { flex: 40 1 0; min-width: 0; display: flex; flex-direction: column; }
+.nxMmPurchCasePane { flex: 25 1 0; min-width: 0; display: flex; flex-direction: column; }
+
+.nxMmPurchRiskCard::before { background: linear-gradient(90deg, #E67E22, #F59E0B); }
+.nxMmPurchBoardCard::before { background: linear-gradient(90deg, #0070F2, #5899DA); }
+.nxMmPurchCaseCard::before { background: linear-gradient(90deg, #8B5CF6, #0070F2); }
+
+.nxMmPurchRiskList { max-height: 22rem; border: none !important; }
+.nxMmPurchRiskItem { border-bottom: 1px solid #F3F4F6 !important; padding: 0.45rem 0.35rem !important; }
+.nxMmPurchRiskItem--danger { background: #FEF2F2 !important; border-left: 3px solid #BB0000 !important; }
+.nxMmPurchRiskItem--warning { background: #FFFBEB !important; border-left: 3px solid #F59E0B !important; }
+.nxMmPurchRiskItem--success { background: #F0FDF4 !important; border-left: 3px solid #36A41D !important; }
+.nxMmPurchRiskItem.sapMLIBSelected { background: #DBEAFE !important; }
+
+.nxMmPurchRiskItemBody { gap: 0.25rem; }
+.nxMmPurchRiskMat, .nxMmPurchRiskMat .sapMText { font-weight: 700 !important; font-size: 0.78rem !important; color: #111827 !important; font-family: Consolas, monospace; }
+.nxMmPurchRiskShort, .nxMmPurchRiskShort .sapMText { font-size: 0.68rem !important; color: #BB0000 !important; font-weight: 600 !important; }
+.nxMmPurchRiskAction, .nxMmPurchRiskAction .sapMText { font-size: 0.68rem !important; color: #6B7280 !important; font-style: italic; }
+.nxMmPurchRiskMeta { margin-top: 0.15rem; }
+
+.nxMmPurchBoardScroll { border: 1px solid #F3F4F6; border-radius: 0.5rem; }
+.nxMmPurchBoardTable .sapMListTblCell { padding-top: 0.28rem !important; padding-bottom: 0.28rem !important; font-size: 0.72rem !important; }
+
+.nxMmPurchCaseTiles { gap: 0.45rem; margin-top: 0.35rem; }
+.nxMmPurchCaseTile {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    padding: 0.45rem 0.55rem;
+}
+
+.nxMmPurchInsightPanel {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.85rem;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    margin-top: 0.25rem;
+    gap: 0.55rem;
+}
+
+.nxMmPurchInsightHead { padding-bottom: 0.45rem; border-bottom: 1px solid #F3F4F6; }
+.nxMmPurchInsightGrid.sapMHBox { gap: 0.65rem; align-items: stretch; }
+.nxMmPurchInsightGrid > .sapMFlexItem { flex: 1 1 calc(25% - 0.5rem); min-width: 12rem; }
+
+.nxMmPurchInsightCard {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.6rem;
+    padding: 0.65rem 0.7rem;
+    height: 100%;
+    min-height: 14rem;
+    box-sizing: border-box;
+}
+
+.nxMmPurchInsightCard--po { border-top: 3px solid #0070F2; }
+.nxMmPurchInsightCard--migo { border-top: 3px solid #36A41D; }
+.nxMmPurchInsightCard--risk { border-top: 3px solid #E67E22; }
+.nxMmPurchInsightCard--data { border-top: 3px solid #6B7280; }
+
+.nxMmPurchInsightBody {
+    min-height: 10rem;
+    background: #FFFFFF;
+    border-radius: 0.45rem;
+    border: 1px solid #F3F4F6;
+    padding: 0.65rem;
+    margin-top: 0.45rem;
+}
+
+.nxMmPurchInsightBody .sapUiHtml { width: 100% !important; }
+
+/* ── Goods Movement Flow Monitor (differentiated layout) ── */
+.nxMmGmFlow .nxMmGmFlowHero {
+    background: linear-gradient(135deg, #064E3B 0%, #047857 42%, #0070F2 100%) !important;
+}
+
+.nxMmGmStatusStrip {
+    gap: 0.5rem;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.nxMmGmStatusSegment {
+    flex: 1 1 calc(25% - 0.45rem);
+    min-width: 8.5rem;
+    border-radius: 0.55rem;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid #E5E7EB;
+    background: #F9FAFB;
+}
+
+.nxMmGmStatusSegment--success { border-left: 3px solid #36A41D; background: #F0FDF4; }
+.nxMmGmStatusSegment--danger { border-left: 3px solid #BB0000; background: #FEF2F2; }
+.nxMmGmStatusSegment--blue { border-left: 3px solid #0070F2; background: #EFF6FF; }
+.nxMmGmStatusSegment--amber { border-left: 3px solid #F59E0B; background: #FFFBEB; }
+
+.nxMmGmStatusLabel, .nxMmGmStatusLabel .sapMText { font-size: 0.68rem !important; font-weight: 700 !important; color: #374151 !important; }
+.nxMmGmStatusNum, .nxMmGmStatusNum .sapMObjectNumberText { font-size: 1.1rem !important; font-weight: 800 !important; }
+.nxMmGmStatusHint, .nxMmGmStatusHint .sapMText { font-size: 0.62rem !important; color: #9CA3AF !important; }
+
+.nxMmGmWorkspace { gap: 0.65rem; align-items: stretch; flex-wrap: nowrap; width: 100%; min-width: 0; }
+.nxMmGmQueuePane { flex: 30 1 0; min-width: 0; display: flex; flex-direction: column; }
+.nxMmGmFlowPane { flex: 45 1 0; min-width: 0; display: flex; flex-direction: column; }
+.nxMmGmStockPane { flex: 25 1 0; min-width: 0; display: flex; flex-direction: column; }
+
+.nxMmGmQueueCard::before { background: linear-gradient(90deg, #36A41D, #10B981); }
+.nxMmGmFlowCard::before { background: linear-gradient(90deg, #0070F2, #36A41D); }
+.nxMmGmStockCard::before { background: linear-gradient(90deg, #E67E22, #0070F2); }
+
+.nxMmGmQueueScroll { border: 1px solid #F3F4F6; border-radius: 0.5rem; }
+.nxMmGmQueueGroups { gap: 0.65rem; padding: 0.25rem; }
+.nxMmGmQueueGroupHead { gap: 0.35rem; margin-bottom: 0.35rem; padding: 0.25rem 0.15rem; border-bottom: 1px dashed #E5E7EB; }
+
+.nxMmGmDocList { border: none !important; }
+.nxMmGmDocItem { border-radius: 0.45rem !important; margin-bottom: 0.35rem !important; padding: 0.4rem 0.45rem !important; border: 1px solid #E5E7EB !important; }
+.nxMmGmDocItem--linked { border-left: 3px solid #36A41D !important; background: #F0FDF4 !important; }
+.nxMmGmDocItem--missing { border-left: 3px solid #F59E0B !important; background: #FFFBEB !important; }
+.nxMmGmDocItem.sapMLIBSelected { background: #DBEAFE !important; border-color: #0070F2 !important; }
+
+.nxMmGmDocMigo, .nxMmGmDocMigo .sapMText { font-weight: 700 !important; font-size: 0.76rem !important; color: #111827 !important; font-family: Consolas, monospace; }
+.nxMmGmDocMeta, .nxMmGmDocMeta .sapMText { font-size: 0.66rem !important; color: #6B7280 !important; margin-top: 0.15rem; }
+
+.nxMmGmFlowBody { gap: 0.65rem; }
+.nxMmGmFlowSteps { gap: 0.25rem; align-items: stretch; width: 100%; flex-wrap: wrap; }
+.nxMmGmFlowStepWrap { align-items: center; flex: 1 1 calc(25% - 0.5rem); min-width: 7rem; }
+.nxMmGmFlowStep {
+    flex: 1;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.55rem;
+    padding: 0.55rem 0.6rem;
+    text-align: center;
+    min-height: 6.5rem;
+}
+.nxMmGmFlowStepIcon { margin-bottom: 0.25rem; }
+.nxMmGmFlowStepLabel, .nxMmGmFlowStepLabel .sapMText { font-size: 0.62rem !important; font-weight: 600 !important; color: #9CA3AF !important; text-transform: uppercase; }
+.nxMmGmFlowStepValue, .nxMmGmFlowStepValue .sapMText { font-size: 0.76rem !important; font-weight: 700 !important; color: #111827 !important; margin: 0.15rem 0; word-break: break-all; }
+.nxMmGmFlowArrow { margin: 0 0.1rem; flex-shrink: 0; }
+
+.nxMmGmFlowMetrics { gap: 0.45rem; margin-top: 0.25rem; }
+.nxMmGmFlowMetric { flex: 1 1 calc(25% - 0.35rem); min-width: 5.5rem; background: #EFF6FF; border-radius: 0.45rem; padding: 0.4rem 0.5rem; border: 1px solid #BFDBFE; }
+.nxMmGmFlowMetricLabel, .nxMmGmFlowMetricLabel .sapMText { font-size: 0.62rem !important; color: #6B7280 !important; font-weight: 600 !important; }
+.nxMmGmFlowMetricValue, .nxMmGmFlowMetricValue .sapMText { font-size: 0.78rem !important; font-weight: 700 !important; color: #111827 !important; }
+.nxMmGmFlowMetricValue--danger, .nxMmGmFlowMetricValue--danger .sapMText { color: #BB0000 !important; }
+
+.nxMmGmMissingFields { background: #F9FAFB; border: 1px dashed #D1D5DB; border-radius: 0.5rem; padding: 0.55rem 0.65rem; margin-top: 0.25rem; }
+.nxMmGmMissingTitle { font-size: 0.72rem !important; color: #6B7280 !important; margin-bottom: 0.35rem !important; }
+.nxMmGmMissingList { gap: 0.35rem; }
+.nxMmGmMissingChip { flex: 1 1 calc(33% - 0.25rem); min-width: 6rem; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 0.4rem; padding: 0.35rem 0.45rem; }
+.nxMmGmMissingChipLabel, .nxMmGmMissingChipLabel .sapMText { font-size: 0.6rem !important; color: #9CA3AF !important; }
+.nxMmGmMissingChipValue, .nxMmGmMissingChipValue .sapMText { font-size: 0.68rem !important; color: #9CA3AF !important; font-weight: 600 !important; }
+
+.nxMmGmStockBody { gap: 0.45rem; }
+.nxMmGmStockTile { background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 0.45rem; padding: 0.4rem 0.5rem; }
+.nxMmGmStockTile--status { background: #F0FDF4; border-color: #BBF7D0; }
+.nxMmGmStockTileLabel, .nxMmGmStockTileLabel .sapMText { font-size: 0.62rem !important; color: #9CA3AF !important; font-weight: 600 !important; text-transform: uppercase; }
+.nxMmGmStockTileValue, .nxMmGmStockTileValue .sapMText { font-size: 0.78rem !important; font-weight: 700 !important; color: #111827 !important; }
+.nxMmGmStockTileValue--danger, .nxMmGmStockTileValue--danger .sapMText { color: #BB0000 !important; }
+
+.nxMmGmAvailSection { margin-top: 0.35rem; border-top: 1px solid #F3F4F6; padding-top: 0.45rem; }
+.nxMmGmAvailTitle { font-size: 0.72rem !important; color: #374151 !important; margin-bottom: 0.25rem !important; }
+.nxMmGmAvailList { border: none !important; }
+.nxMmGmAvailRow { padding: 0.25rem 0 !important; border-bottom: 1px solid #F9FAFB !important; }
+.nxMmGmAvailLabel, .nxMmGmAvailLabel .sapMText { font-size: 0.68rem !important; color: #6B7280 !important; }
+
+.nxMmGmAnalysisPanel {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.85rem;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    margin-top: 0.25rem;
+    gap: 0.55rem;
+}
+
+.nxMmGmAnalysisHead { padding-bottom: 0.45rem; border-bottom: 1px solid #F3F4F6; }
+.nxMmGmAnalysisGrid.sapMHBox { gap: 0.65rem; align-items: stretch; }
+.nxMmGmAnalysisGrid > .sapMFlexItem { flex: 1 1 calc(25% - 0.5rem); min-width: 12rem; }
+
+.nxMmGmAnalysisCard {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.6rem;
+    padding: 0.65rem 0.7rem;
+    min-height: 14rem;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmGmAnalysisCard--migo { border-top: 3px solid #36A41D; }
+.nxMmGmAnalysisCard--material { border-top: 3px solid #0070F2; }
+.nxMmGmAnalysisCard--impact { border-top: 3px solid #E67E22; }
+.nxMmGmAnalysisCard--missing { border-top: 3px solid #9CA3AF; }
+
+.nxMmGmAnalysisBody {
+    min-height: 10rem;
+    background: #FFFFFF;
+    border-radius: 0.45rem;
+    border: 1px solid #F3F4F6;
+    padding: 0.65rem;
+    margin-top: 0.45rem;
+}
+
+.nxMmGmMissingFieldsGrid { grid-template-columns: 1fr; }
+
+@media (max-width: 1200px) {
+    .nxMmPurchWorkspace,
+    .nxMmGmWorkspace { flex-direction: column; }
+    .nxMmPurchRiskPane, .nxMmPurchBoardPane, .nxMmPurchCasePane,
+    .nxMmGmQueuePane, .nxMmGmFlowPane, .nxMmGmStockPane { flex: 1 1 100%; width: 100%; }
+    .nxMmPurchInsightGrid > .sapMFlexItem,
+    .nxMmGmAnalysisGrid > .sapMFlexItem { flex: 1 1 calc(50% - 0.35rem); }
+}
+
+@media (max-width: 720px) {
+    .nxMmPurchPipelineStepWrap { flex: 1 1 calc(50% - 0.35rem); }
+    .nxMmGmStatusSegment { flex: 1 1 calc(50% - 0.35rem); }
+    .nxMmPurchInsightGrid > .sapMFlexItem,
+    .nxMmGmAnalysisGrid > .sapMFlexItem { flex: 1 1 100%; }
+    .nxMmGmFlowStepWrap { flex: 1 1 calc(50% - 0.35rem); }
+}
+
 .nxMmOverviewBottom {
     gap: 0.75rem;
     align-items: stretch;
@@ -2023,20 +4209,22 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 
-/* MM Reports — SAP BomStock 실데이터 (OVP 화려 스타일) */
-.nxMmReports {
+/* MM Reports — Analytics Report Center (Indigo/Purple) */
+.nxMmReports,
+.mmReportsPage {
     padding: 0.75rem 1rem 1.5rem;
-    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+    background: linear-gradient(180deg, #F5F3FF 0%, #EEF2FF 22%, #F9FAFB 100%);
     min-height: 100%;
     box-sizing: border-box;
 }
 
-.nxMmReportsHero {
-    background: linear-gradient(135deg, #0B1F4A 0%, #0A3D91 42%, #0070F2 100%);
+.nxMmReportsHero,
+.mmReportsPage .mmReportsHero {
+    background: linear-gradient(135deg, #0F172A 0%, #312E81 38%, #6366F1 72%, #8B5CF6 100%);
     border-radius: 0.85rem;
     padding: 1.1rem 1.25rem 1rem;
     margin-bottom: 0.85rem;
-    box-shadow: 0 14px 36px rgba(0, 87, 210, 0.28);
+    box-shadow: 0 14px 36px rgba(49, 46, 129, 0.35);
     position: relative;
     overflow: hidden;
 }
@@ -2128,10 +4316,11 @@ html, body, body > div, #container, #container-uiarea,
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
-.nxMmReportsKpi--blue { background: linear-gradient(145deg, rgba(0, 112, 242, 0.35), rgba(255, 255, 255, 0.12)); }
-.nxMmReportsKpi--violet { background: linear-gradient(145deg, rgba(139, 92, 246, 0.38), rgba(255, 255, 255, 0.12)); }
-.nxMmReportsKpi--amber { background: linear-gradient(145deg, rgba(234, 194, 11, 0.38), rgba(255, 255, 255, 0.12)); }
-.nxMmReportsKpi--red { background: linear-gradient(145deg, rgba(187, 0, 0, 0.35), rgba(255, 255, 255, 0.12)); }
+.nxMmReportsKpi--blue { background: linear-gradient(145deg, rgba(99, 102, 241, 0.38), rgba(255, 255, 255, 0.12)); }
+.nxMmReportsKpi--indigo { background: linear-gradient(145deg, rgba(79, 70, 229, 0.42), rgba(255, 255, 255, 0.12)); }
+.nxMmReportsKpi--violet { background: linear-gradient(145deg, rgba(139, 92, 246, 0.42), rgba(255, 255, 255, 0.12)); }
+.nxMmReportsKpi--amber { background: linear-gradient(145deg, rgba(234, 152, 11, 0.42), rgba(255, 255, 255, 0.12)); }
+.nxMmReportsKpi--red { background: linear-gradient(145deg, rgba(187, 0, 0, 0.38), rgba(255, 255, 255, 0.12)); }
 
 .nxMmReportsKpiLabel,
 .nxMmReportsKpiLabel .sapMText {
@@ -2208,15 +4397,117 @@ html, body, body > div, #container, #container-uiarea,
     height: 4px;
 }
 
-.nxMmReportsCard--pie::before { background: linear-gradient(90deg, #E6600D, #F59E0B); }
-.nxMmReportsCard--bar::before { background: linear-gradient(90deg, #0070F2, #5899DA); }
-.nxMmReportsCard--line::before { background: linear-gradient(90deg, #2563EB, #60A5FA); }
-.nxMmReportsCard--quad::before { background: linear-gradient(90deg, #36A41D, #10B981); }
-.nxMmReportsCard--status::before { background: linear-gradient(90deg, #8B5CF6, #0070F2); }
+.mmReportsPage .nxMmReportsCard--pie::before,
+.nxMmReportsCard--pie::before { background: linear-gradient(90deg, #6366F1, #8B5CF6); }
+.mmReportsPage .nxMmReportsCard--bar::before,
+.nxMmReportsCard--bar::before { background: linear-gradient(90deg, #4F46E5, #6366F1); }
+.mmReportsPage .nxMmReportsCard--line::before,
+.nxMmReportsCard--line::before { background: linear-gradient(90deg, #7C3AED, #A855F7); }
+.mmReportsPage .nxMmReportsCard--quad::before,
+.nxMmReportsCard--quad::before { background: linear-gradient(90deg, #0891B2, #6366F1); }
+.mmReportsPage .nxMmReportsCard--status::before,
+.nxMmReportsCard--status::before { background: linear-gradient(90deg, #8B5CF6, #6366F1); }
+
+.mmReportsPage .nxMmReportsChartCard,
+.nxMmReportsChartCard {
+    min-height: 17.5rem;
+    background: linear-gradient(180deg, #FAFAFF 0%, #FFFFFF 100%);
+    border-color: #DDD6FE;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
+}
+
+.mmReportsPage .nxMmReportsChartCard:hover,
+.nxMmReportsChartCard:hover {
+    box-shadow: 0 12px 32px rgba(99, 102, 241, 0.16);
+    border-color: #C4B5FD;
+}
+
+.mmReportsPage .nxMmReportsCardIconWrap--pie,
+.nxMmReportsCardIconWrap--pie { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
+.mmReportsPage .nxMmReportsCardIconWrap--bar,
+.nxMmReportsCardIconWrap--bar { background: linear-gradient(135deg, #4F46E5, #6366F1); }
+.mmReportsPage .nxMmReportsCardIconWrap--line,
+.nxMmReportsCardIconWrap--line { background: linear-gradient(135deg, #7C3AED, #A855F7); }
+.mmReportsPage .nxMmReportsCardIconWrap--quad,
+.nxMmReportsCardIconWrap--quad { background: linear-gradient(135deg, #0891B2, #6366F1); }
+.mmReportsPage .nxMmReportsCardIconWrap--status,
+.nxMmReportsCardIconWrap--status { background: linear-gradient(135deg, #8B5CF6, #6366F1); }
+
+.mmReportsInsightRow { margin: 0.65rem 0; width: 100%; }
+
+.mmReportsInsightPanel {
+    background: #FFFFFF;
+    border: 1px solid #DDD6FE;
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    box-shadow: 0 8px 22px rgba(99, 102, 241, 0.1);
+    gap: 0.65rem;
+    border-top: 3px solid #6366F1;
+}
+
+.mmReportsInsightHead { padding-bottom: 0.45rem; border-bottom: 1px solid #EDE9FE; margin-bottom: 0.35rem; }
+.mmReportsInsightTitle { font-size: 0.95rem !important; font-weight: 700 !important; color: #312E81 !important; }
+
+.mmReportsInsightGrid { gap: 0.55rem; }
+
+.mmReportsInsightTile {
+    flex: 1 1 calc(25% - 0.45rem);
+    min-width: 9rem;
+    background: #F5F3FF;
+    border: 1px solid #DDD6FE;
+    border-radius: 0.55rem;
+    padding: 0.55rem 0.65rem;
+    box-sizing: border-box;
+}
+
+.mmReportsInsightTile--indigo { border-left: 3px solid #6366F1; }
+.mmReportsInsightTile--violet { border-left: 3px solid #8B5CF6; }
+.mmReportsInsightTile--cyan { border-left: 3px solid #0891B2; }
+.mmReportsInsightTile--success { border-left: 3px solid #36A41D; }
+
+.mmReportsInsightLabel,
+.mmReportsInsightLabel .sapMText {
+    font-size: 0.64rem !important;
+    font-weight: 600 !important;
+    color: #6B7280 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.mmReportsInsightValue,
+.mmReportsInsightValue .sapMText {
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+    color: #312E81 !important;
+    margin-top: 0.15rem;
+}
+
+.mmReportsInsightValue--code,
+.mmReportsInsightValue--code .sapMText {
+    font-family: Consolas, monospace;
+    font-size: 0.78rem !important;
+}
+
+.mmReportsInsightSource { margin-top: 0.35rem; }
+.mmReportsInsightSourceText,
+.mmReportsInsightSourceText .sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+}
+
+.mmReportsPage .nxMmReportsTablePanel {
+    border-color: #DDD6FE;
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.08);
+}
+
+.mmReportsPage .nxMmReportsCode,
+.mmReportsPage .nxMmReportsCode .sapMText {
+    color: #6366F1 !important;
+}
 
 .nxMmReportsCard:hover {
     transform: translateY(-3px);
-    box-shadow: 0 14px 30px rgba(0, 112, 242, 0.12);
+    box-shadow: 0 14px 30px rgba(99, 102, 241, 0.14);
 }
 
 .nxMmReportsCardWide {
@@ -2253,11 +4544,11 @@ html, body, body > div, #container, #container-uiarea,
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.nxMmReportsCardIconWrap--pie { background: linear-gradient(135deg, #E6600D, #F59E0B); }
-.nxMmReportsCardIconWrap--bar { background: linear-gradient(135deg, #0070F2, #5899DA); }
-.nxMmReportsCardIconWrap--line { background: linear-gradient(135deg, #2563EB, #60A5FA); }
-.nxMmReportsCardIconWrap--quad { background: linear-gradient(135deg, #36A41D, #10B981); }
-.nxMmReportsCardIconWrap--status { background: linear-gradient(135deg, #8B5CF6, #0070F2); }
+.nxMmReportsCardIconWrap--pie { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
+.nxMmReportsCardIconWrap--bar { background: linear-gradient(135deg, #4F46E5, #6366F1); }
+.nxMmReportsCardIconWrap--line { background: linear-gradient(135deg, #7C3AED, #A855F7); }
+.nxMmReportsCardIconWrap--quad { background: linear-gradient(135deg, #0891B2, #6366F1); }
+.nxMmReportsCardIconWrap--status { background: linear-gradient(135deg, #8B5CF6, #6366F1); }
 
 .nxMmReportsTablePanel {
     margin-top: 0.85rem !important;
@@ -2289,7 +4580,7 @@ html, body, body > div, #container, #container-uiarea,
 .nxMmReportsCode,
 .nxMmReportsCode .sapMText {
     font-weight: 700 !important;
-    color: #0070F2 !important;
+    color: #6366F1 !important;
     font-family: Consolas, "Courier New", monospace;
     font-size: 0.78rem !important;
 }
