@@ -17,8 +17,8 @@
     xmlns:core="sap.ui.core"
     width="100%">
 
-    <VBox class="nxMmReports" width="100%" renderType="Bare">
-        <VBox class="nxMmReportsHero">
+    <VBox class="nxMmReports mmReportsPage" width="100%" renderType="Bare">
+        <VBox class="nxMmReportsHero mmReportsHero">
             <HBox alignItems="Center" justifyContent="SpaceBetween" wrap="Wrap" class="nxMmReportsHeroTop">
                 <VBox class="nxMmReportsHeroText">
                     <HBox alignItems="Center" class="nxMmReportsBadgeRow">
@@ -28,12 +28,13 @@
                             icon="sap-icon://connected"
                             class="nxMmReportsLiveBadge" />
                         <ObjectStatus
-                            text="UNIQLO BOM"
+                            text="MM Analytics Report Center"
                             state="Information"
-                            class="sapUiTinyMarginBegin" />
+                            icon="sap-icon://business-objects-experience"
+                            class="sapUiTinyMarginBegin mmReportsAnalyticsBadge" />
                     </HBox>
-                    <Title text="{dashboard>/mmReports/title}" level="H2" class="nxMmReportsHeroTitle" />
-                    <Text text="{dashboard>/mmReports/subtitle}" class="nxMmReportsHeroSub" />
+                    <Title text="MM Reports" level="H2" class="nxMmReportsHeroTitle mmReportsHeroTitle" />
+                    <Text text="BOM, 자재 부족률, 재고 상태를 분석하는 Analytics Report 화면입니다." class="nxMmReportsHeroSub mmReportsHeroSub" />
                     <Text text="{= ${dashboard>/mmReports/lastUpdated} + ' · ' + ${dashboard>/mmReports/dataSource} }" class="nxMmReportsHeroMeta" />
                 </VBox>
                 <VBox alignItems="End" class="nxMmReportsHeroActions">
@@ -62,7 +63,7 @@
             class="nxMmReportsMigoPanel sapUiSmallMarginBeginEnd">
             <headerToolbar>
                 <Toolbar>
-                    <core:Icon src="sap-icon://shipping-status" color="#0070F2" />
+                    <core:Icon src="sap-icon://shipping-status" color="#8B5CF6" />
                     <Title text="{dashboard>/mmReports/migoInfo/title}" level="H5" class="sapUiTinyMarginBegin" />
                 </Toolbar>
             </headerToolbar>
@@ -75,7 +76,7 @@
                 <VBox items="{dashboard>/mmReports/migoInfo/details}">
                     <items>
                         <HBox alignItems="Start" class="nxMmReportsMigoRow">
-                            <core:Icon src="sap-icon://circle-task-2" size="0.65rem" color="#0070F2" class="sapUiTinyMarginTop" />
+                            <core:Icon src="sap-icon://circle-task-2" size="0.65rem" color="#8B5CF6" class="sapUiTinyMarginTop" />
                             <Text text="{dashboard>text}" class="nxMmReportsMigoDetail sapUiTinyMarginBegin" />
                         </HBox>
                     </items>
@@ -90,12 +91,12 @@
             visible="{= !${dashboard>/mmReports/loaded} }"
             class="sapUiSmallMarginBeginEnd" />
 
-        <HBox class="nxMmReportsGrid" width="100%" wrap="Wrap" renderType="Bare">
-            <VBox class="nxMmReportsCard nxMmReportsCard--pie">
+        <HBox class="nxMmReportsGrid mmReportsChartGrid" width="100%" wrap="Wrap" renderType="Bare">
+            <VBox class="nxMmReportsCard nxMmReportsChartCard nxMmReportsCard--pie">
                 <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
                     <VBox>
                         <Title text="{dashboard>/mmReports/pie/title}" level="H5" />
-                        <Text text="TypeLabel · StockQty 합계" class="nxMmReportsCardSub" />
+                        <Text text="TypeLabel별 StockQty 합계 · SAP BomStockSet" class="nxMmReportsCardSub" />
                     </VBox>
                     <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--pie">
                         <core:Icon src="sap-icon://pie-chart" size="1.1rem" color="#FFFFFF" />
@@ -104,11 +105,11 @@
                 <core:HTML content="{dashboard>/mmReports/pie/chartHtml}" />
             </VBox>
 
-            <VBox class="nxMmReportsCard nxMmReportsCard--bar">
+            <VBox class="nxMmReportsCard nxMmReportsChartCard nxMmReportsCard--bar">
                 <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
                     <VBox>
                         <Title text="{dashboard>/mmReports/bar/title}" level="H5" />
-                        <Text text="재고 수량 Top 6" class="nxMmReportsCardSub" />
+                        <Text text="재고 수량 Top 6 · StockQty 기준" class="nxMmReportsCardSub" />
                     </VBox>
                     <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--bar">
                         <core:Icon src="sap-icon://horizontal-bar-chart" size="1.1rem" color="#FFFFFF" />
@@ -117,11 +118,11 @@
                 <core:HTML content="{dashboard>/mmReports/bar/chartHtml}" />
             </VBox>
 
-            <VBox class="nxMmReportsCard nxMmReportsCard--line">
+            <VBox class="nxMmReportsCard nxMmReportsChartCard nxMmReportsCard--line">
                 <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
                     <VBox>
                         <Title text="{dashboard>/mmReports/line/title}" level="H5" />
-                        <Text text="RequiredQty 대비 충족률" class="nxMmReportsCardSub" />
+                        <Text text="RequiredQty 대비 Fill Rate 분석" class="nxMmReportsCardSub" />
                     </VBox>
                     <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--line">
                         <core:Icon src="sap-icon://line-chart" size="1.1rem" color="#FFFFFF" />
@@ -130,11 +131,11 @@
                 <core:HTML content="{dashboard>/mmReports/line/chartHtml}" />
             </VBox>
 
-            <VBox class="nxMmReportsCard nxMmReportsCard--quad">
+            <VBox class="nxMmReportsCard nxMmReportsChartCard nxMmReportsCard--quad">
                 <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
                     <VBox>
                         <Title text="{dashboard>/mmReports/quadrant/title}" level="H5" />
-                        <Text text="재고 vs 리스크 버블" class="nxMmReportsCardSub" />
+                        <Text text="StockQty vs Fill Rate 리스크 버블" class="nxMmReportsCardSub" />
                     </VBox>
                     <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--quad">
                         <core:Icon src="sap-icon://scatter-chart" size="1.1rem" color="#FFFFFF" />
@@ -143,17 +144,51 @@
                 <core:HTML content="{dashboard>/mmReports/quadrant/chartHtml}" />
             </VBox>
 
-            <VBox class="nxMmReportsCard nxMmReportsCardWide nxMmReportsCard--status">
+            <VBox class="nxMmReportsCard nxMmReportsCardWide nxMmReportsChartCard nxMmReportsCard--status">
                 <HBox class="nxMmReportsCardHead" alignItems="Center" justifyContent="SpaceBetween">
                     <VBox>
                         <Title text="{dashboard>/mmReports/status/title}" level="H5" />
-                        <Text text="정상 · 확인 · 부족 분포" class="nxMmReportsCardSub" />
+                        <Text text="정상 · 확인 · 부족 Status 분포" class="nxMmReportsCardSub" />
                     </VBox>
                     <VBox class="nxMmReportsCardIconWrap nxMmReportsCardIconWrap--status">
                         <core:Icon src="sap-icon://vertical-bar-chart" size="1.1rem" color="#FFFFFF" />
                     </VBox>
                 </HBox>
                 <core:HTML content="{dashboard>/mmReports/status/chartHtml}" />
+            </VBox>
+        </HBox>
+
+        <HBox class="mmReportsInsightRow" width="100%" wrap="Wrap" renderType="Bare">
+            <VBox class="mmReportsInsightPanel" width="100%" renderType="Bare">
+                <HBox class="mmReportsInsightHead" alignItems="Center" justifyContent="SpaceBetween" width="100%">
+                    <VBox>
+                        <Title text="Insight Summary" level="H5" class="mmReportsInsightTitle" />
+                        <Text text="BomStockSet 기반 분석 인사이트" class="nxMmReportsCardSub" />
+                    </VBox>
+                    <core:Icon src="sap-icon://insight" size="1.25rem" color="#8B5CF6" />
+                </HBox>
+                <HBox class="mmReportsInsightGrid" wrap="Wrap" width="100%">
+                    <VBox class="mmReportsInsightTile mmReportsInsightTile--indigo">
+                        <Text text="부족 자재 비율" class="mmReportsInsightLabel" />
+                        <Text text="{dashboard>/mmReports/insightSummary/shortageRate}" class="mmReportsInsightValue" />
+                    </VBox>
+                    <VBox class="mmReportsInsightTile mmReportsInsightTile--violet">
+                        <Text text="최대 부족 자재" class="mmReportsInsightLabel" />
+                        <Text text="{dashboard>/mmReports/insightSummary/topShortageMaterial}" class="mmReportsInsightValue mmReportsInsightValue--code" />
+                    </VBox>
+                    <VBox class="mmReportsInsightTile mmReportsInsightTile--cyan">
+                        <Text text="최대 ShortageQty" class="mmReportsInsightLabel" />
+                        <Text text="{dashboard>/mmReports/insightSummary/topShortageQty}" class="mmReportsInsightValue" />
+                    </VBox>
+                    <VBox class="mmReportsInsightTile mmReportsInsightTile--success">
+                        <Text text="정상 자재 수" class="mmReportsInsightLabel" />
+                        <Text text="{dashboard>/mmReports/insightSummary/okMaterials}" class="mmReportsInsightValue" />
+                    </VBox>
+                </HBox>
+                <HBox alignItems="Center" class="mmReportsInsightSource">
+                    <core:Icon src="sap-icon://database" size="0.75rem" color="#9CA3AF" class="sapUiTinyMarginEnd" />
+                    <Text text="{dashboard>/mmReports/insightSummary/dataSourceNote}" class="mmReportsInsightSourceText" />
+                </HBox>
             </VBox>
         </HBox>
 

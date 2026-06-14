@@ -1,0 +1,257 @@
+<!--
+  MmInventory.view.xml — MM Inventory master-detail (SAP OData, Reports-style UI)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.MmInventory"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    width="100%">
+
+    <VBox class="nxMmInventory mmInventoryPage" width="100%" renderType="Bare">
+        <MessageStrip
+            text="{dashboard>/mmInventory/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= ${dashboard>/mmInventory/error} ? true : false }"
+            class="sapUiSmallMarginBottom" />
+
+        <BusyIndicator visible="{dashboard>/mmInventory/loading}" class="nxMmInventoryBusy" />
+
+        <VBox visible="{= !${dashboard>/mmInventory/loading} }" width="100%" renderType="Bare" class="nxMmInventoryBody">
+            <VBox class="nxMmInventoryHero">
+                <HBox alignItems="Center" justifyContent="SpaceBetween" wrap="Wrap" class="nxMmInventoryHeroTop">
+                    <VBox class="nxMmInventoryHeroText">
+                        <HBox alignItems="Center" class="nxMmInventoryBadgeRow mmInventoryHeroBadges">
+                            <ObjectStatus
+                                text="LIVE SAP DATA"
+                                state="Success"
+                                icon="sap-icon://connected"
+                                class="nxMmInventoryLiveBadge" />
+                            <ObjectStatus
+                                text="Material Stock Ledger"
+                                state="Success"
+                                icon="sap-icon://inventory"
+                                class="sapUiTinyMarginBegin" />
+                        </HBox>
+                        <Title text="Material Inventory" level="H2" class="nxMmInventoryHeroTitle mmInventoryHeroTitle" />
+                        <Text
+                            text="자재별 재고, 필요 수량, 부족 수량, 충족률을 확인하는 재고 관리 화면입니다."
+                            class="nxMmInventoryHeroSub mmInventoryHeroSub" />
+                        <Text
+                            text="{= '현재 필터: ' + ${dashboard>/mmInventory/criteriaLabel} + ' · Last Updated: ' + ${dashboard>/mmInventory/lastUpdated} }"
+                            class="nxMmInventoryHeroMeta" />
+                    </VBox>
+                </HBox>
+
+                <HBox class="nxMmInventoryKpiBand" wrap="Wrap" items="{dashboard>/mmInventory/kpis}">
+                    <items>
+                        <VBox class="{= 'nxMmInventoryKpi nxMmInventoryKpi--' + ${dashboard>accent} }">
+                            <HBox alignItems="Center" justifyContent="SpaceBetween">
+                                <Text text="{dashboard>displayTitle}" class="nxMmInventoryKpiLabel" />
+                                <core:Icon src="{dashboard>icon}" size="1.1rem" class="nxMmInventoryKpiIcon" />
+                            </HBox>
+                            <ObjectNumber
+                                number="{dashboard>value}"
+                                unit="{dashboard>unit}"
+                                emphasized="true"
+                                class="nxMmInventoryKpiNum" />
+                            <Text text="{dashboard>hint}" class="nxMmInventoryKpiHint" />
+                        </VBox>
+                    </items>
+                </HBox>
+            </VBox>
+
+            <HBox class="nxMmInventoryMain" width="100%" renderType="Bare">
+                <VBox class="nxMmInventoryListPane" renderType="Bare">
+                    <VBox class="nxMmInventoryCard nxMmInventoryTableCard">
+                        <HBox class="nxMmInventoryCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                            <VBox>
+                                <Title text="Material Stock List" level="H5" />
+                                <Text text="자재별 재고, 필요 수량, 부족 수량, 충족률" class="nxMmInventoryCardSub" />
+                            </VBox>
+                            <HBox alignItems="Center" class="nxMmInventoryCardHeadActions">
+                                <ObjectStatus
+                                    text="{= ${dashboard>/mmInventory/materials}.length + ' EA' }"
+                                    state="Information"
+                                    icon="sap-icon://list" />
+                                <VBox class="nxMmInventoryCardIconWrap nxMmInventoryCardIconWrap--table">
+                                    <core:Icon src="sap-icon://table-view" size="1.1rem" color="#FFFFFF" />
+                                </VBox>
+                            </HBox>
+                        </HBox>
+                        <Table
+                            id="mmInventoryMaterialTable"
+                            items="{dashboard>/mmInventory/materials}"
+                            mode="SingleSelectMaster"
+                            selectionChange=".onMaterialSelect"
+                            growing="true"
+                            growingThreshold="15"
+                            sticky="ColumnHeaders"
+                            class="nxMmInventoryTable"
+                            width="100%">
+                            <columns>
+                                <Column width="14%"><Text text="Material No" /></Column>
+                                <Column width="20%"><Text text="Material Name" /></Column>
+                                <Column width="9%" hAlign="Center"><Text text="Type" /></Column>
+                                <Column width="9%" hAlign="End"><Text text="Stock" /></Column>
+                                <Column width="9%" hAlign="End"><Text text="Required" /></Column>
+                                <Column width="9%" hAlign="End"><Text text="Shortage" /></Column>
+                                <Column width="16%" hAlign="Center"><Text text="Fill Rate" /></Column>
+                                <Column width="14%" hAlign="Center"><Text text="Status" /></Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem type="Active" class="nxMmInventoryTableRow">
+                                    <cells>
+                                        <Text text="{dashboard>materialNo}" class="nxMmInventoryCode" />
+                                        <Text text="{dashboard>materialName}" class="nxMmInventoryCellEllipsis" />
+                                        <ObjectStatus text="{dashboard>typeLabel}" state="Information" class="nxMmInventoryTypeBadge" />
+                                        <ObjectNumber number="{dashboard>stockQty}" unit="EA" emphasized="true" />
+                                        <ObjectNumber number="{dashboard>requiredQty}" unit="EA" />
+                                        <ObjectNumber
+                                            number="{dashboard>shortageQty}"
+                                            unit="EA"
+                                            state="{= ${dashboard>shortageQty} > 0 ? 'Error' : 'None' }" />
+                                        <VBox alignItems="Stretch" width="100%" class="nxMmInventoryFillCell">
+                                            <ProgressIndicator
+                                                percentValue="{dashboard>fillRatePercent}"
+                                                displayValue="{dashboard>fillRateText}"
+                                                state="{dashboard>fillRateState}"
+                                                width="100%"
+                                                class="nxMmInventoryFillBar" />
+                                        </VBox>
+                                        <ObjectStatus
+                                            text="{dashboard>status}"
+                                            state="{dashboard>statusState}"
+                                            class="nxMmInventoryStatusBadge" />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </VBox>
+                </VBox>
+
+                <VBox class="nxMmInventoryDetailPane" renderType="Bare">
+                    <VBox class="nxMmInventoryCard nxMmInventoryDetailCard">
+                        <HBox class="nxMmInventoryCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                            <VBox>
+                                <Title text="Selected Material Detail" level="H5" />
+                                <Text text="선택 자재 상세 재고 정보" class="nxMmInventoryCardSub" />
+                            </VBox>
+                            <VBox class="nxMmInventoryCardIconWrap nxMmInventoryCardIconWrap--detail">
+                                <core:Icon src="sap-icon://product" size="1.1rem" color="#FFFFFF" />
+                            </VBox>
+                        </HBox>
+
+                        <VBox
+                            visible="{= !${dashboard>/mmInventory/detail/hasSelection} }"
+                            class="nxMmInventoryDetailEmpty"
+                            alignItems="Center"
+                            justifyContent="Center">
+                            <core:Icon src="sap-icon://cursor" size="2.25rem" color="#9CA3AF" class="sapUiSmallMarginBottom" />
+                            <Text text="{dashboard>/mmInventory/detail/emptyMessage}" class="nxMmInventoryDetailEmptyText" />
+                        </VBox>
+
+                        <VBox
+                            visible="{dashboard>/mmInventory/detail/hasSelection}"
+                            class="nxMmInventoryDetailBody"
+                            width="100%">
+                            <HBox alignItems="Start" justifyContent="SpaceBetween" class="nxMmInventoryDetailHead">
+                                <VBox class="nxMmInventoryDetailHeadText">
+                                    <Text text="{dashboard>/mmInventory/detail/materialNo}" class="nxMmInventoryDetailMatNo" />
+                                    <Text text="{dashboard>/mmInventory/detail/materialName}" class="nxMmInventoryDetailMatName" />
+                                </VBox>
+                                <ObjectStatus
+                                    text="{dashboard>/mmInventory/detail/status}"
+                                    state="{dashboard>/mmInventory/detail/statusState}"
+                                    class="nxMmInventoryDetailStatusBadge" />
+                            </HBox>
+
+                            <MessageStrip
+                                text="{dashboard>/mmInventory/detail/warningMessage}"
+                                type="Warning"
+                                showIcon="true"
+                                visible="{= !!${dashboard>/mmInventory/detail/warningMessage} }"
+                                class="nxMmInventoryDetailStrip" />
+                            <MessageStrip
+                                text="{dashboard>/mmInventory/detail/successMessage}"
+                                type="Success"
+                                showIcon="true"
+                                visible="{= !!${dashboard>/mmInventory/detail/successMessage} }"
+                                class="nxMmInventoryDetailStrip" />
+
+                            <HBox class="nxMmInventoryDetailTiles" wrap="Wrap" width="100%">
+                                <VBox class="nxMmInventoryDetailTile">
+                                    <Text text="TypeLabel" class="nxMmInventoryDetailTileLabel" />
+                                    <Text text="{dashboard>/mmInventory/detail/typeLabel}" class="nxMmInventoryDetailTileValue" />
+                                </VBox>
+                                <VBox class="nxMmInventoryDetailTile">
+                                    <Text text="Stock Qty" class="nxMmInventoryDetailTileLabel" />
+                                    <Text text="{dashboard>/mmInventory/detail/stockQty}" class="nxMmInventoryDetailTileValue" />
+                                </VBox>
+                                <VBox class="nxMmInventoryDetailTile">
+                                    <Text text="Required Qty" class="nxMmInventoryDetailTileLabel" />
+                                    <Text text="{dashboard>/mmInventory/detail/requiredQty}" class="nxMmInventoryDetailTileValue" />
+                                </VBox>
+                                <VBox class="nxMmInventoryDetailTile">
+                                    <Text text="Shortage Qty" class="nxMmInventoryDetailTileLabel" />
+                                    <Text text="{dashboard>/mmInventory/detail/shortageQty}" class="nxMmInventoryDetailTileValue nxMmInventoryDetailTileValue--danger" />
+                                </VBox>
+                                <VBox class="nxMmInventoryDetailTile nxMmInventoryDetailTile--wide">
+                                    <Text text="Available Stock" class="nxMmInventoryDetailTileLabel" />
+                                    <Text text="{dashboard>/mmInventory/detail/availableStock}" class="nxMmInventoryDetailTileValue" />
+                                </VBox>
+                            </HBox>
+
+                            <VBox class="nxMmInventoryDetailFillSection">
+                                <HBox alignItems="Center" justifyContent="SpaceBetween" class="nxMmInventoryDetailFillHead">
+                                    <Text text="Fill Rate" class="nxMmInventoryDetailFillLabel" />
+                                    <Text text="{dashboard>/mmInventory/detail/fillRate}" class="nxMmInventoryDetailFillValue" />
+                                </HBox>
+                                <ProgressIndicator
+                                    percentValue="{dashboard>/mmInventory/detail/fillRatePercent}"
+                                    displayValue="{dashboard>/mmInventory/detail/fillRate}"
+                                    state="{dashboard>/mmInventory/detail/fillRateState}"
+                                    width="100%"
+                                    class="nxMmInventoryDetailFillBar" />
+                            </VBox>
+
+                            <HBox alignItems="Center" class="nxMmInventoryDetailSourceRow">
+                                <core:Icon src="sap-icon://database" size="0.75rem" color="#9CA3AF" class="sapUiTinyMarginEnd" />
+                                <Text text="{dashboard>/mmInventory/detail/dataSource}" class="nxMmInventoryDetailSource" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </VBox>
+            </HBox>
+
+            <VBox class="nxMmInventoryAnalysisPanel mmInventoryAnalysis" width="100%" renderType="Bare">
+                <HBox class="nxMmInventoryAnalysisHead" alignItems="Center" justifyContent="SpaceBetween" width="100%">
+                    <VBox>
+                        <Title text="Inventory Analysis" level="H5" class="nxMmInventoryAnalysisTitle" />
+                        <Text text="보조 분석 · TypeLabel · Fill Rate · Status · Shortage" class="nxMmInventoryAnalysisSub" />
+                    </VBox>
+                    <ObjectStatus text="Stock Ledger 보조" state="Success" icon="sap-icon://database" />
+                </HBox>
+                <VBox class="nxMmInventoryChartGrid" width="100%" renderType="Bare" items="{dashboard>/mmInventory/analysisCharts}">
+                    <items>
+                        <VBox class="{= 'nxMmInventoryChartCard nxMmInventoryChartCard--' + ${dashboard>cardKey} }" renderType="Bare">
+                            <HBox class="nxMmInventoryCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                                <VBox>
+                                    <Title text="{dashboard>title}" level="H5" />
+                                    <Text text="{dashboard>subtitle}" class="nxMmInventoryCardSub" />
+                                </VBox>
+                                <VBox class="{= 'nxMmInventoryCardIconWrap nxMmInventoryCardIconWrap--' + ${dashboard>cardKey} }">
+                                    <core:Icon src="{dashboard>icon}" size="1.1rem" color="#FFFFFF" />
+                                </VBox>
+                            </HBox>
+                            <VBox class="nxMmInventoryChartBody" width="100%">
+                                <core:HTML content="{dashboard>html}" />
+                            </VBox>
+                        </VBox>
+                    </items>
+                </VBox>
+            </VBox>
+        </VBox>
+    </VBox>
+</mvc:View>

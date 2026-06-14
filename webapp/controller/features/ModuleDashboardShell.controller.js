@@ -328,6 +328,93 @@ sap.ui.define([
 
         onMmOverviewRefresh: function () {
             sap.ui.getCore().getEventBus().publish("dashboard", "mmOverviewAction", { action: "refresh" });
+        },
+
+        onMmInventoryFilterOpen: function (oEvent) {
+            var oPopover = this.byId("mmInventoryFilterPopover");
+            var oBtn = oEvent.getSource();
+
+            if (!oPopover) {
+                return;
+            }
+
+            if (oPopover.isOpen()) {
+                oPopover.close();
+            } else {
+                oPopover.openBy(oBtn);
+            }
+        },
+
+        onMmInventoryFilterSearch: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmInventoryAction", { action: "search" });
+            this.byId("mmInventoryFilterPopover").close();
+        },
+
+        onMmInventoryFilterReset: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmInventoryAction", { action: "reset" });
+            this.byId("mmInventoryFilterPopover").close();
+        },
+
+        onMmInventoryRefresh: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmInventoryAction", { action: "refresh" });
+        },
+
+        onMmPurchasingFilterOpen: function (oEvent) {
+            var oPopover = this.byId("mmPurchasingFilterPopover");
+            var oBtn = oEvent.getSource();
+
+            if (!oPopover) {
+                return;
+            }
+
+            if (oPopover.isOpen()) {
+                oPopover.close();
+            } else {
+                oPopover.openBy(oBtn);
+            }
+        },
+
+        onMmPurchasingFilterSearch: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmPurchasingAction", { action: "search" });
+            this.byId("mmPurchasingFilterPopover").close();
+        },
+
+        onMmPurchasingFilterReset: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmPurchasingAction", { action: "reset" });
+            this.byId("mmPurchasingFilterPopover").close();
+        },
+
+        onMmPurchasingRefresh: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmPurchasingAction", { action: "refresh" });
+        },
+
+        onMmGoodsMovementFilterOpen: function (oEvent) {
+            var oPopover = this.byId("mmGoodsMovementFilterPopover");
+            var oBtn = oEvent.getSource();
+
+            if (!oPopover) {
+                return;
+            }
+
+            if (oPopover.isOpen()) {
+                oPopover.close();
+            } else {
+                oPopover.openBy(oBtn);
+            }
+        },
+
+        onMmGoodsMovementFilterSearch: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmGoodsMovementAction", { action: "search" });
+            this.byId("mmGoodsMovementFilterPopover").close();
+        },
+
+        onMmGoodsMovementFilterReset: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmGoodsMovementAction", { action: "reset" });
+            this.byId("mmGoodsMovementFilterPopover").close();
+        },
+
+        onMmGoodsMovementRefresh: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmGoodsMovementAction", { action: "refresh" });
         }
     });
 });

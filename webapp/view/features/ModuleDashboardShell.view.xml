@@ -34,11 +34,57 @@
                         press=".onMmOverviewRefresh"
                         visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' }"
                         class="nxModuleSquareBtn sapUiTinyMarginEnd" />
+                    <Button
+                        id="mmInventoryFilterBtn"
+                        text="조회/필터"
+                        icon="sap-icon://filter"
+                        type="Transparent"
+                        press=".onMmInventoryFilterOpen"
+                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' }"
+                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
+                    <Button
+                        icon="sap-icon://refresh"
+                        type="Transparent"
+                        tooltip="SAP 새로고침"
+                        press=".onMmInventoryRefresh"
+                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' }"
+                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
+                    <Button
+                        id="mmPurchasingFilterBtn"
+                        text="조회/필터"
+                        icon="sap-icon://filter"
+                        type="Transparent"
+                        press=".onMmPurchasingFilterOpen"
+                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' }"
+                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
+                    <Button
+                        icon="sap-icon://refresh"
+                        type="Transparent"
+                        tooltip="SAP 새로고침"
+                        press=".onMmPurchasingRefresh"
+                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' }"
+                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
+                    <Button
+                        id="mmGoodsMovementFilterBtn"
+                        text="조회/필터"
+                        icon="sap-icon://filter"
+                        type="Transparent"
+                        press=".onMmGoodsMovementFilterOpen"
+                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' }"
+                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
+                    <Button
+                        icon="sap-icon://refresh"
+                        type="Transparent"
+                        tooltip="SAP 새로고침"
+                        press=".onMmGoodsMovementRefresh"
+                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' }"
+                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
                     <Select
                         selectedKey="{dashboard>/moduleView/period}"
                         width="9.5rem"
                         forceSelection="true"
                         change=".onPeriodChange"
+                        enabled="{= ${dashboard>/moduleView/activeSubTab} !== 'INVENTORY' &amp;&amp; ${dashboard>/moduleView/activeSubTab} !== 'PURCHASING' &amp;&amp; ${dashboard>/moduleView/activeSubTab} !== 'GOODS_MOVEMENT' }"
                         class="nxModulePeriodSelect"
                         items="{dashboard>/moduleView/periodOptions}">
                         <core:Item key="{dashboard>key}" text="{dashboard>text}" />
@@ -276,6 +322,212 @@
                 <HBox class="nxPopoverFooter nxMmOverviewFilterFooter" justifyContent="End" alignItems="Center" width="100%">
                     <Button text="초기화" type="Transparent" press=".onMmOverviewFilterReset" class="nxMmOverviewFilterResetBtn" />
                     <Button text="조회" type="Emphasized" press=".onMmOverviewFilterSearch" class="nxMmOverviewFilterSearchBtn" />
+                </HBox>
+            </VBox>
+        </content>
+    </Popover>
+
+    <Popover
+        id="mmInventoryFilterPopover"
+        placement="Bottom"
+        contentWidth="30rem"
+        showHeader="false"
+        class="nxHeaderPopover nxMmOverviewFilterPopover nxMmInventoryFilterPopover">
+        <content>
+            <VBox width="100%" class="nxPopoverBody nxMmOverviewFilterBody" renderType="Bare">
+                <VBox class="nxHeaderPopoverTitleRow nxMmOverviewFilterHeader">
+                    <Title text="조회 조건" level="H5" class="nxHeaderPopoverTitle" />
+                    <Text text="Inventory 자재별 재고 조회 기준을 설정합니다." class="nxMmOverviewFilterSubtitle" />
+                </VBox>
+
+                <VBox width="100%" class="nxMmOverviewFilterForm">
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="자재번호 검색" class="nxMmOverviewFieldLabel" />
+                        <SearchField
+                            value="{dashboard>/mmInventory/materialSearch}"
+                            placeholder="자재번호 또는 자재명"
+                            width="100%" />
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="Status" class="nxMmOverviewFieldLabel" />
+                        <Select
+                            selectedKey="{dashboard>/mmInventory/statusFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmInventory/statusOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="TypeLabel" class="nxMmOverviewFieldLabel" />
+                        <Select
+                            selectedKey="{dashboard>/mmInventory/typeLabelFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmInventory/typeLabelOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <CheckBox
+                            text="부족 자재만 보기"
+                            selected="{dashboard>/mmInventory/shortageOnly}" />
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup nxMmOverviewFilterDisabledGroup">
+                        <Label text="Plant" class="nxMmOverviewFieldLabel" />
+                        <Input value="데이터 없음" enabled="false" width="100%" />
+                        <Label text="Storage Location" class="nxMmOverviewFieldLabel nxMmOverviewFieldLabelSpaced" />
+                        <Input value="데이터 없음" enabled="false" width="100%" />
+                        <Text text="Plant·Storage Location은 현재 SAP OData 미제공 필드입니다." class="nxMmOverviewFilterDisabledHint" />
+                    </VBox>
+                </VBox>
+
+                <HBox class="nxPopoverFooter nxMmOverviewFilterFooter" justifyContent="End" alignItems="Center" width="100%">
+                    <Button text="초기화" type="Transparent" press=".onMmInventoryFilterReset" class="nxMmOverviewFilterResetBtn" />
+                    <Button text="조회" type="Emphasized" press=".onMmInventoryFilterSearch" class="nxMmOverviewFilterSearchBtn" />
+                </HBox>
+            </VBox>
+        </content>
+    </Popover>
+
+    <Popover
+        id="mmPurchasingFilterPopover"
+        placement="Bottom"
+        contentWidth="30rem"
+        showHeader="false"
+        class="nxHeaderPopover nxMmOverviewFilterPopover nxMmPurchasingFilterPopover">
+        <content>
+            <VBox width="100%" class="nxPopoverBody nxMmOverviewFilterBody" renderType="Bare">
+                <VBox class="nxHeaderPopoverTitleRow nxMmOverviewFilterHeader">
+                    <Title text="조회 조건" level="H5" class="nxHeaderPopoverTitle" />
+                    <Text text="Purchasing PO/MIGO Tracker 조회 기준을 설정합니다." class="nxMmOverviewFilterSubtitle" />
+                </VBox>
+
+                <VBox width="100%" class="nxMmOverviewFilterForm">
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="PO 번호 검색" class="nxMmOverviewFieldLabel" />
+                        <SearchField
+                            value="{dashboard>/mmPurchasing/poSearch}"
+                            placeholder="PurchaseOrder"
+                            width="100%" />
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="자재번호 검색" class="nxMmOverviewFieldLabel" />
+                        <SearchField
+                            value="{dashboard>/mmPurchasing/materialSearch}"
+                            placeholder="Material"
+                            width="100%" />
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="MIGO 전표번호 검색" class="nxMmOverviewFieldLabel" />
+                        <SearchField
+                            value="{dashboard>/mmPurchasing/migoSearch}"
+                            placeholder="POMigoDoc / ProdMigoDoc"
+                            width="100%" />
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="PO Linked" class="nxMmOverviewFieldLabel" />
+                        <Select
+                            selectedKey="{dashboard>/mmPurchasing/poLinkedFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmPurchasing/linkFilterOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="MIGO Linked" class="nxMmOverviewFieldLabel" />
+                        <Select
+                            selectedKey="{dashboard>/mmPurchasing/migoLinkedFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmPurchasing/linkFilterOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <CheckBox
+                            text="부족 자재만 보기"
+                            selected="{dashboard>/mmPurchasing/shortageOnly}" />
+                    </VBox>
+                </VBox>
+
+                <HBox class="nxPopoverFooter nxMmOverviewFilterFooter" justifyContent="End" alignItems="Center" width="100%">
+                    <Button text="초기화" type="Transparent" press=".onMmPurchasingFilterReset" class="nxMmOverviewFilterResetBtn" />
+                    <Button text="조회" type="Emphasized" press=".onMmPurchasingFilterSearch" class="nxMmOverviewFilterSearchBtn" />
+                </HBox>
+            </VBox>
+        </content>
+    </Popover>
+
+    <Popover
+        id="mmGoodsMovementFilterPopover"
+        placement="Bottom"
+        contentWidth="30rem"
+        showHeader="false"
+        class="nxHeaderPopover nxMmOverviewFilterPopover nxMmGoodsMovementFilterPopover">
+        <content>
+            <VBox width="100%" class="nxPopoverBody nxMmOverviewFilterBody" renderType="Bare">
+                <VBox class="nxHeaderPopoverTitleRow nxMmOverviewFilterHeader">
+                    <Title text="조회 조건" level="H5" class="nxHeaderPopoverTitle" />
+                    <Text text="Goods Movement MIGO/PO/자재 조회 기준을 설정합니다." class="nxMmOverviewFilterSubtitle" />
+                </VBox>
+
+                <VBox width="100%" class="nxMmOverviewFilterForm">
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="MIGO 전표번호 검색" class="nxMmOverviewFieldLabel" />
+                        <SearchField
+                            value="{dashboard>/mmGoodsMovement/migoSearch}"
+                            placeholder="POMigoDoc / ProdMigoDoc"
+                            width="100%" />
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="PO 번호 검색" class="nxMmOverviewFieldLabel" />
+                        <SearchField
+                            value="{dashboard>/mmGoodsMovement/poSearch}"
+                            placeholder="PurchaseOrder"
+                            width="100%" />
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="자재번호 검색" class="nxMmOverviewFieldLabel" />
+                        <SearchField
+                            value="{dashboard>/mmGoodsMovement/materialSearch}"
+                            placeholder="Material"
+                            width="100%" />
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="MIGO Linked 여부" class="nxMmOverviewFieldLabel" />
+                        <Select
+                            selectedKey="{dashboard>/mmGoodsMovement/migoLinkedFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmGoodsMovement/linkFilterOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <CheckBox
+                            text="부족 자재만 보기"
+                            selected="{dashboard>/mmGoodsMovement/shortageOnly}" />
+                    </VBox>
+                </VBox>
+
+                <HBox class="nxPopoverFooter nxMmOverviewFilterFooter" justifyContent="End" alignItems="Center" width="100%">
+                    <Button text="초기화" type="Transparent" press=".onMmGoodsMovementFilterReset" class="nxMmOverviewFilterResetBtn" />
+                    <Button text="조회" type="Emphasized" press=".onMmGoodsMovementFilterSearch" class="nxMmOverviewFilterSearchBtn" />
                 </HBox>
             </VBox>
         </content>
