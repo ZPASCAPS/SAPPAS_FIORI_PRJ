@@ -822,6 +822,1206 @@ html, body, body > div, #container, #container-uiarea,
     background: #F5F6F7;
 }
 
+/* MM blank sub-tabs (Inventory / Purchasing / Goods Movement) */
+.nxMmBlankScroll {
+    background: #FFFFFF !important;
+}
+
+.nxMmBlankCanvas {
+    flex: 1 1 auto;
+    min-height: 24rem;
+    width: 100%;
+    background: #FFFFFF;
+    box-sizing: border-box;
+}
+
+/* MM Overview Cockpit */
+.nxMmOverviewScroll {
+    background: #F3F4F6 !important;
+}
+
+.nxMmOverview {
+    padding: 0.65rem 1rem 1.25rem;
+    background: #F3F4F6;
+    min-height: 100%;
+    box-sizing: border-box;
+    gap: 0.65rem;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+.nxModuleFilterBtn .sapMBtnInner {
+    font-weight: 600 !important;
+    color: #0070F2 !important;
+}
+
+.nxMmOverviewFilterPopover.sapMPopover {
+    border: 1px solid #E5E7EB !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12) !important;
+}
+
+.nxMmOverviewFilterPopover .sapMPopoverCont {
+    overflow: hidden !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+.nxMmOverviewFilterBody {
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.nxMmOverviewFilterHeader {
+    padding: 1.35rem 1.75rem 1.15rem !important;
+    gap: 0.5rem;
+    border-bottom: 1px solid #EEF2F6;
+}
+
+.nxMmOverviewFilterHeader .nxHeaderPopoverTitle,
+.nxMmOverviewFilterHeader .nxHeaderPopoverTitle .sapMTitle {
+    margin-bottom: 0.15rem;
+}
+
+.nxMmOverviewFilterSubtitle {
+    font-size: 0.8125rem !important;
+    color: #6B7280 !important;
+    line-height: 1.55 !important;
+    margin-top: 0.35rem;
+}
+
+.nxMmOverviewFilterForm {
+    display: flex;
+    flex-direction: column;
+    padding: 1.35rem 1.75rem 1.5rem;
+    gap: 1.5rem;
+    box-sizing: border-box;
+}
+
+.nxMmOverviewFilterFieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmOverviewFilterForm .nxMmOverviewFieldLabel {
+    margin-bottom: 0.1rem !important;
+    font-size: 0.875rem !important;
+}
+
+.nxMmOverviewFieldLabelSpaced {
+    margin-top: 0.85rem !important;
+}
+
+.nxMmOverviewFilterSegmented,
+.nxMmOverviewFilterSegmented .sapMSegBBtn {
+    max-width: 100%;
+}
+
+.nxMmOverviewFilterSegmented .sapMSegBBtn {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.nxMmOverviewFilterSegmented .sapMSegBBtnInner {
+    height: 2.5rem !important;
+    min-height: 2.5rem !important;
+    padding: 0 0.65rem !important;
+    min-width: 0;
+}
+
+.nxMmOverviewFilterSegmented .sapMSegBBtnInner .sapMSegBBtnText {
+    font-size: 0.875rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nxMmOverviewFilterDisabledGroup {
+    padding: 1.15rem 1.2rem 1.05rem;
+    border-radius: 12px;
+    background: #F8FAFC;
+    border: 1px dashed #D1D5DB;
+    gap: 0.55rem;
+}
+
+.nxMmOverviewFilterDisabledHint {
+    font-size: 0.75rem !important;
+    color: #9CA3AF !important;
+    line-height: 1.55 !important;
+    margin-top: 0.75rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+.nxMmOverviewFilterFooter {
+    padding: 1.1rem 1.75rem 1.35rem !important;
+    gap: 0.75rem;
+    box-sizing: border-box;
+    background: #FAFBFC;
+}
+
+.nxMmOverviewFilterResetBtn .sapMBtnInner,
+.nxMmOverviewFilterSearchBtn .sapMBtnInner {
+    min-width: 5rem;
+    height: 2.35rem !important;
+    min-height: 2.35rem !important;
+}
+
+.nxMmOverviewFilterForm .sapMSF,
+.nxMmOverviewFilterForm .sapMInputBase,
+.nxMmOverviewFilterForm .sapMSegB {
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmOverviewFilterForm .sapMInputBaseInner,
+.nxMmOverviewFilterForm .sapMSFF {
+    min-height: 2.5rem;
+}
+
+.nxMmOverviewFilterDisabledGroup .sapMInputBaseInner {
+    background: #F3F4F6 !important;
+    color: #9CA3AF !important;
+    font-style: italic;
+}
+
+.nxMmOverviewCard {
+    background: #FFFFFF !important;
+    border-radius: 12px !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 2px 8px rgba(17, 24, 39, 0.04) !important;
+}
+
+.nxMmOverviewFilterCard .sapMPanelContent {
+    padding: 0 !important;
+}
+
+.nxMmOverviewFieldLabel {
+    font-weight: 600 !important;
+    color: #374151 !important;
+    margin-bottom: 0.25rem;
+}
+
+.nxMmOverviewFilterRow {
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.nxMmOverviewFilterField {
+    min-width: 10rem;
+    flex: 1 1 10rem;
+}
+
+.nxMmOverviewFilterActions {
+    gap: 0.35rem;
+    align-items: flex-end;
+    margin-left: auto;
+    flex: 0 0 auto;
+    padding-top: 1.35rem;
+}
+
+.nxMmOverviewInfoBar {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.nxMmOverviewInfoText {
+    font-weight: 600 !important;
+    color: #111827 !important;
+}
+
+.nxMmOverviewInfoMeta {
+    color: #6B7280 !important;
+    font-size: 0.875rem !important;
+}
+
+.nxMmOverviewBusy {
+    margin: 2rem auto;
+}
+
+.nxMmOverviewBody {
+    gap: 0.75rem;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.nxMmOverviewCockpitDesc {
+    font-size: 0.8125rem !important;
+    color: #4B5563 !important;
+    line-height: 1.5 !important;
+    padding: 0.55rem 0.85rem;
+    background: #FFFFFF;
+    border: 1px solid #E8ECF0;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.nxMmOverviewCockpitSection {
+    gap: 0.4rem;
+}
+
+.nxMmOverviewSectionHead {
+    gap: 0.5rem;
+    padding: 0 0.15rem;
+}
+
+.nxMmOverviewSectionTitle {
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    letter-spacing: 0.02em;
+}
+
+.nxMmOverviewSectionSub {
+    font-size: 0.6875rem !important;
+    color: #9CA3AF !important;
+}
+
+.nxMmOverviewKpiRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.nxMmOverviewKpiCard {
+    flex: 1 1 calc(20% - 0.5rem);
+    min-width: 8.75rem;
+    min-height: 5rem;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-top: 3px solid #0070F2;
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem 0.6rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 10px rgba(15, 23, 42, 0.04);
+    box-sizing: border-box;
+    transition: box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.nxMmOverviewKpiCard:hover {
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.08);
+    transform: translateY(-1px);
+}
+
+.nxMmOverviewKpiCard--danger {
+    border-top-color: #BB0000;
+}
+
+.nxMmOverviewKpiCard--danger .nxMmOverviewKpiValue {
+    color: #BB0000 !important;
+}
+
+.nxMmOverviewKpiCard--amber {
+    border-top-color: #E9730C;
+}
+
+.nxMmOverviewKpiCard--amber .nxMmOverviewKpiValue {
+    color: #C2410C !important;
+}
+
+.nxMmOverviewKpiCard--blue {
+    border-top-color: #0070F2;
+}
+
+.nxMmOverviewKpiTitle {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0.25rem;
+}
+
+.nxMmOverviewKpiValueRow {
+    gap: 0.2rem;
+    align-items: baseline;
+    min-height: 1.65rem;
+}
+
+.nxMmOverviewKpiValue {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    line-height: 1 !important;
+    letter-spacing: -0.02em;
+}
+
+.nxMmOverviewKpiUnit {
+    font-size: 0.6875rem !important;
+    font-weight: 600 !important;
+    color: #9CA3AF !important;
+}
+
+.nxMmOverviewKpiHint {
+    font-size: 0.625rem !important;
+    color: #9CA3AF !important;
+    margin-top: 0.35rem;
+    line-height: 1.35 !important;
+    padding-top: 0.35rem;
+    border-top: 1px solid #F3F4F6;
+}
+
+.nxMmOverviewPriorityAction {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-height: 8.5rem;
+    padding: 0.1rem 0.05rem;
+}
+
+.nxMmOverviewPriorityRow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.nxMmOverviewPriorityLabel {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.nxMmOverviewPriorityValue {
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.nxMmOverviewPriorityValue--material {
+    font-size: 1.05rem;
+    color: #BB0000;
+}
+
+.nxMmOverviewPriorityMaterialName {
+    font-size: 0.6875rem;
+    color: #6B7280;
+    margin-top: -0.15rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxMmOverviewPriorityMetrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+}
+
+.nxMmOverviewPriorityMetric {
+    padding: 0.4rem 0.45rem;
+    background: #F9FAFB;
+    border-radius: 6px;
+    border: 1px solid #EEF2F6;
+    min-width: 0;
+}
+
+.nxMmOverviewPriorityMetric--danger {
+    background: #FEF2F2;
+    border-color: #FECACA;
+}
+
+.nxMmOverviewPriorityMetricLabel {
+    display: block;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    color: #9CA3AF;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.1rem;
+}
+
+.nxMmOverviewPriorityMetricValue {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.25;
+    word-break: break-word;
+}
+
+.nxMmOverviewPriorityMetric--danger .nxMmOverviewPriorityMetricValue {
+    color: #BB0000;
+}
+
+.nxMmOverviewPriorityCallout {
+    font-size: 0.6875rem;
+    line-height: 1.45;
+    color: #374151;
+    background: #EFF6FF;
+    border-left: 3px solid #0070F2;
+    padding: 0.45rem 0.55rem;
+    border-radius: 0 6px 6px 0;
+    margin-top: 0.1rem;
+}
+
+.nxMmOverviewPriorityEmpty {
+    font-size: 0.8125rem;
+    color: #6B7280;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.nxMmOverviewChartGridInner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.nxMmOverviewChartCard {
+    min-height: 12rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmOverviewChartBody {
+    padding: 0.35rem 0.6rem 0.45rem;
+    box-sizing: border-box;
+    min-height: 9.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nxMmOverviewTrackerSummary {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 8.5rem;
+    padding: 0.1rem 0.05rem;
+}
+
+.nxMmOverviewTrackerTiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.nxMmOverviewTrackerTile {
+    padding: 0.35rem 0.45rem;
+    gap: 0.05rem;
+}
+
+.nxMmOverviewDonutWrap {
+    min-height: 8rem;
+    gap: 0.65rem;
+}
+
+.nxMmOverviewDonutChart {
+    width: 6.25rem;
+    height: 6.25rem;
+}
+
+.nxMmOverviewBarRow {
+    margin-bottom: 5px;
+}
+
+.nxMmOverviewBarTrack {
+    height: 12px;
+}
+
+.nxMmOverviewWorklistPanel {
+    margin-top: 0.1rem;
+}
+
+.nxMmOverviewRiskSummary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    min-height: 9.5rem;
+    align-content: center;
+}
+
+.nxMmOverviewRiskSummaryItem {
+    padding: 0.55rem 0.65rem;
+    border-radius: 8px;
+    background: #F9FAFB;
+    border: 1px solid #EEF2F6;
+    min-width: 0;
+}
+
+.nxMmOverviewRiskSummaryItem--danger {
+    background: #FEF2F2;
+    border-color: #FECACA;
+}
+
+.nxMmOverviewRiskSummaryItem--warn {
+    background: #FFF7ED;
+    border-color: #FED7AA;
+}
+
+.nxMmOverviewRiskSummaryItem--ok {
+    background: #ECFDF5;
+    border-color: #BBF7D0;
+}
+
+.nxMmOverviewRiskSummaryLabel {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.2rem;
+}
+
+.nxMmOverviewRiskSummaryValueRow {
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+}
+
+.nxMmOverviewRiskSummaryValue {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.1;
+    word-break: break-all;
+}
+
+.nxMmOverviewRiskSummaryItem--danger .nxMmOverviewRiskSummaryValue {
+    color: #BB0000;
+}
+
+.nxMmOverviewRiskSummaryItem--warn .nxMmOverviewRiskSummaryValue {
+    color: #C2410C;
+}
+
+.nxMmOverviewRiskSummaryUnit {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #9CA3AF;
+    text-transform: uppercase;
+}
+
+.nxMmOverviewExtraChartsWrap {
+    gap: 0.25rem;
+}
+
+.nxMmOverviewChartGridExtra {
+    margin-top: 0.15rem;
+}
+
+.nxMmOverviewWorklistTitleBlock {
+    gap: 0.05rem;
+}
+
+.nxMmOverviewWorklistTitle .sapMTitle {
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+}
+
+.nxMmOverviewWorklistSub {
+    font-size: 0.6875rem !important;
+    color: #9CA3AF !important;
+}
+
+.nxMmOverviewWlStatus .sapMObjStatusText {
+    font-size: 0.6875rem !important;
+}
+
+.nxMmOverviewChartCard .sapMPanelContent {
+    flex: 1 1 auto;
+    padding: 0 !important;
+}
+
+.nxMmOverviewChartToolbar {
+    min-height: 2.25rem !important;
+    padding: 0 0.75rem !important;
+}
+
+.nxMmOverviewChartTitle .sapMTitle {
+    font-size: 0.875rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.nxMmOverviewChartSub {
+    color: #6B7280 !important;
+    font-size: 0.6875rem !important;
+    margin-bottom: 0.35rem;
+    line-height: 1.35 !important;
+}
+
+.nxMmOverviewChartEmpty {
+    padding: 1.5rem 0.75rem;
+    text-align: center;
+    color: #6B7280;
+    font-size: 0.8125rem;
+    background: #F9FAFB;
+    border: 1px dashed #D1D5DB;
+    border-radius: 8px;
+    min-height: 9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nxMmOverviewBarChart {
+    padding: 0.35rem 0.15rem;
+    background: transparent;
+    border-radius: 0;
+}
+
+.nxMmOverviewBarChart--shortage .nxMmOverviewBarRow:last-child {
+    margin-bottom: 0;
+}
+
+.nxMmOverviewBarRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+}
+
+.nxMmOverviewBarLabel {
+    width: 5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #4B5563;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.nxMmOverviewBarTrack {
+    flex: 1;
+    height: 14px;
+    background: #EEF2F6;
+    border-radius: 99px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.nxMmOverviewBarFill {
+    height: 100%;
+    border-radius: 99px;
+    background: #0070F2;
+}
+
+.nxMmOverviewBarFill--danger {
+    background: linear-gradient(90deg, #BB0000, #E53935) !important;
+}
+
+.nxMmOverviewBarFill--warn {
+    background: linear-gradient(90deg, #E9730C, #F59E0B) !important;
+}
+
+.nxMmOverviewBarValue {
+    width: 2.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-align: right;
+    color: #111827;
+    flex-shrink: 0;
+}
+
+.nxMmOverviewDonutWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    padding: 0.15rem 0.1rem;
+    min-height: 9rem;
+}
+
+.nxMmOverviewDonutChart {
+    width: 6.75rem;
+    height: 6.75rem;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+}
+
+.nxMmOverviewDonutChart--sm {
+    width: 6.5rem;
+    height: 6.5rem;
+}
+
+.nxMmOverviewDonutHole {
+    position: absolute;
+    inset: 22%;
+    background: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+.nxMmOverviewDonutHole--sm {
+    inset: 24%;
+}
+
+.nxMmOverviewDonutCenterValue {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1;
+}
+
+.nxMmOverviewDonutCenterValue--sm {
+    font-size: 1rem;
+}
+
+.nxMmOverviewDonutCenterLabel {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #6B7280;
+    margin-top: 0.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.nxMmOverviewDonutLegend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.nxMmOverviewDonutLegendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.6875rem;
+    color: #374151;
+    line-height: 1.3;
+}
+
+.nxMmOverviewDonutSwatch {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.nxMmOverviewDonutLegendText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxMmOverviewColChart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 0.35rem;
+    min-height: 10.5rem;
+    padding: 0.35rem 0.15rem 0.15rem;
+}
+
+.nxMmOverviewColItem {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.nxMmOverviewColBarWrap {
+    width: 100%;
+    height: 6.5rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: #F3F4F6;
+    border-radius: 6px 6px 2px 2px;
+    padding: 0 0.2rem;
+    box-sizing: border-box;
+}
+
+.nxMmOverviewColBar {
+    width: 72%;
+    min-height: 8px;
+    border-radius: 4px 4px 1px 1px;
+    transition: height 0.2s ease;
+}
+
+.nxMmOverviewColLabel {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #6B7280;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxMmOverviewColValue {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #111827;
+    text-align: center;
+}
+
+.nxMmOverviewTrackerSummary {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 10.5rem;
+    padding: 0.25rem 0.15rem;
+}
+
+.nxMmOverviewTrackerDonutCol {
+    flex-shrink: 0;
+}
+
+.nxMmOverviewTrackerTiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.nxMmOverviewTrackerTile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.45rem 0.55rem;
+    background: #F9FAFB;
+    border: 1px solid #EEF2F6;
+    border-radius: 8px;
+    min-width: 0;
+}
+
+.nxMmOverviewTrackerTileDot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    margin-bottom: 0.15rem;
+}
+
+.nxMmOverviewTrackerTileLabel {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #6B7280;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxMmOverviewTrackerTileLabel {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #6B7280;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxMmOverviewTrackerTileValue {
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.1;
+}
+
+.nxMmOverviewBarChart--type {
+    padding: 0.5rem 0.2rem;
+}
+
+.nxMmOverviewBarRow--compact {
+    margin-bottom: 10px;
+}
+
+.nxMmOverviewBarRow--compact:last-child {
+    margin-bottom: 0;
+}
+
+.nxMmOverviewRiskMatrix {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-height: 10.5rem;
+    padding: 0.15rem 0.1rem;
+}
+
+.nxMmOverviewRiskPlot {
+    position: relative;
+    height: 9.5rem;
+    background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 48%, #FEF2F2 100%);
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.nxMmOverviewRiskGridLine {
+    position: absolute;
+    background: #E5E7EB;
+    pointer-events: none;
+}
+
+.nxMmOverviewRiskGridLine--h {
+    left: 8%;
+    right: 8%;
+    top: 50%;
+    height: 1px;
+}
+
+.nxMmOverviewRiskGridLine--v {
+    top: 8%;
+    bottom: 8%;
+    left: 50%;
+    width: 1px;
+}
+
+.nxMmOverviewRiskZone {
+    position: absolute;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    color: #9CA3AF;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+}
+
+.nxMmOverviewRiskZone--high {
+    top: 0.35rem;
+    right: 0.4rem;
+}
+
+.nxMmOverviewRiskZone--low {
+    bottom: 0.35rem;
+    left: 0.4rem;
+}
+
+.nxMmOverviewRiskDot {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 2px #FFFFFF, 0 2px 6px rgba(15, 23, 42, 0.18);
+    cursor: default;
+    opacity: 0.92;
+}
+
+.nxMmOverviewRiskAxis {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    color: #9CA3AF;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+
+.nxMmOverviewRiskAxis--y {
+    position: absolute;
+    left: 0.15rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    display: none;
+}
+
+.nxMmOverviewRiskLegend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-top: 0.15rem;
+}
+
+.nxMmOverviewRiskLegendItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #6B7280;
+}
+
+.nxMmOverviewRiskSwatch {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    font-style: normal;
+}
+
+.nxMmOverviewWorklistPanel .sapMPanelContent {
+    padding-top: 0 !important;
+}
+
+.nxMmOverviewWorklistTable .sapMListTblCell {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+}
+
+.nxMmOverviewWorklistRow .sapMListTblCell {
+    font-size: 0.8125rem !important;
+}
+
+@media (max-width: 1200px) {
+    .nxMmOverviewKpiCard {
+        flex: 1 1 calc(33.333% - 0.6rem);
+    }
+}
+
+.nxMmOverviewChartCard .sapMPanelContent,
+.nxMmOverviewChartCard .sapUiVBox {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+.nxMmOverviewChartGrid {
+    width: 100%;
+}
+
+@media (max-width: 960px) {
+    .nxMmOverviewChartGridInner {
+        grid-template-columns: 1fr;
+    }
+
+    .nxMmOverviewKpiCard {
+        flex: 1 1 calc(50% - 0.6rem);
+    }
+
+    .nxMmOverviewDonutWrap,
+    .nxMmOverviewTrackerSummary {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 560px) {
+    .nxMmOverviewKpiCard {
+        flex: 1 1 100%;
+    }
+}
+
+.nxMmOverviewBottom {
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.nxMmOverviewWorklistPanel {
+    flex: 1 1 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-top: 0.25rem;
+}
+
+.nxMmOverviewWorklistPanel .sapMPanelContent {
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.nxMmOverviewWorklistToolbar {
+    padding-right: 0.75rem !important;
+}
+
+.nxMmOverviewWorklistCount {
+    font-size: 0.8125rem !important;
+    color: #6B7280 !important;
+    font-weight: 600 !important;
+}
+
+.nxMmOverviewWorklistTable {
+    max-height: 11.5rem;
+}
+
+.nxMmOverviewWorklistTableExpanded {
+    max-height: none;
+}
+
+.nxMmOverviewWorklistTable .sapMListTblCell {
+    padding-top: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+}
+
+.nxMmOverviewWorklistRow .sapMListTblCell {
+    vertical-align: middle !important;
+}
+
+.nxMmOverviewWlEllipsis {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    font-size: 0.8125rem !important;
+    color: #374151 !important;
+}
+
+.nxMmOverviewWlStatus .sapMObjStatusText {
+    font-size: 0.6875rem !important;
+}
+
+.nxMmOverviewWorklistToggleRow {
+    padding: 0.35rem 0.75rem 0.65rem;
+    border-top: 1px solid #F3F4F6;
+}
+
+.nxMmOverviewWorklistToggleBtn .sapMBtnInner {
+    color: #0070F2 !important;
+    font-weight: 600 !important;
+}
+
+.nxMmOverviewDetailPanel {
+    flex: 1 1 38%;
+    min-width: 16rem;
+}
+
+.nxMmOverviewWlTitle {
+    font-weight: 600 !important;
+    color: #111827 !important;
+}
+
+.nxMmOverviewWlSub {
+    font-size: 0.8125rem !important;
+    color: #6B7280 !important;
+}
+
+.nxMmOverviewDetailEmpty {
+    color: #6B7280 !important;
+    font-style: italic;
+    padding: 2rem 0.5rem;
+    text-align: center;
+}
+
+.nxMmOverviewDetailRow {
+    padding: 0.45rem 0;
+    border-bottom: 1px solid #F3F4F6;
+    gap: 1rem;
+}
+
+.nxMmOverviewDetailLabel {
+    color: #6B7280 !important;
+    min-width: 8rem;
+}
+
+.nxMmOverviewDetailValue {
+    color: #111827 !important;
+    font-weight: 600 !important;
+    text-align: right;
+    flex: 1;
+}
+
 
 /* MM Reports — SAP BomStock 실데이터 (OVP 화려 스타일) */
 .nxMmReports {
@@ -3568,29 +4768,90 @@ html, body, body > div, #container, #container-uiarea,
     min-height: 4.5rem !important;
     padding: 0 !important;
     margin: 0 !important;
+    border: none !important;
+    outline: none !important;
     border-radius: 50% !important;
     overflow: hidden !important;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    background: var(--nx-brand) !important;
+    background-color: var(--nx-brand) !important;
+    box-shadow: none !important;
+}
+
+.myFloatingButton.sapMBtn,
+.myFloatingButton.sapMBtn:focus,
+.myFloatingButton.sapMBtn:focus-visible,
+.myFloatingButton.sapMBtn:active,
+.myFloatingButton.sapMBtn.sapMFocus,
+.myFloatingButton.sapMBtnEmphasized {
+    background: var(--nx-brand) !important;
+    background-color: var(--nx-brand) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.myFloatingButton.myFloatingButtonMoved {
+    bottom: auto !important;
+    right: auto !important;
+}
+
+.myFloatingButton.myFloatingButtonDragging .sapMBtnInner {
+    box-shadow: 0 10px 28px rgba(0, 112, 242, 0.35) !important;
 }
 
 .myFloatingButton .sapMBtnInner,
 .myFloatingButton .sapMBtnInner:hover,
 .myFloatingButton .sapMBtnInner:focus,
-.myFloatingButton .sapMBtnInner:active {
-    width: 4.5rem !important;
-    height: 4.5rem !important;
-    min-width: 4.5rem !important;
-    min-height: 4.5rem !important;
+.myFloatingButton .sapMBtnInner:active,
+.myFloatingButton:focus .sapMBtnInner,
+.myFloatingButton.sapMFocus .sapMBtnInner,
+.myFloatingButton.sapMBtnEmphasized .sapMBtnInner,
+.myFloatingButton.sapMBtnEmphasized .sapMBtnInner:hover,
+.myFloatingButton.sapMBtnEmphasized .sapMBtnInner:focus,
+.myFloatingButton.sapMBtnEmphasized .sapMBtnInner:active {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
+    border-width: 0 !important;
+    border-color: transparent !important;
     outline: none !important;
     border-radius: 50% !important;
     background: var(--nx-brand) !important;
     background-color: var(--nx-brand) !important;
+    background-image: none !important;
     box-shadow: 0 6px 18px var(--nx-brand-shadow-strong) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+}
+
+.myFloatingButton.myFloatingButtonDragging {
+    cursor: grabbing !important;
+}
+
+.myFloatingButton .sapMBtnInner::before,
+.myFloatingButton .sapMBtnInner::after,
+.myFloatingButton:focus .sapMBtnInner::before,
+.myFloatingButton:focus .sapMBtnInner::after,
+.myFloatingButton .sapMBtnInner:focus::before,
+.myFloatingButton .sapMBtnInner:focus::after,
+.myFloatingButton .sapMBtnInner:focus-visible::before,
+.myFloatingButton .sapMBtnInner:focus-visible::after,
+.myFloatingButton .sapMBtnInner.sapMFocus::before,
+.myFloatingButton .sapMBtnInner.sapMFocus::after {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: none !important;
 }
 
 .myFloatingButton .sapMBtnIcon {
@@ -3599,6 +4860,12 @@ html, body, body > div, #container, #container-uiarea,
     width: 1.625rem !important;
     height: 1.625rem !important;
     line-height: 1.625rem !important;
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    top: 0 !important;
 }
 
 .myFloatingButton .sapMBtnContent {

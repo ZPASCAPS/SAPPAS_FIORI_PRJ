@@ -216,6 +216,355 @@ sap.ui.define([], function () {
             sItems + "</div>";
     }
 
+    var STATUS_COLORS = {
+        OK: "#36A41D",
+        WARN: "#EAC20B",
+        SHORT: "#BB0000",
+        UNKNOWN: "#94A3B8"
+    };
+
+    var TYPE_COLORS_OVERVIEW = ["#0070F2", "#5899DA", "#36A41D", "#EAC20B", "#8B5CF6", "#06B6D4"];
+
+    function _overviewEmpty(sMsg) {
+        return "<div class='nxMmOverviewChartEmpty'>" + _esc(sMsg || "데이터 없음") + "</div>";
+    }
+
+    function _shortLabel(sText, iMax) {
+        var s = String(sText || "-");
+        iMax = iMax || 10;
+        return s.length > iMax ? s.slice(0, iMax) + "…" : s;
+    }
+
+    function buildOverviewShortageBar(aRows) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("부족 자재 없음");
+        }
+
+        var fMax = Math.max.apply(null, aRows.map(function (r) {
+            return Number(r.value || 0);
+        }).concat([1]));
+
+        var sRows = aRows.slice(0, 5).map(function (oRow, idx) {
+            var fVal = Number(oRow.value || 0);
+            var iW = Math.max(4, Math.round((fVal / fMax) * 100));
+            var sTone = idx === 0 ? "nxMmOverviewBarFill--danger" : (idx === 1 ? "nxMmOverviewBarFill--warn" : "");
+            var sLabel = _shortLabel(oRow.label, 14);
+
+            return "<div class='nxMmOverviewBarRow'>" +
+                "<div class='nxMmOverviewBarLabel' title='" + _esc(oRow.label) + "'>" + _esc(sLabel) + "</div>" +
+                "<div class='nxMmOverviewBarTrack'><div class='nxMmOverviewBarFill " + sTone +
+                "' style='width:" + iW + "%'></div></div>" +
+                "<div class='nxMmOverviewBarValue'>" + fVal.toLocaleString() + "</div></div>";
+        }).join("");
+
+        return "<div class='nxMmOverviewBarChart nxMmOverviewBarChart--shortage'>" + sRows + "</div>";
+    }
+
+    function buildOverviewTypeCompactBar(aRows) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        var fMax = Math.max.apply(null, aRows.map(function (r) {
+            return Number(r.value || 0);
+        }).concat([1]));
+
+        var sRows = aRows.map(function (oRow, idx) {
+            var fVal = Number(oRow.value || 0);
+            var iW = Math.max(6, Math.round((fVal / fMax) * 100));
+            var sColor = TYPE_COLORS_OVERVIEW[idx % TYPE_COLORS_OVERVIEW.length];
+            var sLabel = _shortLabel(oRow.label, 16);
+
+            return "<div class='nxMmOverviewBarRow nxMmOverviewBarRow--compact'>" +
+                "<div class='nxMmOverviewBarLabel' title='" + _esc(oRow.label) + "'>" + _esc(sLabel) + "</div>" +
+                "<div class='nxMmOverviewBarTrack'><div class='nxMmOverviewBarFill' style='width:" + iW +
+                "%;background:" + sColor + "'></div></div>" +
+                "<div class='nxMmOverviewBarValue'>" + fVal.toLocaleString() + "</div></div>";
+        }).join("");
+
+        return "<div class='nxMmOverviewBarChart nxMmOverviewBarChart--type'>" + sRows + "</div>";
+    }
+
+    function buildOverviewTypeStock(aRows) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        if (aRows.length <= 3) {
+            return buildOverviewTypeCompactBar(aRows);
+        }
+
+        return buildOverviewTypeColumn(aRows);
+    }
+
+    function _statusColor(sKey) {
+        var sNorm = String(sKey || "").toUpperCase();
+        if (sNorm === "OK" || sNorm === "NORMAL") {
+            return STATUS_COLORS.OK;
+        }
+        if (sNorm === "SHORT") {
+            return STATUS_COLORS.SHORT;
+        }
+        if (sNorm === "WARN" || sNorm === "WARNING") {
+            return STATUS_COLORS.WARN;
+        }
+        return STATUS_COLORS.UNKNOWN;
+    }
+
+    function buildOverviewStatusDonut(mCounts, iCenterTotal) {
+        var aKeys = Object.keys(mCounts || {});
+
+        if (!aKeys.length) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        var iSum = aKeys.reduce(function (s, k) { return s + mCounts[k]; }, 0) || 1;
+        var fCursor = 0;
+        var sGradient = "";
+        var sLegend = "";
+
+        aKeys.forEach(function (sKey, idx) {
+            var iCount = mCounts[sKey];
+            var fPct = (iCount / iSum) * 100;
+            var sColor = _statusColor(sKey);
+            if (sColor === STATUS_COLORS.UNKNOWN) {
+                sColor = TYPE_COLORS_OVERVIEW[idx % TYPE_COLORS_OVERVIEW.length];
+            }
+            sGradient += sColor + " " + fCursor.toFixed(2) + "% " + (fCursor + fPct).toFixed(2) + "%";
+            if (idx < aKeys.length - 1) {
+                sGradient += ",";
+            }
+            sLegend += "<div class='nxMmOverviewDonutLegendItem'>" +
+                "<span class='nxMmOverviewDonutSwatch' style='background:" + sColor + "'></span>" +
+                "<span class='nxMmOverviewDonutLegendText'>" + _esc(sKey) + " · " + iCount +
+                " (" + fPct.toFixed(0) + "%)</span></div>";
+            fCursor += fPct;
+        });
+
+        var sCenter = iCenterTotal !== null && iCenterTotal !== undefined
+            ? String(iCenterTotal)
+            : String(iSum);
+
+        return "<div class='nxMmOverviewDonutWrap'>" +
+            "<div class='nxMmOverviewDonutChart' style='background:conic-gradient(" + sGradient + ")'>" +
+            "<div class='nxMmOverviewDonutHole'>" +
+            "<div class='nxMmOverviewDonutCenterValue'>" + _esc(sCenter) + "</div>" +
+            "<div class='nxMmOverviewDonutCenterLabel'>Materials</div></div></div>" +
+            "<div class='nxMmOverviewDonutLegend'>" + sLegend + "</div></div>";
+    }
+
+    function buildOverviewTypeColumn(aRows) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        var fMax = Math.max.apply(null, aRows.map(function (r) {
+            return Number(r.value || 0);
+        }).concat([1]));
+
+        var sBars = aRows.map(function (oRow, idx) {
+            var fVal = Number(oRow.value || 0);
+            var iH = Math.max(8, Math.round((fVal / fMax) * 100));
+            var sColor = TYPE_COLORS_OVERVIEW[idx % TYPE_COLORS_OVERVIEW.length];
+            var sLabel = _shortLabel(oRow.label, 8);
+
+            return "<div class='nxMmOverviewColItem'>" +
+                "<div class='nxMmOverviewColValue'>" + fVal.toLocaleString() + "</div>" +
+                "<div class='nxMmOverviewColBarWrap'>" +
+                "<div class='nxMmOverviewColBar' style='height:" + iH + "%;background:" + sColor + "'></div></div>" +
+                "<div class='nxMmOverviewColLabel' title='" + _esc(oRow.label) + "'>" + _esc(sLabel) + "</div></div>";
+        }).join("");
+
+        return "<div class='nxMmOverviewColChart'>" + sBars + "</div>";
+    }
+
+    function buildOverviewTrackerSummary(aTracker) {
+        var iPo = 0;
+        var iMigo = 0;
+        var mMat = {};
+
+        if (!aTracker || !aTracker.length) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        aTracker.forEach(function (oRow) {
+            if (oRow.PurchaseOrder) {
+                iPo += 1;
+            }
+            if (oRow.POMigoDoc || oRow.ProdMigoDoc) {
+                iMigo += 1;
+            }
+            if (oRow.Material) {
+                mMat[String(oRow.Material).toUpperCase()] = true;
+            }
+        });
+
+        var iMat = Object.keys(mMat).length;
+        var iTotal = aTracker.length;
+        var aSegments = [
+            { label: "Tracker Rows", value: iTotal, color: "#0070F2" },
+            { label: "PO Linked", value: iPo, color: "#5899DA" },
+            { label: "MIGO Linked", value: iMigo, color: "#36A41D" },
+            { label: "Materials", value: iMat, color: "#8B5CF6" }
+        ];
+        var iSegSum = aSegments.reduce(function (s, seg) { return s + seg.value; }, 0) || 1;
+        var fCursor = 0;
+        var sGradient = "";
+        var sTiles = "";
+
+        aSegments.forEach(function (oSeg, idx) {
+            var fPct = (oSeg.value / iSegSum) * 100;
+            sGradient += oSeg.color + " " + fCursor.toFixed(2) + "% " + (fCursor + fPct).toFixed(2) + "%";
+            if (idx < aSegments.length - 1) {
+                sGradient += ",";
+            }
+            fCursor += fPct;
+            sTiles += "<div class='nxMmOverviewTrackerTile'>" +
+                "<span class='nxMmOverviewTrackerTileDot' style='background:" + oSeg.color + "'></span>" +
+                "<span class='nxMmOverviewTrackerTileLabel'>" + _esc(oSeg.label) + "</span>" +
+                "<span class='nxMmOverviewTrackerTileValue'>" + oSeg.value.toLocaleString() + "</span></div>";
+        });
+
+        return "<div class='nxMmOverviewTrackerSummary'>" +
+            "<div class='nxMmOverviewTrackerDonutCol'>" +
+            "<div class='nxMmOverviewDonutChart nxMmOverviewDonutChart--sm' style='background:conic-gradient(" + sGradient + ")'>" +
+            "<div class='nxMmOverviewDonutHole nxMmOverviewDonutHole--sm'>" +
+            "<div class='nxMmOverviewDonutCenterValue nxMmOverviewDonutCenterValue--sm'>" + iTotal + "</div>" +
+            "<div class='nxMmOverviewDonutCenterLabel'>Rows</div></div></div></div>" +
+            "<div class='nxMmOverviewTrackerTiles'>" + sTiles + "</div></div>";
+    }
+
+    function buildOverviewPriorityAction(oData) {
+        var sNoData = "데이터 없음";
+        var sMaterial = oData.material && oData.material !== sNoData ? oData.material : sNoData;
+        var iShortage = oData.shortageQty;
+        var sStatus = oData.status || sNoData;
+        var sFill = oData.avgFillRate !== null && oData.avgFillRate !== undefined
+            ? String(oData.avgFillRate) + "%" : sNoData;
+        var sAction = oData.actionText || sNoData;
+        var sShortageDisplay = iShortage !== null && iShortage !== undefined
+            ? Number(iShortage).toLocaleString() + " EA" : sNoData;
+
+        if (sMaterial === sNoData) {
+            return "<div class='nxMmOverviewPriorityAction nxMmOverviewPriorityAction--empty'>" +
+                "<div class='nxMmOverviewPriorityEmpty'>" + _esc(sNoData) + "</div>" +
+                "<div class='nxMmOverviewPriorityCallout'>" + _esc(sAction) + "</div></div>";
+        }
+
+        return "<div class='nxMmOverviewPriorityAction'>" +
+            "<div class='nxMmOverviewPriorityRow'>" +
+            "<span class='nxMmOverviewPriorityLabel'>가장 먼저 확인할 자재</span>" +
+            "<span class='nxMmOverviewPriorityValue nxMmOverviewPriorityValue--material'>" + _esc(sMaterial) + "</span></div>" +
+            (oData.materialName ? "<div class='nxMmOverviewPriorityMaterialName'>" + _esc(oData.materialName) + "</div>" : "") +
+            "<div class='nxMmOverviewPriorityMetrics'>" +
+            "<div class='nxMmOverviewPriorityMetric nxMmOverviewPriorityMetric--danger'>" +
+            "<span class='nxMmOverviewPriorityMetricLabel'>부족 수량</span>" +
+            "<span class='nxMmOverviewPriorityMetricValue'>" + _esc(sShortageDisplay) + "</span></div>" +
+            "<div class='nxMmOverviewPriorityMetric'>" +
+            "<span class='nxMmOverviewPriorityMetricLabel'>상태</span>" +
+            "<span class='nxMmOverviewPriorityMetricValue'>" + _esc(sStatus) + "</span></div>" +
+            "<div class='nxMmOverviewPriorityMetric'>" +
+            "<span class='nxMmOverviewPriorityMetricLabel'>평균 충족률</span>" +
+            "<span class='nxMmOverviewPriorityMetricValue'>" + _esc(sFill) + "</span></div></div>" +
+            "<div class='nxMmOverviewPriorityCallout'>" + _esc(sAction) + "</div></div>";
+    }
+
+    function buildOverviewRiskSummary(oData) {
+        var sNoData = "데이터 없음";
+        var aRows = [
+            {
+                label: "Shortage Items",
+                value: oData.shortageItems !== null && oData.shortageItems !== undefined
+                    ? String(oData.shortageItems) : sNoData,
+                unit: oData.shortageItems !== null && oData.shortageItems !== undefined ? "EA" : "",
+                tone: "danger"
+            },
+            {
+                label: "Avg Fill Rate",
+                value: oData.avgFillRate !== null && oData.avgFillRate !== undefined
+                    ? String(oData.avgFillRate) : sNoData,
+                unit: oData.avgFillRate !== null && oData.avgFillRate !== undefined ? "%" : "",
+                tone: oData.avgFillRate !== null && oData.avgFillRate < 40 ? "danger"
+                    : (oData.avgFillRate !== null && oData.avgFillRate < 70 ? "warn" : "ok")
+            },
+            {
+                label: "Highest Risk Material",
+                value: oData.highestRiskMaterial || sNoData,
+                unit: "",
+                tone: "neutral"
+            },
+            {
+                label: "Critical / Shortage",
+                value: oData.criticalCount !== null && oData.criticalCount !== undefined
+                    ? String(oData.criticalCount) : sNoData,
+                unit: oData.criticalCount !== null && oData.criticalCount !== undefined ? "EA" : "",
+                tone: "danger"
+            }
+        ];
+
+        var sItems = aRows.map(function (oRow) {
+            var sToneClass = "nxMmOverviewRiskSummaryItem--" + (oRow.tone || "neutral");
+            var sValueHtml = "<span class='nxMmOverviewRiskSummaryValue'>" + _esc(oRow.value) + "</span>";
+            if (oRow.unit) {
+                sValueHtml += "<span class='nxMmOverviewRiskSummaryUnit'>" + _esc(oRow.unit) + "</span>";
+            }
+            return "<div class='nxMmOverviewRiskSummaryItem " + sToneClass + "'>" +
+                "<div class='nxMmOverviewRiskSummaryLabel'>" + _esc(oRow.label) + "</div>" +
+                "<div class='nxMmOverviewRiskSummaryValueRow'>" + sValueHtml + "</div></div>";
+        }).join("");
+
+        return "<div class='nxMmOverviewRiskSummary'>" + sItems + "</div>";
+    }
+
+    function buildOverviewRiskMatrix(aItems) {
+        var aPlot = (aItems || []).filter(function (oItem) {
+            return Number(oItem.StockQty || 0) > 0 || Number(oItem.ShortageQty || 0) > 0;
+        }).slice(0, 30);
+
+        if (!aPlot.length) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        var fMaxStock = Math.max.apply(null, aPlot.map(function (i) {
+            return Number(i.StockQty || 0);
+        }).concat([1]));
+        var fMaxShort = Math.max.apply(null, aPlot.map(function (i) {
+            return Number(i.ShortageQty || 0);
+        }).concat([1]));
+
+        var sDots = aPlot.map(function (oItem) {
+            var fStock = Number(oItem.StockQty || 0);
+            var fShort = Number(oItem.ShortageQty || 0);
+            var iLeft = 10 + Math.round((fStock / fMaxStock) * 78);
+            var iTop = 88 - Math.round((fShort / fMaxShort) * 76);
+            var iSize = Math.max(7, Math.min(18, 7 + Math.round(fShort * 1.5)));
+            var sStatus = String(oItem.FilterStatus || oItem.Status || "").toUpperCase();
+            var sColor = sStatus === "SHORT" ? "#BB0000"
+                : (sStatus === "WARN" ? "#E9730C" : "#36A41D");
+            var sTitle = _esc(oItem.Component || oItem.MaterialCode || "-") + " · Stock " +
+                fStock + " · Shortage " + fShort;
+
+            return "<div class='nxMmOverviewRiskDot' style='left:" + iLeft + "%;top:" + iTop +
+                "%;width:" + iSize + "px;height:" + iSize + "px;background:" + sColor +
+                "' title='" + sTitle + "'></div>";
+        }).join("");
+
+        return "<div class='nxMmOverviewRiskMatrix'>" +
+            "<div class='nxMmOverviewRiskAxis nxMmOverviewRiskAxis--y'>ShortageQty</div>" +
+            "<div class='nxMmOverviewRiskPlot'>" +
+            "<div class='nxMmOverviewRiskGridLine nxMmOverviewRiskGridLine--h'></div>" +
+            "<div class='nxMmOverviewRiskGridLine nxMmOverviewRiskGridLine--v'></div>" +
+            "<div class='nxMmOverviewRiskZone nxMmOverviewRiskZone--high'>High Risk</div>" +
+            "<div class='nxMmOverviewRiskZone nxMmOverviewRiskZone--low'>Low Risk</div>" +
+            sDots + "</div>" +
+            "<div class='nxMmOverviewRiskAxis nxMmOverviewRiskAxis--x'>StockQty</div>" +
+            "<div class='nxMmOverviewRiskLegend'>" +
+            "<span class='nxMmOverviewRiskLegendItem'><i class='nxMmOverviewRiskSwatch' style='background:#BB0000'></i>SHORT</span>" +
+            "<span class='nxMmOverviewRiskLegendItem'><i class='nxMmOverviewRiskSwatch' style='background:#E9730C'></i>WARN</span>" +
+            "<span class='nxMmOverviewRiskLegendItem'><i class='nxMmOverviewRiskSwatch' style='background:#36A41D'></i>OK</span>" +
+            "</div></div>";
+    }
+
     return {
         /**
          * SAP BomStock(allItems) 실데이터로 MM Reports 차트·KPI 갱신
@@ -325,6 +674,16 @@ sap.ui.define([], function () {
                 },
                 tableItems: aTable
             });
-        }
+        },
+
+        buildOverviewShortageBar: buildOverviewShortageBar,
+        buildOverviewStatusDonut: buildOverviewStatusDonut,
+        buildOverviewTypeColumn: buildOverviewTypeColumn,
+        buildOverviewTypeCompactBar: buildOverviewTypeCompactBar,
+        buildOverviewTypeStock: buildOverviewTypeStock,
+        buildOverviewTrackerSummary: buildOverviewTrackerSummary,
+        buildOverviewPriorityAction: buildOverviewPriorityAction,
+        buildOverviewRiskSummary: buildOverviewRiskSummary,
+        buildOverviewRiskMatrix: buildOverviewRiskMatrix
     };
 });

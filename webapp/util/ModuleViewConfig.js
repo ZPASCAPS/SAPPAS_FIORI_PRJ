@@ -24,6 +24,14 @@ sap.ui.define([], function () {
         { key: "REPORTS", text: "Reports" }
     ];
 
+    var MM_SUB_TABS = [
+        { key: "OVERVIEW", text: "Overview" },
+        { key: "INVENTORY", text: "Inventory" },
+        { key: "PURCHASING", text: "Purchasing" },
+        { key: "GOODS_MOVEMENT", text: "Goods Movement" },
+        { key: "REPORTS", text: "Reports" }
+    ];
+
     var COMMON_KPIS = [
         { label: "Revenue", valueMain: "$1 248", valueSuffix: ",320", trendHint: "per last week", trend: "14%", trendUp: true },
         { label: "Expenses", valueMain: "$642", valueSuffix: ",800", trendHint: "per last week", trend: "6.2%", trendUp: false },
@@ -40,7 +48,7 @@ sap.ui.define([], function () {
 
     var MODULE_TITLES = {
         SD_SALES: "Sales and Distribution",
-        MM_MATERIALS: "Materials Management",
+        MM_MATERIALS: "Materials Management (자재 관리)",
         PP_PRODUCTION: "Production Planning",
         FI_CO_FINANCE: "Financial Accounting"
     };
@@ -48,14 +56,14 @@ sap.ui.define([], function () {
     function buildModuleConfig(sNavKey) {
         var aKpis = sNavKey === "MM_MATERIALS" ? MM_KPIS : COMMON_KPIS;
         var aSubTabs = sNavKey === "MM_MATERIALS"
-            ? [{ key: "REPORTS", text: "Reports" }]
+            ? MM_SUB_TABS.slice()
             : COMMON_SUB_TABS.slice();
 
         return {
             title: MODULE_TITLES[sNavKey] || sNavKey,
             period: "THIS_WEEK",
             periodOptions: PERIOD_OPTIONS.slice(),
-            activeSubTab: sNavKey === "MM_MATERIALS" ? "REPORTS" : "OVERVIEW",
+            activeSubTab: "OVERVIEW",
             subTabs: aSubTabs,
             kpis: aKpis.map(function (oKpi) {
                 return JSON.parse(JSON.stringify(oKpi));

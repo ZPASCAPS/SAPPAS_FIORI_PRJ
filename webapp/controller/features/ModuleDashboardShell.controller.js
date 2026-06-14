@@ -20,6 +20,9 @@ sap.ui.define([
         OPERATIONS: "subTabOperations",
         DISTRIBUTION: "subTabDistribution",
         INSURANCE: "subTabInsurance",
+        INVENTORY: "subTabMmInventory",
+        PURCHASING: "subTabMmPurchasing",
+        GOODS_MOVEMENT: "subTabMmGoodsMovement",
         REPORTS: "subTabReports"
     };
 
@@ -58,7 +61,9 @@ sap.ui.define([
         },
 
         _onDashboardPropertyChange: function (oEvent) {
-            if (oEvent.getPath() === "/moduleView/activeSubTab") {
+            var sPath = oEvent.getPath();
+
+            if (sPath === "/moduleView/activeSubTab" || sPath === "/ui/navKey") {
                 this._updateSubTabIndicator(true);
             }
         },
@@ -284,6 +289,45 @@ sap.ui.define([
             var sDate = new Date().toISOString().slice(0, 10);
 
             return sSafe + "_KPI_" + sDate + ".csv";
+        },
+
+        onMmOverviewFilterOpen: function (oEvent) {
+            var oPopover = this.byId("mmOverviewFilterPopover");
+            var oBtn = oEvent.getSource();
+
+            if (!oPopover) {
+                return;
+            }
+
+            if (oPopover.isOpen()) {
+                oPopover.close();
+                return;
+            }
+
+            oPopover.openBy(oBtn);
+        },
+
+        onMmOverviewFilterQueryModeChange: function (oEvent) {
+            var sKey = oEvent.getParameter("item") && oEvent.getParameter("item").getKey();
+
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmOverviewAction", {
+                action: "queryMode",
+                key: sKey
+            });
+        },
+
+        onMmOverviewFilterSearch: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmOverviewAction", { action: "search" });
+            this.byId("mmOverviewFilterPopover").close();
+        },
+
+        onMmOverviewFilterReset: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmOverviewAction", { action: "reset" });
+            this.byId("mmOverviewFilterPopover").close();
+        },
+
+        onMmOverviewRefresh: function () {
+            sap.ui.getCore().getEventBus().publish("dashboard", "mmOverviewAction", { action: "refresh" });
         }
     });
 });

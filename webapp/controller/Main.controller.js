@@ -411,7 +411,42 @@ sap.ui.define([
                         actionText: "폐기 승인"
                     }
                 ],
-                mmDetailList: []
+                mmDetailList: [],
+                mmOverview: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    queryMode: "ALL",
+                    searchText: "",
+                    searchEnabled: false,
+                    searchPlaceholder: "전체 MM 현황을 조회합니다",
+                    criteriaLabel: "All Materials",
+                    lastUpdated: "데이터 없음",
+                    kpis: [],
+                    primaryKpis: [],
+                    secondaryKpis: [],
+                    showSecondaryKpis: false,
+                    charts: [],
+                    primaryCharts: [],
+                    extraCharts: [],
+                    hasExtraCharts: false,
+                    chartsExpanded: false,
+                    worklist: [],
+                    worklistExpanded: false,
+                    visibleWorklist: [],
+                    worklistTotalCount: 0,
+                    worklistVisibleCount: 0,
+                    worklistHiddenCount: 0,
+                    worklistShowToggle: false,
+                    detail: {
+                        visible: false,
+                        type: "",
+                        title: "",
+                        fields: [],
+                        emptyMessage: "왼쪽 목록에서 항목을 선택하면 상세 정보가 표시됩니다."
+                    },
+                    selectedWorklistId: ""
+                }
             });
 
             MmChartHtmlUtil.enrichMmReports(oDashboardModel, []);

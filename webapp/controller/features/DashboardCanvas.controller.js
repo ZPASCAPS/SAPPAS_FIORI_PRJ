@@ -7,8 +7,7 @@
  * 역할:
  * - 중앙 콘텐츠 영역. navKey별 View 전환.
  * - navKey=DASHBOARD: A/B 분할
- * - navKey=MM_MATERIALS + Reports: MmReports (SAP BomStock 실데이터)
- * - navKey=SD/MM/PP/FI: ModuleDashboardShell + 탭별 본문
+ * - navKey=MM_MATERIALS + Overview: MmOverview Cockpit (SAP OData)
  * - 그 외: SectionPlaceholder
  */
 sap.ui.define([
