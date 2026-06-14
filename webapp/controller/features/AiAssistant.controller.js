@@ -52,20 +52,57 @@ sap.ui.define([
             this.getView().setModel(oModel, "chatModel");
 
             this._oDragState = null;
+            this._oFabDragState = null;
+            this._bFabDragMoved = false;
             this._bDragBound = false;
+            this._bFabDragBound = false;
             this._fnMouseMove = this._onDragMove.bind(this);
             this._fnMouseUp = this._onDragEnd.bind(this);
             this._fnDragStart = this._onDragStart.bind(this);
             this._fnTouchMove = this._onTouchMove.bind(this);
             this._fnTouchEnd = this._onDragEnd.bind(this);
+            this._fnFabMouseMove = this._onFabDragMove.bind(this);
+            this._fnFabMouseUp = this._onFabDragEnd.bind(this);
+            this._fnFabDragStart = this._onFabDragStart.bind(this);
+            this._fnFabTouchMove = this._onFabTouchMove.bind(this);
+            this._fnFabTouchEnd = this._onFabDragEnd.bind(this);
+            this._waitForDashboardModel();
+        },
+
+        _waitForDashboardModel: function () {
+            var oModel = this.getOwnerComponent() && this.getOwnerComponent().getModel("dashboard");
+
+            if (!oModel) {
+                setTimeout(this._waitForDashboardModel.bind(this), 50);
+                return;
+            }
+
+            this._fnNavReset = this._onDashboardNavChange.bind(this);
+            oModel.attachPropertyChange(this._fnNavReset, this);
+        },
+
+        _onDashboardNavChange: function (oEvent) {
+            var sPath = oEvent.getPath();
+
+            if (sPath === "/ui/navKey" || sPath === "/moduleView/activeSubTab") {
+                this._resetFloatingButtonPosition();
+            }
         },
 
         onAfterRendering: function () {
             this._bindChatbotDrag();
+            this._bindFloatingBtnDrag();
         },
 
         onExit: function () {
+            var oModel = this.getOwnerComponent() && this.getOwnerComponent().getModel("dashboard");
+
+            if (oModel && this._fnNavReset) {
+                oModel.detachPropertyChange(this._fnNavReset, this);
+            }
+
             this._unbindChatbotDrag();
+            this._unbindFloatingBtnDrag();
         },
 
         _getCurrentTime: function () {
@@ -175,10 +212,18 @@ sap.ui.define([
         // 이하 UI 드래그 앤 드롭 로직 유지 (건드리지 않음)
         // ==========================================================
         onToggleChatbot: function () {
+            if (this._bFabDragMoved) {
+                return;
+            }
+
             var oPanel = this.byId("chatbotPanel");
-            if (!oPanel) return;
+            if (!oPanel) {
+                return;
+            }
+
             oPanel.setVisible(!oPanel.getVisible());
             if (oPanel.getVisible()) {
+                this._positionPanelNearFab();
                 setTimeout(this._bindChatbotDrag.bind(this), 0);
             }
         },
@@ -311,7 +356,213 @@ sap.ui.define([
             document.removeEventListener("touchmove", this._fnTouchMove);
             document.removeEventListener("touchend", this._fnTouchEnd);
 
-            if (oDom) oDom.classList.remove("nxChatbotPanelDragging");
+            if (oDom) {
+                oDom.classList.remove("nxChatbotPanelDragging");
+            }
+        },
+
+        _getFabDom: function () {
+            var oBtn = this.byId("chatbotFloatingBtn");
+            return oBtn && oBtn.getDomRef();
+        },
+
+        _resetFloatingButtonPosition: function () {
+            var oFabDom = this._getFabDom();
+            var oPanelDom = this._getPanelDom();
+
+            if (oFabDom) {
+                oFabDom.classList.remove("myFloatingButtonMoved", "myFloatingButtonDragging");
+                oFabDom.style.removeProperty("left");
+                oFabDom.style.removeProperty("top");
+                oFabDom.style.removeProperty("right");
+                oFabDom.style.removeProperty("bottom");
+            }
+
+            if (oPanelDom) {
+                oPanelDom.classList.remove("nxChatbotPanelMoved", "nxChatbotPanelDragging");
+                oPanelDom.style.removeProperty("left");
+                oPanelDom.style.removeProperty("top");
+                oPanelDom.style.removeProperty("right");
+                oPanelDom.style.removeProperty("bottom");
+            }
+        },
+
+        _applyFabPosition: function (iLeft, iTop) {
+            var oDom = this._getFabDom();
+            var iSize = 72;
+            var iMaxLeft;
+            var iMaxTop;
+
+            if (!oDom) {
+                return;
+            }
+
+            iMaxLeft = window.innerWidth - iSize - 8;
+            iMaxTop = window.innerHeight - iSize - 8;
+            iLeft = Math.max(8, Math.min(iLeft, iMaxLeft));
+            iTop = Math.max(8, Math.min(iTop, iMaxTop));
+
+            oDom.classList.add("myFloatingButtonMoved");
+            oDom.style.setProperty("left", iLeft + "px", "important");
+            oDom.style.setProperty("top", iTop + "px", "important");
+            oDom.style.setProperty("right", "auto", "important");
+            oDom.style.setProperty("bottom", "auto", "important");
+        },
+
+        _positionPanelNearFab: function () {
+            var oFabDom = this._getFabDom();
+            var oPanelDom = this._getPanelDom();
+            var oFabRect;
+            var iPanelLeft;
+            var iPanelTop;
+            var iMaxLeft;
+            var iMaxTop;
+
+            if (!oFabDom || !oPanelDom) {
+                return;
+            }
+
+            oFabRect = oFabDom.getBoundingClientRect();
+            iPanelLeft = oFabRect.left + oFabRect.width - oPanelDom.offsetWidth;
+            iPanelTop = oFabRect.top - oPanelDom.offsetHeight - 12;
+            iMaxLeft = window.innerWidth - oPanelDom.offsetWidth - 8;
+            iMaxTop = window.innerHeight - oPanelDom.offsetHeight - 8;
+
+            if (iPanelTop < 8) {
+                iPanelTop = oFabRect.bottom + 12;
+            }
+
+            iPanelLeft = Math.max(8, Math.min(iPanelLeft, iMaxLeft));
+            iPanelTop = Math.max(8, Math.min(iPanelTop, iMaxTop));
+
+            this._applyPanelPosition(oPanelDom, iPanelLeft, iPanelTop);
+        },
+
+        _bindFloatingBtnDrag: function () {
+            var oDom = this._getFabDom();
+
+            if (!oDom || this._bFabDragBound) {
+                return;
+            }
+
+            oDom.addEventListener("mousedown", this._fnFabDragStart);
+            oDom.addEventListener("touchstart", this._fnFabDragStart, { passive: false });
+            this._bFabDragBound = true;
+        },
+
+        _unbindFloatingBtnDrag: function () {
+            var oDom = this._getFabDom();
+
+            if (oDom) {
+                oDom.removeEventListener("mousedown", this._fnFabDragStart);
+                oDom.removeEventListener("touchstart", this._fnFabDragStart);
+            }
+
+            document.removeEventListener("mousemove", this._fnFabMouseMove);
+            document.removeEventListener("mouseup", this._fnFabMouseUp);
+            document.removeEventListener("touchmove", this._fnFabTouchMove);
+            document.removeEventListener("touchend", this._fnFabTouchEnd);
+
+            this._bFabDragBound = false;
+            this._oFabDragState = null;
+        },
+
+        _onFabDragStart: function (oEvent) {
+            var iX = oEvent.clientX;
+            var iY = oEvent.clientY;
+            var oDom = this._getFabDom();
+            var oRect;
+
+            if (oEvent.touches && oEvent.touches.length) {
+                iX = oEvent.touches[0].clientX;
+                iY = oEvent.touches[0].clientY;
+            }
+
+            if (oEvent.button !== undefined && oEvent.button !== 0) {
+                return;
+            }
+
+            if (!oDom) {
+                return;
+            }
+
+            oRect = oDom.getBoundingClientRect();
+            this._bFabDragMoved = false;
+            this._oFabDragState = {
+                startX: iX,
+                startY: iY,
+                startLeft: oRect.left,
+                startTop: oRect.top,
+                moved: false
+            };
+
+            document.addEventListener("mousemove", this._fnFabMouseMove);
+            document.addEventListener("mouseup", this._fnFabMouseUp);
+            document.addEventListener("touchmove", this._fnFabTouchMove, { passive: false });
+            document.addEventListener("touchend", this._fnFabTouchEnd);
+        },
+
+        _onFabTouchMove: function (oEvent) {
+            var oTouch = oEvent.touches && oEvent.touches[0];
+
+            if (oTouch) {
+                this._moveFabDrag(oTouch.clientX, oTouch.clientY, oEvent);
+                oEvent.preventDefault();
+            }
+        },
+
+        _onFabDragMove: function (oEvent) {
+            this._moveFabDrag(oEvent.clientX, oEvent.clientY, oEvent);
+        },
+
+        _moveFabDrag: function (iClientX, iClientY, oEvent) {
+            var iDeltaX;
+            var iDeltaY;
+            var oDom = this._getFabDom();
+
+            if (!this._oFabDragState || !oDom) {
+                return;
+            }
+
+            iDeltaX = iClientX - this._oFabDragState.startX;
+            iDeltaY = iClientY - this._oFabDragState.startY;
+
+            if (!this._oFabDragState.moved && Math.abs(iDeltaX) + Math.abs(iDeltaY) < 4) {
+                return;
+            }
+
+            this._oFabDragState.moved = true;
+            this._bFabDragMoved = true;
+            oDom.classList.add("myFloatingButtonDragging");
+            this._applyFabPosition(
+                this._oFabDragState.startLeft + iDeltaX,
+                this._oFabDragState.startTop + iDeltaY
+            );
+
+            if (oEvent && oEvent.preventDefault) {
+                oEvent.preventDefault();
+            }
+        },
+
+        _onFabDragEnd: function () {
+            var oDom = this._getFabDom();
+
+            document.removeEventListener("mousemove", this._fnFabMouseMove);
+            document.removeEventListener("mouseup", this._fnFabMouseUp);
+            document.removeEventListener("touchmove", this._fnFabTouchMove);
+            document.removeEventListener("touchend", this._fnFabTouchEnd);
+
+            if (oDom) {
+                oDom.classList.remove("myFloatingButtonDragging");
+            }
+
+            if (this._oFabDragState && this._oFabDragState.moved) {
+                setTimeout(function () {
+                    this._bFabDragMoved = false;
+                }.bind(this), 50);
+            }
+
+            this._oFabDragState = null;
         }
     });
 });
