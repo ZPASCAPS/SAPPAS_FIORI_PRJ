@@ -4,9 +4,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
-    "sap/m/MessageBox",
     "com/capstone/dashboard/fioridashboard/service/MmInventoryDataService"
-], function (Controller, MessageToast, MessageBox, MmInventoryDataService) {
+], function (Controller, MessageToast, MmInventoryDataService) {
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.MmInventory", {
@@ -87,21 +86,13 @@ sap.ui.define([
             }
         },
 
-        _resolveImageBase: function () {
-            try {
-                return sap.ui.require.toUrl("com/capstone/dashboard/fioridashboard/images/");
-            } catch (e) {
-                return "images/";
-            }
-        },
-
         _getFiltersFromModel: function () {
             var oModel = this._getDashboardModel();
             return {
                 materialSearch: oModel.getProperty("/mmInventory/materialSearch") || "",
-                statusFilter: oModel.getProperty("/mmInventory/statusFilter") || "ALL",
-                typeLabelFilter: oModel.getProperty("/mmInventory/typeLabelFilter") || "ALL",
-                shortageOnly: oModel.getProperty("/mmInventory/shortageOnly") === true
+                plantFilter: oModel.getProperty("/mmInventory/plantFilter") || "ALL",
+                storageLocationFilter: oModel.getProperty("/mmInventory/storageLocationFilter") || "ALL",
+                materialTypeFilter: oModel.getProperty("/mmInventory/materialTypeFilter") || "ALL"
             };
         },
 
@@ -197,16 +188,16 @@ sap.ui.define([
             this._setLoading(true);
             oModel.setProperty("/mmInventory/error", "");
 
-            MmInventoryDataService.loadInventoryData(oComponent, this._resolveImageBase())
+            MmInventoryDataService.loadInventoryData(oComponent)
                 .then(function (oCache) {
                     this._oCache = oCache;
 
                     if (!bApplyCurrentQuery) {
                         var oDefaults = MmInventoryDataService.getDefaultFilters();
                         oModel.setProperty("/mmInventory/materialSearch", oDefaults.materialSearch);
-                        oModel.setProperty("/mmInventory/statusFilter", oDefaults.statusFilter);
-                        oModel.setProperty("/mmInventory/typeLabelFilter", oDefaults.typeLabelFilter);
-                        oModel.setProperty("/mmInventory/shortageOnly", oDefaults.shortageOnly);
+                        oModel.setProperty("/mmInventory/plantFilter", oDefaults.plantFilter);
+                        oModel.setProperty("/mmInventory/storageLocationFilter", oDefaults.storageLocationFilter);
+                        oModel.setProperty("/mmInventory/materialTypeFilter", oDefaults.materialTypeFilter);
                         sSelectedId = "";
                     }
 
@@ -216,8 +207,10 @@ sap.ui.define([
                 .catch(function (oError) {
                     this._setLoading(false);
                     oModel.setProperty("/mmInventory/loaded", false);
-                    oModel.setProperty("/mmInventory/error", oError.message || "SAP OData 조회 실패");
-                    MessageBox.error(oError.message || "SAP OData 조회에 실패했습니다.");
+                    oModel.setProperty("/mmInventory/error", oError.message || "재고 데이터를 불러올 수 없습니다");
+                    oModel.setProperty("/mmInventory/materials", []);
+                    oModel.setProperty("/mmInventory/kpis", []);
+                    oModel.setProperty("/mmInventory/analysisCharts", []);
                 }.bind(this));
         },
 
@@ -258,9 +251,9 @@ sap.ui.define([
             }
 
             oModel.setProperty("/mmInventory/materialSearch", oDefaults.materialSearch);
-            oModel.setProperty("/mmInventory/statusFilter", oDefaults.statusFilter);
-            oModel.setProperty("/mmInventory/typeLabelFilter", oDefaults.typeLabelFilter);
-            oModel.setProperty("/mmInventory/shortageOnly", oDefaults.shortageOnly);
+            oModel.setProperty("/mmInventory/plantFilter", oDefaults.plantFilter);
+            oModel.setProperty("/mmInventory/storageLocationFilter", oDefaults.storageLocationFilter);
+            oModel.setProperty("/mmInventory/materialTypeFilter", oDefaults.materialTypeFilter);
 
             if (this._oCache) {
                 this._applyInventoryState("");
