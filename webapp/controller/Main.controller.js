@@ -187,6 +187,17 @@ sap.ui.define([
                 spaces: {
                     orderInquiry: {
                         visible: false,
+                        docType: "SO",
+                        docTypeLabel: "",
+                        docNumber: "",
+                        headerDisplay: "",
+                        linkedSalesOrder: "",
+                        summarySource: "",
+                        summary: {},
+                        display: {},
+                        isSalesOrderDoc: true,
+                        trackerPurchaseOrder: "",
+                        trackerProductionOrder: "",
                         orderNumber: "",
                         currentStep: 0,
                         totalSteps: 11,

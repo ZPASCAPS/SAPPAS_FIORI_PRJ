@@ -1,7 +1,7 @@
 /**
  * E2EProgressHelper.js — E2E Flow 진행도·색상 상태 계산
  *
- * iProgressStep: 완료된 단계 수 (0 = 미조회, 4 = 4단계까지 완료 → 5단계 진행중)
+ * progressStep / iCompletedCount: 문서가 있는 완료 단계 수 (0 = 미조회, 4 = 1~4단계 초록, 5단계 주황)
  */
 sap.ui.define([], function () {
     "use strict";

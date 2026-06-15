@@ -57,6 +57,34 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "sdSummarySource": {
+        "uri": "/sap/opu/odata/sap/Z_C_SD_DOCSUMMARY_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "mmSummarySource": {
+        "uri": "/sap/opu/odata/sap/Z_C_MM_DOCSUMMARY_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "ppSummarySource": {
+        "uri": "/sap/opu/odata/sap/Z_C_PP_DOCSUMMARY_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "fiSummarySource": {
+        "uri": "/sap/opu/odata/sap/Z_C_FI_DOCSUMMARY_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
 
     }
@@ -129,6 +157,22 @@
         "dataSource": "mmInventoryService",
         "preload": true,
         "settings": {}
+      },
+      "sdSummaryModel": {
+        "dataSource": "sdSummarySource",
+        "preload": true
+      },
+      "mmSummaryModel": {
+        "dataSource": "mmSummarySource",
+        "preload": true
+      },
+      "ppSummaryModel": {
+        "dataSource": "ppSummarySource",
+        "preload": true
+      },
+      "fiSummaryModel": {
+        "dataSource": "fiSummarySource",
+        "preload": true
       }
     },
     "resources": {
