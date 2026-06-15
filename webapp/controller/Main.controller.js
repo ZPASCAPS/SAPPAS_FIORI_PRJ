@@ -452,15 +452,12 @@ sap.ui.define([
                     loaded: false,
                     error: "",
                     materialSearch: "",
-                    statusFilter: "ALL",
-                    typeLabelFilter: "ALL",
-                    shortageOnly: false,
-                    statusOptions: [
-                        { key: "ALL", text: "전체" },
-                        { key: "OK", text: "OK" },
-                        { key: "SHORT", text: "SHORT" }
-                    ],
-                    typeLabelOptions: [{ key: "ALL", text: "전체" }],
+                    plantFilter: "ALL",
+                    storageLocationFilter: "ALL",
+                    materialTypeFilter: "ALL",
+                    plantOptions: [{ key: "ALL", text: "전체" }],
+                    storageLocationOptions: [{ key: "ALL", text: "전체" }],
+                    materialTypeOptions: [{ key: "ALL", text: "전체" }],
                     criteriaLabel: "전체 자재",
                     lastUpdated: "데이터 없음",
                     kpis: [],
@@ -469,8 +466,7 @@ sap.ui.define([
                     detail: {
                         hasSelection: false,
                         emptyMessage: "왼쪽 자재 목록에서 자재를 선택하면 상세 정보가 표시됩니다.",
-                        warningMessage: "",
-                        successMessage: ""
+                        infoMessage: ""
                     },
                     analysisCharts: []
                 },

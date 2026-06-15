@@ -350,39 +350,36 @@
                     </VBox>
 
                     <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
-                        <Label text="Status" class="nxMmOverviewFieldLabel" />
-                        <Select
-                            selectedKey="{dashboard>/mmInventory/statusFilter}"
-                            forceSelection="true"
-                            width="100%"
-                            items="{dashboard>/mmInventory/statusOptions}">
-                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
-                        </Select>
-                    </VBox>
-
-                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
-                        <Label text="TypeLabel" class="nxMmOverviewFieldLabel" />
-                        <Select
-                            selectedKey="{dashboard>/mmInventory/typeLabelFilter}"
-                            forceSelection="true"
-                            width="100%"
-                            items="{dashboard>/mmInventory/typeLabelOptions}">
-                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
-                        </Select>
-                    </VBox>
-
-                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
-                        <CheckBox
-                            text="부족 자재만 보기"
-                            selected="{dashboard>/mmInventory/shortageOnly}" />
-                    </VBox>
-
-                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup nxMmOverviewFilterDisabledGroup">
                         <Label text="Plant" class="nxMmOverviewFieldLabel" />
-                        <Input value="데이터 없음" enabled="false" width="100%" />
-                        <Label text="Storage Location" class="nxMmOverviewFieldLabel nxMmOverviewFieldLabelSpaced" />
-                        <Input value="데이터 없음" enabled="false" width="100%" />
-                        <Text text="Plant·Storage Location은 현재 SAP OData 미제공 필드입니다." class="nxMmOverviewFilterDisabledHint" />
+                        <Select
+                            selectedKey="{dashboard>/mmInventory/plantFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmInventory/plantOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="Storage Location" class="nxMmOverviewFieldLabel" />
+                        <Select
+                            selectedKey="{dashboard>/mmInventory/storageLocationFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmInventory/storageLocationOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
+                    </VBox>
+
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
+                        <Label text="Material Type" class="nxMmOverviewFieldLabel" />
+                        <Select
+                            selectedKey="{dashboard>/mmInventory/materialTypeFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmInventory/materialTypeOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
                     </VBox>
                 </VBox>
 
