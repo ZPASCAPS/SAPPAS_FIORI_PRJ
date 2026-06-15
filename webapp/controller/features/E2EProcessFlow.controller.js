@@ -88,6 +88,21 @@ sap.ui.define([
             Object.keys(CONNECTOR_IDS).forEach(function (sKey) {
                 this._setStateClasses(this.byId(CONNECTOR_IDS[sKey]), CONNECTOR_STATE_CLASSES, oConnectorClasses[sKey]);
             }, this);
+
+            this._applyMrpVisual(iProgressStep);
+        },
+
+        _applyMrpVisual: function (iProgressStep) {
+            var oConnector = this.byId("e2eConnector12");
+            if (!oConnector) {
+                return;
+            }
+            var sStep2Status = E2EProgressHelper.buildStepStatuses(iProgressStep)[1];
+            if (sStep2Status === "active" || sStep2Status === "completed") {
+                oConnector.addStyleClass("e2eMtoMrpRunning");
+            } else {
+                oConnector.removeStyleClass("e2eMtoMrpRunning");
+            }
         },
 
         _applyStepVisual: function (iStepNo, sStatus) {

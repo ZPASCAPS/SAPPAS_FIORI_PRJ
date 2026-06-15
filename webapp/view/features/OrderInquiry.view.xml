@@ -1,33 +1,48 @@
 <!--
-  OrderInquiry.view.xml  (A공간 — 오더 조회)
-
-  View: com.capstone.dashboard.fioridashboard.view.features.OrderInquiry
-  Controller: com.capstone.dashboard.fioridashboard.controller.features.OrderInquiry
-
-  데이터: dashboard>/spaces/orderInquiry (Main.controller.js)
-  OData: OrderInquiry.controller.js → Z_C_E2E_OrderTracker + Z_C_OrderSummary
+  OrderInquiry.view.xml  (A공간 — 문서 조회)
+  OData: Tracker + OrderSummary(SO) + SD/MM/PP/FI DocSummary
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.OrderInquiry"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     height="100%"
     width="100%">
 
     <VBox class="nxSpaceCard nxSpaceCardA" height="100%" width="100%" renderType="Bare">
         <HBox class="nxSpaceCardHeader" alignItems="Center" width="100%">
-            <Title text="오더 조회" level="H4" class="nxSpaceCardTitle" />
+            <Title text="{i18n>documentInquiryTitle}" level="H4" class="nxSpaceCardTitle" />
         </HBox>
 
         <VBox class="nxSpaceCardBody nxSpaceCardBodyA" width="100%" renderType="Bare">
+            <Select
+                id="docTypeSelect"
+                selectedKey="SO"
+                width="100%"
+                change=".onDocTypeChange"
+                class="nxSpaceDocTypeSelect">
+                <core:Item key="SO" text="판매오더 (SO)" />
+                <core:Item key="PlannedOrder" text="계획오더 (PlannedOrder)" />
+                <core:Item key="PR" text="구매요청 (PR)" />
+                <core:Item key="PO" text="구매오더 (PO)" />
+                <core:Item key="POMigo" text="원자재입고 MIGO (POMigo)" />
+                <core:Item key="Production" text="생산오더 (Production)" />
+                <core:Item key="ProdMigo" text="완제품입고 MIGO (ProdMigo)" />
+                <core:Item key="DN" text="출하 (DN)" />
+                <core:Item key="BL" text="청구 (BL)" />
+                <core:Item key="FI" text="회계전표 (FI)" />
+                <core:Item key="Clearing" text="입금전기 (Clearing)" />
+            </Select>
+
             <SearchField
-                id="salesOrderInput"
-                placeholder="오더 번호 검색"
+                id="docNumberInput"
+                placeholder="판매오더 번호 검색"
                 width="100%"
                 class="nxSpaceSearch"
                 search=".onSearchOrder" />
             <Button
-                text="조회"
+                text="{i18n>documentInquirySearchBtn}"
                 type="Emphasized"
                 press=".onSearchOrder"
                 width="100%"
@@ -40,11 +55,11 @@
                 visible="{dashboard>/spaces/orderInquiry/visible}">
                 <HBox class="nxOrderResultHeader" alignItems="Center" renderType="Bare">
                     <Text text="📄" class="nxOrderIcon" />
-                    <Text text="{dashboard>/spaces/orderInquiry/orderNumber}" class="nxOrderNumber" />
+                    <Text text="{dashboard>/spaces/orderInquiry/headerDisplay}" class="nxOrderNumber" />
                 </HBox>
 
                 <VBox class="nxOrderStageBlock" renderType="Bare" width="100%">
-                    <Text text="현재 단계" class="nxOrderLabel" />
+                    <Text text="{i18n>documentInquiryCurrentStage}" class="nxOrderLabel" />
                     <Text text="{dashboard>/spaces/orderInquiry/stageLabel}" class="nxOrderStageText" />
                     <VBox class="nxOrderProgressBar" renderType="Bare" width="100%">
                         <HBox
@@ -59,33 +74,337 @@
 
                 <VBox class="nxOrderDetailList" width="100%" renderType="Bare">
                     <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
-                        <Text text="예상 소요" class="nxOrderDetailLabel" />
-                        <Text text="{dashboard>/spaces/orderInquiry/estimatedDays}" class="nxOrderDetailValue" />
+                        <Text text="{i18n>documentInquiryLinkedSO}" class="nxOrderDetailLabel" />
+                        <Text text="{dashboard>/spaces/orderInquiry/linkedSalesOrder}" class="nxOrderDetailValue" />
                     </HBox>
-                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
-                        <Text text="고객" class="nxOrderDetailLabel" />
-                        <Text text="{dashboard>/spaces/orderInquiry/customer}" class="nxOrderDetailValue" />
-                    </HBox>
-                    <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
-                        <Text text="제품명" class="nxOrderDetailLabel" />
-                        <Text
-                            text="{= ${dashboard>/spaces/orderInquiry/productCode} + ' / ' + ${dashboard>/spaces/orderInquiry/productName} }"
-                            class="nxOrderDetailValue nxOrderProductName" />
-                    </HBox>
-                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
-                        <Text text="수량" class="nxOrderDetailLabel" />
-                        <Text
-                            text="{= ${dashboard>/spaces/orderInquiry/quantity} + ' ' + ${dashboard>/spaces/orderInquiry/quantityUnit} }"
-                            class="nxOrderDetailValue" />
-                    </HBox>
-                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
-                        <Text text="금액" class="nxOrderDetailLabel" />
-                        <Text text="{dashboard>/spaces/orderInquiry/amountDisplay}" class="nxOrderDetailValue nxOrderAmount" />
-                    </HBox>
-                    <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
-                        <Text text="생성일" class="nxOrderDetailLabel" />
-                        <Text text="{dashboard>/spaces/orderInquiry/creationDate}" class="nxOrderDetailValue" />
-                    </HBox>
+
+                    <!-- SO -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'SO' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryEstimatedDays}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/estimatedDays}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryCustomer}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/customer}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryProduct}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/material}" class="nxOrderDetailValue nxOrderProductName" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryQuantity}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/quantity}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryAmount}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/amount}" class="nxOrderDetailValue nxOrderAmount" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryCreationDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/creationDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- PlannedOrder -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'PlannedOrder' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryMaterial}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/material}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPlannedQty}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/quantity}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPlannedStart}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/plannedStartDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPlannedEnd}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/plannedEndDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryMrpElement}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/mrpElement}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPlant}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/plannedPlant}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- PR -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'PR' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryMaterial}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/material}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPrQty}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/quantity}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPrRequestDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/requestDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPrDeliveryDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/deliveryDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPrRequester}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/requester}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPurchaseGroup}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/purchaseGroup}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPlant}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/plant}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- PO -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'PO' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquirySupplier}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/supplierName}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryMaterial}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/material}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPoQty}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/quantity}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryUnitPrice}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/unitPrice}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryAmount}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/amount}" class="nxOrderDetailValue nxOrderAmount" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPoDeliveryDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/deliveryDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPurchaseOrg}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/purchaseOrg}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- POMigo -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'POMigo' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryMaterial}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/material}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryMigoQty}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/quantity}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryMigoDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/migoDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryMoveType}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/moveType}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryStorage}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/storage}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryPurchaseOrder}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/purchaseOrder}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- Production -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'Production' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryMaterial}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/material}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryProdQty}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/quantity}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryProdStart}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/startDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryProdEnd}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/endDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryConfirmedQty}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/confirmedQty}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryStatus}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/status}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- ProdMigo -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'ProdMigo' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryMaterial}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/material}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryMigoQty}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/quantity}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryMigoDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/migoDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryMoveType}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/moveType}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryStorage}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/storage}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryProductionOrder}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/productionOrder}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- DN -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'DN' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryShipTo}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/customerName}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryMaterial}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/material}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryDnQty}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/quantity}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryDnPlanned}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/plannedDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryDnActual}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/actualDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryShippingPoint}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/shippingPoint}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryDnStatus}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/overallStatus}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- BL -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'BL' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryCustomer}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/customerName}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryBlNet}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/netAmount}" class="nxOrderDetailValue nxOrderAmount" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryBlTax}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/taxAmount}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryBlDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/billingDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryBlType}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/billingType}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPaymentTerms}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/paymentTerms}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- FI -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'FI' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryFiCompany}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/companyCode}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryFiDocType}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/docType}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryFiDocDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/docDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryFiPostingDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/postingDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryAmount}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/amount}" class="nxOrderDetailValue nxOrderAmount" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryFiFiscalYear}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/fiscalYear}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryFiRefDoc}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/refDocument}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryStatus}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/status}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- Clearing -->
+                    <VBox visible="{= ${dashboard>/spaces/orderInquiry/docType} === 'Clearing' }" renderType="Bare" width="100%">
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>documentInquiryCustomer}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/customerName}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryClearingAmount}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/amount}" class="nxOrderDetailValue nxOrderAmount" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryClearingDate}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/clearingDate}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryPaymentMethod}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/paymentMethod}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryClearingDoc}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/clearingDocument}" class="nxOrderDetailValue" />
+                        </HBox>
+                        <HBox class="nxOrderDetailRow" alignItems="Center" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+                            <Text text="{i18n>docInquiryRefBilling}" class="nxOrderDetailLabel" />
+                            <Text text="{dashboard>/spaces/orderInquiry/display/refBilling}" class="nxOrderDetailValue" />
+                        </HBox>
+                    </VBox>
                 </VBox>
             </VBox>
 

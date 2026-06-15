@@ -4698,7 +4698,7 @@ html, body, body > div, #container, #container-uiarea,
 
 .nxHeaderBrand {
     flex-shrink: 0;
-    gap: 0.625rem;
+    gap: 0.125rem;
     display: flex !important;
     align-items: center !important;
     padding: 0.35rem 0.5rem 0.35rem 0;
@@ -4711,10 +4711,10 @@ html, body, body > div, #container, #container-uiarea,
 .nxHeaderMark,
 .nxHeaderMark .sapMImg,
 .nxHeaderMark img {
-    width: 1.5rem !important;
-    height: 1.5rem !important;
-    max-width: 1.5rem !important;
-    max-height: 1.5rem !important;
+    width: 3rem !important;
+    height: 3rem !important;
+    max-width: 3rem !important;
+    max-height: 3rem !important;
     object-fit: contain;
     display: block;
     margin: 0;
@@ -4726,7 +4726,7 @@ html, body, body > div, #container, #container-uiarea,
 .nxHeaderAppName,
 .nxHeaderAppName .sapMText {
     font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
-    font-size: 1.125rem !important;
+    font-size: 2.25rem !important;
     font-weight: 800 !important;
     color: #111827 !important;
     line-height: 1.2 !important;
@@ -9268,10 +9268,6 @@ html, body, body > div, #container, #container-uiarea,
     line-height: 1rem !important;
 }
 
-.e2eStepPos03 .e2eMtoCardStatus .sapMObjStatusText {
-    color: #16A34A !important;
-}
-
 .e2eStepPos08 .e2eMtoCardStatus .sapMObjStatusText {
     color: #111827 !important;
 }
@@ -11168,10 +11164,6 @@ html, body, body > div, #container, #container-uiarea,
     text-indent: -1.1rem !important;
 }
 
-.e2eMtoReferenceGrid .e2eStepPos03 .e2eMtoCardStatus .sapMObjStatusText {
-    color: #16A34A !important;
-}
-
 .e2eMtoReferenceGrid .e2eStepPos08 .e2eMtoCardStatus .sapMObjStatusText {
     color: #111827 !important;
 }
@@ -11993,5 +11985,81 @@ html, body, body > div, #container, #container-uiarea,
 .e2eMtoReferenceGrid .step-pending.e2eMtoConnector::before,
 .e2eMtoReferenceGrid .e2eMtoConnector.step-pending::before {
     /* uses .e2eMtoConnectorPending */
+}
+
+/* Step03 status dot/text — follow card progress class (Done/Active/Pending) */
+.e2eMtoReferenceGrid .e2eStepPos03.e2eMtoCardDone .e2eMtoCardStatus .sapMObjStatusText {
+    color: #16A34A !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos03.e2eMtoCardActive .e2eMtoCardStatus .sapMObjStatusText {
+    color: #D97706 !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos03.e2eMtoCardPending .e2eMtoCardStatus .sapMObjStatusText {
+    color: #111827 !important;
+}
+
+/* MRP badge: spin + blue glow while step 2 is in progress or completed */
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp .e2eMtoMrpSpinIcon {
+    animation: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp.e2eMtoMrpRunning .e2eMtoMrpBadge {
+    background: #EAF4FF !important;
+    border-color: #93C5FD !important;
+    animation: e2eMtoMrpBadgeGlow 2s ease-in-out infinite !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp.e2eMtoMrpRunning .e2eMtoMrpSpinIcon {
+    color: #0070F2 !important;
+    animation: e2eMtoMrpIconSpin 1.2s linear infinite !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp.e2eMtoMrpRunning .e2eMtoMrpLabelLine,
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp.e2eMtoMrpRunning .e2eMtoMrpLabelLine .sapMText {
+    color: #0070F2 !important;
+}
+
+@keyframes e2eMtoMrpBadgeGlow {
+    0%, 100% {
+        box-shadow: 0 0 6px rgba(37, 99, 235, 0.35), 0 1px 4px rgba(37, 99, 235, 0.12) !important;
+    }
+    50% {
+        box-shadow: 0 0 16px rgba(37, 99, 235, 0.55), 0 2px 8px rgba(37, 99, 235, 0.2) !important;
+    }
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp:not(.e2eMtoMrpRunning) .e2eMtoMrpBadge {
+    background: #F3F4F6 !important;
+    border-color: #D1D5DB !important;
+    box-shadow: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp:not(.e2eMtoMrpRunning) .e2eMtoMrpSpinIcon {
+    color: #9CA3AF !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp:not(.e2eMtoMrpRunning) .e2eMtoMrpLabelLine,
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp:not(.e2eMtoMrpRunning) .e2eMtoMrpLabelLine .sapMText {
+    color: #6B7280 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp.e2eMtoConnectorPending::before {
+    background: transparent !important;
+    border: 1.5px dashed #B8C8D8 !important;
+    height: 0.5rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp.e2eMtoConnectorActive::before {
+    background: #93C5FD !important;
+    border: none !important;
+    height: 4px !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorMrp.e2eMtoConnectorDone::before {
+    background: #19B66B !important;
+    border: none !important;
+    height: 4px !important;
 }
 
