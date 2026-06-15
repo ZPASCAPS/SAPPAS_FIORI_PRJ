@@ -107,21 +107,21 @@ sap.ui.define([], function () {
                 this._handleSalesOrder(sProcessedText, oModel, oCallbacks);
 
 
-            // 🚀 4. [신규] 전표 추적 로직 (우선순위를 높여서 다른 단어에 안 뺏기게 함!)
+                // 🚀 4. [신규] 전표 추적 로직 (우선순위를 높여서 다른 단어에 안 뺏기게 함!)
             } else if (sProcessedText.includes("추적") || sProcessedText.includes("흐름")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://chain-link", "전표 연결 흐름을 추적하고 있습니다...");
-                
+
                 var aMatch = sProcessedText.match(/\d+/);
                 var sOrderNum = aMatch ? aMatch[0] : null;
-                
+
                 if (sOrderNum) {
                     // 모델 파라미터가 정확히 넘어가는지 확인 (oTrackerModel)
                     this._handleOrderTracking(sOrderNum, oTrackerModel, oCallbacks);
                 } else {
                     oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "어떤 판매오더를 추적할지 찾지 못했어요. '320번 추적해 줘'처럼 번호를 말씀해 주세요.");
-                }    
+                }
 
-                
+
                 // 4. 재고 조회 로직
             } else if (sProcessedText.includes("재고") || sProcessedText.includes("몇 개") || sProcessedText.includes("수량") || sProcessedText.includes("품절")) {
                 oCallbacks.onProcess("AI 비서", "sap-icon://product", "재고 현황을 분석하고 있습니다...");
@@ -159,21 +159,28 @@ sap.ui.define([], function () {
                 this._handlePrToPoConversion(sProcessedText, oModel, oCallbacks);
 
 
+                // 🚀 [신규 추가] 구매오더 기반 입고(MIGO) 처리 06/15
+                // ==========================================================
+            } else if (sProcessedText.includes("입고")) {
+                this._handlePoToGrCreation(sProcessedText, oModel, oCallbacks);
+
                 // 5. 예외 처리
             } else {
-    oCallbacks.onError(
-        "AI 비서",
-        "sap-icon://sys-help-2",
-        "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n\n" +
-        "사용 가능한 지시에 대해 알려드릴게요.\n" +
-        "- 판매오더 생성 [주문]\n" +
-        "- 판매오더 요약 [요약]\n" +
-        "- 판매오더 추적 [추적]\n" +
-        "- 구매오더 생성 [발주]\n" +
-        "- 가용재고 조회 [재고]\n\n" +
-        "지시를 하실 키워드 [두글자]를 입력해주시면 명령 가이드를 드립니다."
-    );
-}
+                oCallbacks.onError(
+                    "AI 비서",
+                    "sap-icon://sys-help-2",
+                    "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n\n" +
+                    "사용 가능한 지시에 대해 알려드릴게요.\n" +
+                    "- 판매오더 생성 [주문]\n" +
+                    "- 판매오더 요약 [요약]\n" +
+                    "- 판매오더 추적 [추적]\n" +
+                    "- 구매오더 생성 [발주]\n" +
+                    "- 구매요청 변환 [변환]\n" +
+                    "- 구매오더 입고 [입고]\n" +
+                    "- 가용재고 조회 [재고]\n\n" +
+                    "지시를 하실 키워드 [두글자]를 입력해주시면 명령 가이드를 드립니다."
+                );
+            }
 
 
         },
@@ -510,23 +517,23 @@ sap.ui.define([], function () {
         _handleOrderTracking: function (sOrderNum, oTrackerModel, oCallbacks) {
             // SAP 영업오더 번호는 10자리이므로 앞에 0을 채워줍니다 (예: 320 -> 0000000320)
             var sPaddedOrder = sOrderNum.padStart(10, '0');
-            
+
             // 필터 생성
-            var aFilters = [ new sap.ui.model.Filter("SalesOrder", "EQ", sPaddedOrder) ];
+            var aFilters = [new sap.ui.model.Filter("SalesOrder", "EQ", sPaddedOrder)];
 
             oTrackerModel.read("/Z_C_E2E_OrderTracker", {
                 filters: aFilters,
                 success: function (oData) {
                     var aResults = oData.results;
-                    
+
                     if (aResults && aResults.length > 0) {
-                        
+
                         // 💡 1. 중복 데이터를 하나로 묶기 위한 그룹화 (Grouping) 객체 생성
                         var oGroupedData = {};
 
-                        aResults.forEach(function(item) {
+                        aResults.forEach(function (item) {
                             var sMat = item.Material;
-                            
+
                             // 해당 품목이 처음 나왔다면 기본 뼈대 생성
                             if (!oGroupedData[sMat]) {
                                 oGroupedData[sMat] = {
@@ -542,7 +549,7 @@ sap.ui.define([], function () {
                                     ClearingDocument: item.ClearingDocument || "없음"
                                 };
                             }
-                            
+
                             // 구매요청(PR) 번호가 존재하고, 아직 배열에 없다면 추가
                             if (item.PurchaseRequisition && !oGroupedData[sMat].PurchaseRequisitions.includes(item.PurchaseRequisition)) {
                                 oGroupedData[sMat].PurchaseRequisitions.push(item.PurchaseRequisition);
@@ -551,13 +558,13 @@ sap.ui.define([], function () {
 
                         // 💡 2. 묶여진 데이터를 기반으로 챗봇 메시지 조립
                         var sMsg = "";
-                        
+
                         for (var key in oGroupedData) {
                             var oGroup = oGroupedData[key];
-                            
+
                             // 구매요청 배열을 쉼표로 예쁘게 연결 (값이 없으면 "없음")
                             var sPRString = oGroup.PurchaseRequisitions.length > 0 ? oGroup.PurchaseRequisitions.join(", ") : "없음";
-                            
+
                             sMsg += "📌 판매오더 " + sOrderNum + "번 추적 결과입니다. (품목 : " + oGroup.Material + ")\n\n";
                             sMsg += "- 판매오더 : " + oGroup.SalesOrder + "\n";
                             sMsg += "- 계획오더 : " + oGroup.PlannedOrder + "\n";
@@ -568,7 +575,7 @@ sap.ui.define([], function () {
                             sMsg += "- 송장/회계 : " + oGroup.BillingDocument + " / " + oGroup.FIDocument + "\n";
                             sMsg += "- 입금전기 : " + oGroup.ClearingDocument + "\n\n";
                         }
-                        
+
                         oCallbacks.onSuccess("AI 비서", "sap-icon://accept", sMsg);
                     } else {
                         oCallbacks.onSuccess("AI 비서", "sap-icon://warning2", sOrderNum + "번 오더에 대한 추적 데이터가 없습니다.");
@@ -587,13 +594,18 @@ sap.ui.define([], function () {
          */
         _handlePrToPoConversion: function (sProcessedText, oModel, oCallbacks) {
             // 1. 문장에서 10자리 숫자(PR 번호)만 쏙 뽑아내기
-            var aMatch = sProcessedText.match(/(\d{10})/); 
-            var sPrNumber = aMatch ? aMatch[1] : null;
+            var aMatch = sProcessedText.match(/(\d+)/);
+            var sRawNumber = aMatch ? aMatch[1] : null;
 
-            if (!sPrNumber) {
-                oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "변환할 PR 번호를 찾지 못했어요. '0010000395 변환해 줘' 처럼 10자리 번호를 말씀해 주세요.");
+            if (!sRawNumber) {
+                // 에러 메시지도 자연스럽게 수정
+                oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "변환할 PR 번호를 찾지 못했어요. '10000395 변환해 줘' 처럼 번호를 말씀해 주세요.");
                 return;
             }
+
+            // 🌟 2. 핵심: 추출한 숫자가 몇 자리든, 무조건 앞에 '0'을 채워 10자리로 강제 변환합니다. (SAP 표준 대응)
+            // 예: "10000395" -> "0010000395"
+            var sPrNumber = sRawNumber.padStart(10, '0');
 
             // 2. 백엔드로 보낼 파라미터 세팅
             var oPayload = {
@@ -602,7 +614,7 @@ sap.ui.define([], function () {
 
             // 3. Function Import 호출
             oModel.callFunction("/ConvertPrToPo", {
-                method: "POST", 
+                method: "POST",
                 urlParameters: oPayload,
                 success: function (oData) {
                     // 성공 메시지 추출
@@ -618,6 +630,48 @@ sap.ui.define([], function () {
                     } catch (e) { }
                     oCallbacks.onError("AI 비서", "sap-icon://error", "🚨 " + sErrMsg);
                 }
+            });
+        },
+
+
+        /**
+         * [기능] 구매오더(PO) 기반 입고(MIGO) 실행
+         */
+        _handlePoToGrCreation: function (sText, oModel, oCallbacks) {
+            // 1. 사용자의 문장에서 10자리 숫자(구매오더 번호) 추출
+            var aMatch = sText.match(/\d{10}/); // 구매오더는 보통 10자리 (예: 4500001234)
+            
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "어떤 구매오더를 입고할지 10자리 번호를 함께 말씀해 주세요. \n(예: 4500001040 입고해줘)");
+                return;
+            }
+            
+            var sPoNumber = aMatch[0];
+
+            // 2. 진행 중 말풍선 띄우기 (아이콘: 트럭 모양)
+            oCallbacks.onProcess("AI 비서", "sap-icon://shipping-status", "구매오더 " + sPoNumber + "번 입고 처리를 진행합니다. 잠시만 기다려주세요...");
+
+            // 3. OData Function Import 호출 (CreateGrFromPo)
+            var sPath = "/CreateGrFromPo";
+
+            oModel.callFunction(sPath, {
+                method: "POST",
+                urlParameters: {
+                    PO_NUMBER: sPoNumber
+                },
+                success: function (oData, response) {
+                    // 백엔드에서 넘겨준 GrResult 바구니 데이터 확인
+                    var oResult = oData.CreateGrFromPo || oData;
+                    
+                    if (oResult && oResult.MBLNR) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    } else {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", "입고는 시도했으나, 자재문서 번호를 받지 못했습니다.");
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "입고 처리 중 오류가 발생했습니다. PO 상태를 확인해주세요.");
+                }.bind(this)
             });
         }
 
