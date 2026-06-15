@@ -50,6 +50,13 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "mmInventoryService": {
+        "uri": "/sap/opu/odata/sap/Z_C_MM_INVENTORY_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
 
     }
@@ -117,6 +124,11 @@
       "orderSummaryModel": {
         "dataSource": "orderSummarySource",
         "preload": true
+      },
+      "mmInventory": {
+        "dataSource": "mmInventoryService",
+        "preload": true,
+        "settings": {}
       }
     },
     "resources": {
