@@ -19,24 +19,40 @@
         <BusyIndicator visible="{dashboard>/mmGoodsMovement/loading}" class="nxMmGoodsMovementBusy" />
 
         <VBox visible="{= !${dashboard>/mmGoodsMovement/loading} }" width="100%" renderType="Bare" class="nxMmGoodsMovementBody">
-            <VBox class="nxMmGoodsMovementHero nxMmGmFlowHero">
-                <HBox alignItems="Center" justifyContent="SpaceBetween" wrap="Wrap" class="nxMmGoodsMovementHeroTop">
-                    <VBox class="nxMmGoodsMovementHeroText">
-                        <HBox alignItems="Center" class="nxMmGoodsMovementBadgeRow">
-                            <ObjectStatus text="LIVE SAP DATA" state="Success" icon="sap-icon://connected" class="nxMmGoodsMovementLiveBadge" />
-                            <ObjectStatus text="Movement Flow Monitor" state="Success" icon="sap-icon://journey-change" class="sapUiTinyMarginBegin" />
+            <VBox class="mmFeatureHero mmHeroMovement mmHeroCard" width="100%">
+                <HBox alignItems="Start" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="mmHeroCardHead">
+                    <VBox class="mmHeroContent">
+                        <Title text="Goods Movement" level="H2" class="mmHeroTitle" />
+                        <Text
+                            text="자재 입출고 전표와 이동 흐름, 재고 영향 여부를 확인하는 화면"
+                            class="mmHeroDescription" />
+                    </VBox>
+                    <HBox alignItems="Center" class="mmHeroActions">
+                        <HBox alignItems="Center" class="mmHeroActionsBox">
+                            <Button
+                                id="mmGoodsMovementContentFilterBtn"
+                                text="조회/필터"
+                                icon="sap-icon://filter"
+                                type="Transparent"
+                                press=".onToolbarFilterOpen"
+                                class="mmFilterButton" />
                         </HBox>
-                        <Title text="Goods Movement Monitor" level="H2" class="nxMmGoodsMovementHeroTitle" />
-                        <Text
-                            text="MIGO 전표와 PO, 자재 연결 상태를 확인하여 재고 반영 흐름을 추적합니다."
-                            class="nxMmGoodsMovementHeroSub" />
-                        <Text
-                            text="{= '현재 필터: ' + ${dashboard>/mmGoodsMovement/criteriaLabel} + ' · Last Updated: ' + ${dashboard>/mmGoodsMovement/lastUpdated} }"
-                            class="nxMmGoodsMovementHeroMeta" />
-                    </VBox>
-                    <VBox alignItems="End" class="nxMmGoodsMovementHeroActions">
-                        <Button text="SAP 새로고침" icon="sap-icon://refresh" type="Emphasized" press=".onRefreshPress" class="nxMmGoodsMovementRefreshBtn" />
-                    </VBox>
+                    </HBox>
+                </HBox>
+                <HBox class="mmHeroKpiStrip" wrap="Wrap" items="{dashboard>/mmGoodsMovement/heroKpis}">
+                    <items>
+                        <VBox class="mmHeroKpiItem">
+                            <HBox alignItems="Center" justifyContent="SpaceBetween">
+                                <Text text="{dashboard>displayTitle}" class="mmHeroKpiLabel" />
+                                <core:Icon src="{dashboard>icon}" size="0.9rem" color="#FFFFFF" />
+                            </HBox>
+                            <HBox alignItems="Baseline" class="mmHeroKpiValueRow">
+                                <Text text="{dashboard>value}" class="mmHeroKpiValue" />
+                                <Text text="{dashboard>unit}" visible="{= !!${dashboard>unit} }" class="mmHeroKpiUnit" />
+                            </HBox>
+                            <Text text="{dashboard>hint}" class="mmHeroKpiHint" />
+                        </VBox>
+                    </items>
                 </HBox>
             </VBox>
 

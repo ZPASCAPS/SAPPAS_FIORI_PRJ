@@ -6,7 +6,7 @@
 
   역할:
   - 상단 헤더 아래 모듈 탭 바: DASHBOARD / SD / MM / PP / FI.
-  - 활성 탭 슬라이딩 밑줄 (Overview 서브탭과 동일 패턴)
+  - MM Flyout: hover/click 시 내부 메뉴(Overview~Note) 카드형 Popover 표시.
 
   대시보드 구조:
   Main → DashboardMain → DashboardModuleNav (헤더 바로 아래)
@@ -21,16 +21,16 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <HBox class="nxModuleNavBar" width="100%" alignItems="Center">
-        <VBox id="moduleNavTabsWrap" class="nxModuleNavTabsWrap">
-            <HBox id="moduleNavTabsBar" class="nxModuleNavBarInner" alignItems="Center">
+    <HBox class="nxModuleNavBar moduleNavBar" width="100%" alignItems="Center">
+        <VBox id="moduleNavTabsWrap" class="nxModuleNavTabsWrap moduleNavBarTrack">
+            <HBox id="moduleNavTabsBar" class="nxModuleNavBarInner moduleNavBarInner" alignItems="Center">
                 <Button
                     id="moduleNavDashboard"
                     text="Dashboard"
                     icon="sap-icon://bbyd-dashboard"
                     type="Transparent"
                     press=".onModuleNavPress"
-                    class="{= ${dashboard>/ui/navKey} === 'DASHBOARD' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                    class="{= ${dashboard>/ui/navKey} === 'DASHBOARD' ? 'nxModuleNavTab nxModuleNavTabActive moduleNavItem moduleNavItemActive' : 'nxModuleNavTab moduleNavItem' }">
                     <customData>
                         <core:CustomData key="navKey" value="DASHBOARD" />
                     </customData>
@@ -41,20 +41,9 @@
                     icon="sap-icon://sales-order"
                     type="Transparent"
                     press=".onModuleNavPress"
-                    class="{= ${dashboard>/ui/navKey} === 'SD_SALES' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                    class="{= ${dashboard>/ui/navKey} === 'SD_SALES' ? 'nxModuleNavTab nxModuleNavTabActive moduleNavItem moduleNavItemActive' : 'nxModuleNavTab moduleNavItem' }">
                     <customData>
                         <core:CustomData key="navKey" value="SD_SALES" />
-                    </customData>
-                </Button>
-                <Button
-                    id="moduleNavMm"
-                    text="MM"
-                    icon="sap-icon://product"
-                    type="Transparent"
-                    press=".onModuleNavPress"
-                    class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
-                    <customData>
-                        <core:CustomData key="navKey" value="MM_MATERIALS" />
                     </customData>
                 </Button>
                 <Button
@@ -63,9 +52,20 @@
                     icon="sap-icon://factory"
                     type="Transparent"
                     press=".onModuleNavPress"
-                    class="{= ${dashboard>/ui/navKey} === 'PP_PRODUCTION' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                    class="{= ${dashboard>/ui/navKey} === 'PP_PRODUCTION' ? 'nxModuleNavTab nxModuleNavTabActive moduleNavItem moduleNavItemActive' : 'nxModuleNavTab moduleNavItem' }">
                     <customData>
                         <core:CustomData key="navKey" value="PP_PRODUCTION" />
+                    </customData>
+                </Button>
+                <Button
+                    id="moduleNavMm"
+                    text="MM"
+                    icon="sap-icon://product"
+                    type="Transparent"
+                    press=".onModuleNavPress"
+                    class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleNavTab nxModuleNavTabActive moduleNavItem moduleNavItemActive' : 'nxModuleNavTab moduleNavItem' }">
+                    <customData>
+                        <core:CustomData key="navKey" value="MM_MATERIALS" />
                     </customData>
                 </Button>
                 <Button
@@ -74,7 +74,7 @@
                     icon="sap-icon://money-bills"
                     type="Transparent"
                     press=".onModuleNavPress"
-                    class="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleNavTab nxModuleNavTabActive' : 'nxModuleNavTab' }">
+                    class="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleNavTab nxModuleNavTabActive moduleNavItem moduleNavItemActive' : 'nxModuleNavTab moduleNavItem' }">
                     <customData>
                         <core:CustomData key="navKey" value="FI_CO_FINANCE" />
                     </customData>
@@ -82,4 +82,25 @@
             </HBox>
         </VBox>
     </HBox>
+
+    <Popover
+        id="moduleFlyoutPopover"
+        class="moduleFlyoutPopover"
+        showHeader="false"
+        showArrow="true"
+        placement="Bottom"
+        offsetX="0"
+        offsetY="4"
+        contentWidth="13.5rem">
+        <VBox id="moduleFlyoutBox" class="moduleFlyoutBox" width="100%" items="{dashboard>/ui/moduleFlyoutMenu}">
+            <items>
+                <Button
+                    text="{dashboard>text}"
+                    type="Transparent"
+                    press=".onFlyoutItemPress"
+                    width="100%"
+                    class="{= ${dashboard>/ui/navKey} === ${dashboard>/ui/moduleFlyoutNavKey} &amp;&amp; ${dashboard>/moduleView/activeSubTab} === ${dashboard>key} ? 'moduleFlyoutItem moduleFlyoutItemActive' : 'moduleFlyoutItem' }" />
+            </items>
+        </VBox>
+    </Popover>
 </mvc:View>

@@ -23,7 +23,8 @@ sap.ui.define([
         INVENTORY: "subTabMmInventory",
         PURCHASING: "subTabMmPurchasing",
         GOODS_MOVEMENT: "subTabMmGoodsMovement",
-        REPORTS: "subTabReports"
+        REPORTS: "subTabReports",
+        NOTES: "subTabMmNotes"
     };
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.ModuleDashboardShell", {
@@ -43,6 +44,10 @@ sap.ui.define([
 
             this._fnSubTabResize = this._updateSubTabIndicator.bind(this, true);
             window.addEventListener("resize", this._fnSubTabResize);
+
+            sap.ui.getCore().getEventBus().subscribe("dashboard", "exportModuleKpi", this.onExport, this);
+            this._fnMmShellUiAction = this._onMmShellUiAction.bind(this);
+            sap.ui.getCore().getEventBus().subscribe("dashboard", "mmShellUiAction", this._fnMmShellUiAction, this);
         },
 
         onExit: function () {
@@ -54,6 +59,11 @@ sap.ui.define([
 
             if (this._fnSubTabResize) {
                 window.removeEventListener("resize", this._fnSubTabResize);
+            }
+
+            sap.ui.getCore().getEventBus().unsubscribe("dashboard", "exportModuleKpi", this.onExport, this);
+            if (this._fnMmShellUiAction) {
+                sap.ui.getCore().getEventBus().unsubscribe("dashboard", "mmShellUiAction", this._fnMmShellUiAction, this);
             }
 
             this._oSubTabIndicator = null;
@@ -415,6 +425,39 @@ sap.ui.define([
 
         onMmGoodsMovementRefresh: function () {
             sap.ui.getCore().getEventBus().publish("dashboard", "mmGoodsMovementAction", { action: "refresh" });
+        },
+
+        /**
+         * MM Hero 영역 조회/필터 Popover를 열기 위한 EventBus 브릿지.
+         */
+        _onMmShellUiAction: function (sChannel, sEvent, oData) {
+            var mPopoverByAction = {
+                overviewFilterOpen: "mmOverviewFilterPopover",
+                inventoryFilterOpen: "mmInventoryFilterPopover",
+                purchasingFilterOpen: "mmPurchasingFilterPopover",
+                goodsMovementFilterOpen: "mmGoodsMovementFilterPopover"
+            };
+            var oPopover;
+            var oBtn;
+            var sPopoverId;
+
+            if (!oData || !mPopoverByAction[oData.action]) {
+                return;
+            }
+
+            sPopoverId = mPopoverByAction[oData.action];
+            oPopover = this.byId(sPopoverId);
+            oBtn = oData.openById && sap.ui.getCore().byId(oData.openById);
+
+            if (!oPopover || !oBtn) {
+                return;
+            }
+
+            if (oPopover.isOpen()) {
+                oPopover.close();
+            } else {
+                oPopover.openBy(oBtn);
+            }
         }
     });
 });

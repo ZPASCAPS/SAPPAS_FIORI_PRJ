@@ -40,6 +40,9 @@
             viewName="com.capstone.dashboard.fioridashboard.view.features.AiAssistant"
             class="nxOverlaySlot" />
         <mvc:XMLView
+            viewName="com.capstone.dashboard.fioridashboard.view.features.NotesPanel"
+            class="nxOverlaySlot nxNotesOverlaySlot" />
+        <mvc:XMLView
             viewName="com.capstone.dashboard.fioridashboard.view.features.MaterialCreate"
             class="nxOverlaySlot" />
     </VBox>

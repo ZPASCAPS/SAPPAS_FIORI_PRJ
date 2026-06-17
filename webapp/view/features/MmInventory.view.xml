@@ -19,44 +19,38 @@
         <BusyIndicator visible="{dashboard>/mmInventory/loading}" class="nxMmInventoryBusy" />
 
         <VBox visible="{= !${dashboard>/mmInventory/loading} }" width="100%" renderType="Bare" class="nxMmInventoryBody">
-            <VBox class="nxMmInventoryHero">
-                <HBox alignItems="Center" justifyContent="SpaceBetween" wrap="Wrap" class="nxMmInventoryHeroTop">
-                    <VBox class="nxMmInventoryHeroText">
-                        <HBox alignItems="Center" class="nxMmInventoryBadgeRow mmInventoryHeroBadges">
-                            <ObjectStatus
-                                text="LIVE SAP DATA"
-                                state="Success"
-                                icon="sap-icon://connected"
-                                class="nxMmInventoryLiveBadge" />
-                            <ObjectStatus
-                                text="Z_C_MM_INVENTORY"
-                                state="Success"
-                                icon="sap-icon://inventory"
-                                class="sapUiTinyMarginBegin" />
-                        </HBox>
-                        <Title text="Material Inventory" level="H2" class="nxMmInventoryHeroTitle mmInventoryHeroTitle" />
+            <VBox class="mmFeatureHero mmHeroInventory mmHeroCard" width="100%">
+                <HBox alignItems="Start" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="mmHeroCardHead">
+                    <VBox class="mmHeroContent">
+                        <Title text="Inventory" level="H2" class="mmHeroTitle" />
                         <Text
-                            text="자재·플랜트·저장위치별 재고 수량을 확인하는 재고 관리 화면입니다."
-                            class="nxMmInventoryHeroSub mmInventoryHeroSub" />
-                        <Text
-                            text="{= '현재 필터: ' + ${dashboard>/mmInventory/criteriaLabel} + ' · 조회: ' + ${dashboard>/mmInventory/lastUpdated} }"
-                            class="nxMmInventoryHeroMeta" />
+                            text="자재별 재고 수량과 보관 위치, 품질/보류 재고 상태를 확인하는 화면"
+                            class="mmHeroDescription" />
                     </VBox>
+                    <HBox alignItems="Center" class="mmHeroActions">
+                        <HBox alignItems="Center" class="mmHeroActionsBox">
+                            <Button
+                                id="mmInventoryContentFilterBtn"
+                                text="조회/필터"
+                                icon="sap-icon://filter"
+                                type="Transparent"
+                                press=".onToolbarFilterOpen"
+                                class="mmFilterButton" />
+                        </HBox>
+                    </HBox>
                 </HBox>
-
-                <HBox class="nxMmInventoryKpiBand" wrap="Wrap" items="{dashboard>/mmInventory/kpis}">
+                <HBox class="mmHeroKpiStrip" wrap="Wrap" items="{dashboard>/mmInventory/kpis}">
                     <items>
-                        <VBox class="{= 'nxMmInventoryKpi nxMmInventoryKpi--' + ${dashboard>accent} }">
+                        <VBox class="mmHeroKpiItem">
                             <HBox alignItems="Center" justifyContent="SpaceBetween">
-                                <Text text="{dashboard>displayTitle}" class="nxMmInventoryKpiLabel" />
-                                <core:Icon src="{dashboard>icon}" size="1.1rem" class="nxMmInventoryKpiIcon" />
+                                <Text text="{dashboard>displayTitle}" class="mmHeroKpiLabel" />
+                                <core:Icon src="{dashboard>icon}" size="0.9rem" color="#FFFFFF" />
                             </HBox>
-                            <ObjectNumber
-                                number="{dashboard>value}"
-                                unit="{dashboard>unit}"
-                                emphasized="true"
-                                class="nxMmInventoryKpiNum" />
-                            <Text text="{dashboard>hint}" class="nxMmInventoryKpiHint" />
+                            <HBox alignItems="Baseline" class="mmHeroKpiValueRow">
+                                <Text text="{dashboard>value}" class="mmHeroKpiValue" />
+                                <Text text="{dashboard>unit}" visible="{= !!${dashboard>unit} }" class="mmHeroKpiUnit" />
+                            </HBox>
+                            <Text text="{dashboard>hint}" class="mmHeroKpiHint" />
                         </VBox>
                     </items>
                 </HBox>

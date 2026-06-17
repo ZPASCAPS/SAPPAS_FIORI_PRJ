@@ -110,11 +110,19 @@ html, body, body > div, #container, #container-uiarea,
     z-index: 10;
 }
 
+.nxNotesOverlaySlot {
+    z-index: 11000 !important;
+}
+
 .nxOverlaySlot .myFloatingButton {
     pointer-events: auto;
 }
 
 .nxOverlaySlot .nxChatbotPanel {
+    pointer-events: auto;
+}
+
+.nxOverlaySlot .nxNotesPanel {
     pointer-events: auto;
 }
 
@@ -819,7 +827,7 @@ html, body, body > div, #container, #container-uiarea,
 
 /* MM module overview scroll */
 .nxModuleOverviewScroll {
-    background: #F5F6F7;
+    background: #FFFFFF;
 }
 
 /* MM blank sub-tabs (Inventory / Purchasing / Goods Movement) */
@@ -837,12 +845,12 @@ html, body, body > div, #container, #container-uiarea,
 
 /* MM Overview Cockpit */
 .nxMmOverviewScroll {
-    background: #F3F4F6 !important;
+    background: #FFFFFF !important;
 }
 
 .nxMmOverview {
     padding: 0.65rem 1rem 1.25rem;
-    background: #F3F4F6;
+    background: #FFFFFF;
     min-height: 100%;
     box-sizing: border-box;
     gap: 0.65rem;
@@ -1917,7 +1925,7 @@ html, body, body > div, #container, #container-uiarea,
 /* ── MM Inventory — Material Stock Ledger (Teal/Green) ── */
 .nxMmInventoryScroll,
 .mmInventoryPage.nxMmInventoryScroll {
-    background: linear-gradient(180deg, #ECFDF5 0%, #F0FDF4 22%, #F9FAFB 100%);
+    background: #FFFFFF;
 }
 
 .nxMmInventory,
@@ -1929,7 +1937,7 @@ html, body, body > div, #container, #container-uiarea,
     min-width: 0;
     max-width: 100%;
     overflow-x: hidden;
-    background: linear-gradient(180deg, #ECFDF5 0%, #F0FDF4 22%, #F9FAFB 100%);
+    background: #FFFFFF;
     min-height: 100%;
 }
 
@@ -2828,7 +2836,7 @@ html, body, body > div, #container, #container-uiarea,
 
 /* ── MM Purchasing Control Tower ── */
 .nxMmPurchasingScroll {
-    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+    background: #FFFFFF;
 }
 
 .nxMmPurchasing {
@@ -2839,7 +2847,7 @@ html, body, body > div, #container, #container-uiarea,
     min-width: 0;
     max-width: 100%;
     overflow-x: hidden;
-    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+    background: #FFFFFF;
     min-height: 100%;
 }
 
@@ -3333,7 +3341,7 @@ html, body, body > div, #container, #container-uiarea,
 
 /* ── MM Goods Movement Monitor ── */
 .nxMmGoodsMovementScroll {
-    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+    background: #FFFFFF;
 }
 
 .nxMmGoodsMovement {
@@ -3344,7 +3352,7 @@ html, body, body > div, #container, #container-uiarea,
     min-width: 0;
     max-width: 100%;
     overflow-x: hidden;
-    background: linear-gradient(180deg, #EEF2FF 0%, #F3F4F6 28%, #F9FAFB 100%);
+    background: #FFFFFF;
     min-height: 100%;
 }
 
@@ -4210,12 +4218,21 @@ html, body, body > div, #container, #container-uiarea,
 
 
 /* MM Reports — Analytics Report Center (Indigo/Purple) */
+.nxMmReportsScroll {
+    background: #FFFFFF;
+}
+
 .nxMmReports,
 .mmReportsPage {
-    padding: 0.75rem 1rem 1.5rem;
-    background: linear-gradient(180deg, #F5F3FF 0%, #EEF2FF 22%, #F9FAFB 100%);
+    padding: 0.65rem 1rem 1.25rem;
+    background: #FFFFFF;
     min-height: 100%;
     box-sizing: border-box;
+    gap: 0.65rem;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
 }
 
 .nxMmReportsHero,
@@ -4657,6 +4674,15 @@ html, body, body > div, #container, #container-uiarea,
     gap: 1rem;
 }
 
+.appHeader {
+    overflow-x: hidden;
+}
+
+.appHeader .nxHeaderLeft,
+.appHeader .nxHeaderRight {
+    min-width: 0;
+}
+
 .nxHeaderLeft {
     flex: 0 1 auto;
     min-width: 0;
@@ -4703,6 +4729,20 @@ html, body, body > div, #container, #container-uiarea,
     align-items: center !important;
     padding: 0.35rem 0.5rem 0.35rem 0;
     border-radius: 0.5rem;
+}
+
+.nxHeaderBrandClickable {
+    cursor: pointer;
+}
+
+.nxHeaderBrandClickable:hover {
+    background: #F9FAFB;
+}
+
+.nxHeaderBrandClickable:focus,
+.nxHeaderBrandClickable:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .nxHeaderPictogram,
@@ -5019,11 +5059,121 @@ html, body, body > div, #container, #container-uiarea,
     color: #111827 !important;
 }
 
+/* 1차 모듈 메뉴 — 얇고 정돈된 네비게이션 */
+.moduleNavBar {
+    background: #FFFFFF !important;
+}
+
+.moduleNavBarInner {
+    gap: 1.35rem !important;
+}
+
+.moduleNavItem .sapMBtnIcon,
+.moduleNavItem .sapMBtnContent {
+    color: #9CA3AF !important;
+    font-weight: 500 !important;
+}
+
+.moduleNavItem:hover .sapMBtnIcon,
+.moduleNavItem:hover .sapMBtnContent {
+    color: #4B5563 !important;
+}
+
+.moduleNavItemActive .sapMBtnIcon,
+.moduleNavItemActive .sapMBtnContent {
+    color: #111827 !important;
+    font-weight: 700 !important;
+}
+
+.moduleNavBarTrack .nxModuleNavTabIndicator {
+    height: 2px !important;
+    background: #111827 !important;
+}
+
+/* 모듈 Flyout — MM 내부 메뉴 카드형 팝오버 */
+.moduleFlyoutPopover.sapMPopover {
+    border-radius: 0.75rem !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14) !important;
+    overflow: hidden !important;
+    z-index: 12 !important;
+}
+
+.moduleFlyoutPopover .sapMPopoverCont {
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.moduleFlyoutBox {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.15rem !important;
+    padding: 0.4rem !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.moduleFlyoutItem {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+
+.moduleFlyoutItem .sapMBtnInner {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding: 0.55rem 0.8rem !important;
+    border-radius: 0.5rem !important;
+    border: none !important;
+    background: transparent !important;
+    min-height: 2.25rem !important;
+    box-shadow: none !important;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.moduleFlyoutItem .sapMBtnContent,
+.moduleFlyoutItem .sapMBtnContent .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+    line-height: 1.25 !important;
+}
+
+.moduleFlyoutItem:hover .sapMBtnInner {
+    background: #EFF6FF !important;
+}
+
+.moduleFlyoutItem:hover .sapMBtnContent,
+.moduleFlyoutItem:hover .sapMBtnContent .sapMText {
+    color: #1D4ED8 !important;
+}
+
+.moduleFlyoutItemActive .sapMBtnInner {
+    background: #F3F4F6 !important;
+}
+
+.moduleFlyoutItemActive .sapMBtnContent,
+.moduleFlyoutItemActive .sapMBtnContent .sapMText {
+    color: #111827 !important;
+    font-weight: 600 !important;
+}
+
+.nxMmMaterialsShell.nxModuleShell,
+.nxFiFinanceShell.nxModuleShell {
+    padding: 0 !important;
+    min-height: 0 !important;
+    background: #FFFFFF !important;
+}
+
 /* ── Module dashboard shell (CareOps Finances 상단) ── */
 .nxModuleShellSlot {
     flex-shrink: 0;
     width: 100%;
-    background: #F3F4F6;
+    background: #FFFFFF;
 }
 
 .nxModuleShell {
@@ -5129,6 +5279,1070 @@ html, body, body > div, #container, #container-uiarea,
     margin-bottom: 0;
     flex-wrap: nowrap;
     box-sizing: border-box;
+}
+
+.nxModuleSubTabsBar {
+    display: flex !important;
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    box-sizing: border-box;
+}
+
+.nxModuleSubTabsWork {
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.mmNotesTab {
+    flex-shrink: 0;
+}
+
+.mmNotesTabSeparated {
+    margin-left: 2rem;
+    padding-left: 1.25rem;
+    border-left: 1px solid #E5E7EB;
+}
+
+.mmNotesTabSeparated.nxModuleSubTabActive,
+.mmNotesTabSeparated:hover {
+    border-left-color: #D1D5DB;
+}
+
+/* MM Notes — Notion-like local workspace */
+.mmNotesPage,
+.mmNotesShell {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    min-height: calc(100vh - 12rem);
+    padding: 0.75rem 1rem 1rem;
+}
+
+.mmNotesWorkspace {
+    width: 100%;
+    max-width: 72rem;
+    min-width: 0;
+    min-height: 32rem;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+}
+
+.mmNotesHeader {
+    padding: 1.15rem 1.35rem 1rem;
+    border-bottom: 1px solid #F3F4F6;
+    gap: 1rem;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.mmNotesHeaderText {
+    gap: 0.75rem;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.mmNotesHeaderIcon {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+}
+
+.mmNotesHeaderCopy {
+    min-width: 0;
+}
+
+.mmNotesHeaderTitle,
+.mmNotesHeaderTitle.sapMTitle {
+    font-size: 1.125rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.mmNotesSharedBadge,
+.mmNotesSharedBadge.sapMText {
+    font-size: 0.68rem !important;
+    font-weight: 600 !important;
+    color: #2563EB !important;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    background: #EFF6FF;
+    border: 1px solid #DBEAFE;
+    line-height: 1.2 !important;
+    flex-shrink: 0;
+}
+
+.mmNotesModuleTabsWrap.nxModuleSubTabsWrap {
+    width: auto;
+    flex-shrink: 0;
+    min-width: 0;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.mmNotesModuleTabs.nxModuleSubTabs {
+    gap: 1.25rem;
+    flex-wrap: nowrap;
+}
+
+.mmNotesModuleTabs .nxModuleSubTab .sapMBtnInner {
+    padding: 0.55rem 0 !important;
+}
+
+.mmNotesSidebarModuleLabel,
+.mmNotesSidebarModuleLabel.sapMText {
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+    color: #374151 !important;
+    padding: 0 0.15rem 0.35rem;
+    line-height: 1.3 !important;
+}
+
+.mmNotesAuthorPicker {
+    margin-bottom: 0.75rem;
+    padding: 0 0.05rem;
+}
+
+.mmNotesAuthorPickerLabel,
+.mmNotesAuthorPickerLabel.sapMText {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    color: #9CA3AF !important;
+    margin-bottom: 0.35rem;
+    padding-left: 0.15rem;
+    line-height: 1.2 !important;
+}
+
+.mmNotesAuthorPickerList {
+    background: transparent;
+}
+
+.mmNotesAuthorPickerList .sapMListUl {
+    padding: 0;
+}
+
+.mmNotesAuthorPickItem.sapMLIB {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin-bottom: 0.35rem;
+    min-height: auto !important;
+    height: auto !important;
+}
+
+.mmNotesAuthorPickItem.sapMLIB .sapMLIBContent {
+    padding: 0 !important;
+}
+
+.mmNotesAuthorPickRow {
+    gap: 0.5rem;
+    padding: 0.35rem 0.55rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 999px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.mmNotesAuthorPickItemSelected .mmNotesAuthorPickRow {
+    border-color: #3B82F6;
+    background: #EFF6FF;
+}
+
+.mmNotesAuthorPickItem.sapMLIB:hover .mmNotesAuthorPickRow {
+    background: #F9FAFB;
+}
+
+.mmNotesAuthorPickItemSelected.sapMLIB:hover .mmNotesAuthorPickRow {
+    background: #DBEAFE;
+}
+
+.mmNotesAuthorPickName,
+.mmNotesAuthorPickName.sapMText {
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    line-height: 1.3 !important;
+}
+
+.mmNotesHeaderDesc,
+.mmNotesHeaderDesc.sapMText {
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    color: #6B7280 !important;
+    max-width: 40rem;
+}
+
+.mmNotesSaveInfo,
+.mmNotesSaveInfo.sapMText {
+    flex-shrink: 0;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    color: #9CA3AF !important;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    white-space: nowrap;
+}
+
+.mmNotesBody {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    min-height: 28rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.mmNotesSidebar {
+    flex: 0 0 18rem;
+    max-width: 18rem;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #F9FAFB;
+    border-right: 1px solid #E5E7EB;
+    padding: 1rem 0.85rem 1rem 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.mmNotesSidebarHeader {
+    margin-bottom: 0.85rem;
+    padding: 0 0.15rem;
+}
+
+.mmNotesSidebarBrand {
+    gap: 0.35rem;
+    margin-bottom: 0.15rem;
+}
+
+.mmNotesSidebarEmoji {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.mmNotesSidebarTitle,
+.mmNotesSidebarTitle.sapMTitle {
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+}
+
+.mmNotesSidebarSub,
+.mmNotesSidebarSub.sapMText {
+    font-size: 0.75rem !important;
+    color: #9CA3AF !important;
+    padding-left: 1.35rem;
+}
+
+.mmNotesAddButton.sapMBtn {
+    margin-top: 0.35rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 0.5rem !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+.mmNotesAddButton .sapMBtnInner {
+    border: none !important;
+    background: transparent !important;
+    color: #374151 !important;
+    font-weight: 600 !important;
+    justify-content: flex-start !important;
+    padding-left: 0.65rem !important;
+}
+
+.mmNotesAddButton:hover .sapMBtnInner {
+    background: #F3F4F6 !important;
+}
+
+.mmNotesAddButton--empty {
+    max-width: 12rem;
+}
+
+.mmNotesPageList {
+    max-width: 100%;
+    background: transparent;
+}
+
+.mmNotesPageList .sapMListUl {
+    padding: 0;
+}
+
+.mmNotesPageList .sapMLIBContent {
+    overflow: visible !important;
+}
+
+.mmNotesPageItem.sapMLIB {
+    border: none !important;
+    border-radius: 0.5rem !important;
+    margin-bottom: 0.3rem;
+    padding: 0.6rem 0.45rem 0.65rem 0.5rem !important;
+    background: transparent !important;
+    border-left: 3px solid transparent !important;
+    box-sizing: border-box;
+    min-height: 3rem !important;
+    height: auto !important;
+    align-items: stretch !important;
+}
+
+.mmNotesPageItem.sapMLIB:hover {
+    background: #F3F4F6 !important;
+}
+
+.mmNotesPageItemSelected.sapMLIB,
+.mmNotesPageItem.sapMLIBSelected {
+    background: #EFF6FF !important;
+    border-left-color: #3B82F6 !important;
+}
+
+.mmNotesPageItemRow {
+    gap: 0.25rem;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.mmNotesPageItemInner {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.1rem 0;
+}
+
+.mmNotesPageItemActions {
+    flex-shrink: 0;
+    gap: 0.1rem;
+}
+
+.mmNotesPageItemActionBtn.sapMBtn {
+    min-width: 1.75rem !important;
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    padding: 0 !important;
+}
+
+.mmNotesPageItemActionBtn .sapMBtnInner {
+    min-width: 1.75rem !important;
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.mmNotesPageItemActionBtn .sapMBtnIcon {
+    font-size: 0.85rem !important;
+    color: #9CA3AF !important;
+}
+
+.mmNotesPageItemActionBtn:hover .sapMBtnInner {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.mmNotesPageItemDeleteBtn .sapMBtnIcon {
+    color: #DC2626 !important;
+}
+
+.mmNotesPageItemDeleteBtn:hover .sapMBtnInner {
+    background: #FEF2F2 !important;
+}
+
+.mmNotesSapLogo.sapMImg {
+    width: 2.75rem;
+    height: auto;
+    max-height: 1.65rem;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.mmNotesEditorEmptyIllustration {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 1rem;
+    background: linear-gradient(145deg, #ECFDF5 0%, #F0FDFA 100%);
+    border: 1px solid #CCFBF1;
+    box-shadow: 0 6px 18px rgba(13, 148, 136, 0.12);
+}
+
+
+.mmNotesWorkspaceSwitcherBtn.sapMBtn {
+    text-align: left !important;
+    margin-bottom: 0 !important;
+    padding: 0 0.15rem !important;
+}
+
+.mmNotesWorkspaceSwitcherBtn .sapMBtnInner {
+    justify-content: flex-start !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0.5rem 0.5rem 0.45rem 0.45rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    min-height: 2.35rem !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    gap: 0.4rem;
+    margin-bottom: 0 !important;
+}
+
+.mmNotesWorkspaceSwitcherBtn .sapMBtnInner::after {
+    content: "▾";
+    margin-left: 0.35rem;
+    font-size: 0.7rem;
+    color: #9CA3AF;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.mmNotesWorkspaceSwitcherBtn .sapMBtnIcon {
+    width: 1.1rem !important;
+    font-size: 1rem !important;
+    margin-right: 0.45rem !important;
+    flex-shrink: 0;
+}
+
+.mmNotesWorkspaceSwitcherBtn .sapMBtnContent {
+    overflow: visible !important;
+    line-height: 1.4 !important;
+    padding-right: 0.15rem;
+}
+
+.mmNotesWorkspaceSwitcherBtn:hover .sapMBtnInner {
+    background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.mmNotesSidebarBrandClickable {
+    margin-bottom: 0.35rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.mmNotesSidebarBrandClickable:hover {
+    background: transparent;
+}
+
+.mmNotesHeaderText {
+    gap: 0.65rem;
+}
+
+.mmNotesHeaderTitle,
+.mmNotesHeaderTitle.sapMTitle {
+    margin: 0 !important;
+}
+
+.mmNotesPageTitleRow {
+    gap: 0.35rem;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.mmNotesPageMetaRow {
+    gap: 0.45rem;
+    margin-top: 0.3rem;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.mmNotesPageAuthorBadge {
+    flex-shrink: 0;
+    gap: 0.3rem;
+    padding: 0.1rem 0.45rem 0.1rem 0.15rem;
+    border-radius: 999px;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    max-width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.mmNotesPageAuthorAvatar {
+    width: 1.35rem;
+    height: 1.35rem;
+    min-width: 1.35rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
+    flex-shrink: 0;
+}
+
+.mmNotesPageAuthorAvatarText,
+.mmNotesPageAuthorAvatarText.sapMText {
+    font-size: 0.62rem !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    line-height: 1 !important;
+}
+
+.mmNotesPageAuthorName,
+.mmNotesPageAuthorName.sapMText {
+    font-size: 0.68rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    line-height: 1.25 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 4.5rem;
+}
+
+.mmNotesPageMeta,
+.mmNotesPageMeta.sapMText {
+    font-size: 0.68rem !important;
+    color: #9CA3AF !important;
+    line-height: 1.4 !important;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.mmNotesPageTitle,
+.mmNotesPageTitle.sapMText {
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    line-height: 1.45 !important;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    display: block;
+}
+
+.mmNotesSidebarEmpty {
+    min-height: 10rem;
+    padding: 1rem 0.5rem;
+    gap: 0.35rem;
+    text-align: center;
+}
+
+.mmNotesEditor {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    padding: 0.75rem 0 1.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.mmNotesEditorContent {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.mmNotesEditorTopBar {
+    margin-bottom: 0;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 0.65rem 1.25rem 0.35rem;
+    max-width: 52rem;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.mmNotesEditorCanvas {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 0.5rem 1.5rem 2rem;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.mmNotesBreadcrumb,
+.mmNotesBreadcrumb.sapMText {
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    color: #9CA3AF !important;
+}
+
+.mmNotesGhostBtn.sapMBtn .sapMBtnInner {
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    border-radius: 0.45rem !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.mmNotesSaveBtn.sapMBtn .sapMBtnInner {
+    color: #2563EB !important;
+    border-color: #DBEAFE !important;
+    background: #EFF6FF !important;
+}
+
+.mmNotesSaveBtn.sapMBtn:hover .sapMBtnInner {
+    background: #DBEAFE !important;
+}
+
+.mmNotesDeleteBtn.sapMBtn .sapMBtnInner {
+    color: #DC2626 !important;
+    border-color: #FECACA !important;
+    background: #FFFFFF !important;
+}
+
+.mmNotesDeleteBtn.sapMBtn:hover .sapMBtnInner {
+    background: #FEF2F2 !important;
+}
+
+.mmNotesToolbar {
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding: 0.35rem 0;
+}
+
+.mmNotesToolbarGroup {
+    gap: 0.35rem;
+    padding: 0.2rem 0.35rem;
+    border-radius: 0.5rem;
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+}
+
+.mmNotesToolbarSelect {
+    min-width: 5.5rem;
+}
+
+.mmNotesToolbarSelect--size {
+    min-width: 4.5rem;
+}
+
+.mmNotesToolbarSelect .sapMSlt {
+    border: none !important;
+    background: transparent !important;
+    height: 1.65rem !important;
+    min-height: 1.65rem !important;
+    box-shadow: none !important;
+}
+
+.mmNotesToolbarSelect .sapMSltLabel {
+    font-size: 0.75rem !important;
+    line-height: 1.65rem !important;
+    color: #4B5563 !important;
+}
+
+.mmNotesMetaChips {
+    gap: 0.4rem;
+    margin-bottom: 1.15rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.mmNotesMetaChip {
+    gap: 0.3rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0.4rem;
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    min-height: 1.65rem;
+    box-sizing: border-box;
+}
+
+.mmNotesMetaChip--select {
+    padding: 0 0.15rem;
+}
+
+.mmNotesMetaChip--author {
+    padding: 0.15rem 0.5rem 0.15rem 0.2rem;
+    background: #FFFFFF;
+}
+
+.mmNotesMetaChip--authorSelect {
+    gap: 0.35rem;
+    padding-right: 0.35rem;
+}
+
+.mmNotesMetaChipSelect--author.mmNotesMetaChipSelect {
+    min-width: 5.5rem;
+}
+
+.mmNotesMetaChipSelect--author .sapMSlt {
+    border: none !important;
+    background: transparent !important;
+    height: 1.65rem !important;
+    min-height: 1.65rem !important;
+    box-shadow: none !important;
+}
+
+.mmNotesMetaChipSelect--author .sapMSltLabel {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    line-height: 1.65rem !important;
+    color: #111827 !important;
+}
+
+.mmNotesMetaChip--muted {
+    background: transparent;
+    border-color: transparent;
+    padding-left: 0.15rem;
+}
+
+.mmNotesMetaChipText,
+.mmNotesMetaChipText.sapMText {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: #4B5563 !important;
+    line-height: 1.3 !important;
+}
+
+.mmNotesMetaChipMuted,
+.mmNotesMetaChipMuted.sapMText {
+    font-weight: 500 !important;
+    color: #9CA3AF !important;
+}
+
+.mmNotesMetaChipAuthorName,
+.mmNotesMetaChipAuthorName.sapMText {
+    font-weight: 600 !important;
+    color: #111827 !important;
+}
+
+.mmNotesEditorAuthorAvatar {
+    width: 1.25rem;
+    height: 1.25rem;
+    min-width: 1.25rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
+}
+
+.mmNotesEditorAuthorAvatarText,
+.mmNotesEditorAuthorAvatarText.sapMText {
+    font-size: 0.6rem !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    line-height: 1 !important;
+}
+
+.mmNotesMetaChipSelect .sapMSlt {
+    border: none !important;
+    background: transparent !important;
+    height: 1.55rem !important;
+    min-height: 1.55rem !important;
+    min-width: 5.5rem;
+}
+
+.mmNotesMetaChipSelect .sapMSltLabel {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: #4B5563 !important;
+    line-height: 1.55rem !important;
+}
+
+.mmNotesTitleInput,
+.mmNotesTitleInput.sapMInput {
+    margin-bottom: 0.65rem;
+    max-width: 100%;
+}
+
+.mmNotesTitleInput .sapMInputBaseInner,
+.mmNotesTitleInput input {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    padding: 0.2rem 0 !important;
+    min-height: 2.85rem !important;
+    height: auto !important;
+    line-height: 1.35 !important;
+}
+
+.mmNotesTitleInput .sapMInputBaseContentWrapper {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    min-height: 2.85rem !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.mmNotesFontRow {
+    gap: 0.65rem 1rem;
+    margin-bottom: 0.65rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.mmNotesFontItem {
+    gap: 0.35rem;
+}
+
+.mmNotesFontLabel,
+.mmNotesFontLabel.sapMText {
+    font-size: 0.75rem !important;
+    color: #9CA3AF !important;
+}
+
+.mmNotesFontSelect {
+    min-width: 6.5rem;
+}
+
+.mmNotesFontSelect .sapMSlt {
+    border-color: #E5E7EB !important;
+    border-radius: 0.4rem !important;
+    background: #F9FAFB !important;
+    height: 1.75rem !important;
+    min-height: 1.75rem !important;
+}
+
+.mmNotesFs-14 .sapMInputBaseInner,
+.mmNotesFs-14 textarea {
+    font-size: 0.875rem !important;
+}
+
+.mmNotesFs-16 .sapMInputBaseInner,
+.mmNotesFs-16 textarea {
+    font-size: 1rem !important;
+}
+
+.mmNotesFs-18 .sapMInputBaseInner,
+.mmNotesFs-18 textarea {
+    font-size: 1.125rem !important;
+}
+
+.mmNotesFs-20 .sapMInputBaseInner,
+.mmNotesFs-20 textarea {
+    font-size: 1.25rem !important;
+}
+
+.mmNotesFs-24 .sapMInputBaseInner,
+.mmNotesFs-24 textarea {
+    font-size: 1.5rem !important;
+}
+
+.mmNotesTitleInput.mmNotesFs-14 .sapMInputBaseInner,
+.mmNotesTitleInput.mmNotesFs-14 input {
+    font-size: 1.25rem !important;
+}
+
+.mmNotesTitleInput.mmNotesFs-16 .sapMInputBaseInner,
+.mmNotesTitleInput.mmNotesFs-16 input {
+    font-size: 1.5rem !important;
+}
+
+.mmNotesTitleInput.mmNotesFs-18 .sapMInputBaseInner,
+.mmNotesTitleInput.mmNotesFs-18 input {
+    font-size: 1.75rem !important;
+}
+
+.mmNotesTitleInput.mmNotesFs-20 .sapMInputBaseInner,
+.mmNotesTitleInput.mmNotesFs-20 input {
+    font-size: 2rem !important;
+}
+
+.mmNotesTitleInput.mmNotesFs-24 .sapMInputBaseInner,
+.mmNotesTitleInput.mmNotesFs-24 input {
+    font-size: 2.25rem !important;
+}
+
+.mmNotesFf-default .sapMInputBaseInner,
+.mmNotesFf-default textarea {
+    font-family: "72", "72full", Arial, Helvetica, sans-serif !important;
+}
+
+.mmNotesFf-sans .sapMInputBaseInner,
+.mmNotesFf-sans textarea {
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif !important;
+}
+
+.mmNotesFf-serif .sapMInputBaseInner,
+.mmNotesFf-serif textarea {
+    font-family: "Times New Roman", "Batang", serif !important;
+}
+
+.mmNotesFf-mono .sapMInputBaseInner,
+.mmNotesFf-mono textarea {
+    font-family: Consolas, "Courier New", monospace !important;
+}
+
+.mmNotesTitleInput .sapMInputBaseInner::placeholder {
+    color: #D1D5DB !important;
+    font-weight: 700 !important;
+}
+
+.mmNotesMetaRow {
+    gap: 0.65rem 1.25rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #F3F4F6;
+    max-width: 100%;
+}
+
+.mmNotesMetaItem {
+    gap: 0.35rem;
+    flex-shrink: 0;
+}
+
+.mmNotesMetaLabel,
+.mmNotesMetaLabel.sapMText {
+    font-size: 0.75rem !important;
+    color: #9CA3AF !important;
+}
+
+.mmNotesMetaValue,
+.mmNotesMetaValue.sapMText {
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+.mmNotesSectionSelect {
+    min-width: 8.5rem;
+    max-width: 11rem;
+}
+
+.mmNotesSectionSelect .sapMSlt {
+    border-color: #E5E7EB !important;
+    border-radius: 0.4rem !important;
+    background: #F9FAFB !important;
+    height: 1.75rem !important;
+    min-height: 1.75rem !important;
+}
+
+.mmNotesSectionSelect .sapMSltLabel {
+    font-size: 0.8125rem !important;
+    line-height: 1.75rem !important;
+    color: #374151 !important;
+}
+
+.mmNotesContentArea,
+.mmNotesContentArea.sapMTextArea {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.mmNotesContentArea .sapMInputBaseContentWrapper,
+.mmNotesContentArea .sapMInputBaseInner {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.mmNotesContentArea textarea,
+.mmNotesContentArea .sapMInputBaseInner {
+    min-height: 18rem !important;
+    font-size: 0.9375rem !important;
+    line-height: 1.75 !important;
+    color: #374151 !important;
+    resize: vertical !important;
+    padding-top: 0.25rem !important;
+}
+
+.mmNotesActionBar {
+    gap: 0.35rem;
+    flex-shrink: 0;
+}
+
+.mmNotesContentArea textarea::placeholder {
+    color: #D1D5DB !important;
+}
+
+.mmNotesEditorEmpty {
+    min-height: 24rem;
+    padding: 2rem 1rem;
+    gap: 0.45rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.mmNotesEditorEmptyIcon {
+    margin-bottom: 0.35rem;
+}
+
+.mmNotesEmptyTitle,
+.mmNotesEmptyTitle.sapMText {
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+.mmNotesEmptyTitle--large,
+.mmNotesEmptyTitle--large.sapMText {
+    font-size: 1.0625rem !important;
+    margin-top: 0.35rem;
+}
+
+.mmNotesEmptyHint,
+.mmNotesEmptyHint.sapMText {
+    font-size: 0.8125rem !important;
+    color: #9CA3AF !important;
+    max-width: 18rem;
+    text-align: center;
+    line-height: 1.45 !important;
+}
+
+.nxMmNotesScroll {
+    max-width: 100%;
+    box-sizing: border-box;
+    background: #FFFFFF !important;
+}
+
+.nxDarkMode .mmNotesPage,
+.nxDarkMode .mmNotesShell {
+    background: var(--nx-dm-canvas, #111827);
+}
+
+.nxDarkMode .mmNotesWorkspace {
+    background: var(--nx-dm-surface, #1F2937);
+    border-color: var(--nx-dm-border, #374151);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.nxDarkMode .mmNotesHeader {
+    border-bottom-color: var(--nx-dm-border, #374151);
+}
+
+.nxDarkMode .mmNotesHeaderTitle,
+.nxDarkMode .mmNotesHeaderTitle.sapMTitle,
+.nxDarkMode .mmNotesSidebarTitle,
+.nxDarkMode .mmNotesSidebarTitle.sapMTitle,
+.nxDarkMode .mmNotesPageTitle,
+.nxDarkMode .mmNotesPageTitle.sapMText {
+    color: var(--nx-dm-text, #F9FAFB) !important;
+}
+
+.nxDarkMode .mmNotesSidebar {
+    background: rgba(0, 0, 0, 0.15);
+    border-right-color: var(--nx-dm-border, #374151);
+}
+
+.nxDarkMode .mmNotesEditor {
+    background: var(--nx-dm-surface, #1F2937);
+}
+
+.nxDarkMode .mmNotesPageItemSelected.sapMLIB,
+.nxDarkMode .mmNotesPageItem.sapMLIBSelected {
+    background: rgba(59, 130, 246, 0.15) !important;
+}
+
+.nxDarkMode .mmNotesTitleInput .sapMInputBaseInner,
+.nxDarkMode .mmNotesTitleInput input {
+    color: var(--nx-dm-text, #F9FAFB) !important;
+}
+
+.nxDarkMode .mmNotesTabSeparated {
+    border-left-color: var(--nx-dm-border, #374151);
 }
 
 .nxModuleShellKpiBand {
@@ -11849,6 +13063,7 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxDarkMode .nxHeaderBrandBtn:hover .sapMBtnInner,
+.nxDarkMode .nxHeaderBrandClickable:hover,
 .nxDarkMode .nxHeaderTeamSelectorBtn:hover .sapMBtnInner,
 .nxDarkMode .nxHeaderTeamSelector:hover .nxHeaderTeamSelectorBtn .sapMBtnInner,
 .nxDarkMode .nxModuleNavTab:hover .sapMBtnInner {
@@ -12061,5 +13276,1133 @@ html, body, body > div, #container, #container-uiarea,
     background: #19B66B !important;
     border: none !important;
     height: 4px !important;
+}
+
+/* MM Cockpit — 공통 Gradient Hero */
+.mmFeatureHero {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    padding: 1.2rem 1.35rem;
+    margin-bottom: 0.75rem;
+    color: #FFFFFF;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.mmHeroOverview {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 48%, #14b8a6 100%);
+}
+
+.mmHeroInventory {
+    background: linear-gradient(135deg, #065f46 0%, #059669 52%, #2dd4bf 100%);
+}
+
+.mmHeroPurchasing {
+    background: linear-gradient(135deg, #1e3a8a 0%, #6366f1 55%, #a855f7 100%);
+}
+
+.mmHeroMovement {
+    background: linear-gradient(135deg, #1e293b 0%, #0f766e 52%, #f59e0b 100%);
+}
+
+.mmHeroReports {
+    background: linear-gradient(135deg, #4c1d95 0%, #6366f1 50%, #312e81 100%);
+}
+
+.mmHeroBadgeRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.6rem;
+    max-width: 100%;
+}
+
+.mmHeroBadgePill {
+    display: inline-block;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    font-family: "Inter", var(--sapFontFamily, sans-serif);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #FFFFFF;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.mmHeroTitle,
+.mmHeroTitle.sapMTitle {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.35rem !important;
+}
+
+.mmHeroDescription,
+.mmHeroDescription.sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.9375rem !important;
+    line-height: 1.45 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    max-width: 52rem;
+}
+
+.mmHeroFilterLine,
+.mmHeroFilterLine.sapMText {
+    margin-top: 0.55rem;
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.mmHeroKpiStrip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.95rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.mmHeroKpiItem {
+    flex: 1 1 9.5rem;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.72rem 0.82rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(8px);
+}
+
+.mmHeroKpiLabel,
+.mmHeroKpiLabel.sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.mmHeroKpiValueRow {
+    margin-top: 0.2rem;
+    gap: 0.15rem;
+}
+
+.mmHeroKpiValue,
+.mmHeroKpiValue.sapMText {
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    line-height: 1.2 !important;
+}
+
+.mmHeroKpiUnit,
+.mmHeroKpiUnit.sapMText {
+    font-size: 0.78rem !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.mmHeroKpiHint,
+.mmHeroKpiHint.sapMText {
+    margin-top: 0.25rem;
+    font-size: 0.68rem !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+    line-height: 1.35 !important;
+}
+
+.mmHeroActions {
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+    margin-left: auto;
+}
+
+.mmHeroCardHead {
+    gap: 1rem;
+    margin-bottom: 0.15rem;
+    align-items: flex-start !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.mmHeroContent {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 11rem);
+}
+
+.mmHeroTextBlock {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 11rem);
+}
+
+.mmHeroActionsBox {
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.15rem;
+    border-radius: 0.65rem;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    overflow: hidden;
+}
+
+.mmFilterButton .sapMBtnInner {
+    background: transparent !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    border-radius: 0 !important;
+    min-height: 2.35rem !important;
+    padding: 0 0.9rem !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+    transition: background 0.15s ease;
+}
+
+.mmFilterButton .sapMBtnContent,
+.mmFilterButton .sapMBtnIcon {
+    color: #FFFFFF !important;
+}
+
+.mmFilterButton:hover .sapMBtnInner {
+    background: rgba(255, 255, 255, 0.14) !important;
+}
+
+.mmRefreshButton .sapMBtnInner {
+    background: transparent !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    border-radius: 0 !important;
+    min-height: 2.35rem !important;
+    min-width: 2.35rem !important;
+    width: 2.35rem !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    transition: background 0.15s ease;
+}
+
+.mmRefreshButton .sapMBtnIcon {
+    color: #FFFFFF !important;
+}
+
+.mmRefreshButton:hover .sapMBtnInner {
+    background: rgba(255, 255, 255, 0.14) !important;
+}
+
+.mmHeroActionsBox .mmRefreshButtonInline {
+    border-left: 1px solid rgba(255, 255, 255, 0.28) !important;
+}
+
+.mmHeroRefreshBtn .sapMBtnInner {
+    background: rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(255, 255, 255, 0.32) !important;
+    color: #FFFFFF !important;
+}
+
+.mmHeroRefreshBtn:hover .sapMBtnInner {
+    background: rgba(255, 255, 255, 0.28) !important;
+}
+
+.mmHeroActionHint,
+.mmHeroActionHint.sapMText {
+    font-size: 0.72rem !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+    text-align: right;
+}
+
+.nxMmOverviewBody,
+.mmInventoryPage,
+.nxMmPurchasing,
+.nxMmGoodsMovement,
+.mmReportsPage {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   MM Cockpit — 2차 서브 네비게이션 (pill/card tab)
+   ========================================================================== */
+.nxMmMaterialsTop {
+    padding: 0 !important;
+    border-bottom: none !important;
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    background: transparent !important;
+}
+
+.mmSubNavBarWrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.55rem 1.75rem 0.65rem !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: stretch !important;
+    overflow-x: hidden !important;
+    background: #F9FAFB !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    position: relative;
+}
+
+.mmSubNavBar {
+    width: 100% !important;
+    max-width: 100% !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.75rem !important;
+    box-sizing: border-box !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+    display: flex !important;
+}
+
+.mmSubNavList {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    flex-wrap: wrap !important;
+    gap: 0.35rem !important;
+    align-items: center !important;
+    border-bottom: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.mmSubNavNoteZone {
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mmSubNavBarWrap .nxModuleSubTabIndicator {
+    display: none !important;
+    opacity: 0 !important;
+    height: 0 !important;
+}
+
+.mmSubNavItem {
+    flex-shrink: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-width: 0 !important;
+}
+
+.mmSubNavItem .sapMBtnInner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 2rem !important;
+    height: 2rem !important;
+    padding: 0 0.85rem !important;
+    border: 1px solid transparent !important;
+    border-radius: 0.55rem !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.mmSubNavItem .sapMBtnIcon {
+    display: none !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mmSubNavItem .sapMBtnContent,
+.mmSubNavItem .sapMBtnContent .sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: #6B7280 !important;
+    line-height: 1.2 !important;
+}
+
+.mmSubNavItem:hover .sapMBtnInner {
+    background: rgba(255, 255, 255, 0.72) !important;
+}
+
+.mmSubNavItem:hover .sapMBtnContent,
+.mmSubNavItem:hover .sapMBtnContent .sapMText {
+    color: #374151 !important;
+}
+
+.mmSubNavItemActive .sapMBtnInner {
+    background: #FFFFFF !important;
+    border-color: #E5E7EB !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+}
+
+.mmSubNavItemActive .sapMBtnContent,
+.mmSubNavItemActive .sapMBtnContent .sapMText {
+    color: #111827 !important;
+    font-weight: 600 !important;
+}
+
+.mmSubNavItemNote .sapMBtnContent,
+.mmSubNavItemNote .sapMBtnContent .sapMText {
+    color: #4F46E5 !important;
+}
+
+.mmSubNavItemNote.mmSubNavItemActive .sapMBtnInner {
+    background: #FFFFFF !important;
+    border-color: #E0E7FF !important;
+}
+
+.mmSubNavItemNote.mmSubNavItemActive .sapMBtnContent,
+.mmSubNavItemNote.mmSubNavItemActive .sapMBtnContent .sapMText {
+    color: #4338CA !important;
+    font-weight: 600 !important;
+}
+
+.nxMmMaterialsRightGroup {
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    gap: 0 !important;
+    margin: 0 !important;
+}
+
+.nxMmMaterialsActions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    flex-shrink: 0 !important;
+    padding: 0.2rem 0.5rem !important;
+    background: #F9FAFB !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 0.65rem !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.nxMmMaterialsActions .nxModuleFilterBtn .sapMBtnInner,
+.nxMmMaterialsActions .nxModuleSquareBtn .sapMBtnInner {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* MM Cockpit Hero — 메뉴와 자연스러운 간격 */
+.nxMmOverview,
+.mmInventoryPage,
+.nxMmPurchasing,
+.nxMmGoodsMovement,
+.mmReportsPage {
+    padding-top: 0.75rem !important;
+}
+
+.mmHeroCard {
+    margin-top: 0 !important;
+}
+
+/* MM Hero — 우측 조회/필터 · 새로고침 (그라데이션 위 글래스 버튼) */
+.nxDarkMode .nxMmMaterialsTop {
+    background: transparent !important;
+}
+
+.nxDarkMode .mmSubNavBarWrap {
+    background: var(--nx-dm-zone) !important;
+    border-bottom-color: var(--nx-dm-border) !important;
+}
+
+.nxDarkMode .mmSubNavItem .sapMBtnContent,
+.nxDarkMode .mmSubNavItem .sapMBtnContent .sapMText {
+    color: var(--nx-dm-text-muted) !important;
+}
+
+.nxDarkMode .mmSubNavItemActive .sapMBtnInner {
+    background: var(--nx-dm-surface) !important;
+    border-color: var(--nx-dm-border) !important;
+}
+
+.nxDarkMode .mmSubNavItemActive .sapMBtnContent,
+.nxDarkMode .mmSubNavItemActive .sapMBtnContent .sapMText {
+    color: #F9FAFB !important;
+}
+
+.nxDarkMode .mmSubNavItemNote .sapMBtnContent,
+.nxDarkMode .mmSubNavItemNote .sapMBtnContent .sapMText {
+    color: #A5B4FC !important;
+}
+
+.nxDarkMode .nxMmMaterialsActions {
+    background: var(--nx-dm-surface) !important;
+    border-color: var(--nx-dm-border) !important;
+}
+
+/* ===================================================================
+   FI Cockpit — Financial Accounting (네이비 + 딥그린 + 골드/민트 포인트)
+   =================================================================== */
+
+.fiCockpitPage {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.65rem 1rem 1.25rem;
+    background: #FFFFFF;
+    min-height: 100%;
+}
+
+.nxFiOverview,
+.nxFiGeneralLedger,
+.nxFiAccountsPayable,
+.nxFiAccountsReceivable,
+.nxFiReport,
+.nxFiNote {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.nxFiOverviewBody,
+.nxFiGeneralLedgerBody,
+.nxFiAccountsPayableBody,
+.nxFiAccountsReceivableBody,
+.nxFiReportBody {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    gap: 0.65rem;
+}
+
+/* FI Gradient Hero */
+.fiFeatureHero {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    padding: 1.2rem 1.35rem;
+    margin-bottom: 0.75rem;
+    color: #FFFFFF;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.fiHeroOverview {
+    background: linear-gradient(135deg, #0f172a 0%, #134e4a 46%, #14b8a6 100%);
+}
+
+.fiHeroGeneralLedger {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0d9488 100%);
+}
+
+.fiHeroAccountsPayable {
+    background: linear-gradient(135deg, #1e293b 0%, #0f4c5c 52%, #2dd4bf 100%);
+}
+
+.fiHeroAccountsReceivable {
+    background: linear-gradient(135deg, #0f172a 0%, #164e63 48%, #5eead4 100%);
+}
+
+.fiHeroReport {
+    background: linear-gradient(135deg, #0f172a 0%, #14532d 50%, #ca8a04 100%);
+}
+
+.fiHeroNote {
+    background: linear-gradient(135deg, #1e293b 0%, #0f766e 55%, #99f6e4 100%);
+}
+
+.fiHeroTitle,
+.fiHeroTitle.sapMTitle {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.35rem !important;
+}
+
+.fiHeroDescription,
+.fiHeroDescription.sapMText {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.9375rem !important;
+    line-height: 1.45 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    max-width: 52rem;
+}
+
+.fiHeroCardHead {
+    gap: 1rem;
+    margin-bottom: 0.15rem;
+    align-items: flex-start !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.fiHeroContent {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 11rem);
+}
+
+.fiHeroTextBlock {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: calc(100% - 11rem);
+}
+
+.fiHeroActions {
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+    margin-left: auto;
+}
+
+.fiHeroActionsBox {
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.15rem;
+    border-radius: 0.65rem;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    overflow: hidden;
+}
+
+.fiFilterButton .sapMBtnInner {
+    background: transparent !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    border-radius: 0 !important;
+    min-height: 2.35rem !important;
+    padding: 0 0.9rem !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+.fiFilterButton .sapMBtnContent,
+.fiFilterButton .sapMBtnIcon {
+    color: #FFFFFF !important;
+}
+
+.fiRefreshButton .sapMBtnInner {
+    background: transparent !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    min-height: 2.35rem !important;
+    min-width: 2.35rem !important;
+    box-shadow: none !important;
+}
+
+.fiRefreshButton .sapMBtnIcon {
+    color: #FFFFFF !important;
+}
+
+.fiHeroCard {
+    margin-top: 0 !important;
+}
+
+/* FI Cards */
+.nxFiCard {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.85rem 0.85rem;
+    box-sizing: border-box;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    position: relative;
+    overflow: hidden;
+    min-height: 10rem;
+}
+
+.nxFiCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0f766e, #14b8a6);
+}
+
+.nxFiSummaryCard::before {
+    background: linear-gradient(90deg, #0f172a, #0d9488);
+}
+
+.nxFiWorklistCard::before {
+    background: linear-gradient(90deg, #134e4a, #ca8a04);
+}
+
+.nxFiListCard::before {
+    background: linear-gradient(90deg, #1e3a5f, #14b8a6);
+}
+
+.nxFiDetailCard::before {
+    background: linear-gradient(90deg, #14532d, #5eead4);
+}
+
+.nxFiChartCard::before {
+    background: linear-gradient(90deg, #0f172a, #ca8a04);
+}
+
+.nxFiNoteCard::before {
+    background: linear-gradient(90deg, #0f766e, #99f6e4);
+}
+
+.nxFiCardHead {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #F1F5F9;
+    gap: 0.5rem;
+}
+
+.nxFiCardHead .sapMTitle {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+}
+
+.nxFiCardSub,
+.nxFiCardSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #94A3B8 !important;
+    margin-top: 0.1rem;
+}
+
+.nxFiCardIconWrap {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.55rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.nxFiCardIconWrap--summary { background: linear-gradient(135deg, #0f172a, #0d9488); }
+.nxFiCardIconWrap--worklist { background: linear-gradient(135deg, #134e4a, #ca8a04); }
+.nxFiCardIconWrap--list { background: linear-gradient(135deg, #1e3a5f, #14b8a6); }
+.nxFiCardIconWrap--detail { background: linear-gradient(135deg, #14532d, #5eead4); }
+.nxFiCardIconWrap--payable { background: linear-gradient(135deg, #0f4c5c, #2dd4bf); }
+.nxFiCardIconWrap--receivable { background: linear-gradient(135deg, #164e63, #99f6e4); }
+
+/* FI Overview grid */
+.nxFiOverviewSummaryGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 0.65rem;
+}
+
+.nxFiOverviewSummaryGrid > .sapMFlexItem,
+.nxFiOverviewSummaryGrid > .sapUiVBox {
+    flex: 1 1 calc(33.333% - 0.5rem);
+    min-width: min(100%, 14rem);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.nxFiWorklistCard {
+    min-height: 14rem;
+}
+
+/* FI Master-detail */
+.nxFiMasterDetail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-items: stretch;
+}
+
+.nxFiListPane,
+.nxFiDetailPane {
+    flex: 1 1 20rem;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.nxFiListCard,
+.nxFiDetailCard {
+    height: 100%;
+    min-height: 22rem;
+}
+
+.nxFiGlListCard {
+    overflow: hidden;
+}
+
+.nxFiGlTable {
+    border: none !important;
+}
+
+.nxFiGlTable .sapMListTblHeader {
+    background: #F8FAFC !important;
+}
+
+.nxFiGlTableRow:hover {
+    background: #F0FDFA !important;
+}
+
+.nxFiGlCellEllipsis,
+.nxFiGlCellEllipsis .sapMText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.nxFiGlDetailBody {
+    padding-top: 0.35rem;
+}
+
+.nxFiGlDetailHead {
+    margin-bottom: 0.65rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.nxFiGlDetailDocNo,
+.nxFiGlDetailDocNo .sapMText {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+}
+
+.nxFiGlDetailDocText,
+.nxFiGlDetailDocText .sapMText {
+    margin-top: 0.2rem;
+    font-size: 0.75rem !important;
+    color: #64748B !important;
+}
+
+.nxFiGlDetailTiles {
+    gap: 0.55rem;
+}
+
+.nxFiGlDetailTile {
+    flex: 1 1 9rem;
+    min-width: 9rem;
+    padding: 0.55rem 0.65rem;
+    border-radius: 0.55rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    box-sizing: border-box;
+}
+
+.nxFiGlDetailTileLabel,
+.nxFiGlDetailTileLabel .sapMText {
+    font-size: 0.68rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxFiGlDetailTileValue,
+.nxFiGlDetailTileValue .sapMText {
+    margin-top: 0.15rem;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #0F172A !important;
+    word-break: break-word;
+}
+
+/* FI Report chart grid */
+.nxFiReportChartGrid {
+    gap: 0.65rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.nxFiChartCard {
+    min-height: 16rem;
+}
+
+.nxFiChartBody {
+    min-height: 12rem;
+}
+
+/* FI Empty State */
+.fiEmptyState {
+    min-height: 9rem;
+    padding: 1.25rem 0.75rem;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fiEmptyState--worklist {
+    min-height: 10rem;
+}
+
+.fiEmptyState--chart {
+    min-height: 11rem;
+    border: 1px dashed #CBD5E1;
+    border-radius: 0.65rem;
+    background: #F8FAFC;
+    margin-top: 0.35rem;
+}
+
+.fiEmptyStateTitle,
+.fiEmptyStateTitle .sapMText {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+}
+
+.fiEmptyStateHint,
+.fiEmptyStateHint .sapMText {
+    margin-top: 0.35rem;
+    font-size: 0.75rem !important;
+    color: #94A3B8 !important;
+    line-height: 1.45 !important;
+    max-width: 28rem;
+    text-align: center;
+}
+
+.fiOdataStrip,
+.fiContextStrip {
+    border-radius: 0.5rem !important;
+}
+
+/* FI Note */
+.fiNotePage {
+    align-items: stretch !important;
+}
+
+.fiNoteHero {
+    margin-bottom: 0.65rem;
+}
+
+.nxFiNoteCard {
+    min-height: 18rem;
+}
+
+.fiNoteBody {
+    min-height: 14rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+.fiNoteIntro,
+.fiNoteIntro .sapMText {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+}
+
+.nxFiNoteCardHead {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+/* FI scroll containers */
+.nxFiOverviewScroll,
+.nxFiGeneralLedgerScroll,
+.nxFiAccountsPayableScroll,
+.nxFiAccountsReceivableScroll,
+.nxFiReportScroll,
+.nxFiNoteScroll {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    background: #FFFFFF !important;
+}
+
+.nxFiFinanceShell {
+    width: 100%;
+    max-width: 100%;
+    background: #FFFFFF !important;
+}
+
+/* Dark mode — FI */
+.nxDarkMode .nxFiCard {
+    background: var(--nx-dm-surface) !important;
+    border-color: var(--nx-dm-border) !important;
+}
+
+.nxDarkMode .nxFiCardHead .sapMTitle {
+    color: #F9FAFB !important;
+}
+
+.nxDarkMode .fiEmptyState--chart {
+    background: var(--nx-dm-zone) !important;
+    border-color: var(--nx-dm-border) !important;
+}
+
+.nxDarkMode .fiEmptyStateTitle,
+.nxDarkMode .fiEmptyStateTitle .sapMText {
+    color: var(--nx-dm-text) !important;
+}
+
+.nxDarkMode .fiEmptyStateHint,
+.nxDarkMode .fiEmptyStateHint .sapMText {
+    color: var(--nx-dm-text-muted) !important;
+}
+
+.nxDarkMode .fiNoteIntro,
+.nxDarkMode .fiNoteIntro .sapMText {
+    color: var(--nx-dm-text) !important;
+}
+
+/* ===================================================================
+   Notes Panel — 헤더 메모장 오버레이 (Pastell AI 패널 스타일)
+   =================================================================== */
+.nxNotesPanel {
+    position: fixed !important;
+    right: 1.5rem;
+    top: 4.5rem;
+    left: auto;
+    bottom: auto;
+    z-index: 11000 !important;
+    background: #EBF0F5 !important;
+    border: 1px solid #CFD9E0 !important;
+    border-radius: 0.85rem !important;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.22) !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    max-width: min(48rem, 94vw);
+    max-height: min(38rem, 82vh);
+    touch-action: none;
+}
+
+.nxNotesPanel.nxNotesPanelFront {
+    z-index: 11001 !important;
+}
+
+.nxNotesPanel.nxNotesPanelMoved {
+    right: auto !important;
+    bottom: auto !important;
+}
+
+.nxNotesPanelHeader {
+    flex-shrink: 0;
+    padding: 0.75rem 0.5rem 0.75rem 1rem;
+    border-bottom: 1px solid #E0E0E0;
+    background: #FFFFFF;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+.nxNotesPanelDragging .nxNotesPanelHeader {
+    cursor: grabbing !important;
+}
+
+.nxNotesPanelDragging {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    box-shadow: 0 20px 56px rgba(15, 23, 42, 0.28) !important;
+}
+
+.nxNotesPanelHeaderHint,
+.nxNotesPanelHeaderHint .sapMText {
+    font-size: 0.68rem !important;
+    color: #94A3B8 !important;
+    margin-left: 0.35rem;
+}
+
+.nxNotesPanelTitle,
+.nxNotesPanelTitle .sapMTitle {
+    font-family: "Inter", var(--sapFontFamily, sans-serif) !important;
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin: 0 !important;
+}
+
+.nxNotesPanelBody {
+    flex: 1;
+    min-height: 0;
+    background: #FFFFFF;
+    overflow: hidden;
+}
+
+.nxHeaderNotesBtn .sapMBtnIcon {
+    color: #0D9488 !important;
+}
+
+/* 메모장 — 패널 모드 (오버레이 내부) */
+.mmNotesPanelMode.mmNotesPage,
+.mmNotesPanelMode.mmNotesShell {
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    align-items: stretch !important;
+}
+
+.mmNotesPanelMode .mmNotesWorkspace {
+    max-width: none;
+    min-height: 0;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.mmNotesPanelMode .mmNotesHeader {
+    padding: 0.45rem 0.85rem 0.4rem;
+    border-bottom: 1px solid #F1F5F9;
+    justify-content: flex-end !important;
+}
+
+.mmNotesPanelMode .mmNotesHeaderText {
+    display: none !important;
+}
+
+.mmNotesPanelMode .mmNotesBody {
+    min-height: 0;
+    height: calc(100% - 2.4rem);
+}
+
+.mmNotesPanelMode .mmNotesSidebar {
+    min-height: 0;
+    max-height: none;
+}
+
+.mmNotesPanelMode .mmNotesEditor {
+    min-height: 0;
+}
+
+.mmNotesPanelMode .mmNotesEditorEmpty {
+    min-height: 14rem;
+}
+
+.mmNotesPanelMode .mmNotesContentArea textarea {
+    min-height: 12rem;
+}
+
+.nxDarkMode .nxNotesPanel {
+    background: var(--nx-dm-surface) !important;
+    border-color: var(--nx-dm-border) !important;
+}
+
+.nxDarkMode .nxNotesPanelHeader {
+    background: var(--nx-dm-zone) !important;
+    border-bottom-color: var(--nx-dm-border) !important;
+}
+
+.nxDarkMode .nxNotesPanelBody {
+    background: var(--nx-dm-surface) !important;
 }
 

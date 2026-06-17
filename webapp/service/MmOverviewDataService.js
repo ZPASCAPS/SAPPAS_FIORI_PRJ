@@ -2,13 +2,16 @@
  * MmOverviewDataService.js
  *
  * MM Overview Cockpit — SAP OData read, filter, KPI/chart/worklist aggregation.
- * Uses: BomStockSet, Z_C_InventoryStatus, Z_C_E2E_OrderTracker (no mock data).
+ * Uses: BomStockSet (Component), Z_C_InventoryStatus (Material), Z_C_E2E_OrderTracker (Material).
+ * UP* 자재 필터: MmUpMaterialFilterUtil (UP-R-COT-001, UP-F-ONT-001 제외).
  */
 sap.ui.define([
     "com/capstone/dashboard/fioridashboard/service/DashboardDataService",
     "com/capstone/dashboard/fioridashboard/util/SapErrorUtil",
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil"
-], function (DashboardDataService, SapErrorUtil, MmChartHtmlUtil) {
+    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil",
+    "com/capstone/dashboard/fioridashboard/util/MmUpMaterialFilterUtil",
+    "com/capstone/dashboard/fioridashboard/util/MmHeroUiUtil"
+], function (DashboardDataService, SapErrorUtil, MmChartHtmlUtil, MmUpMaterialFilterUtil, MmHeroUiUtil) {
     "use strict";
 
     var NO_DATA = "데이터 없음";
@@ -658,12 +661,12 @@ sap.ui.define([
 
     function _criteriaLabel(sMode, sSearch) {
         if (sMode === QUERY_MODES.MATERIAL && sSearch) {
-            return "Material · " + sSearch;
+            return MmHeroUiUtil.buildCriteriaBase("Material · " + sSearch);
         }
         if (sMode === QUERY_MODES.PO && sSearch) {
-            return "PO · " + sSearch;
+            return MmHeroUiUtil.buildCriteriaBase("PO · " + sSearch);
         }
-        return "All Materials";
+        return MmHeroUiUtil.UNIQLO_LABEL;
     }
 
     function _searchPlaceholder(sMode) {
@@ -706,6 +709,9 @@ sap.ui.define([
             searchEnabled: sMode !== QUERY_MODES.ALL,
             searchPlaceholder: _searchPlaceholder(sMode),
             criteriaLabel: _criteriaLabel(sMode, sSearch),
+            heroFilterLine: MmHeroUiUtil.buildOverviewFilterLine(aBom.length),
+            recordCount: aBom.length,
+            odataBadge: "BOM · Inventory · PO/MIGO",
             lastUpdated: oCache.lastUpdated,
             loading: false,
             error: "",
@@ -732,13 +738,29 @@ sap.ui.define([
             var that = this;
 
             return Promise.all([
-                _readCollection(oStockModel, "/BomStockSet"),
-                _readCollection(oInventoryModel, "/Z_C_InventoryStatus"),
-                _readCollection(oTrackerModel, "/Z_C_E2E_OrderTracker")
+                _readCollection(
+                    oStockModel,
+                    "/BomStockSet",
+                    MmUpMaterialFilterUtil.getODataFilters("Component")
+                ),
+                _readCollection(
+                    oInventoryModel,
+                    "/Z_C_InventoryStatus",
+                    MmUpMaterialFilterUtil.getODataFilters("Material")
+                ),
+                _readCollection(
+                    oTrackerModel,
+                    "/Z_C_E2E_OrderTracker",
+                    MmUpMaterialFilterUtil.getODataFilters("Material")
+                )
             ]).then(function (aResults) {
-                var aRawBom = aResults[0];
-                var aInventory = aResults[1];
-                var aTracker = aResults[2];
+                var aRawBom = MmUpMaterialFilterUtil.filterRows(aResults[0], MmUpMaterialFilterUtil.getBomMaterialCode);
+                var aInventory = MmUpMaterialFilterUtil.filterRows(aResults[1], function (oRow) {
+                    return MmUpMaterialFilterUtil.getRowMaterialCode(oRow, "Material");
+                });
+                var aTracker = MmUpMaterialFilterUtil.filterRows(aResults[2], function (oRow) {
+                    return MmUpMaterialFilterUtil.getRowMaterialCode(oRow, "Material");
+                });
                 var aBomItems = aRawBom.map(function (oItem) {
                     return DashboardDataService.mapODataItem(JSON.parse(JSON.stringify(oItem)), sImageBase || "");
                 });
@@ -772,7 +794,10 @@ sap.ui.define([
                 searchText: "",
                 searchEnabled: false,
                 searchPlaceholder: _searchPlaceholder(QUERY_MODES.ALL),
-                criteriaLabel: "All Materials",
+                criteriaLabel: MmHeroUiUtil.UNIQLO_LABEL,
+                heroFilterLine: MmHeroUiUtil.buildOverviewFilterLine(0),
+                recordCount: 0,
+                odataBadge: "BOM · Inventory · PO/MIGO",
                 lastUpdated: NO_DATA,
                 kpis: [],
                 charts: [],
