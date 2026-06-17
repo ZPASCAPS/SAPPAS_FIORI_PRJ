@@ -45,7 +45,8 @@ sap.ui.define([
                             "- 구매요청 변환 [변환]\n" +
                             "- 구매오더 입고 [입고]\n" +
                             "- 계획오더 전환 [전환]\n" +
-                            "- 생산오더 릴리즈 [릴리즈]\n\n" +
+                            "- 생산오더 릴리즈 [릴리즈]\n" +
+                            "- 생산오더 확정 [확정]\n\n" +
                             "지시를 하실 업무 키워드 [글자]를 입력해주시면 명령 가이드를 드립니다.",
                         time: this._getCurrentTime(),
                         isUser: false
@@ -177,7 +178,7 @@ sap.ui.define([
         _convertPrToPo: function (sPrNumber) {
             // 1. OData 모델 가져오기 (manifest.json에 등록된 기본 모델)
             // 만약 OData 모델 이름이 지정되어 있다면 getModel("모델명")으로 변경하세요.
-            var oModel = this.getOwnerComponent().getModel(); 
+            var oModel = this.getOwnerComponent().getModel();
 
             // 2. 백엔드로 보낼 파라미터 세팅 (SEGW에서 만든 PR_LIST)
             var oPayload = {
@@ -189,12 +190,12 @@ sap.ui.define([
 
             // 4. Function Import 호출
             oModel.callFunction("/ConvertPrToPo", {
-                method: "POST", 
+                method: "POST",
                 urlParameters: oPayload,
                 success: function (oData, response) {
                     // 통신 성공 (200 OK)
                     var sMessage = oData.MSG || (oData.ConvertPrToPo && oData.ConvertPrToPo.MSG);
-                    
+
                     // 챗봇 말풍선에 성공 메시지 띄우기
                     this._addMessage("AI 비서", "sap-icon://activate-blueprints", "✨ " + sMessage, false);
                 }.bind(this),

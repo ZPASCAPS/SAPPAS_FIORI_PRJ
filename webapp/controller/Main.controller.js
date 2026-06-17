@@ -94,9 +94,9 @@ sap.ui.define([
                     kpis: []
                 },
                 user: {
-                    name: "박찬영",
+                    name: "김용민",
                     role: "FI",
-                    editName: "박찬영",
+                    editName: "김용민",
                     editModule: "FI",
                     blogUrl: "https://blog.naver.com/channy0210",
                     blogQrSrc: "images/profile-blog-qr.png"
