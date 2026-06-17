@@ -1,0 +1,63 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdKpiTilesSlot"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:mc="sap.suite.ui.microchart"
+    height="100%"
+    width="100%">
+
+    <HBox class="nxSdKpiTilesRow" width="100%" height="100%" alignItems="Stretch" renderType="Bare">
+        <GenericTile
+            class="nxSdKpiTile nxSdKpiTile--season"
+            header="{sdKpi>/seasonAchievement/header}"
+            subheader="{sdKpi>/seasonAchievement/subheader}"
+            frameType="TwoByOne"
+            width="100%">
+            <TileContent>
+                <content>
+                    <mc:RadialMicroChart
+                        percentage="{sdKpi>/seasonAchievement/percentage}"
+                        total="100"
+                        size="M"
+                        valueColor="{= ${sdKpi>/seasonAchievement/percentage} >= 70 ? 'Good' : 'Critical' }" />
+                </content>
+            </TileContent>
+        </GenericTile>
+
+        <GenericTile
+            class="nxSdKpiTile nxSdKpiTile--return"
+            header="{sdKpi>/returnAcceptanceRate/header}"
+            subheader="{sdKpi>/returnAcceptanceRate/subheader}"
+            frameType="TwoByOne"
+            width="100%">
+            <TileContent>
+                <content>
+                    <NumericContent
+                        value="{sdKpi>/returnAcceptanceRate/value}"
+                        scale="%"
+                        valueColor="Error"
+                        indicator="{sdKpi>/returnAcceptanceRate/indicator}"
+                        withMargin="false" />
+                </content>
+            </TileContent>
+        </GenericTile>
+
+        <GenericTile
+            class="nxSdKpiTile nxSdKpiTile--credit"
+            header="{sdKpi>/creditExceed/header}"
+            subheader="{sdKpi>/creditExceed/subheader}"
+            frameType="TwoByOne"
+            width="100%">
+            <TileContent>
+                <content>
+                    <NumericContent
+                        value="{sdKpi>/creditExceed/value}"
+                        scale="건"
+                        valueColor="Critical"
+                        icon="sap-icon://alert"
+                        withMargin="false" />
+                </content>
+            </TileContent>
+        </GenericTile>
+    </HBox>
+</mvc:View>

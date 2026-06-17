@@ -5040,6 +5040,18 @@ html, body, body > div, #container, #container-uiarea,
 
 .nxModuleShellHeader {
     margin-bottom: 0.65rem;
+    justify-content: space-between;
+}
+
+.nxModuleShellHeaderLeft {
+    flex-shrink: 0;
+    gap: 1.25rem;
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+.nxModuleShell:not(.nxModuleShell--sd) .nxModuleShellHeader {
+    justify-content: space-between;
 }
 
 .nxModuleShellTitle,
@@ -12061,5 +12073,368 @@ html, body, body > div, #container, #container-uiarea,
     background: #19B66B !important;
     border: none !important;
     height: 4px !important;
+}
+
+/* SD Sales Overview Cockpit (Step 0) — single viewport fit */
+.nxSdMainScroll {
+    background: #F3F4F6 !important;
+    overflow: hidden !important;
+}
+
+.nxSdMainScroll .sapMScrollCont,
+.nxSdMainScroll .sapMScrollContScroll {
+    height: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+}
+
+.nxSdMainScroll > .sapUiView,
+.nxSdMainScroll .sapUiView {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+}
+
+.nxSdMain {
+    padding: 0.2rem 0.75rem 0.45rem;
+    background: #F3F4F6;
+    height: 100%;
+    min-height: 0;
+    max-height: 100%;
+    box-sizing: border-box;
+    gap: 0.45rem;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxSdMain > .sapUiView,
+.nxSdMainSection > .sapUiView {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+.nxSdMainSection {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nxSdMainSection--kpi {
+    flex: 0 0 8.25rem;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Step 1 only — KPI 타일 단독 표시, 겹침 방지 */
+.nxSdMain--step1Only {
+    overflow: visible;
+    min-height: 0;
+    height: auto;
+}
+
+.nxSdMain--step1Only .nxSdMainSection--kpi {
+    flex: 0 0 auto;
+    min-height: 12rem;
+    height: 12rem;
+    overflow: visible;
+}
+
+.nxSdMainMiddleRow {
+    gap: 0.45rem;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    width: 100%;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.nxSdMainSection--control {
+    flex: 2 1 0;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.nxSdMainSideStack {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+    gap: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.nxSdMainSection--rma,
+.nxSdMainSection--bestseller {
+    flex: 1 1 0;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.nxSdMainSection--matrix {
+    flex: 0 0 6.75rem;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.nxSdMainPlaceholderPanel {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    box-sizing: border-box;
+    border: 1px dashed #D1D5DB !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+.nxSdMainPlaceholderPanel .sapMPanelHdr {
+    border-bottom: 1px solid #E5E7EB !important;
+    background: #FAFBFC !important;
+    border-radius: 12px 12px 0 0 !important;
+    min-height: 2.25rem !important;
+    flex-shrink: 0;
+}
+
+.nxSdMainPlaceholderPanel .sapMPanelHdrText {
+    font-size: 0.9375rem !important;
+    font-weight: 700 !important;
+    color: #374151 !important;
+}
+
+.nxSdMainPlaceholderPanel .sapMPanelContent {
+    padding: 0.55rem 1rem !important;
+    color: #6B7280;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.nxSdMainPlaceholderPanel--kpi,
+.nxSdMainPlaceholderPanel--control,
+.nxSdMainPlaceholderPanel--rma,
+.nxSdMainPlaceholderPanel--bestseller,
+.nxSdMainPlaceholderPanel--matrix {
+    min-height: 0 !important;
+    height: 100% !important;
+}
+
+.nxSdMainSection--control .nxSdMainPlaceholderPanel--control,
+.nxSdMainSection--rma .nxSdMainPlaceholderPanel--rma,
+.nxSdMainSection--bestseller .nxSdMainPlaceholderPanel--bestseller {
+    min-height: 0 !important;
+}
+
+@media (max-width: 960px) {
+    .nxSdMainMiddleRow {
+        flex-wrap: wrap;
+    }
+
+    .nxSdMainSection--control,
+    .nxSdMainSideStack {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+}
+
+/* SD module shell — compact header for viewport fit */
+.nxModuleShell--sd .nxModuleShellTop {
+    padding: 0.5rem 0.75rem 0.4rem;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.nxModuleShell--sd .nxModuleShellHeader {
+    margin-bottom: 0;
+    align-items: center;
+}
+
+.nxModuleShell--sd .nxModuleShellHeaderLeft {
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.nxModuleShell--sd .nxModuleShellActions {
+    flex-shrink: 0;
+}
+
+.nxModuleShell--sd .nxModuleShellTitle,
+.nxModuleShell--sd .nxModuleShellTitle .sapMTitle {
+    font-size: 1.625rem !important;
+    line-height: 1.1 !important;
+    white-space: nowrap;
+}
+
+.nxSdShellDesc {
+    color: #6B7280;
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    font-weight: 400;
+    padding-top: 0.3rem;
+    max-width: 24rem;
+}
+
+.nxModuleShell--sd .nxModuleSubTabsWrap {
+    display: none !important;
+}
+
+@media (max-width: 1100px) {
+    .nxSdShellDesc {
+        max-width: 20rem;
+    }
+}
+
+@media (max-width: 860px) {
+    .nxModuleShell--sd .nxModuleShellHeader {
+        flex-wrap: wrap;
+        gap: 0.65rem;
+    }
+
+    .nxModuleShell--sd .nxModuleShellHeaderLeft {
+        flex: 1 1 100%;
+    }
+
+    .nxModuleShell--sd .nxModuleShellActions {
+        flex: 1 1 100%;
+        justify-content: flex-end;
+    }
+
+    .nxSdShellDesc {
+        max-width: 100%;
+        padding-top: 0;
+    }
+}
+
+/* SD KPI GenericTiles (Step 1) */
+.nxSdKpiTilesRow {
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    align-items: stretch;
+}
+
+.nxSdKpiTile {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100% !important;
+}
+
+.nxSdKpiTile .sapMGT {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    border-radius: 12px !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+    background: #FFFFFF !important;
+    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.nxSdKpiTile .sapMGTHeader {
+    flex-shrink: 0;
+    padding: 0.6rem 0.9rem 0.15rem !important;
+    min-height: 0 !important;
+}
+
+.nxSdKpiTile .sapMGTHdrTxt,
+.nxSdKpiTile .sapMGTSubHdrTxt {
+    font-weight: 700 !important;
+    color: #111827 !important;
+    white-space: normal !important;
+    line-height: 1.3 !important;
+}
+
+.nxSdKpiTile .sapMGTSubHdrTxt {
+    font-weight: 500 !important;
+    color: #6B7280 !important;
+    font-size: 0.75rem !important;
+    margin-top: 0.1rem !important;
+}
+
+.nxSdKpiTile .sapMTileCnt {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.nxSdKpiTile .sapMTileCntContent {
+    height: auto !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.nxSdKpiTile--season .sapMGT {
+    border-top: 3px solid #19B66B !important;
+}
+
+.nxSdKpiTile--season .sapSuiteRMC {
+    max-width: 4.5rem !important;
+    max-height: 4.5rem !important;
+}
+
+.nxSdKpiTile--return .sapMGT {
+    border-top: 3px solid #EE3939 !important;
+}
+
+.nxSdKpiTile--return .sapMNCValue,
+.nxSdKpiTile--return .sapMNCValueScr {
+    color: #EE3939 !important;
+}
+
+.nxSdKpiTile--credit .sapMGT {
+    border-top: 3px solid #F58B00 !important;
+}
+
+.nxSdKpiTile--credit .sapMNCValue,
+.nxSdKpiTile--credit .sapMNCValueScr {
+    color: #F58B00 !important;
+}
+
+.nxSdKpiTile .sapMNCScale,
+.nxSdKpiTile .sapMNCIndicator {
+    font-weight: 600 !important;
+}
+
+.nxSdKpiTile .sapMNC {
+    padding: 0 !important;
+}
+
+@media (max-width: 960px) {
+    .nxSdKpiTilesRow {
+        flex-wrap: wrap;
+        height: auto !important;
+    }
+
+    .nxSdKpiTile {
+        flex: 1 1 100%;
+        min-height: 6.5rem;
+    }
 }
 

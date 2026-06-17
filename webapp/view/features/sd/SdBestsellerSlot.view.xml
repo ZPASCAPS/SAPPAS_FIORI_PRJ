@@ -1,0 +1,15 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdBestsellerSlot"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    height="100%"
+    width="100%">
+    <Panel
+        headerText="Step 4 · Season Bestseller TOP 5"
+        width="100%"
+        class="nxSdMainPlaceholderPanel nxSdMainPlaceholderPanel--bestseller">
+        <content>
+            <Text text="시즌 베스트셀러 TOP 5 리스트 — Step 4에서 구현" />
+        </content>
+    </Panel>
+</mvc:View>

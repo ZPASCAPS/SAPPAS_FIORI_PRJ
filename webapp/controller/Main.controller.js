@@ -458,6 +458,11 @@ sap.ui.define([
                     },
                     selectedWorklistId: ""
                 },
+                sdMain: {
+                    ready: false,
+                    lastUpdated: "데이터 없음",
+                    showStepsBelow: false
+                },
                 mmInventory: {
                     loading: false,
                     loaded: false,
