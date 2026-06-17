@@ -5,7 +5,7 @@
   Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader
 
   역할:
-  - 상단 헤더: 로고·PasCal 브랜드, 팀 선택, 검색, 알림, 도움말, 프로필.
+  - 상단 헤더: 로고·PasCal 브랜드(클릭 → Dashboard), 팀 선택, 검색, 알림, 도움말, 프로필.
 
   대시보드 구조:
   Main → DashboardMain → DashboardHeader (최상단 가로 바)
@@ -20,9 +20,13 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <HBox class="nxHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+    <HBox class="nxHeader appHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
         <HBox class="nxHeaderLeft" alignItems="Center">
-            <HBox class="nxHeaderBrand" alignItems="Center">
+            <HBox
+                id="headerBrand"
+                class="nxHeaderBrand nxHeaderBrandClickable"
+                alignItems="Center"
+                tooltip="Dashboard">
                 <Image
                     src="images/pascal-pictogram.svg"
                     densityAware="false"
@@ -81,12 +85,12 @@
                     press=".onNotifications"
                     class="nxIconBtn" />
                 <Button
-                    id="helpBtn"
-                    icon="sap-icon://sys-help"
+                    id="headerNotesBtn"
+                    icon="sap-icon://notes"
                     type="Transparent"
-                    tooltip="도움말"
-                    press=".onHelp"
-                    class="nxIconBtn" />
+                    tooltip="메모장"
+                    press=".onNotesPress"
+                    class="nxIconBtn nxHeaderNotesBtn" />
                 <Button
                     id="settingsBtn"
                     icon="sap-icon://action-settings"
@@ -171,33 +175,6 @@
                 <HBox justifyContent="End" alignItems="Center" class="nxPopoverFooter">
                     <Button text="모두 읽음" type="Transparent" press=".onMarkAllNotificationsRead" />
                 </HBox>
-            </VBox>
-        </content>
-    </Popover>
-
-    <Popover
-        id="helpPopover"
-        placement="Bottom"
-        contentWidth="19rem"
-        showHeader="false"
-        afterClose=".onHelpPopoverAfterClose"
-        class="nxHeaderPopover nxHelpPopover">
-        <content>
-            <VBox width="100%" class="nxPopoverBody">
-                <VBox class="nxHeaderPopoverTitleRow">
-                    <Title text="도움말" level="H5" class="nxHeaderPopoverTitle" />
-                </VBox>
-                <List
-                    items="{dashboard>/helpItems}"
-                    showSeparators="Inner"
-                    class="nxHelpList">
-                    <StandardListItem
-                        title="{dashboard>title}"
-                        description="{dashboard>description}"
-                        icon="sap-icon://sys-help-2"
-                        type="Active"
-                        press=".onHelpItemPress" />
-                </List>
             </VBox>
         </content>
     </Popover>

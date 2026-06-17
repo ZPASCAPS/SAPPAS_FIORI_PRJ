@@ -4,7 +4,10 @@
  * 역할:
  * - MM Reports 차트 HTML 생성 (SAP BomStock 실데이터, core:HTML 렌더링용)
  */
-sap.ui.define([], function () {
+sap.ui.define([
+    "com/capstone/dashboard/fioridashboard/util/MmUpMaterialFilterUtil",
+    "com/capstone/dashboard/fioridashboard/util/MmHeroUiUtil"
+], function (MmUpMaterialFilterUtil, MmHeroUiUtil) {
     "use strict";
 
     function _esc(sText) {
@@ -826,7 +829,6 @@ sap.ui.define([], function () {
          * SAP BomStock(allItems) 실데이터로 MM Reports 차트·KPI 갱신
          */
         enrichMmReports: function (oModel, aItems) {
-            var oSummary;
             var sUpdated;
             var aTable;
 
@@ -834,10 +836,11 @@ sap.ui.define([], function () {
                 return;
             }
 
-            aItems = aItems || [];
-            oSummary = oModel.getProperty("/summary") || {};
+            aItems = MmUpMaterialFilterUtil.filterRows(aItems || [], MmUpMaterialFilterUtil.getBomMaterialCode);
             sUpdated = oModel.getProperty("/ui/lastUpdated") || "";
-            var iShortCount = (oModel.getProperty("/counts") || {}).shortage || 0;
+            var iShortCount = aItems.filter(function (oItem) {
+                return oItem.FilterStatus === "SHORT";
+            }).length;
             var iTotal = aItems.length;
             var iOkCount = 0;
             var fAvgFill = null;
@@ -884,9 +887,12 @@ sap.ui.define([], function () {
             });
 
             oModel.setProperty("/mmReports", {
-                title: "MM Reports",
-                subtitle: "MM Analytics Report Center · ZUP_PNT_STOCK_SRV / BomStockSet · " + aItems.length + "건",
-                dataSource: "SAP OData BomStockSet",
+                title: "MM Analytics Report",
+                subtitle: "MM Analytics Report Center · BomStockSet · UP* 자재 " + aItems.length + "건",
+                dataSource: "SAP OData BomStockSet (UP* · UP-R-COT-001·UP-F-ONT-001 제외)",
+                heroFilterLine: MmHeroUiUtil.buildFilterLine(aItems.length),
+                recordCount: aItems.length,
+                odataBadge: "BomStockSet",
                 lastUpdated: sUpdated,
                 loaded: aItems.length > 0,
                 insightSummary: {
@@ -898,7 +904,7 @@ sap.ui.define([], function () {
                         ? String(Number(oTopShort.ShortageQty || 0)) + " EA"
                         : (iShortCount ? "데이터 없음" : "0 EA"),
                     okMaterials: iTotal ? String(iOkCount) + " EA" : "데이터 없음",
-                    dataSourceNote: "데이터 기준: BomStockSet (StockQty · ShortageQty · Status · TypeLabel)"
+                    dataSourceNote: "데이터 기준: BomStockSet · UP* 자재 (UP-R-COT-001, UP-F-ONT-001 제외)"
                 },
                 migoInfo: {
                     title: "MIGO 입고/출고와 데이터 연동",
@@ -916,11 +922,11 @@ sap.ui.define([], function () {
                 kpis: [
                     {
                         label: "Total Materials",
-                        value: String(oSummary.totalMaterials || aItems.length),
+                        value: String(iTotal),
                         unit: "EA",
                         icon: "sap-icon://product",
                         accent: "indigo",
-                        hint: "BomStockSet 전체 건수"
+                        hint: "UP* BomStockSet 건수"
                     },
                     {
                         label: "Shortage Items",

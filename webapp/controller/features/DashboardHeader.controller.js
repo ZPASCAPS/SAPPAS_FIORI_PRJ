@@ -5,7 +5,7 @@
  * Controller: com.capstone.dashboard.fioridashboard.controller.features.DashboardHeader
  *
  * 역할:
- * - 상단 헤더: 로고·PasCal, 팀 선택, 검색, 알림·도움말 Popover, 프로필 Dialog.
+ * - 상단 헤더: 로고·PasCal(→Dashboard), 팀 선택, 검색, 알림·도움말 Popover, 프로필 Dialog.
  *
  * 대시보드 구조: DashboardMain → DashboardHeader (최상단)
  *
@@ -27,12 +27,15 @@ sap.ui.define([
 
         onInit: function () {
             this._attachProfileQrHandler();
+            this.getView().addEventDelegate({
+                onAfterRendering: this._onHeaderAfterRendering
+            }, this);
         },
 
         onExit: function () {
+            this._detachBrandClickHandler();
             this._oProfileDialog = null;
             this._oNotificationPopover = null;
-            this._oHelpPopover = null;
             this._oSettingsPopover = null;
             this._oTeamPopover = null;
             this._oSearchPopover = null;
@@ -124,6 +127,58 @@ sap.ui.define([
         onSearchIconPress: function () {
             var oInput = this.byId("globalSearch");
             this._applySearch(oInput ? oInput.getValue() : "");
+        },
+
+        /**
+         * PasCal 로고 클릭 시 통합 Dashboard 화면으로 이동한다.
+         */
+        onBrandPress: function () {
+            this._setNavKey("DASHBOARD");
+        },
+
+        _onHeaderAfterRendering: function () {
+            this._detachBrandClickHandler();
+            this._attachBrandClickHandler();
+        },
+
+        _attachBrandClickHandler: function () {
+            var oBrand = this.byId("headerBrand");
+            var oDom = oBrand && oBrand.getDomRef();
+
+            if (!oDom) {
+                return;
+            }
+
+            if (!this._fnBrandClick) {
+                this._fnBrandClick = this.onBrandPress.bind(this);
+                this._fnBrandKeydown = function (oEvent) {
+                    if (oEvent.key === "Enter" || oEvent.key === " ") {
+                        oEvent.preventDefault();
+                        this.onBrandPress();
+                    }
+                }.bind(this);
+            }
+
+            oDom.addEventListener("click", this._fnBrandClick);
+            oDom.addEventListener("keydown", this._fnBrandKeydown);
+            oDom.setAttribute("role", "button");
+            oDom.setAttribute("tabindex", "0");
+            oDom.setAttribute("aria-label", "PasCal Dashboard");
+
+            this._bBrandClickAttached = true;
+        },
+
+        _detachBrandClickHandler: function () {
+            var oBrand = this.byId("headerBrand");
+            var oDom = oBrand && oBrand.getDomRef();
+
+            if (!oDom || !this._fnBrandClick || !this._bBrandClickAttached) {
+                return;
+            }
+
+            oDom.removeEventListener("click", this._fnBrandClick);
+            oDom.removeEventListener("keydown", this._fnBrandKeydown);
+            this._bBrandClickAttached = false;
         },
 
         _clearSearchFocus: function () {
@@ -256,10 +311,12 @@ sap.ui.define([
             }.bind(this), 0);
         },
 
-        onHelpPopoverAfterClose: function () {
-            setTimeout(function () {
-                this._clearIconBtnFocus("helpBtn");
-            }.bind(this), 0);
+        onNotesPress: function (oEvent) {
+            var oSource = oEvent.getSource();
+
+            sap.ui.getCore().getEventBus().publish("dashboard", "toggleNotesPanel", {
+                openById: oSource && oSource.getId()
+            });
         },
 
         onSettingsPopoverAfterClose: function () {
@@ -314,20 +371,6 @@ sap.ui.define([
                 return !oItem.read;
             }).length;
             oModel.setProperty("/ui/notificationCount", iUnread);
-        },
-
-        onHelp: function (oEvent) {
-            this._openPopover("helpPopover", oEvent.getSource());
-        },
-
-        onHelpItemPress: function (oEvent) {
-            var oItem = oEvent.getParameter("listItem");
-            var oContext = oItem && oItem.getBindingContext("dashboard");
-            var sKey = oContext && oContext.getProperty("key");
-            if (sKey) {
-                this._setNavKey(sKey);
-            }
-            this.byId("helpPopover").close();
         },
 
         onSettings: function (oEvent) {

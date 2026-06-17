@@ -46,6 +46,29 @@ sap.ui.define([], function () {
         { label: "GR This Month", valueMain: "1,284", valueSuffix: " EA", trendHint: "goods receipt", trend: "9.4%", trendUp: true }
     ];
 
+    var MM_FLYOUT_ITEMS = [
+        { key: "OVERVIEW", text: "Overview" },
+        { key: "INVENTORY", text: "Inventory" },
+        { key: "PURCHASING", text: "Purchasing" },
+        { key: "GOODS_MOVEMENT", text: "Goods Movement" },
+        { key: "REPORTS", text: "Reports" }
+    ];
+
+    var FI_SUB_TABS = [
+        { key: "OVERVIEW", text: "Overview" },
+        { key: "GENERAL_LEDGER", text: "General Ledger" },
+        { key: "ACCOUNTS_PAYABLE", text: "Accounts Payable" },
+        { key: "ACCOUNTS_RECEIVABLE", text: "Accounts Receivable" },
+        { key: "REPORT", text: "Report" }
+    ];
+
+    var FI_FLYOUT_ITEMS = FI_SUB_TABS.slice();
+
+    var MODULE_FLYOUT_ITEMS = {
+        MM_MATERIALS: MM_FLYOUT_ITEMS,
+        FI_CO_FINANCE: FI_FLYOUT_ITEMS
+    };
+
     var MODULE_TITLES = {
         SD_SALES: "Sales and Distribution",
         MM_MATERIALS: "Materials Management (자재 관리)",
@@ -53,7 +76,26 @@ sap.ui.define([], function () {
         FI_CO_FINANCE: "Financial Accounting"
     };
 
+    function buildFiModuleConfig() {
+        return {
+            title: MODULE_TITLES.FI_CO_FINANCE,
+            period: "THIS_WEEK",
+            periodOptions: PERIOD_OPTIONS.slice(),
+            activeSubTab: "OVERVIEW",
+            subTabs: FI_SUB_TABS.slice(),
+            kpis: [],
+            settings: {
+                showKpiTrends: false,
+                includeTrendsInExport: false
+            }
+        };
+    }
+
     function buildModuleConfig(sNavKey) {
+        if (sNavKey === "FI_CO_FINANCE") {
+            return buildFiModuleConfig();
+        }
+
         var aKpis = sNavKey === "MM_MATERIALS" ? MM_KPIS : COMMON_KPIS;
         var aSubTabs = sNavKey === "MM_MATERIALS"
             ? MM_SUB_TABS.slice()
@@ -95,7 +137,20 @@ sap.ui.define([], function () {
             }
 
             oConfig = JSON.parse(JSON.stringify(MODULE_CONFIGS[sNavKey]));
+            if ((sNavKey === "MM_MATERIALS" || sNavKey === "FI_CO_FINANCE") && oConfig.activeSubTab === "NOTES") {
+                oConfig.activeSubTab = "OVERVIEW";
+            }
             oModel.setProperty("/moduleView", oConfig);
+        },
+
+        hasFlyout: function (sNavKey) {
+            var aItems = MODULE_FLYOUT_ITEMS[sNavKey];
+            return !!(aItems && aItems.length);
+        },
+
+        getFlyoutItems: function (sNavKey) {
+            var aItems = MODULE_FLYOUT_ITEMS[sNavKey];
+            return aItems ? aItems.slice() : [];
         }
     };
 });
