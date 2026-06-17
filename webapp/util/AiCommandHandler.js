@@ -175,6 +175,14 @@ sap.ui.define([], function () {
                 // ==========================================================
             } else if (sProcessedText.includes("릴리즈")) {
                 this._handlePrdOrdRelease(sProcessedText, oModel, oCallbacks);
+
+
+                // ==========================================================
+                // 🚀 [신규 추가] 3. 제조오더 생산 확정 (Auto GR)
+                // ==========================================================
+            } else if (sProcessedText.includes("확정")) {
+                this._handlePrdOrdConfirmation(sProcessedText, oModel, oCallbacks);
+
                 // 5. 예외 처리
             } else {
                 oCallbacks.onError(
@@ -190,7 +198,8 @@ sap.ui.define([], function () {
                     "- 구매요청 변환 [변환]\n" +
                     "- 구매오더 입고 [입고]\n" +
                     "- 계획오더 전환 [전환]\n" +
-                    "- 생산오더 릴리즈 [릴리즈]\n\n" +
+                    "- 생산오더 릴리즈 [릴리즈]\n" +
+                    "- 생산오더 확정 [확정]\n\n" +
                     "지시를 하실 키워드 [글자]를 입력해주시면 명령 가이드를 드립니다."
                 );
             }
@@ -757,6 +766,44 @@ sap.ui.define([], function () {
                 }.bind(this),
                 error: function (oError) {
                     oCallbacks.onError("AI 비서", "sap-icon://error", "릴리즈 처리 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
+        },
+
+
+        /**
+         * [기능] 3. 제조오더 생산 실적 확정 및 Auto GR (ConfirmOrder)
+         */
+        _handlePrdOrdConfirmation: function (sText, oModel, oCallbacks) {
+            // 사용자의 문장에서 연속된 숫자(제조오더 번호) 추출
+            var aMatch = sText.match(/\d+/); 
+            
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "확정할 제조오더 번호를 함께 말씀해 주세요. (예: 1000021 확정해줘)");
+                return;
+            }
+            var sOrderNumber = aMatch[0];
+
+            // 진행 중 말풍선 (결재/도장 느낌의 아이콘 사용)
+            oCallbacks.onProcess("AI 비서", "sap-icon://approvals", "제조오더 " + sOrderNumber + "번의 생산 실적 확정 및 자동 입고(Auto GR)를 진행합니다. 잠시만 기다려주세요...");
+
+            oModel.callFunction("/ConfirmOrder", {
+                method: "POST",
+                urlParameters: {
+                    ORDER_NUMBER: sOrderNumber
+                },
+                success: function (oData, response) {
+                    var oResult = oData.ConfirmOrder || oData;
+                    
+                    // 백엔드에서 넘겨준 메시지에 "실패"라는 단어가 있으면 에러 말풍선으로 띄움
+                    if (oResult && oResult.MSG && oResult.MSG.includes("실패")) {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG);
+                    } else if (oResult) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "생산 확정 처리 중 통신 오류가 발생했습니다.");
                 }.bind(this)
             });
         }
