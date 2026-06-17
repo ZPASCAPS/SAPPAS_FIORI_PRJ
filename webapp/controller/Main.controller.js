@@ -431,7 +431,10 @@ sap.ui.define([
                     searchText: "",
                     searchEnabled: false,
                     searchPlaceholder: "전체 MM 현황을 조회합니다",
-                    criteriaLabel: "All Materials",
+                    criteriaLabel: "Uniqlo Material",
+                    heroFilterLine: "현재 필터: Uniqlo Material · UP 자재 기준 · 조회: 데이터 없음",
+                    recordCount: 0,
+                    odataBadge: "BOM · Inventory · PO/MIGO",
                     lastUpdated: "데이터 없음",
                     kpis: [],
                     primaryKpis: [],
@@ -469,7 +472,10 @@ sap.ui.define([
                     plantOptions: [{ key: "ALL", text: "전체" }],
                     storageLocationOptions: [{ key: "ALL", text: "전체" }],
                     materialTypeOptions: [{ key: "ALL", text: "전체" }],
-                    criteriaLabel: "전체 자재",
+                    criteriaLabel: "Uniqlo Material",
+                    heroFilterLine: "현재 필터: Uniqlo Material · 조회: 데이터 없음",
+                    recordCount: 0,
+                    odataBadge: "Z_C_MM_INVENTORY",
                     lastUpdated: "데이터 없음",
                     kpis: [],
                     materials: [],
@@ -496,8 +502,12 @@ sap.ui.define([
                         { key: "LINKED", text: "연결됨" },
                         { key: "NO_DATA", text: "데이터 없음" }
                     ],
-                    criteriaLabel: "전체 Tracker",
+                    criteriaLabel: "Uniqlo Material",
+                    heroFilterLine: "현재 필터: Uniqlo Material · 조회: 데이터 없음",
+                    recordCount: 0,
+                    odataBadge: "Z_C_E2E_OrderTracker",
                     lastUpdated: "데이터 없음",
+                    heroKpis: [],
                     pipeline: [],
                     riskQueue: [],
                     trackers: [],
@@ -525,8 +535,12 @@ sap.ui.define([
                         { key: "LINKED", text: "연결됨" },
                         { key: "NO_DATA", text: "데이터 없음" }
                     ],
-                    criteriaLabel: "전체 MIGO/Tracker",
+                    criteriaLabel: "Uniqlo Material",
+                    heroFilterLine: "현재 필터: Uniqlo Material · 조회: 데이터 없음",
+                    recordCount: 0,
+                    odataBadge: "Z_C_E2E_OrderTracker",
                     lastUpdated: "데이터 없음",
+                    heroKpis: [],
                     statusStrip: [],
                     documentQueue: {
                         linkedDocuments: [],
@@ -546,6 +560,88 @@ sap.ui.define([
                     movementFlow: { hasFlow: false, emptyMessage: "", steps: [], missingFields: [] },
                     stockPanel: { hasSelection: false, emptyMessage: "", dataAvailability: [] },
                     analysisCards: []
+                },
+                fiOverview: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    hasData: false,
+                    odataConnected: false,
+                    emptyTitle: "데이터 없음",
+                    emptyMessage: "현재 연결된 FI OData가 없습니다.",
+                    emptyHint: "FI 전표/채권/채무 데이터를 표시하려면 Eclipse CDS 및 OData 연결이 필요합니다.",
+                    summaryCards: [],
+                    worklist: [],
+                    worklistTitle: "FI Worklist",
+                    worklistSubtitle: "우선 확인 재무 업무 목록",
+                    worklistEmptyMessage: "데이터 없음"
+                },
+                fiGeneralLedger: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    hasData: false,
+                    odataConnected: false,
+                    emptyTitle: "데이터 없음",
+                    emptyMessage: "현재 연결된 FI OData가 없습니다.",
+                    emptyHint: "FI 전표/채권/채무 데이터를 표시하려면 Eclipse CDS 및 OData 연결이 필요합니다.",
+                    journalEntries: [],
+                    listTitle: "Journal Entry List",
+                    listSubtitle: "회계전표 목록",
+                    detail: {
+                        hasSelection: false,
+                        emptyMessage: "왼쪽 목록에서 전표를 선택하면 상세 정보가 표시됩니다."
+                    }
+                },
+                fiAccountsPayable: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    hasData: false,
+                    odataConnected: false,
+                    emptyTitle: "데이터 없음",
+                    emptyMessage: "미지급금 데이터 없음",
+                    emptyHint: "현재 연결된 FI OData가 없습니다.",
+                    payables: [],
+                    listTitle: "Open Payables",
+                    listSubtitle: "구매·입고 이후 발생한 미지급금 목록",
+                    detail: {
+                        hasSelection: false,
+                        emptyMessage: "미지급금 목록에서 항목을 선택하면 상세 정보가 표시됩니다."
+                    }
+                },
+                fiAccountsReceivable: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    hasData: false,
+                    odataConnected: false,
+                    emptyTitle: "데이터 없음",
+                    emptyMessage: "미수금 데이터 없음",
+                    emptyHint: "현재 연결된 FI OData가 없습니다.",
+                    receivables: [],
+                    listTitle: "Open Receivables",
+                    listSubtitle: "판매 이후 발생한 미수금 목록",
+                    detail: {
+                        hasSelection: false,
+                        emptyMessage: "미수금 목록에서 항목을 선택하면 상세 정보가 표시됩니다."
+                    }
+                },
+                fiReport: {
+                    loading: false,
+                    loaded: false,
+                    error: "",
+                    hasData: false,
+                    odataConnected: false,
+                    emptyTitle: "데이터 없음",
+                    emptyMessage: "현재 연결된 FI OData가 없습니다.",
+                    emptyHint: "FI 전표/채권/채무 데이터를 표시하려면 Eclipse CDS 및 OData 연결이 필요합니다.",
+                    chartSlots: []
+                },
+                fiNote: {
+                    introTitle: "FI Note",
+                    introMessage: "FI 업무 관련 메모를 정리할 수 있는 영역입니다.",
+                    hint: "저장 기능이 연결되기 전까지는 안내 문구만 표시됩니다."
                 }
             });
 

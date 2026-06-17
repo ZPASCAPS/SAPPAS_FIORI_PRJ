@@ -1,24 +1,27 @@
 /**
  * MmInventoryDataService.js
  *
- * MM Inventory — Z_C_MM_INVENTORY_CDS / Z_C_MM_INVENTORY 기반 재고 조회.
+ * MM Inventory — Z_C_MM_INVENTORY_CDS / Z_C_MM_INVENTORY (Material 필드 UP* 필터).
  */
 sap.ui.define([
     "com/capstone/dashboard/fioridashboard/util/SapErrorUtil",
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil"
-], function (SapErrorUtil, MmChartHtmlUtil) {
+    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil",
+    "com/capstone/dashboard/fioridashboard/util/MmUpMaterialFilterUtil",
+    "com/capstone/dashboard/fioridashboard/util/MmHeroUiUtil"
+], function (SapErrorUtil, MmChartHtmlUtil, MmUpMaterialFilterUtil, MmHeroUiUtil) {
     "use strict";
 
     var NO_DATA = "데이터 없음";
     var ENTITY_SET = "/Z_C_MM_INVENTORY";
 
-    function _readCollection(oModel, sPath) {
+    function _readCollection(oModel, sPath, aFilters) {
         return new Promise(function (resolve, reject) {
             if (!oModel) {
                 reject(new Error("mmInventory OData 모델을 찾을 수 없습니다."));
                 return;
             }
             oModel.read(sPath, {
+                filters: aFilters || [],
                 success: function (oData) {
                     resolve(oData.results || []);
                 },
@@ -119,7 +122,7 @@ sap.ui.define([
             aParts.push("Type " + oFilters.materialTypeFilter);
         }
 
-        return aParts.length ? aParts.join(" · ") : "전체 자재";
+        return aParts.length ? MmHeroUiUtil.buildCriteriaBase(aParts.join(" · ")) : MmHeroUiUtil.UNIQLO_LABEL;
     }
 
     function _mapTableRow(oItem) {
@@ -292,6 +295,9 @@ sap.ui.define([
             loaded: true,
             error: "",
             criteriaLabel: _criteriaLabel(oFilters),
+            heroFilterLine: MmHeroUiUtil.buildFilterLine(aFiltered.length),
+            recordCount: aFiltered.length,
+            odataBadge: "Z_C_MM_INVENTORY",
             lastUpdated: oCache.lastUpdated || NO_DATA,
             materialSearch: oFilters.materialSearch || "",
             plantFilter: oFilters.plantFilter || "ALL",
@@ -314,7 +320,10 @@ sap.ui.define([
         loadInventoryData: function (oComponent) {
             var oModel = oComponent.getModel("mmInventory");
 
-            return _readCollection(oModel, ENTITY_SET).then(function (aItems) {
+            return _readCollection(oModel, ENTITY_SET, MmUpMaterialFilterUtil.getODataFilters("Material")).then(function (aItems) {
+                aItems = MmUpMaterialFilterUtil.filterRows(aItems, function (oRow) {
+                    return MmUpMaterialFilterUtil.getRowMaterialCode(oRow, "Material");
+                });
                 return {
                     items: aItems,
                     lastUpdated: aItems.length ? String(aItems.length) + "건" : NO_DATA
@@ -329,7 +338,10 @@ sap.ui.define([
                 loading: false,
                 loaded: false,
                 error: "",
-                criteriaLabel: "전체 자재",
+                criteriaLabel: MmHeroUiUtil.UNIQLO_LABEL,
+                heroFilterLine: MmHeroUiUtil.buildFilterLine(0),
+                recordCount: 0,
+                odataBadge: "Z_C_MM_INVENTORY",
                 lastUpdated: NO_DATA,
                 materialSearch: "",
                 plantFilter: "ALL",

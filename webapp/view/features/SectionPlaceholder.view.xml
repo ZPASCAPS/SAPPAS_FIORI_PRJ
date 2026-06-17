@@ -34,7 +34,7 @@
         </VBox>
         <VBox
             class="nxSectionPlaceholderModuleBody"
-            visible="{= ${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' }">
+            visible="{= ${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' }">
             <Text
                 text="{= ${dashboard>/moduleView/activeSubTab} + ' 탭 콘텐츠가 이 영역에 표시됩니다.' }"
                 class="nxSectionPlaceholderDesc" />

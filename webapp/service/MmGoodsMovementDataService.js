@@ -6,8 +6,9 @@
  */
 sap.ui.define([
     "com/capstone/dashboard/fioridashboard/service/MmOverviewDataService",
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil"
-], function (MmOverviewDataService, MmChartHtmlUtil) {
+    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil",
+    "com/capstone/dashboard/fioridashboard/util/MmHeroUiUtil"
+], function (MmOverviewDataService, MmChartHtmlUtil, MmHeroUiUtil) {
     "use strict";
 
     var NO_DATA = "데이터 없음";
@@ -206,7 +207,7 @@ sap.ui.define([
             aParts.push("부족 자재만");
         }
 
-        return aParts.length ? aParts.join(" · ") : "전체 MIGO/Tracker";
+        return aParts.length ? MmHeroUiUtil.buildCriteriaBase(aParts.join(" · ")) : MmHeroUiUtil.UNIQLO_LABEL;
     }
 
     function _sortMovementRows(aRows) {
@@ -467,6 +468,47 @@ sap.ui.define([
         };
     }
 
+    function _buildHeroKpis(aTracker) {
+        var iPo = aTracker.filter(_hasPo).length;
+        var iMigo = aTracker.filter(_hasMigo).length;
+        var iMat = _countLinkedMaterials(aTracker);
+
+        return [
+            {
+                displayTitle: "Document Rows",
+                value: String(aTracker.length),
+                unit: "EA",
+                hint: "Z_C_E2E_OrderTracker",
+                accent: "blue",
+                icon: "sap-icon://activity-items"
+            },
+            {
+                displayTitle: "PO Linked",
+                value: String(iPo),
+                unit: "EA",
+                hint: "PurchaseOrder 존재",
+                accent: "blue",
+                icon: "sap-icon://sales-order"
+            },
+            {
+                displayTitle: "MIGO Linked",
+                value: String(iMigo),
+                unit: "EA",
+                hint: "POMigoDoc / ProdMigoDoc",
+                accent: "success",
+                icon: "sap-icon://shipping-status"
+            },
+            {
+                displayTitle: "Materials",
+                value: String(iMat),
+                unit: "EA",
+                hint: "MIGO/PO 연결 Material",
+                accent: "blue",
+                icon: "sap-icon://product"
+            }
+        ];
+    }
+
     function _buildKpis(aTracker, aBom) {
         var iMigo = aTracker.filter(_hasMigo).length;
         var iMissingMigo = aTracker.length - iMigo;
@@ -660,6 +702,9 @@ sap.ui.define([
             loaded: true,
             error: "",
             criteriaLabel: _criteriaLabel(oFilters),
+            heroFilterLine: MmHeroUiUtil.buildFilterLine(aTable.length),
+            recordCount: aTable.length,
+            odataBadge: "Z_C_E2E_OrderTracker",
             lastUpdated: oCache.lastUpdated || _formatTime(),
             migoSearch: oFilters.migoSearch || "",
             poSearch: oFilters.poSearch || "",
@@ -667,6 +712,7 @@ sap.ui.define([
             migoLinkedFilter: oFilters.migoLinkedFilter || "ALL",
             shortageOnly: oFilters.shortageOnly === true,
             linkFilterOptions: LINK_FILTER_OPTIONS,
+            heroKpis: _buildHeroKpis(aFiltered),
             statusStrip: _buildStatusStrip(aFiltered, aBom),
             documentQueue: _buildDocumentQueue(aTable),
             movements: aTable,
@@ -692,7 +738,10 @@ sap.ui.define([
                 loading: false,
                 loaded: false,
                 error: "",
-                criteriaLabel: "전체 MIGO/Tracker",
+                criteriaLabel: MmHeroUiUtil.UNIQLO_LABEL,
+                heroFilterLine: MmHeroUiUtil.buildFilterLine(0),
+                recordCount: 0,
+                odataBadge: "Z_C_E2E_OrderTracker",
                 lastUpdated: NO_DATA,
                 migoSearch: "",
                 poSearch: "",
@@ -700,6 +749,7 @@ sap.ui.define([
                 migoLinkedFilter: "ALL",
                 shortageOnly: false,
                 linkFilterOptions: LINK_FILTER_OPTIONS,
+                heroKpis: [],
                 statusStrip: [],
                 documentQueue: {
                     linkedDocuments: [],

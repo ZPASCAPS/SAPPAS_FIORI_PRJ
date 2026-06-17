@@ -265,6 +265,21 @@ sap.ui.define([
             this._showInventoryToast("SAP 데이터 새로고침");
         },
 
+        onToolbarFilterOpen: function (oEvent) {
+            var oSource = oEvent.getSource();
+
+            if (this._oEventBus && oSource) {
+                this._oEventBus.publish("dashboard", "mmShellUiAction", {
+                    action: "inventoryFilterOpen",
+                    openById: oSource.getId()
+                });
+            }
+        },
+
+        onToolbarRefresh: function () {
+            this.onRefreshPress();
+        },
+
         onMaterialSelect: function (oEvent) {
             var oItem = oEvent.getParameter("listItem");
             var oContext;

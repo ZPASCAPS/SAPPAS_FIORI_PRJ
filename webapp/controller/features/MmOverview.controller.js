@@ -21,7 +21,7 @@ sap.ui.define([
 
     var KPI_DISPLAY = {
         "Shortage Items": { displayTitle: "부족 자재", hint: "Status/ShortageQty 기준", accent: "danger" },
-        "Total Materials": { displayTitle: "전체 자재", hint: "BomStockSet 전체 자재 수", accent: "blue" },
+        "Total Materials": { displayTitle: "전체 자재", hint: "Uniqlo Material · BomStockSet", accent: "blue" },
         "Total Stock Qty": { displayTitle: "전체 재고 수량", hint: "StockQty 합계", accent: "blue" },
         "Avg Fill Rate": { displayTitle: "평균 충족률", hint: "RequiredQty 대비 StockQty", accent: "amber" },
         "PO/MIGO Tracker Count": { displayTitle: "PO/MIGO 추적", hint: "OrderTracker 추적 건수", accent: "blue" }
@@ -256,6 +256,21 @@ sap.ui.define([
         onRefreshPress: function () {
             this._loadOverview(true);
             MessageToast.show("SAP OData를 새로고침했습니다.");
+        },
+
+        onToolbarFilterOpen: function (oEvent) {
+            var oSource = oEvent.getSource();
+
+            if (this._oEventBus && oSource) {
+                this._oEventBus.publish("dashboard", "mmShellUiAction", {
+                    action: "overviewFilterOpen",
+                    openById: oSource.getId()
+                });
+            }
+        },
+
+        onToolbarRefresh: function () {
+            this.onRefreshPress();
         },
 
         _applyQuery: function (sMode, sSearch) {

@@ -6,8 +6,9 @@
  */
 sap.ui.define([
     "com/capstone/dashboard/fioridashboard/service/MmOverviewDataService",
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil"
-], function (MmOverviewDataService, MmChartHtmlUtil) {
+    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil",
+    "com/capstone/dashboard/fioridashboard/util/MmHeroUiUtil"
+], function (MmOverviewDataService, MmChartHtmlUtil, MmHeroUiUtil) {
     "use strict";
 
     var NO_DATA = "데이터 없음";
@@ -210,7 +211,7 @@ sap.ui.define([
             aParts.push("부족 자재만");
         }
 
-        return aParts.length ? aParts.join(" · ") : "전체 Tracker";
+        return aParts.length ? MmHeroUiUtil.buildCriteriaBase(aParts.join(" · ")) : MmHeroUiUtil.UNIQLO_LABEL;
     }
 
     function _sortTrackerRows(aRows) {
@@ -555,6 +556,9 @@ sap.ui.define([
             loaded: true,
             error: "",
             criteriaLabel: _criteriaLabel(oFilters),
+            heroFilterLine: MmHeroUiUtil.buildFilterLine(aTable.length),
+            recordCount: aTable.length,
+            odataBadge: "Z_C_E2E_OrderTracker",
             lastUpdated: oCache.lastUpdated || _formatTime(),
             poSearch: oFilters.poSearch || "",
             materialSearch: oFilters.materialSearch || "",
@@ -563,6 +567,7 @@ sap.ui.define([
             migoLinkedFilter: oFilters.migoLinkedFilter || "ALL",
             shortageOnly: oFilters.shortageOnly === true,
             linkFilterOptions: LINK_FILTER_OPTIONS,
+            heroKpis: _buildKpis(aFiltered, aBom).slice(0, 4),
             pipeline: _buildPipeline(aFiltered, aBom),
             riskQueue: _buildRiskQueue(aTable),
             trackers: aTable,
@@ -586,7 +591,10 @@ sap.ui.define([
                 loading: false,
                 loaded: false,
                 error: "",
-                criteriaLabel: "전체 Tracker",
+                criteriaLabel: MmHeroUiUtil.UNIQLO_LABEL,
+                heroFilterLine: MmHeroUiUtil.buildFilterLine(0),
+                recordCount: 0,
+                odataBadge: "Z_C_E2E_OrderTracker",
                 lastUpdated: NO_DATA,
                 poSearch: "",
                 materialSearch: "",
@@ -595,6 +603,7 @@ sap.ui.define([
                 migoLinkedFilter: "ALL",
                 shortageOnly: false,
                 linkFilterOptions: LINK_FILTER_OPTIONS,
+                heroKpis: [],
                 pipeline: [],
                 riskQueue: [],
                 trackers: [],
