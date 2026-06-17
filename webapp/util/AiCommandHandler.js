@@ -164,6 +164,17 @@ sap.ui.define([], function () {
             } else if (sProcessedText.includes("입고")) {
                 this._handlePoToGrCreation(sProcessedText, oModel, oCallbacks);
 
+                // ==========================================================
+                // 🚀 [신규 추가] 1. 계획오더 -> 제조오더 전환
+                // ==========================================================
+            } else if (sProcessedText.includes("전환")) {
+                this._handlePlOrdToPrdOrdConversion(sProcessedText, oModel, oCallbacks);
+
+                // ==========================================================
+                // 🚀 [신규 추가] 2. 제조오더 릴리즈 (생산 시작)
+                // ==========================================================
+            } else if (sProcessedText.includes("릴리즈")) {
+                this._handlePrdOrdRelease(sProcessedText, oModel, oCallbacks);
                 // 5. 예외 처리
             } else {
                 oCallbacks.onError(
@@ -640,12 +651,12 @@ sap.ui.define([], function () {
         _handlePoToGrCreation: function (sText, oModel, oCallbacks) {
             // 1. 사용자의 문장에서 10자리 숫자(구매오더 번호) 추출
             var aMatch = sText.match(/\d{10}/); // 구매오더는 보통 10자리 (예: 4500001234)
-            
+
             if (!aMatch) {
                 oCallbacks.onError("AI 비서", "sap-icon://alert", "어떤 구매오더를 입고할지 10자리 번호를 함께 말씀해 주세요. \n(예: 4500001040 입고해줘)");
                 return;
             }
-            
+
             var sPoNumber = aMatch[0];
 
             // 2. 진행 중 말풍선 띄우기 (아이콘: 트럭 모양)
@@ -662,7 +673,7 @@ sap.ui.define([], function () {
                 success: function (oData, response) {
                     // 백엔드에서 넘겨준 GrResult 바구니 데이터 확인
                     var oResult = oData.CreateGrFromPo || oData;
-                    
+
                     if (oResult && oResult.MBLNR) {
                         oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
                     } else {
@@ -673,7 +684,82 @@ sap.ui.define([], function () {
                     oCallbacks.onError("AI 비서", "sap-icon://error", "입고 처리 중 오류가 발생했습니다. PO 상태를 확인해주세요.");
                 }.bind(this)
             });
+        },
+
+        /**
+        * [기능] 1. 계획오더 -> 제조오더 전환 (ConvertOrder)
+        */
+        _handlePlOrdToPrdOrdConversion: function (sText, oModel, oCallbacks) {
+            // 사용자의 문장에서 연속된 숫자(계획오더 번호) 추출
+            var aMatch = sText.match(/\d+/);
+
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "어떤 계획오더를 전환할지 번호를 함께 말씀해 주세요. (예: 156 전환해줘)");
+                return;
+            }
+            var sPlannedOrder = aMatch[0];
+
+            // 진행 중 말풍선 (공장 아이콘)
+            oCallbacks.onProcess("AI 비서", "sap-icon://factory", "계획오더 " + sPlannedOrder + "번을 제조오더로 전환합니다. 잠시만 기다려주세요...");
+
+            oModel.callFunction("/ConvertOrder", {
+                method: "POST",
+                urlParameters: {
+                    PLANNED_ORDER: sPlannedOrder
+                },
+                success: function (oData, response) {
+                    var oResult = oData.ConvertOrder || oData;
+
+                    if (oResult && oResult.AUFNR) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    } else {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG || "오더 전환에 실패했습니다.");
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "전환 처리 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
+        },
+
+        /**
+         * [기능] 2. 제조오더 릴리즈 (ReleaseOrder)
+         */
+        _handlePrdOrdRelease: function (sText, oModel, oCallbacks) {
+            // 사용자의 문장에서 연속된 숫자(제조오더 번호) 추출
+            var aMatch = sText.match(/\d+/);
+
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "릴리즈할 제조오더 번호를 함께 말씀해 주세요. (예: 1000023 릴리즈해줘)");
+                return;
+            }
+            var sOrderNumber = aMatch[0];
+
+            // 진행 중 말풍선 (체크 완료 느낌의 아이콘)
+            oCallbacks.onProcess("AI 비서", "sap-icon://sys-enter-2", "제조오더 " + sOrderNumber + "번 릴리즈를 진행합니다...");
+
+            oModel.callFunction("/ReleaseOrder", {
+                method: "POST",
+                urlParameters: {
+                    ORDER_NUMBER: sOrderNumber
+                },
+                success: function (oData, response) {
+                    var oResult = oData.ReleaseOrder || oData;
+
+                    // 백엔드에서 넘겨준 메시지에 "실패"라는 단어가 있으면 에러 말풍선으로 띄움 (결품 에러 처리용)
+                    if (oResult && oResult.MSG && oResult.MSG.includes("실패")) {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG);
+                    } else if (oResult) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "릴리즈 처리 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
         }
+
+
 
     };
 });

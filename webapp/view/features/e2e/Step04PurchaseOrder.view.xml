@@ -13,5 +13,5 @@
         <Text text="{flowModel>/PurchaseOrder}" class="e2eMtoCardDoc" />
         
         <Text text="2026.06.15" class="e2eMtoCardDetail" />
-    </VBox>                                                              
+    </VBox>                                                                          
 </mvc:View>
