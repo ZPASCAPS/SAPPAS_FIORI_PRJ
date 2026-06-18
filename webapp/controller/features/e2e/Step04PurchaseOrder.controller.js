@@ -27,11 +27,12 @@ sap.ui.define([
             var bShow = oModel.getProperty(sPath + "/showDetail");
             oModel.setProperty("/e2eProcessFlow/selectedStepId", STEP_KEY);
             oModel.setProperty(sPath + "/showDetail", !bShow);
+            
             if (!bShow) { this.loadDocuments(); }
             MessageToast.show("Step 4 — Purchase Order selected");
         },
 
-        /** TODO: OData Purchase Order read */
+        /** OData 데이터는 상위 컨트롤러에서 전역 flowModel에 담으므로 여기서는 비워둡니다 */
         loadDocuments: function () {}
     });
 });

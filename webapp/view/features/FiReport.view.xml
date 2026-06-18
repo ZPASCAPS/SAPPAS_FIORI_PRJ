@@ -1,0 +1,74 @@
+<!--
+  FiReport.view.xml — FI Report (OData 미연결 시 Empty State, 차트 영역만 준비)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.FiReport"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    width="100%">
+
+    <VBox class="nxFiReport fiCockpitPage" width="100%" renderType="Bare">
+        <MessageStrip
+            text="{dashboard>/fiReport/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= ${dashboard>/fiReport/error} ? true : false }"
+            class="sapUiSmallMarginBottom" />
+
+        <BusyIndicator visible="{dashboard>/fiReport/loading}" class="nxFiReportBusy" />
+
+        <VBox visible="{= !${dashboard>/fiReport/loading} }" width="100%" renderType="Bare" class="nxFiReportBody">
+            <VBox class="fiFeatureHero fiHeroReport fiHeroCard" width="100%">
+                <HBox alignItems="Start" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="fiHeroCardHead">
+                    <VBox class="fiHeroContent">
+                        <Title text="Report" level="H2" class="fiHeroTitle" />
+                        <Text
+                            text="FI 데이터를 지표와 차트로 분석하여 재무 현황을 확인하는 화면입니다."
+                            class="fiHeroDescription" />
+                    </VBox>
+                    <HBox alignItems="Center" class="fiHeroActions">
+                        <HBox alignItems="Center" class="fiHeroActionsBox">
+                            <Button
+                                id="fiReportContentRefreshBtn"
+                                icon="sap-icon://refresh"
+                                type="Transparent"
+                                tooltip="새로고침"
+                                press=".onRefreshPress"
+                                class="fiRefreshButton" />
+                        </HBox>
+                    </HBox>
+                </HBox>
+            </VBox>
+
+            <MessageStrip
+                text="{dashboard>/fiReport/emptyMessage}"
+                type="Information"
+                showIcon="true"
+                visible="{= !${dashboard>/fiReport/hasData} }"
+                class="sapUiSmallMarginBottom fiOdataStrip" />
+
+            <VBox items="{dashboard>/fiReport/chartSlots}" width="100%" class="nxFiReportChartGrid">
+                <items>
+                    <Panel class="nxFiCard nxFiChartCard">
+                        <headerToolbar>
+                            <Toolbar class="nxFiChartToolbar">
+                                <Title text="{dashboard>title}" level="H5" />
+                            </Toolbar>
+                        </headerToolbar>
+                        <content>
+                            <VBox class="nxFiChartBody" width="100%">
+                                <Text text="{dashboard>subtitle}" class="nxFiCardSub sapUiSmallMarginBottom" />
+                                <VBox class="fiEmptyState fiEmptyState--chart" alignItems="Center" justifyContent="Center">
+                                    <core:Icon src="sap-icon://bar-chart" size="2.25rem" color="#94A3B8" class="sapUiSmallMarginBottom" />
+                                    <Text text="{dashboard>emptyMessage}" class="fiEmptyStateTitle" />
+                                    <Text text="{dashboard>/fiReport/emptyHint}" class="fiEmptyStateHint" />
+                                </VBox>
+                            </VBox>
+                        </content>
+                    </Panel>
+                </items>
+            </VBox>
+        </VBox>
+    </VBox>
+</mvc:View>

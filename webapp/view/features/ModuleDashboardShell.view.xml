@@ -14,11 +14,9 @@
     xmlns:core="sap.ui.core"
     width="100%">
 
-    <VBox
-        class="{= ${dashboard>/ui/navKey} === 'SD_SALES' ? 'nxModuleShell nxModuleShell--sd' : 'nxModuleShell' }"
-        width="100%">
-        <VBox class="nxModuleShellTop" width="100%">
-            <HBox class="nxModuleShellHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+    <VBox class="{= ${dashboard>/ui/navKey} === 'SD_SALES' ? 'nxModuleShell nxModuleShell--sd' : (${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleShell nxMmMaterialsShell' : (${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleShell nxFiFinanceShell' : 'nxModuleShell')) }" width="100%">
+        <VBox class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleShellTop nxMmMaterialsTop' : (${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleShellTop nxFiFinanceTop' : 'nxModuleShellTop') }" width="100%" visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' }">
+            <HBox class="nxModuleShellHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween" visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' }">
                 <HBox class="nxModuleShellHeaderLeft" alignItems="Center" renderType="Bare">
                     <Title text="{dashboard>/moduleView/title}" level="H2" class="nxModuleShellTitle" />
                     <Text
@@ -26,67 +24,7 @@
                         text="수주·출하·여신·반품 현황을 한 화면에서 모니터링합니다."
                         class="nxSdShellDesc" />
                 </HBox>
-                <HBox alignItems="Center" class="nxModuleShellActions" justifyContent="End">
-                    <Button
-                        id="mmOverviewFilterBtn"
-                        text="조회/필터"
-                        icon="sap-icon://filter"
-                        type="Transparent"
-                        press=".onMmOverviewFilterOpen"
-                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' }"
-                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
-                    <Button
-                        icon="sap-icon://refresh"
-                        type="Transparent"
-                        tooltip="SAP 새로고침"
-                        press=".onMmOverviewRefresh"
-                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' }"
-                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
-                    <Button
-                        id="mmInventoryFilterBtn"
-                        text="조회/필터"
-                        icon="sap-icon://filter"
-                        type="Transparent"
-                        press=".onMmInventoryFilterOpen"
-                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' }"
-                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
-                    <Button
-                        icon="sap-icon://refresh"
-                        type="Transparent"
-                        tooltip="SAP 새로고침"
-                        press=".onMmInventoryRefresh"
-                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' }"
-                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
-                    <Button
-                        id="mmPurchasingFilterBtn"
-                        text="조회/필터"
-                        icon="sap-icon://filter"
-                        type="Transparent"
-                        press=".onMmPurchasingFilterOpen"
-                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' }"
-                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
-                    <Button
-                        icon="sap-icon://refresh"
-                        type="Transparent"
-                        tooltip="SAP 새로고침"
-                        press=".onMmPurchasingRefresh"
-                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' }"
-                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
-                    <Button
-                        id="mmGoodsMovementFilterBtn"
-                        text="조회/필터"
-                        icon="sap-icon://filter"
-                        type="Transparent"
-                        press=".onMmGoodsMovementFilterOpen"
-                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' }"
-                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
-                    <Button
-                        icon="sap-icon://refresh"
-                        type="Transparent"
-                        tooltip="SAP 새로고침"
-                        press=".onMmGoodsMovementRefresh"
-                        visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' }"
-                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
+                <HBox alignItems="Center" class="nxModuleShellActions">
                     <Select
                         selectedKey="{dashboard>/moduleView/period}"
                         width="9.5rem"
@@ -97,7 +35,6 @@
                         items="{dashboard>/moduleView/periodOptions}">
                         <core:Item key="{dashboard>key}" text="{dashboard>text}" />
                     </Select>
-                    <Button icon="sap-icon://upload" type="Transparent" tooltip="내보내기" press=".onExport" class="nxModuleSquareBtn" />
                     <Button
                         id="moduleSettingsBtn"
                         icon="sap-icon://action-settings"
@@ -108,18 +45,15 @@
                 </HBox>
             </HBox>
 
-            <VBox
-                id="moduleSubTabsWrap"
-                class="nxModuleSubTabsWrap"
-                width="100%"
-                visible="{= ${dashboard>/ui/navKey} !== 'SD_SALES' }">
-            <HBox id="moduleSubTabsBar" class="nxModuleSubTabs" width="100%" alignItems="Center">
+            <VBox id="moduleSubTabsWrap" class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleSubTabsWrap nxMmMaterialsSubTabsWrap mmSubNavBarWrap' : 'nxModuleSubTabsWrap' }" visible="{= ${dashboard>/ui/navKey} !== 'SD_SALES' }" width="100%">
+            <HBox id="moduleSubTabsBar" class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleSubTabsBar mmSubNavBar' : 'nxModuleSubTabsBar' }" width="100%" alignItems="Center" justifyContent="SpaceBetween">
+            <HBox class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleSubTabs nxModuleSubTabsWork mmSubNavList' : 'nxModuleSubTabs nxModuleSubTabsWork' }" alignItems="Center" wrap="Wrap">
             <Button
                 id="subTabOverview"
                 text="Overview"
                 type="Transparent"
                 press=".onSubTabPress"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+                class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? (${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem') : (${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab') }">
                 <customData><core:CustomData key="subTabKey" value="OVERVIEW" /></customData>
             </Button>
             <Button
@@ -155,7 +89,7 @@
                 type="Transparent"
                 press=".onSubTabPress"
                 visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem' }">
                 <customData><core:CustomData key="subTabKey" value="INVENTORY" /></customData>
             </Button>
             <Button
@@ -164,7 +98,7 @@
                 type="Transparent"
                 press=".onSubTabPress"
                 visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem' }">
                 <customData><core:CustomData key="subTabKey" value="PURCHASING" /></customData>
             </Button>
             <Button
@@ -173,7 +107,7 @@
                 type="Transparent"
                 press=".onSubTabPress"
                 visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem' }">
                 <customData><core:CustomData key="subTabKey" value="GOODS_MOVEMENT" /></customData>
             </Button>
             <Button
@@ -181,9 +115,60 @@
                 text="Reports"
                 type="Transparent"
                 press=".onSubTabPress"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'REPORTS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
+                class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? (${dashboard>/moduleView/activeSubTab} === 'REPORTS' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem') : (${dashboard>/moduleView/activeSubTab} === 'REPORTS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab') }">
                 <customData><core:CustomData key="subTabKey" value="REPORTS" /></customData>
             </Button>
+            </HBox>
+
+            <HBox alignItems="Center" class="nxMmMaterialsRightGroup mmSubNavNoteZone" visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }">
+                <HBox alignItems="Center" class="nxMmMaterialsActions" visible="false">
+                    <Button
+                        id="mmInventoryFilterBtn"
+                        text="조회/필터"
+                        icon="sap-icon://filter"
+                        type="Transparent"
+                        press=".onMmInventoryFilterOpen"
+                        visible="{= ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' }"
+                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
+                    <Button
+                        icon="sap-icon://refresh"
+                        type="Transparent"
+                        tooltip="SAP 새로고침"
+                        press=".onMmInventoryRefresh"
+                        visible="{= ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' }"
+                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
+                    <Button
+                        id="mmPurchasingFilterBtn"
+                        text="조회/필터"
+                        icon="sap-icon://filter"
+                        type="Transparent"
+                        press=".onMmPurchasingFilterOpen"
+                        visible="{= ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' }"
+                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
+                    <Button
+                        icon="sap-icon://refresh"
+                        type="Transparent"
+                        tooltip="SAP 새로고침"
+                        press=".onMmPurchasingRefresh"
+                        visible="{= ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' }"
+                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
+                    <Button
+                        id="mmGoodsMovementFilterBtn"
+                        text="조회/필터"
+                        icon="sap-icon://filter"
+                        type="Transparent"
+                        press=".onMmGoodsMovementFilterOpen"
+                        visible="{= ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' }"
+                        class="nxModuleFilterBtn sapUiTinyMarginEnd" />
+                    <Button
+                        icon="sap-icon://refresh"
+                        type="Transparent"
+                        tooltip="SAP 새로고침"
+                        press=".onMmGoodsMovementRefresh"
+                        visible="{= ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' }"
+                        class="nxModuleSquareBtn sapUiTinyMarginEnd" />
+                </HBox>
+            </HBox>
             </HBox>
             </VBox>
         </VBox>
@@ -191,7 +176,7 @@
         <VBox
             class="nxModuleShellKpiBand"
             width="100%"
-            visible="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' &amp;&amp; ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'SD_SALES' }">
+            visible="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' &amp;&amp; ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/ui/navKey} !== 'SD_SALES' }">
             <HBox class="nxModuleKpiRow" width="100%" alignItems="Stretch">
             <VBox class="nxModuleKpiCard">
                 <Text text="{dashboard>/moduleView/kpis/0/label}" class="nxModuleKpiLabel" />

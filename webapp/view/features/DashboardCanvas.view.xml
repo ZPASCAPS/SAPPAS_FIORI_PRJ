@@ -1,6 +1,8 @@
 <!--
   DashboardCanvas.view.xml
-  SD Overview: SdMain | MM Overview: MmOverview | MM Inventory: MmInventory | MM Purchasing: MmPurchasing | MM Goods Movement: blank | Reports: MmReports
+  SD Overview: SdMain | MM: MmOverview | MmInventory | MmPurchasing | MmGoodsMovement | MmReports
+  FI: FiOverview | FiGeneralLedger | FiAccountsPayable | FiAccountsReceivable | FiReport
+  메모장: DashboardHeader → NotesPanel (오버레이)
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardCanvas"
@@ -39,7 +41,7 @@
 
         <ScrollContainer
             class="nxModuleOverviewFill nxModuleOverviewScroll"
-            visible="{= (${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE') &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' }"
+            visible="{= ${dashboard>/ui/navKey} === 'PP_PRODUCTION' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' }"
             vertical="true"
             horizontal="false"
             height="100%"
@@ -62,6 +64,18 @@
         </ScrollContainer>
 
         <ScrollContainer
+            class="nxModuleOverviewFill nxModuleOverviewScroll nxFiOverviewScroll"
+            visible="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.FiOverview"
+                width="100%" />
+        </ScrollContainer>
+
+        <ScrollContainer
             class="nxModuleOverviewFill nxModuleOverviewScroll nxMmInventoryScroll"
             visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' }"
             vertical="true"
@@ -70,6 +84,18 @@
             width="100%">
             <mvc:XMLView
                 viewName="com.capstone.dashboard.fioridashboard.view.features.MmInventory"
+                width="100%" />
+        </ScrollContainer>
+
+        <ScrollContainer
+            class="nxModuleOverviewFill nxModuleOverviewScroll nxFiGeneralLedgerScroll"
+            visible="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'GENERAL_LEDGER' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.FiGeneralLedger"
                 width="100%" />
         </ScrollContainer>
 
@@ -86,6 +112,18 @@
         </ScrollContainer>
 
         <ScrollContainer
+            class="nxModuleOverviewFill nxModuleOverviewScroll nxFiAccountsPayableScroll"
+            visible="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'ACCOUNTS_PAYABLE' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.FiAccountsPayable"
+                width="100%" />
+        </ScrollContainer>
+
+        <ScrollContainer
             class="nxModuleOverviewFill nxModuleOverviewScroll nxMmGoodsMovementScroll"
             visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' }"
             vertical="true"
@@ -98,17 +136,49 @@
         </ScrollContainer>
 
         <ScrollContainer
+            class="nxModuleOverviewFill nxModuleOverviewScroll nxFiAccountsReceivableScroll"
+            visible="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'ACCOUNTS_RECEIVABLE' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.FiAccountsReceivable"
+                width="100%" />
+        </ScrollContainer>
+
+        <ScrollContainer
+            class="nxModuleOverviewFill nxModuleOverviewScroll nxMmReportsScroll"
+            visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'REPORTS' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.MmReports"
+                width="100%" />
+        </ScrollContainer>
+
+        <ScrollContainer
+            class="nxModuleOverviewFill nxModuleOverviewScroll nxFiReportScroll"
+            visible="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'REPORT' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.FiReport"
+                width="100%" />
+        </ScrollContainer>
+
+        <ScrollContainer
             class="nxContentScroll nxModuleCanvas"
-            visible="{= (${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE') &amp;&amp; ${dashboard>/moduleView/activeSubTab} !== 'OVERVIEW' || (${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'REPORTS') }"
+            visible="{= (${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION') &amp;&amp; ${dashboard>/moduleView/activeSubTab} !== 'OVERVIEW' }"
             vertical="true"
             horizontal="false"
             height="100%"
             width="100%">
             <VBox class="nxContent nxModuleCanvasBody nxModuleContentBody" width="100%">
-                <mvc:XMLView
-                    viewName="com.capstone.dashboard.fioridashboard.view.features.MmReports"
-                    visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'REPORTS' }"
-                    width="100%" />
                 <VBox
                     visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' }"
                     width="100%">

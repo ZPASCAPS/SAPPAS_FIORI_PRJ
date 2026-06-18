@@ -371,12 +371,34 @@ sap.ui.define([
 
         _buildFlowData: function (aResults) {
             var aPRs = [];
+            var aPOs = [];
+            var aPOMigos = [];   // 🚀 [추가] 원자재 입고(MIGO) 자재전표 배열
+            var aProds = [];     // 🚀 [추가] 생산오더 배열
+            var aProdMigos = []; // 🚀 [추가] 완제품 입고(MIGO) 자재전표 배열
             var oMerged = {};
 
             aResults.forEach(function (item) {
+                // 1. 구매요청 배열로 묶기
                 if (item.PurchaseRequisition && aPRs.indexOf(item.PurchaseRequisition) < 0) {
                     aPRs.push(item.PurchaseRequisition);
                 }
+                // 2. 구매오더 배열로 묶기
+                if (item.PurchaseOrder && aPOs.indexOf(item.PurchaseOrder) < 0) {
+                    aPOs.push(item.PurchaseOrder);
+                }
+                // 3. 원자재 입고(POMigo) 자재전표 묶기
+                if (item.POMigoDoc && aPOMigos.indexOf(item.POMigoDoc) < 0) {
+                    aPOMigos.push(item.POMigoDoc);
+                }
+                // 4. 생산오더 묶기
+                if (item.ProductionOrder && aProds.indexOf(item.ProductionOrder) < 0) {
+                    aProds.push(item.ProductionOrder);
+                }
+                // 5. 완제품 입고(ProdMigo) 자재전표 묶기
+                if (item.ProdMigoDoc && aProdMigos.indexOf(item.ProdMigoDoc) < 0) {
+                    aProdMigos.push(item.ProdMigoDoc);
+                }
+
                 this._mergeFlowField(oMerged, "SalesOrder", item.SalesOrder);
                 this._mergeFlowField(oMerged, "PlannedOrder", item.PlannedOrder);
                 this._mergeFlowField(oMerged, "PurchaseOrder", item.PurchaseOrder);
@@ -393,10 +415,10 @@ sap.ui.define([
                 SalesOrder: oMerged.SalesOrder || "없음",
                 PlannedOrder: oMerged.PlannedOrder || "없음",
                 PurchaseReq: aPRs.length ? aPRs.join(", ") : "없음",
-                PurchaseOrder: oMerged.PurchaseOrder || "없음",
-                POMigo: oMerged.POMigo || "없음",
-                ProductionOrder: oMerged.ProductionOrder || "없음",
-                ProdMigo: oMerged.ProdMigo || "없음",
+                PurchaseOrder: aPOs.length ? aPOs.join(", ") : "없음",
+                POMigo: aPOMigos.length ? aPOMigos.join(", ") : "없음",
+                ProductionOrder: aProds.length ? aProds.join(", ") : "없음",
+                ProdMigo: aProdMigos.length ? aProdMigos.join(", ") : "없음",
                 Delivery: oMerged.Delivery || "없음",
                 Billing: oMerged.Billing || "없음",
                 FI: oMerged.FI || "없음",

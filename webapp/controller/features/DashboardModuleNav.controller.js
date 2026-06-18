@@ -6,13 +6,16 @@
  *
  * 역할:
  * - 상단 모듈 탭 바(Dashboard / SD / MM / PP / FI) 클릭 시 navKey·moduleView 갱신.
- * - 활성 탭 슬라이딩 밑줄 표시 (ModuleDashboardShell 서브탭과 동일 패턴).
+ * - MM 등 Flyout 내부 메뉴가 있는 모듈은 hover/click 시 카드형 Flyout 표시.
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "com/capstone/dashboard/fioridashboard/util/ModuleViewConfig"
 ], function (Controller, ModuleViewConfig) {
     "use strict";
+
+    var FLYOUT_OPEN_DELAY_MS = 140;
+    var FLYOUT_CLOSE_DELAY_MS = 240;
 
     var NAV_BTN_IDS = {
         DASHBOARD: "moduleNavDashboard",
@@ -54,14 +57,22 @@ sap.ui.define([
 
             if (oModel) {
                 oModel.attachPropertyChange(this._onDashboardPropertyChange, this);
+                if (!oModel.getProperty("/ui/moduleFlyoutMenu")) {
+                    oModel.setProperty("/ui/moduleFlyoutMenu", []);
+                }
             }
 
             oView.addEventDelegate({
                 onAfterRendering: this._onNavTabsAfterRendering
             }, this);
 
-            this._fnNavTabResize = this._updateNavTabIndicator.bind(this, true);
+            this._fnNavTabResize = function () {
+                this._updateNavTabIndicator(true);
+                this._closeModuleFlyout();
+            }.bind(this);
             window.addEventListener("resize", this._fnNavTabResize);
+            this._fnPopoverMouseEnter = this._onFlyoutPopoverEnter.bind(this);
+            this._fnPopoverMouseLeave = this._onFlyoutPopoverLeave.bind(this);
         },
 
         onExit: function () {
@@ -75,6 +86,9 @@ sap.ui.define([
                 window.removeEventListener("resize", this._fnNavTabResize);
             }
 
+            this._clearFlyoutTimers();
+            this._detachFlyoutDelegates();
+            this._detachPopoverHoverHandlers();
             this._oNavTabIndicator = null;
             this._bNavTabIndicatorReady = false;
         },
@@ -82,17 +96,192 @@ sap.ui.define([
         _onDashboardPropertyChange: function (oEvent) {
             if (oEvent.getPath() === "/ui/navKey") {
                 this._updateNavTabIndicator(true);
+                this._closeModuleFlyout();
             }
         },
 
         _onNavTabsAfterRendering: function () {
             this._ensureNavTabIndicator();
+            this._attachFlyoutDelegates();
 
             if (!this._bNavTabIndicatorReady) {
                 this._updateNavTabIndicator(false);
                 this._bNavTabIndicatorReady = true;
             } else {
                 this._updateNavTabIndicator(true);
+            }
+        },
+
+        _attachFlyoutDelegates: function () {
+            var that = this;
+
+            this._detachFlyoutDelegates();
+            this._mFlyoutDelegates = {};
+
+            Object.keys(NAV_BTN_IDS).forEach(function (sNavKey) {
+                var oBtn;
+                var oDelegate;
+
+                if (!ModuleViewConfig.hasFlyout(sNavKey)) {
+                    return;
+                }
+
+                oBtn = that.byId(NAV_BTN_IDS[sNavKey]);
+                if (!oBtn) {
+                    return;
+                }
+
+                oDelegate = {
+                    onmouseover: function () {
+                        that._onModuleNavHover(sNavKey);
+                    },
+                    onmouseout: function () {
+                        that._onModuleNavLeave(sNavKey);
+                    }
+                };
+
+                oBtn.addEventDelegate(oDelegate);
+                that._mFlyoutDelegates[sNavKey] = { button: oBtn, delegate: oDelegate };
+            });
+        },
+
+        _detachFlyoutDelegates: function () {
+            var sKey;
+            var oEntry;
+
+            if (!this._mFlyoutDelegates) {
+                return;
+            }
+
+            for (sKey in this._mFlyoutDelegates) {
+                if (Object.prototype.hasOwnProperty.call(this._mFlyoutDelegates, sKey)) {
+                    oEntry = this._mFlyoutDelegates[sKey];
+                    if (oEntry.button && oEntry.delegate) {
+                        oEntry.button.removeEventDelegate(oEntry.delegate);
+                    }
+                }
+            }
+
+            this._mFlyoutDelegates = null;
+        },
+
+        _attachPopoverHoverHandlers: function () {
+            var oPopover = this.byId("moduleFlyoutPopover");
+            var oDom = oPopover && oPopover.getDomRef();
+
+            this._detachPopoverHoverHandlers();
+
+            if (!oDom) {
+                return;
+            }
+
+            oDom.addEventListener("mouseenter", this._fnPopoverMouseEnter);
+            oDom.addEventListener("mouseleave", this._fnPopoverMouseLeave);
+            this._oFlyoutPopoverDom = oDom;
+        },
+
+        _detachPopoverHoverHandlers: function () {
+            if (this._oFlyoutPopoverDom) {
+                this._oFlyoutPopoverDom.removeEventListener("mouseenter", this._fnPopoverMouseEnter);
+                this._oFlyoutPopoverDom.removeEventListener("mouseleave", this._fnPopoverMouseLeave);
+                this._oFlyoutPopoverDom = null;
+            }
+        },
+
+        _clearFlyoutTimers: function () {
+            if (this._flyoutOpenTimer) {
+                clearTimeout(this._flyoutOpenTimer);
+                this._flyoutOpenTimer = null;
+            }
+
+            if (this._flyoutCloseTimer) {
+                clearTimeout(this._flyoutCloseTimer);
+                this._flyoutCloseTimer = null;
+            }
+        },
+
+        _onModuleNavHover: function (sNavKey) {
+            this._clearFlyoutTimers();
+            this._pendingFlyoutNavKey = sNavKey;
+            this._flyoutOpenTimer = setTimeout(function () {
+                this._openModuleFlyout(sNavKey);
+            }.bind(this), FLYOUT_OPEN_DELAY_MS);
+        },
+
+        _onModuleNavLeave: function () {
+            if (this._flyoutOpenTimer) {
+                clearTimeout(this._flyoutOpenTimer);
+                this._flyoutOpenTimer = null;
+            }
+
+            this._scheduleFlyoutClose();
+        },
+
+        _onFlyoutPopoverEnter: function () {
+            if (this._flyoutCloseTimer) {
+                clearTimeout(this._flyoutCloseTimer);
+                this._flyoutCloseTimer = null;
+            }
+        },
+
+        _onFlyoutPopoverLeave: function () {
+            this._scheduleFlyoutClose();
+        },
+
+        _scheduleFlyoutClose: function () {
+            if (this._flyoutCloseTimer) {
+                clearTimeout(this._flyoutCloseTimer);
+            }
+
+            this._flyoutCloseTimer = setTimeout(function () {
+                this._closeModuleFlyout();
+            }.bind(this), FLYOUT_CLOSE_DELAY_MS);
+        },
+
+        _openModuleFlyout: function (sNavKey) {
+            var oPopover = this.byId("moduleFlyoutPopover");
+            var oBtn = this.byId(NAV_BTN_IDS[sNavKey]);
+            var oModel = this.getView().getModel("dashboard");
+            var aItems;
+            var sPrevKey = this._activeFlyoutNavKey;
+            var bWasOpen = !!(oPopover && oPopover.isOpen());
+
+            if (!oPopover || !oBtn || !oModel || !ModuleViewConfig.hasFlyout(sNavKey)) {
+                return;
+            }
+
+            aItems = ModuleViewConfig.getFlyoutItems(sNavKey);
+            oModel.setProperty("/ui/moduleFlyoutMenu", aItems);
+            oModel.setProperty("/ui/moduleFlyoutNavKey", sNavKey);
+            this._activeFlyoutNavKey = sNavKey;
+
+            if (bWasOpen && sPrevKey === sNavKey) {
+                return;
+            }
+
+            if (bWasOpen) {
+                oPopover.close();
+            }
+
+            setTimeout(function () {
+                if (this._activeFlyoutNavKey !== sNavKey) {
+                    return;
+                }
+
+                oPopover.openBy(oBtn);
+                this._attachPopoverHoverHandlers();
+            }.bind(this), 0);
+        },
+
+        _closeModuleFlyout: function () {
+            var oPopover = this.byId("moduleFlyoutPopover");
+
+            this._clearFlyoutTimers();
+            this._detachPopoverHoverHandlers();
+            this._activeFlyoutNavKey = null;
+
+            if (oPopover && oPopover.isOpen()) {
+                oPopover.close();
             }
         },
 
@@ -163,7 +352,33 @@ sap.ui.define([
             var oButton = oEvent.getSource();
             var aCustom = oButton.getCustomData();
             var sKey = (aCustom && aCustom[0] && aCustom[0].getValue()) || "DASHBOARD";
+
             this._setNavKey(sKey);
+
+            if (ModuleViewConfig.hasFlyout(sKey)) {
+                this._openModuleFlyout(sKey);
+            } else {
+                this._closeModuleFlyout();
+            }
+        },
+
+        onFlyoutItemPress: function (oEvent) {
+            var oSource = oEvent.getSource();
+            var oCtx = oSource.getBindingContext("dashboard");
+            var sSubTabKey = oCtx && oCtx.getProperty("key");
+            var oModel = this.getView().getModel("dashboard");
+            var sNavKey = oModel && oModel.getProperty("/ui/moduleFlyoutNavKey");
+
+            if (!oModel || !sSubTabKey || !sNavKey) {
+                return;
+            }
+
+            if (oModel.getProperty("/ui/navKey") !== sNavKey) {
+                this._setNavKey(sNavKey);
+            }
+
+            oModel.setProperty("/moduleView/activeSubTab", sSubTabKey);
+            this._closeModuleFlyout();
         },
 
         _setNavKey: function (sKey) {

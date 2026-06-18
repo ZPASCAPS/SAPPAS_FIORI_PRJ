@@ -19,24 +19,40 @@
         <BusyIndicator visible="{dashboard>/mmPurchasing/loading}" class="nxMmPurchasingBusy" />
 
         <VBox visible="{= !${dashboard>/mmPurchasing/loading} }" width="100%" renderType="Bare" class="nxMmPurchasingBody">
-            <VBox class="nxMmPurchasingHero nxMmPurchTowerHero">
-                <HBox alignItems="Center" justifyContent="SpaceBetween" wrap="Wrap" class="nxMmPurchasingHeroTop">
-                    <VBox class="nxMmPurchasingHeroText">
-                        <HBox alignItems="Center" class="nxMmPurchasingBadgeRow">
-                            <ObjectStatus text="LIVE SAP DATA" state="Success" icon="sap-icon://connected" class="nxMmPurchasingLiveBadge" />
-                            <ObjectStatus text="Procurement Control Tower" state="Information" icon="sap-icon://customer-order-entry" class="sapUiTinyMarginBegin" />
+            <VBox class="mmFeatureHero mmHeroPurchasing mmHeroCard" width="100%">
+                <HBox alignItems="Start" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="mmHeroCardHead">
+                    <VBox class="mmHeroContent mmHeroText">
+                        <Title text="Purchasing" level="H2" class="mmHeroTitle" />
+                        <Text
+                            text="구매오더 진행 상태와 입고 연결 흐름을 추적하는 화면"
+                            class="mmHeroDescription" />
+                    </VBox>
+                    <HBox alignItems="Center" class="mmHeroActions">
+                        <HBox alignItems="Center" class="mmHeroActionsBox">
+                            <Button
+                                id="mmPurchasingContentFilterBtn"
+                                text="조회/필터"
+                                icon="sap-icon://filter"
+                                type="Transparent"
+                                press=".onToolbarFilterOpen"
+                                class="mmFilterButton" />
                         </HBox>
-                        <Title text="Purchasing Control Tower" level="H2" class="nxMmPurchasingHeroTitle" />
-                        <Text
-                            text="PO 번호와 MIGO 전표, 자재 연결 상태를 통해 구매 진행 흐름과 조달 리스크를 확인합니다."
-                            class="nxMmPurchasingHeroSub" />
-                        <Text
-                            text="{= '현재 필터: ' + ${dashboard>/mmPurchasing/criteriaLabel} + ' · Last Updated: ' + ${dashboard>/mmPurchasing/lastUpdated} }"
-                            class="nxMmPurchasingHeroMeta" />
-                    </VBox>
-                    <VBox alignItems="End" class="nxMmPurchasingHeroActions">
-                        <Button text="SAP 새로고침" icon="sap-icon://refresh" type="Emphasized" press=".onRefreshPress" class="nxMmPurchasingRefreshBtn" />
-                    </VBox>
+                    </HBox>
+                </HBox>
+                <HBox class="mmHeroKpiStrip" wrap="Wrap" items="{dashboard>/mmPurchasing/heroKpis}">
+                    <items>
+                        <VBox class="mmHeroKpiItem">
+                            <HBox alignItems="Center" justifyContent="SpaceBetween">
+                                <Text text="{dashboard>displayTitle}" class="mmHeroKpiLabel" />
+                                <core:Icon src="{dashboard>icon}" size="0.9rem" color="#FFFFFF" />
+                            </HBox>
+                            <HBox alignItems="Baseline" class="mmHeroKpiValueRow">
+                                <Text text="{dashboard>value}" class="mmHeroKpiValue" />
+                                <Text text="{dashboard>unit}" visible="{= !!${dashboard>unit} }" class="mmHeroKpiUnit" />
+                            </HBox>
+                            <Text text="{dashboard>hint}" class="mmHeroKpiHint" />
+                        </VBox>
+                    </items>
                 </HBox>
             </VBox>
 

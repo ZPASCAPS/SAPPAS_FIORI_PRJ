@@ -86,6 +86,20 @@
           "odataVersion": "2.0"
         }
       },
+      "notesSource": {
+        "uri": "/sap/opu/odata/sap/Z_C_DASHBOARD_NOTE_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "fiGLService": {
+        "uri": "/sap/opu/odata/sap/Z_C_FI_GL_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
       "sdKpiSource": {
         "uri": "/sap/opu/odata/sap/Z_C_SD_KPI_SJ_CDS/",
         "type": "OData",
@@ -181,6 +195,22 @@
       "fiSummaryModel": {
         "dataSource": "fiSummarySource",
         "preload": true
+      },
+      "notesModel": {
+        "dataSource": "notesSource",
+        "preload": false,
+        "settings": {
+          "useBatch": false
+        }
+      },
+      "fiGL": {
+        "dataSource": "fiGLService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
       },
       "sdKpiModel": {
         "dataSource": "sdKpiSource",
