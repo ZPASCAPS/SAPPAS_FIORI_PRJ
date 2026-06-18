@@ -99,6 +99,13 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "sdKpiSource": {
+        "uri": "/sap/opu/odata/sap/Z_C_SD_KPI_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
 
     }
@@ -127,7 +134,8 @@
         "sap.m": {},
         "sap.ui.core": {},
         "sap.ui.layout": {},
-        "sap.f": {}
+        "sap.f": {},
+        "sap.suite.ui.microchart": {}
       }
     },
     "contentDensities": {
@@ -203,6 +211,10 @@
           "defaultCountMode": "Inline",
           "useBatch": false
         }
+      },
+      "sdKpiModel": {
+        "dataSource": "sdKpiSource",
+        "preload": true
       }
     },
     "resources": {

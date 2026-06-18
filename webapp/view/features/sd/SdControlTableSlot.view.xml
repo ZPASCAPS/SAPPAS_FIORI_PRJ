@@ -1,0 +1,15 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdControlTableSlot"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    height="100%"
+    width="100%">
+    <Panel
+        headerText="Step 2 · Credit &amp; Delivery Control Table"
+        width="100%"
+        class="nxSdMainPlaceholderPanel nxSdMainPlaceholderPanel--control">
+        <content>
+            <Text text="여신 초과 · 납기 지연 관제 테이블 — Step 2에서 구현" />
+        </content>
+    </Panel>
+</mvc:View>

@@ -35,6 +35,32 @@ sap.ui.define([], function () {
         return nAmount.toLocaleString("ko-KR") + (sCurrency ? " " + sCurrency : "");
     }
 
+    /** EUR → KRW 환율 (1 EUR = 1,755.66원) */
+    var EUR_TO_KRW = 1755.66;
+
+    function _convertToKrw(nAmount, sCurrency) {
+        var n = Number(nAmount);
+        if (isNaN(n)) {
+            return 0;
+        }
+        var sCur = String(sCurrency || "").toUpperCase();
+        if (sCur === "KRW" || sCur === "WON") {
+            return n;
+        }
+        if (sCur === "EUR") {
+            return n * EUR_TO_KRW;
+        }
+        return n * EUR_TO_KRW;
+    }
+
+    function formatAmountInKrw(vAmount, sCurrency) {
+        if (vAmount === undefined || vAmount === null || vAmount === "") {
+            return "-";
+        }
+        var nKrw = _convertToKrw(vAmount, sCurrency);
+        return "₩ " + Math.round(nKrw).toLocaleString("ko-KR");
+    }
+
     function formatQtyUnit(vQty, sUnit) {
         if (vQty === undefined || vQty === null || vQty === "") {
             return "-";
@@ -133,6 +159,7 @@ sap.ui.define([], function () {
         dash: dash,
         formatDate: formatDate,
         formatAmount: formatAmount,
+        formatAmountInKrw: formatAmountInKrw,
         formatQtyUnit: formatQtyUnit,
         formatMaterial: formatMaterial,
         formatProductionStatus: formatProductionStatus,
