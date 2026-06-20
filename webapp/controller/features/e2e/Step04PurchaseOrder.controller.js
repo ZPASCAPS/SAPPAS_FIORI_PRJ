@@ -29,7 +29,7 @@ sap.ui.define([
             oModel.setProperty(sPath + "/showDetail", !bShow);
             
             if (!bShow) { this.loadDocuments(); }
-            MessageToast.show("Step 4 — Purchase Order selected");
+            MessageToast.show("Step  4 — Purchase Order selected");
         },
 
         /** OData 데이터는 상위 컨트롤러에서 전역 flowModel에 담으므로 여기서는 비워둡니다 */
