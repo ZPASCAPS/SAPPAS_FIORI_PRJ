@@ -142,6 +142,55 @@
           "odataVersion": "2.0"
         }
       },
+      "fiAPService": {
+        "uri": "/sap/opu/odata/sap/Z_C_FI_AP_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "fiCustomerReceiptDetailService": {
+        "uri": "/sap/opu/odata/sap/Z_C_FI_REC_DETAIL_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "mmStockPositionService": {
+        "uri": "/sap/opu/odata/sap/Z_C_MM_STOCK_POSITION_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "mmMovementLogService": {
+        "uri": "/sap/opu/odata/sap/Z_C_MM_MOVEMENT_LOG_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "mmReservedLogService": {
+        "uri": "/sap/opu/odata/sap/Z_C_MM_RESERVED_LOG_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "mmOnOrderLogService": {
+        "uri": "/sap/opu/odata/sap/Z_C_MM_ONORDER_LOG_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "mmSoStockLogService": {
+        "uri": "/sap/opu/odata/sap/Z_C_MM_SO_STOCK_LOG_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
       "sdKpiSource": {
         "uri": "/sap/opu/odata/sap/Z_C_SD_KPI_SJ_CDS/",
         "type": "OData",
@@ -318,6 +367,68 @@
       },
       "fiGL": {
         "dataSource": "fiGLService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
+      },
+      "fiAP": {
+        "dataSource": "fiAPService",
+        "preload": false,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
+      },
+      "fiCustomerReceiptDetail": {
+        "dataSource": "fiCustomerReceiptDetailService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
+      },
+      "mmStockPosition": {
+        "dataSource": "mmStockPositionService",
+        "preload": false,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "useBatch": true
+        }
+      },
+      "mmMovementLog": {
+        "dataSource": "mmMovementLogService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
+      },
+      "mmReservedLog": {
+        "dataSource": "mmReservedLogService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
+      },
+      "mmOnOrderLog": {
+        "dataSource": "mmOnOrderLogService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
+      },
+      "mmSoStockLog": {
+        "dataSource": "mmSoStockLogService",
         "preload": true,
         "settings": {
           "defaultBindingMode": "TwoWay",

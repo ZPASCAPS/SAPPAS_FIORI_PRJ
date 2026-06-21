@@ -1,0 +1,109 @@
+<!--
+  FiAccountsPayable.view.xml ??FI Accounts Payable (OData ë¯¸ì—°ê²???Empty State)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.fi.FiAccountsPayable"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    width="100%">
+
+    <VBox class="nxFiAccountsPayable fiCockpitPage" width="100%" renderType="Bare">
+        <MessageStrip
+            text="{dashboard>/fiAccountsPayable/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= ${dashboard>/fiAccountsPayable/error} ? true : false }"
+            class="sapUiSmallMarginBottom" />
+
+        <BusyIndicator visible="{dashboard>/fiAccountsPayable/loading}" class="nxFiAccountsPayableBusy" />
+
+        <VBox visible="{= !${dashboard>/fiAccountsPayable/loading} }" width="100%" renderType="Bare" class="nxFiAccountsPayableBody">
+            <VBox class="fiFeatureHero fiHeroAccountsPayable fiHeroCard" width="100%">
+                <HBox alignItems="Start" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="fiHeroCardHead">
+                    <VBox class="fiHeroContent">
+                        <Title text="Accounts Payable" level="H2" class="fiHeroTitle" />
+                        <Text
+                            text="êµ¬ë§¤ ë°??…ê³  ?´í›„ ë°œìƒ??ë¯¸ì?ê¸‰ê¸ˆê³?ì§€ê¸??íƒœë¥??•ì¸?˜ëŠ” ?”ë©´?…ë‹ˆ??"
+                            class="fiHeroDescription" />
+                    </VBox>
+                    <HBox alignItems="Center" class="fiHeroActions">
+                        <HBox alignItems="Center" class="fiHeroActionsBox">
+                            <Button
+                                id="fiAccountsPayableContentFilterBtn"
+                                text="ì¡°íšŒ/?„í„°"
+                                icon="sap-icon://filter"
+                                type="Transparent"
+                                press=".onToolbarFilterOpen"
+                                class="fiFilterButton" />
+                        </HBox>
+                    </HBox>
+                </HBox>
+            </VBox>
+
+            <MessageStrip
+                text="MM Purchasing / Goods Movement ?´í›„ FIë¡??´ì–´ì§€??ë¯¸ì?ê¸‰ê¸ˆ ?ë¦„???•ì¸?˜ëŠ” ?ì—­?…ë‹ˆ??"
+                type="Information"
+                showIcon="true"
+                class="sapUiSmallMarginBottom fiContextStrip" />
+
+            <HBox class="nxFiMasterDetail" width="100%" renderType="Bare">
+                <VBox class="nxFiListPane" renderType="Bare">
+                    <VBox class="nxFiCard nxFiListCard">
+                        <HBox class="nxFiCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                            <VBox>
+                                <Title text="{dashboard>/fiAccountsPayable/listTitle}" level="H5" />
+                                <Text text="{dashboard>/fiAccountsPayable/listSubtitle}" class="nxFiCardSub" />
+                            </VBox>
+                            <VBox class="nxFiCardIconWrap nxFiCardIconWrap--payable">
+                                <core:Icon src="sap-icon://money-bills" size="1.1rem" color="#FFFFFF" />
+                            </VBox>
+                        </HBox>
+                        <VBox
+                            visible="{= !${dashboard>/fiAccountsPayable/odataConnected} }"
+                            class="fiEmptyState"
+                            alignItems="Center"
+                            justifyContent="Center">
+                            <core:Icon src="sap-icon://database" size="2rem" color="#94A3B8" class="sapUiSmallMarginBottom" />
+                            <Text text="{dashboard>/fiAccountsPayable/emptyMessage}" class="fiEmptyStateTitle" />
+                            <Text text="{dashboard>/fiAccountsPayable/emptyHint}" class="fiEmptyStateHint" />
+                        </VBox>
+                        <List
+                            visible="{dashboard>/fiAccountsPayable/odataConnected}"
+                            items="{fiAP>/Z_C_FI_AP}"
+                            growing="true"
+                            growingThreshold="20"
+                            noDataText="?°ì´???†ìŒ"
+                            width="100%">
+                            <items>
+                                <StandardListItem type="Active" />
+                            </items>
+                        </List>
+                    </VBox>
+                </VBox>
+
+                <VBox class="nxFiDetailPane" renderType="Bare">
+                    <VBox class="nxFiCard nxFiDetailCard">
+                        <HBox class="nxFiCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                            <VBox>
+                                <Title text="Payable Detail" level="H5" />
+                                <Text text="? íƒ ë¯¸ì?ê¸‰ê¸ˆ ?ì„¸ ?•ë³´" class="nxFiCardSub" />
+                            </VBox>
+                            <VBox class="nxFiCardIconWrap nxFiCardIconWrap--detail">
+                                <core:Icon src="sap-icon://payment-approval" size="1.1rem" color="#FFFFFF" />
+                            </VBox>
+                        </HBox>
+                        <VBox
+                            visible="{= !${dashboard>/fiAccountsPayable/detail/hasSelection} }"
+                            class="fiEmptyState"
+                            alignItems="Center"
+                            justifyContent="Center">
+                            <core:Icon src="sap-icon://cursor" size="2.25rem" color="#9CA3AF" class="sapUiSmallMarginBottom" />
+                            <Text text="{dashboard>/fiAccountsPayable/detail/emptyMessage}" class="fiEmptyStateTitle" />
+                        </VBox>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</mvc:View>

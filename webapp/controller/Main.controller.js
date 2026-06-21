@@ -1,4 +1,4 @@
-/**
+﻿/**
  *  
  *
  * View: com.capstone.dashboard.fioridashboard.view.Main
@@ -24,7 +24,7 @@ sap.ui.define([
     "com/capstone/dashboard/fioridashboard/service/DashboardDataService",
     "com/capstone/dashboard/fioridashboard/util/SapErrorUtil",
     "com/capstone/dashboard/fioridashboard/util/DashboardThemeHelper",
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmChartHtmlUtil",
     "com/capstone/dashboard/fioridashboard/util/E2EProgressHelper"
 ], function (Controller, JSONModel, MessageToast, MessageBox, DashboardDataService, SapErrorUtil, DashboardThemeHelper, MmChartHtmlUtil, E2EProgressHelper) {
     "use strict";
@@ -200,7 +200,7 @@ sap.ui.define([
                         trackerProductionOrder: "",
                         orderNumber: "",
                         currentStep: 0,
-                        totalSteps: 11,
+                        totalSteps: 12,
                         stageText: "",
                         stageLabel: "",
                         progressPercent: 0,
@@ -267,10 +267,11 @@ sap.ui.define([
                         step05: { id: "step05", number: 5, title: "Goods Receipt", icon: "sap-icon://building", status: "complete", showDetail: false, documents: [], keyInfo: "" },
                         step06: { id: "step06", number: 6, title: "Production Order", icon: "sap-icon://shipping-status", status: "complete", showDetail: false, documents: [], keyInfo: "" },
                         step07: { id: "step07", number: 7, title: "Goods Receipt", icon: "sap-icon://outbox", status: "complete", showDetail: false, documents: [], keyInfo: "" },
-                        step08: { id: "step08", number: 8, title: "Shipment", icon: "sap-icon://retail-store", status: "complete", showDetail: false, documents: [], keyInfo: "" },
-                        step09: { id: "step09", number: 9, title: "Billing", icon: "sap-icon://money-bills", status: "complete", showDetail: false, documents: [], keyInfo: "" },
-                        step10: { id: "step10", number: 10, title: "회계전표", icon: "sap-icon://account", status: "pending", showDetail: false, documents: [], keyInfo: "" },
-                        step11: { id: "step11", number: 11, title: "입금 전기", icon: "sap-icon://payment-approval", status: "pending", showDetail: false, documents: [], keyInfo: "" }
+                        step08: { id: "step08", number: 8, title: "Outbound Delivery", icon: "sap-icon://retail-store", status: "complete", showDetail: false, documents: [], keyInfo: "" },
+                        step09: { id: "step09", number: 9, title: "Picking", icon: "sap-icon://inventory", status: "complete", showDetail: false, documents: [], keyInfo: "" },
+                        step10: { id: "step10", number: 10, title: "Billing", icon: "sap-icon://money-bills", status: "complete", showDetail: false, documents: [], keyInfo: "" },
+                        step11: { id: "step11", number: 11, title: "회계전표", icon: "sap-icon://account", status: "pending", showDetail: false, documents: [], keyInfo: "" },
+                        step12: { id: "step12", number: 12, title: "입금 전기", icon: "sap-icon://payment-approval", status: "pending", showDetail: false, documents: [], keyInfo: "" }
                     },
                     kpis: [
                         { id: "K1", label: "On-time delivery", value: "56%", state: "Success", progress: 56 },
@@ -427,39 +428,20 @@ sap.ui.define([
                     loading: false,
                     loaded: false,
                     error: "",
-                    queryMode: "ALL",
-                    searchText: "",
-                    searchEnabled: false,
-                    searchPlaceholder: "전체 MM 현황을 조회합니다",
-                    criteriaLabel: "Uniqlo Material",
-                    heroFilterLine: "현재 필터: Uniqlo Material · UP 자재 기준 · 조회: 데이터 없음",
-                    recordCount: 0,
-                    odataBadge: "BOM · Inventory · PO/MIGO",
                     lastUpdated: "데이터 없음",
-                    kpis: [],
+                    odataBadge: "Z_C_MM_INVENTORY",
                     primaryKpis: [],
-                    secondaryKpis: [],
-                    showSecondaryKpis: false,
-                    charts: [],
-                    primaryCharts: [],
-                    extraCharts: [],
-                    hasExtraCharts: false,
-                    chartsExpanded: false,
-                    worklist: [],
-                    worklistExpanded: false,
-                    visibleWorklist: [],
-                    worklistTotalCount: 0,
-                    worklistVisibleCount: 0,
-                    worklistHiddenCount: 0,
-                    worklistShowToggle: false,
-                    detail: {
-                        visible: false,
-                        type: "",
-                        title: "",
-                        fields: [],
-                        emptyMessage: "왼쪽 목록에서 항목을 선택하면 상세 정보가 표시됩니다."
-                    },
-                    selectedWorklistId: ""
+                    bomStructure: [],
+                    requirementMatrix: [],
+                    productionReadiness: [],
+                    priorityAction: {
+                        hasData: false,
+                        material: "",
+                        materialName: "",
+                        isShared: false,
+                        reason: "",
+                        message: "데이터 없음"
+                    }
                 },
                 sdMain: {
                     ready: true,
@@ -477,20 +459,12 @@ sap.ui.define([
                     plantOptions: [{ key: "ALL", text: "전체" }],
                     storageLocationOptions: [{ key: "ALL", text: "전체" }],
                     materialTypeOptions: [{ key: "ALL", text: "전체" }],
-                    criteriaLabel: "Uniqlo Material",
-                    heroFilterLine: "현재 필터: Uniqlo Material · 조회: 데이터 없음",
+                    criteriaLabel: "Uniqlo BOM 자재",
+                    heroFilterLine: "현재 필터: Uniqlo BOM 자재 · 조회: 데이터 없음",
                     recordCount: 0,
                     odataBadge: "Z_C_MM_INVENTORY",
                     lastUpdated: "데이터 없음",
-                    kpis: [],
-                    materials: [],
-                    selectedMaterialId: "",
-                    detail: {
-                        hasSelection: false,
-                        emptyMessage: "왼쪽 자재 목록에서 자재를 선택하면 상세 정보가 표시됩니다.",
-                        infoMessage: ""
-                    },
-                    analysisCharts: []
+                    selectedMaterial: ""
                 },
                 mmPurchasing: {
                     loading: false,
@@ -507,8 +481,8 @@ sap.ui.define([
                         { key: "LINKED", text: "연결됨" },
                         { key: "NO_DATA", text: "데이터 없음" }
                     ],
-                    criteriaLabel: "Uniqlo Material",
-                    heroFilterLine: "현재 필터: Uniqlo Material · 조회: 데이터 없음",
+                    criteriaLabel: "Uniqlo BOM 자재",
+                    heroFilterLine: "현재 필터: Uniqlo BOM 자재 · 조회: 데이터 없음",
                     recordCount: 0,
                     odataBadge: "Z_C_E2E_OrderTracker",
                     lastUpdated: "데이터 없음",
@@ -540,8 +514,8 @@ sap.ui.define([
                         { key: "LINKED", text: "연결됨" },
                         { key: "NO_DATA", text: "데이터 없음" }
                     ],
-                    criteriaLabel: "Uniqlo Material",
-                    heroFilterLine: "현재 필터: Uniqlo Material · 조회: 데이터 없음",
+                    criteriaLabel: "Uniqlo BOM 자재",
+                    heroFilterLine: "현재 필터: Uniqlo BOM 자재 · 조회: 데이터 없음",
                     recordCount: 0,
                     odataBadge: "Z_C_E2E_OrderTracker",
                     lastUpdated: "데이터 없음",

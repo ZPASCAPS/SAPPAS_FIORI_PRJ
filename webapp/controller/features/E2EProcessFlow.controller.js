@@ -21,7 +21,8 @@ sap.ui.define([
         "78": "e2eConnector78",
         "89": "e2eConnector89",
         "910": "e2eConnector910",
-        "1011": "e2eConnector1011"
+        "1011": "e2eConnector1011",
+        "1112": "e2eConnector1112"
     };
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.E2EProcessFlow", {

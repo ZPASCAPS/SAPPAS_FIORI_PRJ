@@ -8,15 +8,15 @@
         
         <HBox alignItems="Start" justifyContent="SpaceBetween">
             <VBox class="e2eMtoCardTitleStack" renderType="Bare">
-                <Text text="8. 출하 / Outbound" class="e2eMtoCardTitle" />
-                <Text text="Delivery" class="e2eMtoCardTitle e2eMtoCardTitleLine2" />
+                <Text text="8. 출하 " class="e2eMtoCardTitle" />
+              
             </VBox>
             <ObjectStatus id="e2eStepStatus" text="예정" state="None" class="e2eMtoCardStatus" />
         </HBox>
         
         <Text text="{flowModel>/Delivery}" class="e2eMtoCardDoc" />
         
-        <Text text="플랜트 1000" class="e2eMtoCardDetail" />
+        <Text text="Outbound Delivery" class="e2eMtoCardDetail" />
         
     </VBox>
 </mvc:View>

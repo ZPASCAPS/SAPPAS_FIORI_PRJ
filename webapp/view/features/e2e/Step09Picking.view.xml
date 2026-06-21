@@ -1,0 +1,20 @@
+<mvc:View 
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.e2e.Step09Picking" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:core="sap.ui.core">
+    
+    <VBox id="e2eStepCard" class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos09" renderType="Bare">
+        <HBox alignItems="Start" justifyContent="SpaceBetween">
+            <VBox class="e2eMtoCardTitleStack" renderType="Bare">
+                <Text text="9. 피킹 &amp; 출고 전기" class="e2eMtoCardTitle" />
+              
+            </VBox>
+            <ObjectStatus id="e2eStepStatus" text="예정" state="None" class="e2eMtoCardStatus" />
+        </HBox>
+        
+        <Text text="{flowModel>/Picking}" class="e2eMtoCardDoc" />
+        
+        <Text text="Picking &amp; Post Good Issue" class="e2eMtoCardDetail" />
+    </VBox>
+</mvc:View>

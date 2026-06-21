@@ -48,6 +48,7 @@ sap.ui.define([
         { key: "ProductionOrder", title: "Production Order" },
         { key: "ProdMigo", title: "Goods Receipt (MIGO)" },
         { key: "Delivery", title: "Outbound Delivery" },
+        { key: "Picking", title: "Picking" },
         { key: "Billing", title: "Billing" },
         { key: "FI", title: "Accounting Document" },
         { key: "Clearing", title: "Payment Posting" }
@@ -369,6 +370,21 @@ sap.ui.define([
             return sValue;
         },
 
+        _formatDocListTwoPerLine: function (aItems) {
+            var aLines = [];
+            var i;
+
+            if (!aItems || !aItems.length) {
+                return "없음";
+            }
+
+            for (i = 0; i < aItems.length; i += 2) {
+                aLines.push(aItems.slice(i, i + 2).join(", "));
+            }
+
+            return aLines.join("\n");
+        },
+
         _buildFlowData: function (aResults) {
             var aPRs = [];
             var aPOs = [];
@@ -406,6 +422,7 @@ sap.ui.define([
                 this._mergeFlowField(oMerged, "ProductionOrder", item.ProductionOrder);
                 this._mergeFlowField(oMerged, "ProdMigo", item.ProdMigoDoc);
                 this._mergeFlowField(oMerged, "Delivery", item.OutboundDelivery);
+                this._mergeFlowField(oMerged, "Picking", item.GoodsIssueDoc);
                 this._mergeFlowField(oMerged, "Billing", item.BillingDocument);
                 this._mergeFlowField(oMerged, "FI", item.FIDocument);
                 this._mergeFlowField(oMerged, "Clearing", item.ClearingDocument);
@@ -414,12 +431,13 @@ sap.ui.define([
             return {
                 SalesOrder: oMerged.SalesOrder || "없음",
                 PlannedOrder: oMerged.PlannedOrder || "없음",
-                PurchaseReq: aPRs.length ? aPRs.join(", ") : "없음",
-                PurchaseOrder: aPOs.length ? aPOs.join(", ") : "없음",
-                POMigo: aPOMigos.length ? aPOMigos.join(", ") : "없음",
+                PurchaseReq: this._formatDocListTwoPerLine(aPRs),
+                PurchaseOrder: this._formatDocListTwoPerLine(aPOs),
+                POMigo: this._formatDocListTwoPerLine(aPOMigos),
                 ProductionOrder: aProds.length ? aProds.join(", ") : "없음",
-                ProdMigo: aProdMigos.length ? aProdMigos.join(", ") : "없음",
+                ProdMigo: this._formatDocListTwoPerLine(aProdMigos),
                 Delivery: oMerged.Delivery || "없음",
+                Picking: oMerged.Picking || "없음",
                 Billing: oMerged.Billing || "없음",
                 FI: oMerged.FI || "없음",
                 Clearing: oMerged.Clearing || "없음"
@@ -691,6 +709,9 @@ sap.ui.define([
         _isStepReady: function (oFlowData, sKey) {
             if (sKey === "PlannedOrder" && this._isDocReady(oFlowData.ProductionOrder)) {
                 return true;
+            }
+            if (sKey === "Picking") {
+                return this._isDocReady(oFlowData.Picking);
             }
             return this._isDocReady(oFlowData[sKey]);
         },

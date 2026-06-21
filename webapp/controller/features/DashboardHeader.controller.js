@@ -163,7 +163,7 @@ sap.ui.define([
             oDom.addEventListener("keydown", this._fnBrandKeydown);
             oDom.setAttribute("role", "button");
             oDom.setAttribute("tabindex", "0");
-            oDom.setAttribute("aria-label", "PasCal Dashboard");
+            oDom.setAttribute("aria-label", "Pascal Dashboard");
 
             this._bBrandClickAttached = true;
         },

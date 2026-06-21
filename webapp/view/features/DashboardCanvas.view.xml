@@ -1,8 +1,9 @@
 <!--
   DashboardCanvas.view.xml
-  SD Overview: SdMain | MM: MmOverview | MmInventory | MmPurchasing | MmGoodsMovement | MmReports
-  FI: FiOverview | FiGeneralLedger | FiAccountsPayable | FiAccountsReceivable | FiReport
-  메모장: DashboardHeader → NotesPanel (오버레이)
+  SD: SdMain
+  MM: MmOverview | MmInventory | MmPurchasing
+  FI: FiOverview | FiCustomerReceipt
+  ?????: DashboardHeader ?? NotesPanel (????????)
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.DashboardCanvas"
@@ -60,7 +61,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmOverview"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmOverview"
                 width="100%" />
         </ScrollContainer>
 
@@ -72,7 +73,19 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.FiOverview"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.fi.FiOverview"
+                width="100%" />
+        </ScrollContainer>
+
+        <ScrollContainer
+            class="nxModuleOverviewFill nxModuleOverviewScroll nxFiCustomerReceiptScroll"
+            visible="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'CUSTOMER_RECEIPT' }"
+            vertical="true"
+            horizontal="false"
+            height="100%"
+            width="100%">
+            <mvc:XMLView
+                viewName="com.capstone.dashboard.fioridashboard.view.features.fi.FiCustomerReceipt"
                 width="100%" />
         </ScrollContainer>
 
@@ -84,19 +97,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmInventory"
-                width="100%" />
-        </ScrollContainer>
-
-        <ScrollContainer
-            class="nxModuleOverviewFill nxModuleOverviewScroll nxFiGeneralLedgerScroll"
-            visible="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'GENERAL_LEDGER' }"
-            vertical="true"
-            horizontal="false"
-            height="100%"
-            width="100%">
-            <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.FiGeneralLedger"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmInventory"
                 width="100%" />
         </ScrollContainer>
 
@@ -108,19 +109,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmPurchasing"
-                width="100%" />
-        </ScrollContainer>
-
-        <ScrollContainer
-            class="nxModuleOverviewFill nxModuleOverviewScroll nxFiAccountsPayableScroll"
-            visible="{= ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/moduleView/activeSubTab} === 'ACCOUNTS_PAYABLE' }"
-            vertical="true"
-            horizontal="false"
-            height="100%"
-            width="100%">
-            <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.FiAccountsPayable"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmPurchasing"
                 width="100%" />
         </ScrollContainer>
 
@@ -132,7 +121,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmGoodsMovement"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmGoodsMovement"
                 width="100%" />
         </ScrollContainer>
 
@@ -144,7 +133,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.FiAccountsReceivable"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.fi.FiAccountsReceivable"
                 width="100%" />
         </ScrollContainer>
 
@@ -156,7 +145,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmReports"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmReports"
                 width="100%" />
         </ScrollContainer>
 
@@ -168,7 +157,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.FiReport"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.fi.FiReport"
                 width="100%" />
         </ScrollContainer>
 

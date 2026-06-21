@@ -6,10 +6,10 @@
 sap.ui.define([], function () {
     "use strict";
 
-    var TOTAL_STEPS = 11;
+    var TOTAL_STEPS = 12;
     var EMPTY_DOC = "-------";
-    var CONNECTOR_KEYS = ["12", "23", "34", "45", "56", "67", "78", "89", "910", "1011"];
-    var CONNECTOR_TO_STEP = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    var CONNECTOR_KEYS = ["12", "23", "34", "45", "56", "67", "78", "89", "910", "1011", "1112"];
+    var CONNECTOR_TO_STEP = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     function resolveStepStatus(iStepNo, iProgressStep) {
         if (!iProgressStep || iProgressStep <= 0) {
@@ -118,6 +118,7 @@ sap.ui.define([], function () {
             ProductionOrder: EMPTY_DOC,
             ProdMigo: EMPTY_DOC,
             Delivery: EMPTY_DOC,
+            Picking: EMPTY_DOC,
             Billing: EMPTY_DOC,
             FI: EMPTY_DOC,
             Clearing: EMPTY_DOC

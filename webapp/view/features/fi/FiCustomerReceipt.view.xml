@@ -1,0 +1,404 @@
+<!--
+  FiCustomerReceipt.view.xml - FI Customer Receipt (Z_C_FI_REC_DETAIL CDS OData)
+  Electronic receipt style layout: 70% receipt card + 30% customer/detail panel
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.fi.FiCustomerReceipt"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    width="100%">
+
+    <VBox class="fiReceiptPage fiCockpitPage" width="100%" renderType="Bare">
+        <MessageStrip
+            text="{fiReceiptView>/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= !!${fiReceiptView>/error} }"
+            class="sapUiSmallMarginBottom" />
+
+        <BusyIndicator visible="{fiReceiptView>/loading}" class="fiReceiptBusy" />
+
+        <VBox
+            visible="{= !${fiReceiptView>/loading} }"
+            width="100%"
+            renderType="Bare"
+            class="fiReceiptBody">
+
+            <!-- Hero -->
+            <VBox class="fiFeatureHero fiHeroCustomerReceipt fiReceiptHero" width="100%">
+                <VBox class="fiHeroContent fiHeroTextBlock">
+                    <Title text="Customer Receipt" level="H2" class="fiHeroTitle" />
+                    <Title text="&#xACE0;&#xAC1D;&#xBCC4; &#xCCAD;&#xAD6C; &#xB7; &#xC785;&#xAE08; &#xD655;&#xC778;&#xC11C;" level="H4" class="fiReceiptHeaderSub" />
+                    <Text
+                        text="&#xACE0;&#xAC1D;&#xBCC4; &#xCCAD;&#xAD6C;&#xAE08;&#xC561;, &#xC785;&#xAE08;&#xC644;&#xB8CC;&#xAE08;&#xC561;, &#xB0A8;&#xC740; &#xBBF8;&#xC218;&#xAE08;&#xC561;&#xC744; &#xD68C;&#xACC4;&#xBB38;&#xC11C;&#xBC88;&#xD638;&#xC640; &#xBC18;&#xC81C;&#xBB38;&#xC11C;&#xBC88;&#xD638; &#xAE30;&#xC900;&#xC73C;&#xB85C; &#xD655;&#xC778;&#xD569;&#xB2C8;&#xB2E4;."
+                        class="fiHeroDescription" />
+                </VBox>
+            </VBox>
+
+            <!-- Empty State -->
+            <VBox
+                visible="{= !${fiReceiptView>/hasData} &amp;&amp; !${fiReceiptView>/loading} &amp;&amp; !${fiReceiptView>/error} }"
+                class="fiReceiptEmpty"
+                alignItems="Center"
+                justifyContent="Center"
+                width="100%">
+                <core:Icon src="sap-icon://money-bills" size="2.25rem" color="#94A3B8" class="sapUiSmallMarginBottom" />
+                <Title text="{fiReceiptView>/emptyMessage}" level="H5" class="fiEmptyStateTitle" />
+            </VBox>
+
+            <VBox visible="{fiReceiptView>/hasData}" width="100%" renderType="Bare">
+                <!-- Main: 70% Receipt + 30% Side Panel -->
+                <VBox class="fiReceiptMainLayout" width="100%" renderType="Bare">
+                    <!-- Left 70% - Main Electronic Receipt -->
+                    <VBox class="fiReceiptMainReceiptArea" renderType="Bare">
+                        <VBox
+                            visible="{= !${fiReceiptView>/selectedCustomer/hasSelection} }"
+                            class="fiReceiptEmpty fiReceiptEmpty--paper"
+                            alignItems="Center"
+                            justifyContent="Center">
+                            <Text text="{fiReceiptView>/emptyMessage}" class="fiEmptyStateTitle" />
+                        </VBox>
+                        <HBox
+                            visible="{fiReceiptView>/selectedCustomer/hasSelection}"
+                            class="fiReceiptMainReceiptInner"
+                            alignItems="FlexStart"
+                            justifyContent="Center"
+                            width="100%"
+                            renderType="Bare">
+                            <VBox class="fiReceiptPaper" renderType="Bare">
+
+                            <Title text="UNIQLO" level="H1" class="fiReceiptBrand" />
+                            <Text text="CUSTOMER RECEIPT" class="fiReceiptTitle" />
+                            <Text text="FI Payment Confirmation" class="fiReceiptSubtitle" />
+                            <Text text="&#xACE0;&#xAC1D;&#xBCC4; &#xCCAD;&#xAD6C; &#xB7; &#xC785;&#xAE08; &#xD655;&#xC778;&#xC11C;" class="fiReceiptTagline" />
+
+                            <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
+
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Company Code" class="fiReceiptLabel" />
+                                <Text text="{fiReceiptView>/selectedCustomer/CompanyCode}" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Customer" class="fiReceiptLabel" />
+                                <Text text="{fiReceiptView>/selectedCustomer/Customer}" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Customer Name" class="fiReceiptLabel" />
+                                <Text text="{fiReceiptView>/selectedCustomer/CustomerName}" class="fiReceiptValue fiReceiptValue--name" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Status" class="fiReceiptLabel" />
+                                <Text
+                                    text="{ path: 'fiReceiptView>/selectedCustomer/Status', formatter: '.formatStatus' }"
+                                    class="{ parts: [{path: 'fiReceiptView>/selectedCustomer/Status'}], formatter: '.formatStatusBadgeClass' }"
+                                    wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Currency" class="fiReceiptLabel" />
+                                <Text text="{fiReceiptView>/selectedCustomer/Currency}" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+
+                            <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
+
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Invoice Amount" class="fiReceiptLabel" />
+                                <Text
+                                    text="{
+                                        parts: [
+                                            {path: 'fiReceiptView>/selectedCustomer/InvoiceAmount'},
+                                            {path: 'fiReceiptView>/selectedCustomer/Currency'}
+                                        ],
+                                        formatter: '.formatAmount'
+                                    }"
+                                    class="fiReceiptAmountStrong"
+                                    wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Paid Amount" class="fiReceiptLabel" />
+                                <Text
+                                    text="{
+                                        parts: [
+                                            {path: 'fiReceiptView>/selectedCustomer/PaidAmount'},
+                                            {path: 'fiReceiptView>/selectedCustomer/Currency'}
+                                        ],
+                                        formatter: '.formatAmount'
+                                    }"
+                                    class="fiReceiptValue"
+                                    wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Open Amount" class="fiReceiptLabel" />
+                                <Text
+                                    text="{
+                                        parts: [
+                                            {path: 'fiReceiptView>/selectedCustomer/OpenAmount'},
+                                            {path: 'fiReceiptView>/selectedCustomer/Currency'}
+                                        ],
+                                        formatter: '.formatAmount'
+                                    }"
+                                    class="fiReceiptOpenAmount"
+                                    wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Payment Rate" class="fiReceiptLabel" />
+                                <Text
+                                    text="{ path: 'fiReceiptView>/selectedCustomer/PaymentRate', formatter: '.formatRate' }"
+                                    class="fiReceiptValue fiReceiptValue--rate"
+                                    wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Open Rate" class="fiReceiptLabel" />
+                                <Text
+                                    text="{ path: 'fiReceiptView>/selectedCustomer/OpenRate', formatter: '.formatRate' }"
+                                    class="fiReceiptValue"
+                                    wrapping="true" />
+                            </HBox>
+
+                            <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
+
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Invoice Count" class="fiReceiptLabel" />
+                                <Text text="{fiReceiptView>/selectedCustomer/InvoiceCount}" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Paid Count" class="fiReceiptLabel" />
+                                <Text text="{fiReceiptView>/selectedCustomer/PaidCount}" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Open Count" class="fiReceiptLabel" />
+                                <Text text="{fiReceiptView>/selectedCustomer/OpenCount}" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+
+                            <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
+
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Accounting Doc." class="fiReceiptLabel" />
+                                <Text text="{ path: 'fiReceiptView>/selectedCustomer/AccountingDocument', formatter: '.formatOptionalText' }" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Fiscal Year" class="fiReceiptLabel" />
+                                <Text text="{ path: 'fiReceiptView>/selectedCustomer/FiscalYear', formatter: '.formatOptionalText' }" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Document Type" class="fiReceiptLabel" />
+                                <Text text="{ path: 'fiReceiptView>/selectedCustomer/DocumentType', formatter: '.formatOptionalText' }" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Posting Date" class="fiReceiptLabel" />
+                                <Text text="{ path: 'fiReceiptView>/selectedCustomer/PostingDate', formatter: '.formatDate' }" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Clearing Doc." class="fiReceiptLabel" />
+                                <Text text="{ path: 'fiReceiptView>/selectedCustomer/ClearingDocument', formatter: '.formatOptionalText' }" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+                            <HBox class="fiReceiptRow" width="100%" renderType="Bare">
+                                <Text text="Clearing Date" class="fiReceiptLabel" />
+                                <Text text="{ path: 'fiReceiptView>/selectedCustomer/ClearingDate', formatter: '.formatDate' }" class="fiReceiptValue" wrapping="true" />
+                            </HBox>
+
+                            <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
+
+                            <VBox class="fiReceiptFooter" alignItems="Center" width="100%">
+                                <Text text="Thank you" class="fiReceiptFooterThanks" />
+                                <Text text="Uniqlo FI Receipt" class="fiReceiptFooterBrand" />
+                                <Text text="Generated from SAP FI Open/Cleared Customer Items" class="fiReceiptFooterNote" />
+                            </VBox>
+                            </VBox>
+
+                            <VBox class="fiReceiptVoucherActions" alignItems="Center" renderType="Bare">
+                                <Button
+                                    text="&#xC804;&#xD45C; &#xCD94;&#xCD9C;&#xD558;&#xAE30;"
+                                    type="Emphasized"
+                                    icon="sap-icon://excel-attachment"
+                                    press=".onExportReceiptPress"
+                                    class="fiReceiptExportBtn"
+                                    width="100%" />
+                                <Button
+                                    text="&#xC601;&#xC218;&#xC99D; PDF &#xC778;&#xC1C4;"
+                                    type="Default"
+                                    icon="sap-icon://print"
+                                    press=".onPrintReceiptPress"
+                                    class="fiReceiptPrintBtn"
+                                    width="100%" />
+                                <Text text="&#xC120;&#xD0DD; &#xACE0;&#xAC1D; &#xC804;&#xD45C;&#xB97C; &#xC5D1;&#xC140;&#xB85C; &#xB0B4;&#xBCF4;&#xB0B4;&#xAC70;&#xB098; PDF&#xB85C; &#xC778;&#xC1C4;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;." class="fiReceiptActionHint" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Right 30% - Side Panel -->
+                    <VBox class="fiReceiptSidePanel" renderType="Bare">
+                        <VBox class="fiReceiptKpiPanel" renderType="Bare" visible="{fiReceiptView>/selectedCustomer/hasSelection}">
+                            <HBox class="fiReceiptKpiGrid fiReceiptKpiGrid--side" width="100%" wrap="Wrap" renderType="Bare">
+                                <VBox class="fiReceiptKpiCard fiReceiptKpiCard--side">
+                                    <Text text="&#xCD1D; &#xCCAD;&#xAD6C;&#xAE08;&#xC561;" class="fiReceiptKpiLabel" />
+                                    <Text
+                                        text="{
+                                            parts: [
+                                                {path: 'fiReceiptView>/selectedCustomer/InvoiceAmount'},
+                                                {path: 'fiReceiptView>/selectedCustomer/Currency'}
+                                            ],
+                                            formatter: '.formatAmount'
+                                        }"
+                                        class="fiReceiptKpiValue" />
+                                </VBox>
+                                <VBox class="fiReceiptKpiCard fiReceiptKpiCard--side">
+                                    <Text text="&#xC785;&#xAE08;&#xC644;&#xB8CC;&#xAE08;&#xC561;" class="fiReceiptKpiLabel" />
+                                    <Text
+                                        text="{
+                                            parts: [
+                                                {path: 'fiReceiptView>/selectedCustomer/PaidAmount'},
+                                                {path: 'fiReceiptView>/selectedCustomer/Currency'}
+                                            ],
+                                            formatter: '.formatAmount'
+                                        }"
+                                        class="fiReceiptKpiValue" />
+                                </VBox>
+                                <VBox class="fiReceiptKpiCard fiReceiptKpiCard--side">
+                                    <Text text="&#xB0A8;&#xC740; &#xBBF8;&#xC218;&#xAE08;&#xC561;" class="fiReceiptKpiLabel" />
+                                    <Text
+                                        text="{
+                                            parts: [
+                                                {path: 'fiReceiptView>/selectedCustomer/OpenAmount'},
+                                                {path: 'fiReceiptView>/selectedCustomer/Currency'}
+                                            ],
+                                            formatter: '.formatAmount'
+                                        }"
+                                        class="{
+                                            parts: [{path: 'fiReceiptView>/selectedCustomer/OpenAmount'}],
+                                            formatter: '.formatKpiOpenClass'
+                                        }" />
+                                </VBox>
+                                <VBox class="fiReceiptKpiCard fiReceiptKpiCard--side fiReceiptKpiCard--rate">
+                                    <Text text="&#xC785;&#xAE08;&#xB960;" class="fiReceiptKpiLabel" />
+                                    <Text
+                                        text="{ path: 'fiReceiptView>/selectedCustomer/PaymentRate', formatter: '.formatRate' }"
+                                        class="fiReceiptKpiValue fiReceiptKpiValue--rate" />
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <VBox class="fiReceiptCustomerPanel" renderType="Bare">
+                            <Title text="&#xACE0;&#xAC1D; &#xBAA9;&#xB85D;" level="H5" class="fiReceiptSectionTitle" />
+                            <List
+                                id="fiCustomerReceiptList"
+                                items="{fiReceiptView>/customers}"
+                                mode="SingleSelectMaster"
+                                selectionChange=".onCustomerSelect"
+                                growing="false"
+                                width="100%"
+                                class="fiReceiptCustomerList">
+                                <CustomListItem type="Active" press=".onCustomerItemPress">
+                                    <VBox
+                                        class="{
+                                            parts: [
+                                                {path: 'fiReceiptView>Customer'},
+                                                {path: 'fiReceiptView>/selectedCustomerKey'}
+                                            ],
+                                            formatter: '.formatCustomerCardClass'
+                                        }"
+                                        width="100%">
+                                        <HBox alignItems="Start" justifyContent="SpaceBetween" width="100%" class="fiReceiptCustomerCardHead">
+                                            <VBox renderType="Bare" class="fiReceiptCustomerCardText">
+                                                <Text text="{fiReceiptView>CustomerName}" class="fiReceiptCustomerName" wrapping="true" />
+                                                <Text text="{fiReceiptView>Customer}" class="fiReceiptCustomerCode" wrapping="true" />
+                                            </VBox>
+                                            <Text
+                                                text="{ path: 'fiReceiptView>Status', formatter: '.formatStatus' }"
+                                                class="{ parts: [{path: 'fiReceiptView>Status'}], formatter: '.formatStatusBadgeClass' }" />
+                                        </HBox>
+                                        <HBox alignItems="Center" justifyContent="SpaceBetween" class="fiReceiptCustomerCardRow" width="100%">
+                                            <Text text="Open Amount" class="fiReceiptMiniLabel" />
+                                            <Text
+                                                text="{
+                                                    parts: [
+                                                        {path: 'fiReceiptView>OpenAmount'},
+                                                        {path: 'fiReceiptView>Currency'}
+                                                    ],
+                                                    formatter: '.formatAmount'
+                                                }"
+                                                class="fiReceiptMiniValue"
+                                                wrapping="true" />
+                                        </HBox>
+                                        <HBox alignItems="Center" justifyContent="SpaceBetween" class="fiReceiptCustomerCardRow" width="100%">
+                                            <Text text="Payment Rate" class="fiReceiptMiniLabel" />
+                                            <Text
+                                                text="{ path: 'fiReceiptView>PaymentRate', formatter: '.formatRate' }"
+                                                class="fiReceiptCustomerRate"
+                                                wrapping="true" />
+                                        </HBox>
+                                    </VBox>
+                                </CustomListItem>
+                            </List>
+                        </VBox>
+
+                        <VBox class="fiReceiptDocPanel" renderType="Bare">
+                            <Title text="&#xD68C;&#xACC4;&#xBB38;&#xC11C; &#xC0C1;&#xC138;" level="H5" class="fiReceiptSectionTitle" />
+                            <VBox
+                                visible="{= !${fiReceiptView>/selectedDetails/length} }"
+                                class="fiReceiptEmpty fiReceiptEmpty--detail"
+                                alignItems="Center"
+                                justifyContent="Center">
+                                <Text text="{fiReceiptView>/detailEmptyMessage}" class="fiEmptyStateTitle" />
+                            </VBox>
+                            <List
+                                visible="{= ${fiReceiptView>/selectedDetails/length} > 0 }"
+                                items="{fiReceiptView>/selectedDetails}"
+                                growing="false"
+                                width="100%"
+                                class="fiReceiptDocList">
+                                <CustomListItem>
+                                    <VBox class="fiReceiptDocCard" width="100%">
+                                        <HBox alignItems="Start" justifyContent="SpaceBetween" width="100%" class="fiReceiptDocTop">
+                                            <Text text="{fiReceiptView>AccountingDocument}" class="fiReceiptDocNumber" wrapping="true" />
+                                            <Text
+                                                text="{
+                                                    parts: [
+                                                        {path: 'fiReceiptView>Amount'},
+                                                        {path: 'fiReceiptView>Currency'}
+                                                    ],
+                                                    formatter: '.formatAmount'
+                                                }"
+                                                class="fiReceiptDocAmount"
+                                                wrapping="true" />
+                                        </HBox>
+                                        <HBox alignItems="Center" justifyContent="SpaceBetween" width="100%">
+                                            <Text
+                                                text="{
+                                                    parts: [
+                                                        {path: 'fiReceiptView>DocumentType'},
+                                                        {path: 'fiReceiptView>AccountingDocumentItem'}
+                                                    ],
+                                                    formatter: '.formatDocMeta'
+                                                }"
+                                                class="fiReceiptDocMeta"
+                                                wrapping="true" />
+                                            <Text
+                                                text="{ path: 'fiReceiptView>ReceiptStatus', formatter: '.formatStatus' }"
+                                                class="{ parts: [{path: 'fiReceiptView>ReceiptStatus'}], formatter: '.formatStatusBadgeClass' }" />
+                                        </HBox>
+                                        <Text
+                                            text="{
+                                                parts: [
+                                                    {path: 'fiReceiptView>PostingDate'},
+                                                    {path: 'fiReceiptView>ClearingDate'}
+                                                ],
+                                                formatter: '.formatDocPostingClearing'
+                                            }"
+                                            class="fiReceiptDocMeta"
+                                            wrapping="true" />
+                                        <Text
+                                            text="{ path: 'fiReceiptView>ClearingDocument', formatter: '.formatDocClearingLine' }"
+                                            class="fiReceiptDocMeta"
+                                            visible="{= !!${fiReceiptView>ClearingDocument} &amp;&amp; ${fiReceiptView>ClearingDocument} !== '00000000' }"
+                                            wrapping="true" />
+                                    </VBox>
+                                </CustomListItem>
+                            </List>
+                        </VBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </VBox>
+    </VBox>
+</mvc:View>

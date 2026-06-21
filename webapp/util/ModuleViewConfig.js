@@ -25,12 +25,10 @@ sap.ui.define([], function () {
     ];
 
     var MM_SUB_TABS = [
-        { key: "OVERVIEW", text: "Overview" },
-        { key: "INVENTORY", text: "Inventory" },
-        { key: "PURCHASING", text: "Purchasing" },
-        { key: "GOODS_MOVEMENT", text: "Goods Movement" },
-        { key: "REPORTS", text: "Reports" }
+        { key: "INVENTORY", text: "Inventory" }
     ];
+
+    var MM_ALLOWED_SUB_TABS = ["INVENTORY"];
 
     var COMMON_KPIS = [
         { label: "Revenue", valueMain: "$1 248", valueSuffix: ",320", trendHint: "per last week", trend: "14%", trendUp: true },
@@ -46,28 +44,11 @@ sap.ui.define([], function () {
         { label: "GR This Month", valueMain: "1,284", valueSuffix: " EA", trendHint: "goods receipt", trend: "9.4%", trendUp: true }
     ];
 
-    var MM_FLYOUT_ITEMS = [
-        { key: "OVERVIEW", text: "Overview" },
-        { key: "INVENTORY", text: "Inventory" },
-        { key: "PURCHASING", text: "Purchasing" },
-        { key: "GOODS_MOVEMENT", text: "Goods Movement" },
-        { key: "REPORTS", text: "Reports" }
-    ];
-
     var FI_SUB_TABS = [
-        { key: "OVERVIEW", text: "Overview" },
-        { key: "GENERAL_LEDGER", text: "General Ledger" },
-        { key: "ACCOUNTS_PAYABLE", text: "Accounts Payable" },
-        { key: "ACCOUNTS_RECEIVABLE", text: "Accounts Receivable" },
-        { key: "REPORT", text: "Report" }
+        { key: "CUSTOMER_RECEIPT", text: "Customer Receipt" }
     ];
 
-    var FI_FLYOUT_ITEMS = FI_SUB_TABS.slice();
-
-    var MODULE_FLYOUT_ITEMS = {
-        MM_MATERIALS: MM_FLYOUT_ITEMS,
-        FI_CO_FINANCE: FI_FLYOUT_ITEMS
-    };
+    var FI_ALLOWED_SUB_TABS = ["CUSTOMER_RECEIPT"];
 
     var MODULE_TITLES = {
         SD_SALES: "Sales and Distribution",
@@ -76,12 +57,24 @@ sap.ui.define([], function () {
         FI_CO_FINANCE: "Financial Accounting"
     };
 
+    function normalizeActiveSubTab(sNavKey, sActiveSubTab) {
+        if (sNavKey === "MM_MATERIALS") {
+            return MM_ALLOWED_SUB_TABS.indexOf(sActiveSubTab) >= 0 ? sActiveSubTab : "INVENTORY";
+        }
+
+        if (sNavKey === "FI_CO_FINANCE") {
+            return FI_ALLOWED_SUB_TABS.indexOf(sActiveSubTab) >= 0 ? sActiveSubTab : "CUSTOMER_RECEIPT";
+        }
+
+        return sActiveSubTab || "OVERVIEW";
+    }
+
     function buildFiModuleConfig() {
         return {
             title: MODULE_TITLES.FI_CO_FINANCE,
             period: "THIS_WEEK",
             periodOptions: PERIOD_OPTIONS.slice(),
-            activeSubTab: "OVERVIEW",
+            activeSubTab: "CUSTOMER_RECEIPT",
             subTabs: FI_SUB_TABS.slice(),
             kpis: [],
             settings: {
@@ -100,12 +93,13 @@ sap.ui.define([], function () {
         var aSubTabs = sNavKey === "MM_MATERIALS"
             ? MM_SUB_TABS.slice()
             : COMMON_SUB_TABS.slice();
+        var sDefaultSubTab = sNavKey === "MM_MATERIALS" ? "INVENTORY" : "OVERVIEW";
 
         return {
             title: MODULE_TITLES[sNavKey] || sNavKey,
             period: "THIS_WEEK",
             periodOptions: PERIOD_OPTIONS.slice(),
-            activeSubTab: "OVERVIEW",
+            activeSubTab: sDefaultSubTab,
             subTabs: aSubTabs,
             kpis: aKpis.map(function (oKpi) {
                 return JSON.parse(JSON.stringify(oKpi));
@@ -137,20 +131,22 @@ sap.ui.define([], function () {
             }
 
             oConfig = JSON.parse(JSON.stringify(MODULE_CONFIGS[sNavKey]));
-            if ((sNavKey === "MM_MATERIALS" || sNavKey === "FI_CO_FINANCE") && oConfig.activeSubTab === "NOTES") {
-                oConfig.activeSubTab = "OVERVIEW";
-            }
+            oConfig.activeSubTab = normalizeActiveSubTab(sNavKey, oConfig.activeSubTab);
             oModel.setProperty("/moduleView", oConfig);
         },
 
-        hasFlyout: function (sNavKey) {
-            var aItems = MODULE_FLYOUT_ITEMS[sNavKey];
-            return !!(aItems && aItems.length);
+        hasFlyout: function () {
+            return false;
         },
 
-        getFlyoutItems: function (sNavKey) {
-            var aItems = MODULE_FLYOUT_ITEMS[sNavKey];
-            return aItems ? aItems.slice() : [];
+        getFlyoutItems: function () {
+            return [];
+        },
+
+        normalizeActiveSubTab: normalizeActiveSubTab,
+
+        isAllowedSubTab: function (sNavKey, sSubTab) {
+            return normalizeActiveSubTab(sNavKey, sSubTab) === sSubTab;
         }
     };
 });

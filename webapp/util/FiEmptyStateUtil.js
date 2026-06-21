@@ -30,32 +30,84 @@ sap.ui.define([], function () {
         ODATA_HINT: ODATA_HINT,
 
         getOverviewEmptyState: function () {
-            return Object.assign(_baseShell(), {
-                summaryCards: [
+            return {
+                loading: false,
+                loaded: true,
+                error: "",
+                hasData: true,
+                odataConnected: false,
+                emptyTitle: NO_DATA,
+                emptyMessage: NO_ODATA,
+                emptyHint: ODATA_HINT,
+                steps: [
                     {
-                        key: "GL_SUMMARY",
-                        title: "General Ledger Summary",
-                        subtitle: "회계전표 및 계정별 흐름 요약",
-                        emptyMessage: NO_DATA
+                        number: "01",
+                        title: "FI 모듈 선택",
+                        description: "상단 탭에서 Financial Accounting을 선택합니다."
+                    },
+                    {
+                        number: "02",
+                        title: "Customer Receipt 이동",
+                        description: "플라이아웃 메뉴 또는 아래 기능 카드에서 Customer Receipt을 열어 주세요."
+                    },
+                    {
+                        number: "03",
+                        title: "고객 미수금 확인",
+                        description: "고객을 선택하고 전표별 입금완료와 미입금 내역을 확인합니다."
+                    }
+                ],
+                features: [
+                    {
+                        key: "CUSTOMER_RECEIPT",
+                        title: "Customer Receipt",
+                        subtitle: "고객별 청구·입금 확인",
+                        description: "Z_C_FI_REC_DETAIL OData 기반 고객 미수금 상세 조회",
+                        icon: "sap-icon://money-bills",
+                        available: true,
+                        badge: "사용 가능",
+                        actionText: "이동하기",
+                        actionIcon: "sap-icon://navigation-right-arrow"
+                    },
+                    {
+                        key: "GENERAL_LEDGER",
+                        title: "General Ledger",
+                        subtitle: "회계전표 및 계정별 흐름",
+                        description: "전표 목록과 계정 입력 요약 (준비 중)",
+                        icon: "sap-icon://ledger",
+                        available: false,
+                        badge: "준비 중",
+                        actionText: "준비 중",
+                        actionIcon: "sap-icon://future"
                     },
                     {
                         key: "PAYABLE_STATUS",
                         title: "Payable Status",
-                        subtitle: "미지급금 및 지급 상태 요약",
-                        emptyMessage: NO_DATA
+                        subtitle: "미지급금 및 지급 상태",
+                        description: "구매·입고 이후 발생 미지급금 요약 (준비 중)",
+                        icon: "sap-icon://payment-approval",
+                        available: false,
+                        badge: "준비 중",
+                        actionText: "준비 중",
+                        actionIcon: "sap-icon://future"
                     },
                     {
                         key: "RECEIVABLE_STATUS",
                         title: "Receivable Status",
-                        subtitle: "미수금 및 수금 상태 요약",
-                        emptyMessage: NO_DATA
+                        subtitle: "미수금 및 수금 상태",
+                        description: "판매 이후 발생 미수금 요약 (준비 중)",
+                        icon: "sap-icon://customer-financial-fact-sheet",
+                        available: false,
+                        badge: "준비 중",
+                        actionText: "준비 중",
+                        actionIcon: "sap-icon://future"
                     }
                 ],
+                summaryCards: [],
                 worklist: [],
                 worklistTitle: "FI Worklist",
                 worklistSubtitle: "우선 확인 재무 업무 목록",
                 worklistEmptyMessage: NO_DATA
-            });
+            };
         },
 
         getGeneralLedgerEmptyState: function () {

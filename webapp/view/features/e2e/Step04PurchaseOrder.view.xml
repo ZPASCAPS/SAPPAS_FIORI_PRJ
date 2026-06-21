@@ -6,12 +6,12 @@
     
     <VBox id="e2eStepCard" class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos04" renderType="Bare">
         <HBox alignItems="Center" justifyContent="SpaceBetween">
-            <Text text="4. Purchase Order" class="e2eMtoCardTitle" />
+            <Text text="4. 구매 오더" class="e2eMtoCardTitle" />
             <ObjectStatus id="e2eStepStatus" text="예정" state="None" class="e2eMtoCardStatus" />
         </HBox>
         
-        <Text text="{flowModel>/PurchaseOrder}" class="e2eMtoCardDoc" />
+        <Text text="{flowModel>/PurchaseOrder}" wrapping="true" class="e2eMtoCardDoc" />
         
-        <Text text="2026.06.15" class="e2eMtoCardDetail" />
+        <Text text="Purchase Order" class="e2eMtoCardDetail" />
     </VBox>                                                                          
 </mvc:View>
