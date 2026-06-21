@@ -618,6 +618,16 @@ html, body, body > div, #container, #container-uiarea,
     font-family: "Inter", var(--sapFontFamily, sans-serif);
     font-size: 0.875rem;
     color: #374151;
+    font-style: normal !important;
+}
+
+.nxSpaceSearch .sapMSFI::placeholder,
+.nxSpaceSearch .sapMSFI::-webkit-input-placeholder,
+.nxSpaceSearch .sapMSFI::-moz-placeholder,
+.nxSpaceSearch .sapMSFI:-ms-input-placeholder {
+    font-style: normal !important;
+    font-weight: 400 !important;
+    color: #9CA3AF !important;
 }
 
 .nxSpaceSearchBtn {
@@ -632,6 +642,19 @@ html, body, body > div, #container, #container-uiarea,
     font-weight: 600 !important;
     font-size: 0.875rem !important;
     box-shadow: 0 2px 6px rgba(0, 112, 242, 0.22) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: 1 !important;
+}
+
+.nxSpaceSearchBtn .sapMBtnContent {
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 /* B공간 — 범례 */
@@ -2695,6 +2718,14 @@ html, body, body > div, #container, #container-uiarea,
     flex-wrap: nowrap;
 }
 
+.nxMmInvAnalysisDonutWrap--mmbe {
+    padding: 0.65rem 0.85rem;
+    background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 55%, #ECFEFF 100%);
+    border: 1px solid #DBEAFE;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.08);
+}
+
 .nxMmInvAnalysisDonut {
     width: 9rem;
     height: 9rem;
@@ -2757,10 +2788,27 @@ html, body, body > div, #container, #container-uiarea,
     flex-shrink: 0;
 }
 
-.nxMmInvAnalysisLegendText {
-    font-size: 0.75rem;
-    color: #374151;
-    font-weight: 500;
+.nxMmInvAnalysisLegend--mmbe {
+    gap: 0.65rem;
+}
+
+.nxMmInvAnalysisLegendItem--mmbe {
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.45rem;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.nxMmInvAnalysisLegendItem--mmbe .nxMmInvAnalysisLegendSwatch {
+    width: 0.72rem;
+    height: 0.72rem;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95);
+}
+
+.nxMmInvAnalysisLegendItem--mmbe .nxMmInvAnalysisLegendText {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #0F172A;
 }
 
 /* Host variants — vertical fill per card type */
@@ -2778,6 +2826,127 @@ html, body, body > div, #container, #container-uiarea,
 
 .nxMmInvAnalysisHost--status .nxMmInvAnalysisDonutWrap {
     justify-content: center;
+}
+
+.nxMmInvAnalysisDonutSvgWrap {
+    position: relative;
+    width: 9rem;
+    height: 9rem;
+    flex-shrink: 0;
+}
+
+.nxMmInvAnalysisDonutSvg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.nxMmInvDonutSlice {
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.nxMmInvDonutSlice:hover {
+    opacity: 0.82;
+}
+
+.nxMmInvDonutSvgValue {
+    font-size: 18px;
+    font-weight: 800;
+    fill: #111827;
+}
+
+.nxMmInvDonutSvgLabel {
+    font-size: 8px;
+    font-weight: 600;
+    fill: #6B7280;
+    letter-spacing: 0.03em;
+}
+
+.nxMmInvDonutTooltip {
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    background: rgba(15, 23, 42, 0.92);
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.3;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.35rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+}
+
+.nxMmInvAnalysisLegendItem {
+    cursor: help;
+}
+
+.nxMmInvDashMatFilterBar {
+    margin-bottom: 0.35rem;
+    gap: 0.5rem;
+}
+
+.nxMmInvDashMatFilterBar--enhanced {
+    padding: 0.5rem 0.65rem;
+    margin-bottom: 0.55rem;
+    background: linear-gradient(180deg, #F0F9FF 0%, #ECFEFF 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 0.55rem;
+    box-shadow: none;
+}
+
+.nxMmInvDashMatFilterLabelWrap {
+    gap: 0.05rem;
+    min-width: 0;
+}
+
+.nxMmInvDashFilterHint,
+.nxMmInvDashFilterHint .sapMText {
+    font-size: 0.62rem !important;
+    font-weight: 500 !important;
+    color: #64748B !important;
+    letter-spacing: 0.01em;
+}
+
+.nxMmInvDashMatSegment .sapMSegBBtn {
+    min-width: 3.2rem;
+}
+
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtn {
+    min-width: 4.5rem;
+    border-color: #BAE6FD !important;
+}
+
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtn .sapMSegBBtnInner {
+    font-size: 0.74rem !important;
+    font-weight: 600 !important;
+    color: #0369A1 !important;
+}
+
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtnSel {
+    background: #E0F2FE !important;
+    border-color: #0EA5E9 !important;
+    box-shadow: none !important;
+}
+
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtnSel .sapMSegBBtnInner {
+    color: #0C4A6E !important;
+    font-weight: 700 !important;
+}
+
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtn:focus,
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtnSel:focus,
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtn:focus .sapMSegBBtnInner,
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtnSel:focus .sapMSegBBtnInner {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.nxMmInvDashMatSegment--enhanced .sapMSegBBtn:not(.sapMSegBBtnSel):hover {
+    background: #F0F9FF !important;
 }
 
 /* Responsive */
@@ -10362,8 +10531,6 @@ html, body, body > div, #container, #container-uiarea,
     text-align: right !important;
 }
 
-.e2eStepPos03 .e2eMtoCardTitle,
-.e2eStepPos03 .e2eMtoCardTitle .sapMText,
 .e2eStepPos08 .e2eMtoCardTitle,
 .e2eStepPos08 .e2eMtoCardTitle .sapMText {
     white-space: normal !important;
@@ -12093,8 +12260,8 @@ html, body, body > div, #container, #container-uiarea,
 
 .e2eStepPos05 .e2eMtoCardDoc,
 .e2eStepPos05 .e2eMtoCardDoc .sapMText {
-    white-space: nowrap !important;
-    word-break: keep-all !important;
+    white-space: pre-line !important;
+    word-break: break-all !important;
 }
 
 .e2eMtoReferenceGrid .e2eMtoCardStatus,
@@ -12370,7 +12537,7 @@ html, body, body > div, #container, #container-uiarea,
     flex: 1 1 auto !important;
     min-width: 0 !important;
     max-width: calc(100% - 2.6rem) !important;
-    white-space: normal !important;
+    white-space: nowrap !important;
     word-break: keep-all !important;
     line-height: 1.15 !important;
     text-align: left !important;
@@ -12454,20 +12621,7 @@ html, body, body > div, #container, #container-uiarea,
     display: none !important;
 }
 
-/* Vertical connectors 4→5, 7→8: 3/5 of previous span */
-.e2eMtoReferenceGrid .e2eCon45 {
-    left: calc(77.6% + 100px - 0.75rem) !important;
-    top: 12.27rem !important;
-    width: 1.5rem !important;
-    height: 3.36rem !important;
-}
-
-.e2eMtoReferenceGrid .e2eCon78 {
-    left: calc(5.2% + 100px - 0.75rem) !important;
-    top: 25.07rem !important;
-    width: 1.5rem !important;
-    height: 3.36rem !important;
-}
+/* (vertical 4→5, 8→9 — see final 12-step layout block at file end) */
 
 /* Step 8 title: force exactly 2 lines (no wrap inside each line) */
 .e2eMtoReferenceGrid .e2eStepPos08 > .sapMFlexBox:first-child {
@@ -12777,11 +12931,25 @@ html, body, body > div, #container, #container-uiarea,
     font-size: 0.875rem !important;
     font-weight: 400 !important;
     color: #32363A !important;
+    font-style: normal !important;
+}
+
+.nxSpaceCardA .nxSpaceSearchBtn .sapMBtnInner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: 1 !important;
 }
 
 .nxSpaceCardA .nxSpaceSearchBtn .sapMBtnContent {
     font-size: 0.875rem !important;
     font-weight: 600 !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .nxSpaceCardA .nxOrderResultPanel {
@@ -13813,6 +13981,338 @@ html, body, body > div, #container, #container-uiarea,
     background: linear-gradient(135deg, #0f172a 0%, #134e4a 46%, #14b8a6 100%);
 }
 
+/* FI Overview onboarding */
+.fiOnboardingPage {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.fiOnboardingBody {
+    gap: 1rem;
+}
+
+.fiOnboardingHero {
+    width: 100%;
+    border-radius: 1.1rem;
+    padding: 1.45rem 1.55rem 1.35rem;
+    margin-bottom: 0.15rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0f172a 0%, #115e59 42%, #14b8a6 100%);
+    box-shadow: 0 18px 42px rgba(15, 118, 110, 0.22);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.fiOnboardingHero::before {
+    content: "";
+    position: absolute;
+    top: -35%;
+    right: -6%;
+    width: 18rem;
+    height: 18rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, transparent 68%);
+    pointer-events: none;
+}
+
+.fiOnboardingHero::after {
+    content: "";
+    position: absolute;
+    bottom: -45%;
+    left: -8%;
+    width: 14rem;
+    height: 14rem;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.fiOnboardingHeroRow {
+    gap: 1.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.fiOnboardingHeroText {
+    flex: 1 1 22rem;
+    min-width: 0;
+    gap: 0.35rem;
+}
+
+.fiOnboardingBadgeRow {
+    gap: 0.55rem;
+    margin-bottom: 0.35rem;
+}
+
+.fiOnboardingModuleBadge .sapMObjStatusText,
+.fiOnboardingModuleBadge .sapMObjStatusIcon {
+    font-weight: 700 !important;
+}
+
+.fiOnboardingHeroMeta,
+.fiOnboardingHeroMeta .sapMText {
+    font-size: 0.72rem !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+    letter-spacing: 0.02em;
+}
+
+.fiOnboardingHeroTitle,
+.fiOnboardingHeroTitle.sapMTitle {
+    font-size: 1.65rem !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.15rem !important;
+}
+
+.fiOnboardingHeroSubtitle,
+.fiOnboardingHeroSubtitle.sapMTitle {
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    margin-bottom: 0.45rem !important;
+}
+
+.fiOnboardingHeroDesc,
+.fiOnboardingHeroDesc .sapMText {
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    max-width: 38rem;
+}
+
+.fiOnboardingHeroActions {
+    gap: 0.55rem;
+    margin-top: 0.85rem;
+}
+
+.fiOnboardingPrimaryBtn .sapMBtnInner {
+    background: #FFFFFF !important;
+    border-color: #FFFFFF !important;
+    color: #0f766e !important;
+    font-weight: 700 !important;
+    border-radius: 0.65rem !important;
+    min-height: 2.45rem !important;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18) !important;
+}
+
+.fiOnboardingPrimaryBtn .sapMBtnContent,
+.fiOnboardingPrimaryBtn .sapMBtnIcon {
+    color: #0f766e !important;
+}
+
+.fiOnboardingGhostBtn .sapMBtnInner {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    color: #FFFFFF !important;
+    border-radius: 0.65rem !important;
+    min-height: 2.45rem !important;
+}
+
+.fiOnboardingGhostBtn .sapMBtnContent,
+.fiOnboardingGhostBtn .sapMBtnIcon {
+    color: #FFFFFF !important;
+}
+
+.fiOnboardingHeroVisual {
+    flex: 0 0 auto;
+    min-width: 9rem;
+    padding: 0.35rem 0.5rem;
+}
+
+.fiOnboardingIconCluster {
+    gap: 0.65rem;
+    padding: 1rem 1.1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(8px);
+}
+
+.fiOnboardingIconMain {
+    filter: drop-shadow(0 6px 14px rgba(15, 23, 42, 0.25));
+}
+
+.fiOnboardingIconOrbit {
+    gap: 0.75rem;
+}
+
+.fiOnboardingSection {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fiOnboardingSectionHead {
+    margin-bottom: 0.55rem;
+    gap: 0.5rem;
+}
+
+.fiOnboardingSectionTitle,
+.fiOnboardingSectionTitle.sapMTitle {
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    color: #0F172A !important;
+}
+
+.fiOnboardingSectionHint,
+.fiOnboardingSectionHint .sapMText {
+    font-size: 0.72rem !important;
+    color: #64748B !important;
+}
+
+.fiOnboardingStepGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    width: 100%;
+}
+
+.fiOnboardingStepGrid > .sapMFlexItem,
+.fiOnboardingStepGrid > .sapUiVBox {
+    flex: 1 1 calc(33.333% - 0.5rem);
+    min-width: min(100%, 13rem);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.fiOnboardingStepCard {
+    height: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 0.85rem;
+    border: 1px solid #E2E8F0;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    box-sizing: border-box;
+}
+
+.fiOnboardingStepNumber {
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em;
+    color: #0D9488 !important;
+    margin-bottom: 0.35rem;
+}
+
+.fiOnboardingStepTitle,
+.fiOnboardingStepTitle.sapMTitle {
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.fiOnboardingStepDesc,
+.fiOnboardingStepDesc .sapMText {
+    font-size: 0.76rem !important;
+    line-height: 1.5 !important;
+    color: #64748B !important;
+}
+
+.fiOnboardingFeatureGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    width: 100%;
+}
+
+.fiOnboardingFeatureGrid > .sapMFlexItem,
+.fiOnboardingFeatureGrid > .sapUiVBox {
+    flex: 1 1 calc(50% - 0.35rem);
+    min-width: min(100%, 16rem);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.fiOnboardingFeatureTile {
+    height: 100%;
+    padding: 0.95rem 1rem 0.85rem;
+    border-radius: 0.9rem;
+    border: 1px solid #E2E8F0;
+    background: #FFFFFF;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    box-sizing: border-box;
+    gap: 0.35rem;
+}
+
+.fiOnboardingFeatureTile--available {
+    border-color: #99F6E4;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F0FDFA 100%);
+}
+
+.fiOnboardingFeatureTile--soon {
+    opacity: 0.92;
+}
+
+.fiOnboardingFeatureHead {
+    margin-bottom: 0.35rem;
+}
+
+.fiOnboardingFeatureIconWrap {
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 0.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a, #0d9488);
+    box-shadow: 0 6px 16px rgba(13, 148, 136, 0.25);
+}
+
+.fiOnboardingFeatureTile--soon .fiOnboardingFeatureIconWrap {
+    background: linear-gradient(135deg, #64748B, #94A3B8);
+    box-shadow: none;
+}
+
+.fiOnboardingFeatureBadge .sapMObjStatusText {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+}
+
+.fiOnboardingFeatureTitle,
+.fiOnboardingFeatureTitle.sapMTitle {
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+}
+
+.fiOnboardingFeatureSub,
+.fiOnboardingFeatureSub .sapMText {
+    font-size: 0.74rem !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+}
+
+.fiOnboardingFeatureDesc,
+.fiOnboardingFeatureDesc .sapMText {
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+    color: #64748B !important;
+    min-height: 2.1rem;
+}
+
+.fiOnboardingFeatureBtn {
+    margin-top: 0.35rem;
+}
+
+.fiOnboardingInfoStrip {
+    margin-top: 0.15rem;
+    border-radius: 0.75rem !important;
+}
+
+@media (max-width: 720px) {
+    .fiOnboardingHeroVisual {
+        width: 100%;
+        align-items: flex-start !important;
+    }
+
+    .fiOnboardingFeatureGrid > .sapMFlexItem,
+    .fiOnboardingFeatureGrid > .sapUiVBox,
+    .fiOnboardingStepGrid > .sapMFlexItem,
+    .fiOnboardingStepGrid > .sapUiVBox {
+        flex-basis: 100%;
+    }
+}
+
 .fiHeroGeneralLedger {
     background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0d9488 100%);
 }
@@ -14414,6 +14914,1931 @@ html, body, body > div, #container, #container-uiarea,
     border-bottom-color: var(--nx-dm-border) !important;
 }
 
+/* MM BOM Overview (히트텍/가방) */
+.nxMmBomOverview {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.nxMmBomOverviewGrid {
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmBomOverviewGridBottom {
+    margin-top: 0;
+}
+
+.nxMmBomOverviewCard {
+    flex: 1 1 20rem;
+    min-width: 0;
+    max-width: 100%;
+    padding: 0.85rem 0.95rem;
+    border-radius: 0.75rem;
+    border: 1px solid #E2E8F0;
+    background: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.nxMmBomOverviewCardWide {
+    flex: 1 1 100%;
+}
+
+.nxMmBomCardHead {
+    margin-bottom: 0.65rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.nxMmBomCardSub,
+.nxMmBomCardSub .sapMText {
+    font-size: 0.74rem !important;
+    color: #64748B !important;
+}
+
+.nxMmBomProductBlock {
+    margin-bottom: 0.75rem;
+}
+
+.nxMmBomProductHead {
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.nxMmBomProductCode,
+.nxMmBomProductCode .sapMText {
+    font-size: 0.72rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmBomComponentTable,
+.nxMmBomMatrixTable {
+    border: none !important;
+}
+
+.nxMmBomMatrixRowShared {
+    background: #FFFBEB !important;
+}
+
+.nxMmBomCellEllipsis,
+.nxMmBomCellEllipsis .sapMText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.nxMmBomReadinessList {
+    gap: 0.55rem;
+}
+
+.nxMmBomReadinessTile {
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.55rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+.nxMmBomReadinessCode,
+.nxMmBomReadinessCode .sapMText {
+    font-size: 0.72rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmBomReadinessMsg,
+.nxMmBomReadinessMsg .sapMText {
+    margin-top: 0.35rem;
+    font-size: 0.78rem !important;
+    color: #475569 !important;
+    word-break: break-word;
+}
+
+.nxMmBomPriorityEmpty {
+    min-height: 10rem;
+    padding: 1rem;
+}
+
+.nxMmBomPriorityEmptyText,
+.nxMmBomPriorityEmptyText .sapMText {
+    margin-top: 0.5rem;
+    color: #94A3B8 !important;
+    text-align: center;
+}
+
+.nxMmBomPriorityBody {
+    padding: 0.35rem 0.15rem;
+}
+
+.nxMmBomPriorityHead {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nxMmBomPriorityName,
+.nxMmBomPriorityName .sapMText {
+    font-size: 0.82rem !important;
+    color: #64748B !important;
+}
+
+.nxMmBomPriorityReason,
+.nxMmBomPriorityReason .sapMText {
+    margin-top: 0.25rem;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    color: #0F172A !important;
+}
+
+.nxMmBomPriorityMsg,
+.nxMmBomPriorityMsg .sapMText {
+    margin-top: 0.35rem;
+    font-size: 0.76rem !important;
+    color: #475569 !important;
+    word-break: break-word;
+}
+
+/* MM Inventory / Purchasing inline filter bar (SAP horizontal style) */
+.nxMmInlineFilterBar {
+    width: 100%;
+    max-width: 100%;
+    min-height: 2.5rem;
+    margin-bottom: 0.65rem;
+    padding: 0.45rem 0.75rem;
+    gap: 0.5rem;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.35rem;
+}
+
+.nxMmInlineFilterFields {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0.55rem 0.75rem;
+}
+
+.nxMmInlineFilterField {
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 0.35rem;
+}
+
+.nxMmInlineFilterField--check {
+    padding-top: 0.1rem;
+}
+
+.nxMmInlineFilterLabel,
+.nxMmInlineFilterLabel.sapMLabel {
+    flex-shrink: 0;
+    font-size: 0.76rem !important;
+    color: #374151 !important;
+    white-space: nowrap;
+}
+
+.nxMmInlineFilterSearch,
+.nxMmInlineFilterSelect {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.nxMmInlineFilterSearch .sapMSFF,
+.nxMmInlineFilterSelect .sapMSlt {
+    height: 1.75rem !important;
+    min-height: 1.75rem !important;
+    border-radius: 0.25rem !important;
+    background: #FFFFFF !important;
+}
+
+.nxMmInlineFilterSearch .sapMSFI,
+.nxMmInlineFilterSelect .sapMSltLabel {
+    height: 1.75rem !important;
+    line-height: 1.75rem !important;
+    font-size: 0.78rem !important;
+}
+
+.nxMmInlineFilterActions {
+    flex-shrink: 0;
+    gap: 0.4rem;
+    margin-left: auto;
+}
+
+.nxMmInlineFilterResetBtn .sapMBtnInner,
+.nxMmInlineFilterSearchBtn .sapMBtnInner {
+    height: 1.75rem !important;
+    min-width: 3.25rem !important;
+    border-radius: 0.25rem !important;
+    font-size: 0.78rem !important;
+}
+
+.nxMmInlineFilterSearchBtn .sapMBtnInner {
+    background: #0B74F0 !important;
+    border-color: #0B74F0 !important;
+}
+
+.nxMmInlineFilterResetBtn .sapMBtnInner {
+    background: #FFFFFF !important;
+    border: 1px solid #D1D5DB !important;
+    color: #111827 !important;
+}
+
+.nxMmInlineFilterField--check .sapMCb {
+    height: 1.75rem;
+}
+
+.nxMmInlineFilterField--check .sapMCbLabel {
+    font-size: 0.76rem !important;
+    color: #374151 !important;
+}
+
+/* MM Inventory 2x2 Dashboard */
+.nxMmInvDashPage {
+    background: #F0F9FF;
+}
+
+.nxMmInvDashGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    align-items: stretch;
+}
+
+.nxMmInvDashRow {
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+.nxMmInvDashCard {
+    flex: 1 1 calc(50% - 0.4rem);
+    min-width: 0;
+    max-width: 100%;
+    min-height: 18rem;
+    padding: 0.85rem 0.95rem;
+    border-radius: 0.75rem;
+    border: 1px solid #BAE6FD;
+    background: #FFFFFF;
+    box-shadow: 0 4px 18px rgba(14, 165, 233, 0.08);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.nxMmInvDashCard--tl {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+}
+
+.nxMmInvDashCard--tl .nxMmInvDashSplit {
+    flex: 0 0 auto;
+    height: 13.25rem;
+    min-height: 13.25rem;
+    max-height: 13.25rem;
+}
+
+.nxMmInvDashCard--productionMerged {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.nxMmInvDashCard--bl {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.nxMmInvDashCardHead {
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #E0F2FE;
+}
+
+.nxMmInvDashCardHead .sapMTitle {
+    color: #0C4A6E !important;
+    font-weight: 700 !important;
+}
+
+.nxMmInvDashCardSub,
+.nxMmInvDashCardSub .sapMText {
+    font-size: 0.72rem !important;
+    color: #64748B !important;
+}
+
+.nxMmInvDashSplit {
+    gap: 0.65rem;
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: stretch;
+    min-height: 0;
+}
+
+.nxMmInvDashListPane {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.nxMmInvDashMmbePane {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.nxMmInvDashMmbeScroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.nxMmInvDashMmbeScroll .sapMScrollCont,
+.nxMmInvDashMmbeScroll .sapMScrollContScroll {
+    height: 100% !important;
+}
+
+.nxMmInvDashSubLabel,
+.nxMmInvDashSubLabel.sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: #0369A1 !important;
+    margin-bottom: 0;
+}
+
+.nxMmInvDashMatScroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 10.75rem !important;
+    max-height: 10.75rem !important;
+    overflow: hidden;
+    border: 1px solid #E0F2FE;
+    border-radius: 0.5rem;
+    background: #FFFFFF;
+}
+
+.nxMmInvDashMatScroll .sapMScrollCont {
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
+
+.nxMmInvDashMatScroll .sapMScrollCont,
+.nxMmInvDashMatScroll .sapMScrollContScroll {
+    height: 100% !important;
+    max-height: 100% !important;
+}
+
+.nxMmInvDashMatScroll .sapMScrollCont::-webkit-scrollbar {
+    width: 6px;
+}
+
+.nxMmInvDashMatScroll .sapMScrollCont::-webkit-scrollbar-thumb {
+    background: #94A3B8;
+    border-radius: 999px;
+}
+
+.nxMmInvDashMatScroll .sapMScrollCont::-webkit-scrollbar-track {
+    background: #F1F5F9;
+    border-radius: 999px;
+}
+
+.nxMmInvDashMatList {
+    border: none;
+    border-radius: 0;
+    flex: none;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+}
+
+.nxMmInvDashMatItem {
+    border-bottom: 1px solid #F0F9FF;
+}
+
+.nxMmInvDashMatBody {
+    padding: 0.45rem 0.55rem;
+    gap: 0.15rem;
+}
+
+.nxMmInvDashMatCode,
+.nxMmInvDashMatCode .sapMText {
+    font-size: 0.66rem !important;
+    font-weight: 500 !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmInvDashMatName,
+.nxMmInvDashMatName .sapMText {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+}
+
+.nxMmInvDashMatMeta {
+    margin-top: 0.15rem;
+}
+
+.nxMmInvDashMatType,
+.nxMmInvDashMatType .sapMText {
+    font-size: 0.7rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmInvDashMatHint,
+.nxMmInvDashMatHint .sapMText {
+    font-size: 0.65rem !important;
+    color: #64748B !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmInvDashMatItem--noStock .nxMmInvDashMatName,
+.nxMmInvDashMatItem--noStock .nxMmInvDashMatName .sapMText,
+.nxMmInvDashMatItem--noStock .nxMmInvDashMatCode,
+.nxMmInvDashMatItem--noStock .nxMmInvDashMatCode .sapMText,
+.nxMmInvDashMatItem--noStock .nxMmInvDashMatQty,
+.nxMmInvDashMatItem--noStock .nxMmInvDashMatQty .sapMObjectNumberText,
+.nxMmInvDashMatItem--noStock .nxMmInvDashMatQty .sapMObjectNumberUnit {
+    color: #0F172A !important;
+    opacity: 1 !important;
+}
+
+.nxMmInvDashMatQty .sapMObjectNumberText,
+.nxMmInvDashMatQty .sapMObjectNumberUnit {
+    font-size: 0.82rem !important;
+}
+
+.nxMmInvDashMmbeTable {
+    border: 1px solid #E0F2FE;
+    border-radius: 0.5rem;
+    background: #FFFFFF;
+}
+
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell {
+    background: #F0F9FF !important;
+    border-bottom: 1px solid #BAE6FD !important;
+}
+
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #0C4A6E !important;
+}
+
+.nxMmInvDashMmbeTable .sapMListTblRow {
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.nxMmInvDashMmbeCell,
+.nxMmInvDashMmbeCell .sapMText {
+    font-size: 0.8125rem !important;
+    color: #0F172A !important;
+}
+
+.nxMmInvDashMmbeCell--center,
+.nxMmInvDashMmbeCell--center .sapMText {
+    text-align: center !important;
+    width: 100%;
+}
+
+.nxMmInvDashMmbeQty,
+.nxMmInvDashMmbeQty .sapMObjectNumberText {
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+}
+
+.nxMmInvDashMmbeTable .sapMListTblCell:nth-child(4) {
+    text-align: right !important;
+}
+
+.nxMmInvStockTypeBtn {
+    padding: 0 !important;
+    min-height: auto !important;
+    height: auto !important;
+    cursor: default;
+}
+
+.nxMmInvStockTypeBtn:not(.sapMBtnDisabled) {
+    cursor: pointer;
+}
+
+.nxMmInvStockTypeBtn .sapMBtnInner {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    min-height: auto !important;
+    height: auto !important;
+    justify-content: flex-start !important;
+}
+
+.nxMmInvStockTypeBtn .sapMBtnContent {
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    line-height: 1.35 !important;
+    color: #0F172A !important;
+}
+
+.nxMmInvStockTypeBtn:not(.sapMBtnDisabled):hover .sapMBtnInner,
+.nxMmInvStockTypeBtn:not(.sapMBtnDisabled):focus .sapMBtnInner {
+    background: transparent !important;
+}
+
+.nxMmInvStockTypeBtn:not(.sapMBtnDisabled):hover .sapMBtnContent,
+.nxMmInvStockTypeBtn:not(.sapMBtnDisabled):focus .sapMBtnContent {
+    color: #0F172A !important;
+    text-decoration: underline;
+}
+
+.nxMmInvStockTypeBtn.sapMBtnDisabled .sapMBtnContent {
+    color: #0F172A !important;
+    opacity: 1 !important;
+    cursor: default !important;
+    text-decoration: none !important;
+}
+
+.nxMmStockLogPopover .sapMPopoverCont {
+    padding: 0 !important;
+    max-width: 900px;
+    box-sizing: border-box;
+    border-radius: 0.85rem !important;
+    overflow: hidden;
+    box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18) !important;
+}
+
+.nxMmStockLogVoucher {
+    width: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    border: 1px solid #CBD5E1;
+    border-radius: 0.85rem;
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+}
+
+.nxMmStockLogVoucherHead {
+    padding: 0.95rem 1.1rem 0.75rem;
+    background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
+    color: #FFFFFF;
+    gap: 0.75rem;
+}
+
+.nxMmStockLogVoucherHeadText {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0.25rem;
+}
+
+.nxMmStockLogVoucherTitle,
+.nxMmStockLogVoucherTitle.sapMTitle {
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
+    margin: 0 !important;
+}
+
+.nxMmStockLogVoucherIcon {
+    flex-shrink: 0;
+    opacity: 0.92;
+}
+
+.nxMmStockLogVoucherHead .nxMmStockLogContext,
+.nxMmStockLogVoucherHead .nxMmStockLogContext .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    line-height: 1.45 !important;
+}
+
+.nxMmStockLogVoucherMeta {
+    padding: 0.65rem 1.1rem 0.55rem;
+    background: #F0FDFA;
+    border-bottom: 1px dashed #99F6E4;
+}
+
+.nxMmStockLogHint,
+.nxMmStockLogHint .sapMText {
+    font-size: 0.72rem !important;
+    color: #0F766E !important;
+    line-height: 1.5 !important;
+}
+
+.nxMmStockLogVoucherStrip {
+    margin: 0.55rem 1.1rem 0 !important;
+    border-radius: 0.45rem !important;
+}
+
+.nxMmStockLogBusy {
+    margin: 0.55rem auto;
+}
+
+.nxMmStockLogEmpty {
+    min-height: 7rem;
+    padding: 1rem 1.1rem;
+    margin: 0.55rem 1.1rem;
+    border: 1px dashed #CBD5E1;
+    border-radius: 0.55rem;
+    background: #FFFFFF;
+}
+
+.nxMmStockLogVoucherTableWrap,
+.nxMmStockLogTableScroll {
+    padding: 0.75rem 1.1rem 0.35rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmStockLogTableScroll .sapMScrollContScroll {
+    min-width: 100%;
+}
+
+.nxMmStockLogTable {
+    width: auto !important;
+    min-width: 44rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 0.55rem;
+    background: #FFFFFF;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    table-layout: auto !important;
+}
+
+.nxMmStockLogTable .sapMListTblHeader .sapMListTblCell {
+    background: #F8FAFC !important;
+    border-bottom: 2px solid #E2E8F0 !important;
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+}
+
+.nxMmStockLogTable .sapMListTblHeader .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    letter-spacing: 0.01em;
+    white-space: nowrap !important;
+}
+
+.nxMmStockLogTable .sapMListTblCell {
+    padding-top: 0.42rem !important;
+    padding-bottom: 0.42rem !important;
+    vertical-align: middle !important;
+    overflow: hidden !important;
+}
+
+.nxMmStockLogTable .sapMListTblRow:nth-child(even) {
+    background: #FAFBFC;
+}
+
+.nxMmStockLogTable .sapMListTblRow:hover {
+    background: #F0F9FF !important;
+}
+
+.nxMmStockLogTable .sapMText,
+.nxMmStockLogTable .sapMListTblCell {
+    font-size: 0.78rem !important;
+    color: #0F172A !important;
+}
+
+.nxMmStockLogCell,
+.nxMmStockLogCell .sapMText {
+    display: block !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    line-height: 1.35 !important;
+}
+
+.nxMmStockLogCell--end,
+.nxMmStockLogCell--end .sapMText {
+    text-align: right !important;
+}
+
+.nxMmStockLogCell--center,
+.nxMmStockLogCell--center .sapMText {
+    text-align: center !important;
+}
+
+.nxMmStockLogFooter {
+    margin-top: 0;
+    padding: 0.75rem 1.1rem 0.95rem;
+    border-top: 1px solid #E2E8F0;
+    background: #F8FAFC;
+}
+
+.nxMmStockLogCloseBtn .sapMBtnInner {
+    font-weight: 700 !important;
+    min-width: 5.5rem !important;
+    border-radius: 0.5rem !important;
+}
+
+.nxMmInvDashProdTabs .sapMITBHead {
+    background: transparent !important;
+}
+
+.nxMmInvDashProdBody {
+    padding: 0.5rem 0.15rem;
+    gap: 0.45rem;
+}
+
+.nxMmInvDashHint,
+.nxMmInvDashHint .sapMText {
+    font-size: 0.74rem !important;
+    color: #64748B !important;
+    line-height: 1.4;
+}
+
+.nxMmInvDashProdTiles {
+    gap: 0.55rem;
+    margin-top: 0.35rem;
+}
+
+.nxMmInvDashProdTile {
+    flex: 1 1 10rem;
+    min-width: 0;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.55rem;
+    background: linear-gradient(145deg, #F0F9FF, #ECFEFF);
+    border: 1px solid #BAE6FD;
+}
+
+.nxMmInvDashTileLabel,
+.nxMmInvDashTileLabel .sapMText {
+    font-size: 0.72rem !important;
+    color: #0369A1 !important;
+    font-weight: 600 !important;
+}
+
+.nxMmInvDashTileHint,
+.nxMmInvDashTileHint .sapMText {
+    margin-top: 0.35rem;
+    font-size: 0.7rem !important;
+    color: #64748B !important;
+    word-break: break-word;
+}
+
+.nxMmInvDashWhatIfInputs {
+    gap: 0.55rem;
+}
+
+.nxMmInvDashWhatIfField {
+    gap: 0.2rem;
+}
+
+.nxMmInvDashWhatIfTable {
+    border: 1px solid #E0F2FE;
+    border-radius: 0.5rem;
+}
+
+.nxMmInvDashBomBody {
+    gap: 0.45rem;
+}
+
+.nxMmInvDashBomNote {
+    margin-top: 0.15rem;
+}
+
+.nxMmInvDashBomGrid {
+    gap: 0.55rem;
+    margin-top: 0.25rem;
+}
+
+.nxMmInvDashBomCard {
+    flex: 1 1 14rem;
+    min-width: 0;
+    padding: 0.65rem 0.7rem;
+    border-radius: 0.65rem;
+    border: 1px solid #E0F2FE;
+    background: #FFFFFF;
+    box-shadow: 0 8px 18px rgba(14, 165, 233, 0.06);
+}
+
+.nxMmInvDashBomCard--heat {
+    background: linear-gradient(180deg, #FFF7ED 0%, #FFFFFF 42%);
+    border-color: #FED7AA;
+}
+
+.nxMmInvDashBomCard--bag {
+    background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 42%);
+    border-color: #BAE6FD;
+}
+
+.nxMmInvDashBomCardHead {
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInvDashBomCode,
+.nxMmInvDashBomCode .sapMText {
+    font-size: 0.68rem !important;
+    color: #64748B !important;
+}
+
+.nxMmInvDashBomSummary,
+.nxMmInvDashBomSummary .sapMText {
+    font-size: 0.72rem !important;
+    color: #0369A1 !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInvDashBomTable {
+    border: 1px solid #E0F2FE;
+    border-radius: 0.45rem;
+}
+
+.nxMmInvDashBomMatName,
+.nxMmInvDashBomMatName .sapMText {
+    font-size: 0.74rem !important;
+    font-weight: 600 !important;
+    color: #0F172A !important;
+}
+
+.nxMmInvDashBomMatCode,
+.nxMmInvDashBomMatCode .sapMText {
+    font-size: 0.66rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmInvAnalysisHost--bomCompare {
+    padding: 0.15rem 0;
+}
+
+.nxMmInvBomCompareChart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    width: 100%;
+}
+
+.nxMmInvBomCompareRow {
+    padding: 0.45rem 0.5rem;
+    border-radius: 0.5rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+.nxMmInvBomCompareHead {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInvBomCompareName {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.nxMmInvBomCompareCode {
+    font-size: 0.66rem;
+    color: #94A3B8;
+}
+
+.nxMmInvBomCompareShared {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #C2410C;
+    background: #FFEDD5;
+    border-radius: 999px;
+    padding: 0.08rem 0.4rem;
+}
+
+.nxMmInvBomCompareBars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+}
+
+.nxMmInvBomCompareTrack {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr 3rem;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.nxMmInvBomCompareTag {
+    font-size: 0.64rem;
+    font-weight: 700;
+}
+
+.nxMmInvBomCompareTag--heat {
+    color: #EA580C;
+}
+
+.nxMmInvBomCompareTag--bag {
+    color: #0284C7;
+}
+
+.nxMmInvBomCompareBarWrap {
+    height: 0.55rem;
+    border-radius: 999px;
+    background: #E2E8F0;
+    overflow: hidden;
+}
+
+.nxMmInvBomCompareBar {
+    height: 100%;
+    border-radius: 999px;
+    min-width: 0;
+}
+
+.nxMmInvBomCompareBar--heat {
+    background: linear-gradient(90deg, #FB923C, #EA580C);
+}
+
+.nxMmInvBomCompareBar--bag {
+    background: linear-gradient(90deg, #38BDF8, #0284C7);
+}
+
+.nxMmInvBomCompareVal {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #334155;
+    text-align: right;
+}
+
+.nxMmInvDashChartBody--bomViz {
+    min-height: 11rem;
+    padding: 0.1rem 0 0;
+}
+
+.nxMmInvDashBomVizTabs {
+    margin-top: 0.05rem;
+}
+
+.nxMmInvDashBomVizBody {
+    padding-top: 0.2rem;
+}
+
+.nxMmInvAnalysisHost--bomMix {
+    width: 100%;
+    padding: 0.15rem 0.05rem;
+}
+
+.nxMmInvBomMixChart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    width: 100%;
+}
+
+.nxMmInvBomMixRow {
+    padding: 0.55rem 0.65rem;
+    border-radius: 0.55rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.nxMmInvBomMixHead {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 0.3rem;
+}
+
+.nxMmInvBomMixName {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.nxMmInvBomMixShared {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #C2410C;
+    background: #FFEDD5;
+    border-radius: 999px;
+    padding: 0.06rem 0.38rem;
+}
+
+.nxMmInvBomMixTrackRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.nxMmInvBomMixTrack {
+    height: 0.72rem;
+    border-radius: 999px;
+    background: #E2E8F0;
+    overflow: hidden;
+    min-width: 0;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+
+.nxMmInvBomMixFill {
+    height: 100%;
+    border-radius: 999px;
+    min-width: 0;
+    transition: width 0.35s ease;
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.nxMmInvBomMixMeta {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #334155;
+    white-space: nowrap;
+}
+
+.nxMmInvBomMixFootnote {
+    margin-top: 0.55rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 0.45rem;
+    background: #F0F9FF;
+    border: 1px solid #BAE6FD;
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #0369A1;
+    line-height: 1.45;
+}
+
+.nxMmInvDashVizHint {
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInvDashChartBody {
+    min-height: 11rem;
+    padding: 0.35rem 0;
+}
+
+.nxMmInvDashChartBody--dist {
+    min-height: 12rem;
+    padding: 0.1rem 0 0.2rem;
+}
+
+.nxMmInvDashCompTabs {
+    margin-top: 0.1rem;
+}
+
+.nxMmInvDashCompBody {
+    padding-top: 0.25rem;
+    gap: 0.2rem;
+}
+
+.nxMmInvDashChartBody--mmbe {
+    min-height: 11rem;
+    padding: 0.15rem 0 0.1rem;
+}
+
+.nxMmInvDashChartBody--mmbe .nxMmInvAnalysisHost--status {
+    min-height: 10rem;
+}
+
+.nxMmInvDashDistFilterBar {
+    margin: 0.15rem 0 0.2rem;
+    gap: 0.35rem;
+}
+
+.nxMmInvDashDistSegment .sapMSegBBtn {
+    min-width: 3.4rem;
+}
+
+.nxMmInvDashDistSegment.nxMmInvDashMatSegment--enhanced .sapMSegBBtn {
+    min-width: 4.5rem;
+}
+
+.nxMmInvDashVizSection {
+    margin-top: 0.65rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid #E0F2FE;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.nxMmInvDashVizTitle,
+.nxMmInvDashVizTitle .sapMTitle {
+    color: #0369A1 !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.nxMmInvAnalysisHost--dist {
+    width: 100%;
+    padding: 0.25rem 0.35rem 0.15rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistColChart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    width: 100%;
+    min-height: 10.5rem;
+    height: 10.5rem;
+    padding: 0 0.15rem 0.1rem;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.nxMmInvDistCol {
+    flex: 0 0 auto;
+    min-width: 3.5rem;
+    max-width: 4.75rem;
+    width: 3.75rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.28rem;
+    padding: 0.15rem 0.12rem 0.1rem;
+    border-radius: 0.45rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistCol--selected {
+    background: transparent;
+    box-shadow: none;
+}
+
+.nxMmInvDistColValue {
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: #0F172A;
+    line-height: 1.1;
+    text-align: center;
+    white-space: nowrap;
+    min-height: 0.85rem;
+}
+
+.nxMmInvDistColTrack {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 2rem;
+    min-height: 5.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    border-radius: 0.45rem 0.45rem 0.2rem 0.2rem;
+    background: #E2E8F0;
+    overflow: hidden;
+}
+
+.nxMmInvDistColFill {
+    width: 100%;
+    border-radius: 0.45rem 0.45rem 0.15rem 0.15rem;
+    min-height: 0;
+    transition: height 0.25s ease;
+}
+
+.nxMmInvDistColFill--selected {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.75);
+}
+
+.nxMmInvDistColLabel {
+    font-size: 0.66rem;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    word-break: keep-all;
+    min-height: 1.6rem;
+}
+
+.nxMmInvDashGaugeList {
+    gap: 0.55rem;
+    padding: 0.35rem 0;
+    max-height: 14rem;
+    overflow-y: auto;
+}
+
+.nxMmInvDashGaugeItem {
+    padding: 0.35rem 0.15rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.nxMmInvDashGaugeLabel,
+.nxMmInvDashGaugeLabel .sapMText {
+    font-size: 0.78rem !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+}
+
+.nxMmInvDashGaugeBar {
+    margin-top: 0.25rem;
+}
+
+.nxMmInvDashPaneEmpty {
+    min-height: 10rem;
+    padding: 1rem;
+    background: #F8FAFC;
+    border-radius: 0.5rem;
+    border: 1px dashed #CBD5E1;
+}
+
+.nxMmInvDashPaneEmpty--chart {
+    min-height: 11rem;
+}
+
+.nxMmInvDashEmptyText,
+.nxMmInvDashEmptyText .sapMText {
+    color: #94A3B8 !important;
+    text-align: center;
+    font-size: 0.82rem !important;
+}
+
+.nxMmInvDashGlobalEmpty {
+    min-height: 16rem;
+    padding: 2rem 1rem;
+    background: #FFFFFF;
+    border-radius: 0.75rem;
+    border: 1px dashed #BAE6FD;
+}
+
+.nxMmInvDashEmptyTitle,
+.nxMmInvDashEmptyTitle .sapMTitle {
+    color: #64748B !important;
+    font-weight: 600 !important;
+}
+
+@media (max-width: 960px) {
+    .nxMmInvDashGrid {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .nxMmInvDashCard--tl,
+    .nxMmInvDashCard--productionMerged,
+    .nxMmInvDashCard--bl {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .nxMmInvDashCard {
+        flex: 1 1 100%;
+    }
+}
+
+.fiHeroCustomerReceipt {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 46%, #0d9488 100%);
+}
+
+/* FI Customer Receipt — electronic receipt style (TOSSCAFE-inspired) */
+.fiReceiptPage {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.fiReceiptBody {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    gap: 0.65rem;
+    overflow-x: hidden;
+}
+
+.fiReceiptHero {
+    margin-bottom: 0.15rem;
+    grid-column: 1 / -1;
+}
+
+.fiReceiptHeaderSub,
+.fiReceiptHeaderSub.sapMTitle {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    margin-bottom: 0.35rem !important;
+}
+
+.fiReceiptKpiGrid {
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.fiReceiptKpiPanel {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fiReceiptKpiGrid--side.sapMHBox {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    width: 100% !important;
+}
+
+.fiReceiptKpiCard--side.fiReceiptKpiCard--rate {
+    grid-column: 1 / -1;
+}
+
+.fiReceiptKpiGrid--side.sapMHBox > .sapMVBox {
+    min-width: 0 !important;
+    width: 100% !important;
+}
+
+.fiReceiptKpiCard {
+    min-height: 4.75rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: 0.75rem;
+    border: 1px solid #E5E7EB;
+    background: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.fiReceiptKpiCard--side {
+    min-height: 4.5rem;
+    padding: 0.65rem 0.75rem;
+}
+
+.fiReceiptKpiLabel,
+.fiReceiptKpiLabel.sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: #64748B !important;
+    margin-bottom: 0.35rem;
+}
+
+.fiReceiptKpiValue,
+.fiReceiptKpiValue.sapMText {
+    font-size: 0.92rem !important;
+    font-weight: 800 !important;
+    color: #0F172A !important;
+    text-align: right;
+    width: 100%;
+    white-space: normal !important;
+    word-break: break-word;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+
+.fiReceiptKpiCard--side .fiReceiptKpiValue,
+.fiReceiptKpiCard--side .fiReceiptKpiValue.sapMText {
+    font-size: 0.82rem !important;
+}
+
+.fiReceiptKpiValue--rate,
+.fiReceiptKpiValue--rate.sapMText {
+    font-size: 1rem !important;
+    color: #0369A1 !important;
+}
+
+.fiReceiptKpiCard--side .fiReceiptKpiValue--rate,
+.fiReceiptKpiCard--side .fiReceiptKpiValue--rate.sapMText {
+    font-size: 0.9rem !important;
+}
+
+.fiReceiptKpiValue--paid,
+.fiReceiptKpiValue--paid.sapMText {
+    color: #047857 !important;
+}
+
+.fiReceiptKpiValue--open,
+.fiReceiptKpiValue--open.sapMText {
+    color: #B91C1C !important;
+}
+
+.fiReceiptMainLayout.sapMVBox {
+    display: grid !important;
+    grid-template-columns: minmax(0, 7fr) minmax(320px, 3fr);
+    gap: 24px;
+    align-items: start;
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.fiReceiptMainLayout.sapMVBox > .sapMVBox {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.fiReceiptMainReceiptArea.sapMVBox {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    padding: 24px 16px 40px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.fiReceiptMainReceiptInner.sapMHBox {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.fiReceiptVoucherActions.sapMVBox {
+    flex: 0 0 220px;
+    min-width: 200px;
+    max-width: 240px;
+    padding: 16px 14px;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    gap: 12px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 12px;
+}
+
+.fiReceiptExportBtn {
+    min-height: 2.5rem !important;
+}
+
+.fiReceiptPrintBtn {
+    min-height: 2.5rem !important;
+}
+
+.fiReceiptActionHint,
+.fiReceiptActionHint.sapMText {
+    font-size: 0.68rem !important;
+    color: #94A3B8 !important;
+    text-align: center;
+    line-height: 1.4;
+    white-space: normal !important;
+}
+
+.fiReceiptSidePanel.sapMVBox {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px;
+    min-width: 0;
+    position: sticky;
+    top: 12px;
+    align-self: start;
+    max-height: calc(100vh - 12rem);
+    overflow: hidden;
+}
+
+.fiReceiptPaper.sapMVBox {
+    width: 100%;
+    max-width: 560px;
+    min-height: 720px;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    padding: 32px 34px;
+    box-sizing: border-box;
+    gap: 0;
+}
+
+.fiReceiptBrand,
+.fiReceiptBrand.sapMTitle {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+    color: #0F172A !important;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif !important;
+    margin: 0 auto 0.15rem !important;
+    white-space: nowrap !important;
+    word-spacing: normal !important;
+}
+
+.fiReceiptTitle,
+.fiReceiptTitle.sapMText {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.18em !important;
+    color: #334155 !important;
+    text-align: center;
+    margin-top: 0.1rem;
+}
+
+.fiReceiptSubtitle,
+.fiReceiptSubtitle.sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    color: #94A3B8 !important;
+    text-align: center;
+    margin-top: 0.2rem;
+}
+
+.fiReceiptTagline,
+.fiReceiptTagline.sapMText {
+    font-size: 0.68rem !important;
+    color: #CBD5E1 !important;
+    text-align: center;
+    margin-bottom: 0.15rem;
+}
+
+.fiReceiptDashedLine {
+    width: 100%;
+    border-top: 1px dashed #CBD5E1;
+    margin: 18px 0;
+    min-height: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+}
+
+.fiReceiptRow.sapMHBox {
+    display: grid !important;
+    grid-template-columns: minmax(0, 42%) minmax(0, 58%);
+    gap: 12px;
+    align-items: start !important;
+    padding: 7px 0;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.fiReceiptLabel,
+.fiReceiptLabel.sapMText,
+.fiReceiptMiniLabel,
+.fiReceiptMiniLabel.sapMText {
+    font-size: 12px !important;
+    color: #64748B !important;
+    white-space: normal !important;
+    word-break: break-word;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+}
+
+.fiReceiptValue,
+.fiReceiptValue.sapMText,
+.fiReceiptMiniValue,
+.fiReceiptMiniValue.sapMText,
+.fiReceiptAmountStrong,
+.fiReceiptAmountStrong.sapMText,
+.fiReceiptOpenAmount,
+.fiReceiptOpenAmount.sapMText {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #0F172A !important;
+    text-align: right;
+    word-break: break-word;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+    width: 100% !important;
+}
+
+.fiReceiptValue--rate,
+.fiReceiptValue--rate.sapMText {
+    font-weight: 700 !important;
+}
+
+.fiReceiptAmountStrong,
+.fiReceiptAmountStrong.sapMText {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+}
+
+.fiReceiptOpenAmount,
+.fiReceiptOpenAmount.sapMText {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: #B91C1C !important;
+}
+
+.fiReceiptStatusBadge,
+.fiReceiptStatusBadge.sapMText {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1.3;
+    text-align: center;
+    white-space: normal !important;
+    word-break: break-word;
+    justify-self: end;
+}
+
+.fiReceiptStatusPaid {
+    background: #ECFDF5;
+    color: #047857 !important;
+    border: 1px solid #A7F3D0;
+}
+
+.fiReceiptStatusPartial {
+    background: #FFF7ED;
+    color: #C2410C !important;
+    border: 1px solid #FED7AA;
+}
+
+.fiReceiptStatusOpen {
+    background: #FEF2F2;
+    color: #B91C1C !important;
+    border: 1px solid #FECACA;
+}
+
+.fiReceiptCustomerPanel {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 14px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.fiReceiptCustomerList .sapMListUl {
+    padding: 0;
+}
+
+.fiReceiptCustomerList .sapMLIB {
+    border: none !important;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    background: transparent !important;
+}
+
+.fiReceiptCustomerCard {
+    padding: 12px;
+    gap: 6px;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.fiReceiptCustomerCardSelected {
+    background: #EFF6FF !important;
+    border-color: #BFDBFE !important;
+    border-left: 3px solid #2563EB !important;
+    padding-left: calc(12px - 2px);
+}
+
+.fiReceiptCustomerCardHead {
+    gap: 8px;
+}
+
+.fiReceiptCustomerCardText {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.fiReceiptCustomerCardRow {
+    gap: 8px;
+}
+
+.fiReceiptCustomerName,
+.fiReceiptCustomerName.sapMText {
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+    white-space: normal !important;
+    word-break: break-word;
+}
+
+.fiReceiptCustomerCode,
+.fiReceiptCustomerCode.sapMText {
+    font-size: 0.68rem !important;
+    color: #64748B !important;
+    white-space: normal !important;
+    word-break: break-all;
+}
+
+.fiReceiptCustomerRate,
+.fiReceiptCustomerRate.sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #0369A1 !important;
+    text-align: right;
+    white-space: normal !important;
+}
+
+.fiReceiptSectionTitle,
+.fiReceiptSectionTitle.sapMTitle {
+    color: #0F172A !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.fiReceiptDocPanel {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    padding: 14px;
+    max-height: 520px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.fiReceiptDocList .sapMListUl {
+    padding: 0;
+}
+
+.fiReceiptDocList .sapMLIB {
+    border: none !important;
+    background: transparent !important;
+}
+
+.fiReceiptDocCard {
+    border-bottom: 1px dashed #E2E8F0;
+    padding: 12px 4px;
+    gap: 4px;
+    box-sizing: border-box;
+}
+
+.fiReceiptDocTop {
+    gap: 12px;
+    align-items: flex-start !important;
+}
+
+.fiReceiptDocNumber,
+.fiReceiptDocNumber.sapMText {
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: normal !important;
+    word-break: break-all;
+}
+
+.fiReceiptDocAmount,
+.fiReceiptDocAmount.sapMText {
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+    text-align: right;
+    flex: 0 0 auto;
+    white-space: normal !important;
+    word-break: break-word;
+}
+
+.fiReceiptDocMeta,
+.fiReceiptDocMeta.sapMText {
+    margin-top: 4px;
+    font-size: 12px !important;
+    color: #64748B !important;
+    white-space: normal !important;
+    word-break: break-word;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+
+.fiReceiptFooter {
+    gap: 0.2rem;
+    margin-top: 0.25rem;
+    padding-top: 0.15rem;
+}
+
+.fiReceiptFooterThanks,
+.fiReceiptFooterThanks.sapMText {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #0F172A !important;
+    text-align: center;
+    font-style: italic;
+}
+
+.fiReceiptFooterBrand,
+.fiReceiptFooterBrand.sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    color: #475569 !important;
+    text-align: center;
+}
+
+.fiReceiptFooterNote,
+.fiReceiptFooterNote.sapMText {
+    font-size: 0.62rem !important;
+    color: #CBD5E1 !important;
+    text-align: center;
+    margin-top: 0.35rem;
+    white-space: normal !important;
+}
+
+.fiReceiptEmpty {
+    min-height: 10rem;
+    padding: 1.5rem 1rem;
+    border-radius: 14px;
+    border: 1px dashed #E5E7EB;
+    background: #FAFAFA;
+    box-sizing: border-box;
+}
+
+.fiReceiptEmpty--paper {
+    min-height: 720px;
+    width: 100%;
+    max-width: 560px;
+}
+
+.fiReceiptEmpty--detail {
+    min-height: 8rem;
+}
+
+.nxFiCustomerReceiptScroll {
+    background: #F8FAFC;
+    overflow-x: hidden !important;
+}
+
+@media (max-width: 1199px) {
+    .fiReceiptMainLayout.sapMVBox {
+        grid-template-columns: 1fr;
+    }
+
+    .fiReceiptSidePanel.sapMVBox {
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .fiReceiptMainReceiptArea.sapMVBox {
+        padding: 16px 8px 24px;
+    }
+
+    .fiReceiptPaper.sapMVBox {
+        max-width: 100%;
+    }
+
+    .fiReceiptMainReceiptInner.sapMHBox {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .fiReceiptVoucherActions.sapMVBox {
+        flex: 1 1 100%;
+        max-width: 100%;
+        width: 100%;
+        position: static;
+    }
+
+    .fiReceiptCustomerPanel {
+        max-height: 280px;
+    }
+
+    .fiReceiptDocPanel {
+        max-height: 420px;
+    }
+
+    .fiReceiptKpiGrid--side.sapMHBox {
+        grid-template-columns: 1fr;
+    }
+
+    .fiReceiptKpiCard--side.fiReceiptKpiCard--rate {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .fiReceiptKpiGrid--side.sapMHBox {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fiReceiptKpiCard--side.fiReceiptKpiCard--rate {
+        grid-column: 1 / -1;
+    }
+
+    .fiReceiptPaper.sapMVBox {
+        padding: 24px 20px;
+        min-height: auto;
+    }
+}
+
 .nxDarkMode .nxNotesPanelBody {
     background: var(--nx-dm-surface) !important;
 }
@@ -14775,3 +17200,219 @@ html, body, body > div, #container, #container-uiarea,
         flex-wrap: wrap;
         height: auto !important;
     }
+}
+
+/* E2E 12-step flow: 4-4-4 layout
+   row1: 1→2→3→4  |  row2 (L→R): 8·7·6·5  |  row3 (L→R): 9→10→11→12 */
+.e2eMtoReferenceGrid {
+    min-height: 43rem !important;
+    height: 100% !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos01 { left: 5.2% !important; right: auto !important; top: 4.4rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos02 { left: 29.4% !important; right: auto !important; top: 4.4rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos03 { left: 53.6% !important; right: auto !important; top: 4.4rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos04 { left: 77.6% !important; right: auto !important; top: 4.4rem !important; }
+
+.e2eMtoReferenceGrid .e2eStepPos05 { left: 77.6% !important; right: auto !important; top: 17.2rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos06 { left: 53.6% !important; right: auto !important; top: 17.2rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos07 { left: 29.4% !important; right: auto !important; top: 17.2rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos08 { left: 5.2% !important; right: auto !important; top: 17.2rem !important; }
+
+.e2eMtoReferenceGrid .e2eStepPos09 { left: 5.2% !important; right: auto !important; top: 30rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos10 { left: 29.4% !important; right: auto !important; top: 30rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos11 { left: 53.6% !important; right: auto !important; top: 30rem !important; }
+.e2eMtoReferenceGrid .e2eStepPos12 { left: 77.6% !important; right: auto !important; top: 30rem !important; }
+
+.e2eMtoReferenceGrid .e2eCon45.e2eMtoConnectorVertical {
+    left: calc(77.6% + 100px - 0.675rem) !important;
+    top: calc(4.4rem + 5.1rem + (17.2rem - 4.4rem - 5.1rem - 2.8rem) / 2) !important;
+    width: 1.35rem !important;
+    height: 2.8rem !important;
+    transform: none !important;
+}
+
+/* row2 horizontal ← : 56·67·78 same Y axis, gap between cards */
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon56,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon67,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon78 {
+    top: calc(17.2rem + 2.55rem) !important;
+    transform: translateY(-50%) !important;
+    height: 2.1rem !important;
+    width: calc((24.2% - 200px) / 2 - 0.5rem) !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon56 {
+    left: calc(65.6% + 100px - (24.2% - 200px) / 4 + 0.25rem) !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon67 {
+    left: calc(41.5% + 100px - (24.2% - 200px) / 4 + 0.25rem) !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon78 {
+    left: calc(17.3% + 100px - (24.2% - 200px) / 4 + 0.25rem) !important;
+}
+
+/* row2 step8 → row3 step9 vertical ↓ (floating, not touching cards) */
+.e2eMtoReferenceGrid .e2eCon89.e2eMtoConnectorVertical {
+    left: calc(5.2% + 100px - 0.675rem) !important;
+    top: calc(17.2rem + 5.1rem + (30rem - 17.2rem - 5.1rem - 2.8rem) / 2) !important;
+    width: 1.35rem !important;
+    height: 2.8rem !important;
+    transform: none !important;
+}
+
+/* row3 horizontal → */
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon910,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon1011,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon1112 {
+    top: calc(30rem + 2.55rem) !important;
+    transform: translateY(-50%) !important;
+    height: 2.1rem !important;
+    width: calc((24.2% - 200px) / 2 - 0.5rem) !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon910 {
+    left: calc(17.3% + 100px - (24.2% - 200px) / 4 + 0.25rem) !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon1011 {
+    left: calc(41.5% + 100px - (24.2% - 200px) / 4 + 0.25rem) !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon1112 {
+    left: calc(65.6% + 100px - (24.2% - 200px) / 4 + 0.25rem) !important;
+}
+
+/* row1 horizontal → (match row2/3 spacing) */
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon12,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon23,
+.e2eMtoReferenceGrid .e2eMtoConnector.e2eCon34 {
+    height: 2.1rem !important;
+    width: calc((24.2% - 200px) / 2 - 0.5rem) !important;
+}
+
+/* MRP-style: stroke above, arrow below (→ ← ↓ per connector) */
+.e2eMtoReferenceGrid .e2eMtoConnector:not(.e2eMtoConnectorVertical):not(.e2eMtoConnectorMrp)::before {
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    bottom: 1.05rem !important;
+    width: auto !important;
+    height: 4px !important;
+    transform: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical:not(.e2eMtoConnectorMrp)::before {
+    top: 0 !important;
+    bottom: 1.05rem !important;
+    left: 50% !important;
+    right: auto !important;
+    width: 4px !important;
+    height: auto !important;
+    transform: translateX(-50%) !important;
+}
+
+/* 4→5, 8→9: vertical line full span, ↓ arrow on right side of line */
+.e2eMtoReferenceGrid .e2eCon45.e2eMtoConnectorVertical,
+.e2eMtoReferenceGrid .e2eCon89.e2eMtoConnectorVertical {
+    width: 1.65rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon45.e2eMtoConnectorVertical::before,
+.e2eMtoReferenceGrid .e2eCon89.e2eMtoConnectorVertical::before {
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0.15rem !important;
+    right: auto !important;
+    width: 4px !important;
+    height: auto !important;
+    transform: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eCon45.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eCon45.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText,
+.e2eMtoReferenceGrid .e2eCon89.e2eMtoConnectorVertical .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eCon89.e2eMtoConnectorVertical .e2eMtoFlowArrow .sapMText {
+    top: 50% !important;
+    bottom: auto !important;
+    left: calc(0.15rem + 4px + 0.28rem) !important;
+    right: auto !important;
+    transform: translateY(-50%) !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical.e2eMtoConnectorDone::before {
+    background: #19B66B !important;
+    border: none !important;
+    border-radius: 999px !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical.e2eMtoConnectorActive::before {
+    background: #E99A13 !important;
+    border: none !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnector:not(.e2eMtoConnectorVertical):not(.e2eMtoConnectorMrp) .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnector:not(.e2eMtoConnectorVertical):not(.e2eMtoConnectorMrp) .e2eMtoFlowArrow .sapMText {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 0.88rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical.e2eMtoConnectorDone .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical.e2eMtoConnectorDone .e2eMtoFlowArrow .sapMText {
+    color: #19B66B !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical.e2eMtoConnectorActive .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorVertical.e2eMtoConnectorActive .e2eMtoFlowArrow .sapMText {
+    color: #E99A13 !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorDone:not(.e2eMtoConnectorVertical):not(.e2eMtoConnectorMrp) .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorDone:not(.e2eMtoConnectorVertical):not(.e2eMtoConnectorMrp) .e2eMtoFlowArrow .sapMText {
+    color: #19B66B !important;
+}
+
+.e2eMtoReferenceGrid .e2eMtoConnectorActive:not(.e2eMtoConnectorVertical):not(.e2eMtoConnectorMrp) .e2eMtoFlowArrow,
+.e2eMtoReferenceGrid .e2eMtoConnectorActive:not(.e2eMtoConnectorVertical):not(.e2eMtoConnectorMrp) .e2eMtoFlowArrow .sapMText {
+    color: #E99A13 !important;
+}
+
+.e2eStepPos09 .e2eMtoCardTitle,
+.e2eStepPos09 .e2eMtoCardTitle .sapMText {
+    max-width: 9rem !important;
+    white-space: normal !important;
+    padding-left: 1.05rem !important;
+    text-indent: -1.05rem !important;
+}
+
+.e2eMtoReferenceGrid .e2eStepPos10 .e2eMtoCardTitle,
+.e2eMtoReferenceGrid .e2eStepPos10 .e2eMtoCardTitle .sapMText {
+    max-width: 9rem !important;
+    white-space: normal !important;
+    padding-left: 1.05rem !important;
+    text-indent: -1.05rem !important;
+}
+
+.e2eCon89 .e2eMtoFlowArrow,
+.e2eCon89 .e2eMtoFlowArrow .sapMText,
+.e2eCon910 .e2eMtoFlowArrow,
+.e2eCon910 .e2eMtoFlowArrow .sapMText,
+.e2eCon1011 .e2eMtoFlowArrow,
+.e2eCon1011 .e2eMtoFlowArrow .sapMText,
+.e2eCon1112 .e2eMtoFlowArrow,
+.e2eCon1112 .e2eMtoFlowArrow .sapMText {
+    color: inherit !important;
+}
+

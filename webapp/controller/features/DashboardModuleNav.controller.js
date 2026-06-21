@@ -377,6 +377,7 @@ sap.ui.define([
                 this._setNavKey(sNavKey);
             }
 
+            sSubTabKey = ModuleViewConfig.normalizeActiveSubTab(sNavKey, sSubTabKey);
             oModel.setProperty("/moduleView/activeSubTab", sSubTabKey);
             this._closeModuleFlyout();
         },
@@ -393,6 +394,12 @@ sap.ui.define([
 
             if (ModuleViewConfig.isModuleKey(sKey)) {
                 ModuleViewConfig.syncModuleView(oModel, sKey);
+
+                if (sKey === "MM_MATERIALS") {
+                    oModel.setProperty("/moduleView/activeSubTab", "INVENTORY");
+                } else if (sKey === "FI_CO_FINANCE") {
+                    oModel.setProperty("/moduleView/activeSubTab", "CUSTOMER_RECEIPT");
+                }
             }
 
             this._updateNavTabIndicator(true);

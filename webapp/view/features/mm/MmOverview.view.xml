@@ -1,0 +1,200 @@
+﻿<!--
+  MmOverview.view.xml — MM Overview (히트텍/가방 BOM + Z_C_MM_INVENTORY)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.mm.MmOverview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    width="100%">
+
+    <VBox class="nxMmOverview nxMmBomOverview" width="100%" renderType="Bare">
+        <MessageStrip
+            text="{dashboard>/mmOverview/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= ${dashboard>/mmOverview/error} ? true : false }"
+            class="sapUiSmallMarginBottom" />
+
+        <BusyIndicator visible="{dashboard>/mmOverview/loading}" class="nxMmOverviewBusy" />
+
+        <VBox visible="{= !${dashboard>/mmOverview/loading} }" width="100%" renderType="Bare" class="nxMmOverviewBody">
+            <VBox class="mmFeatureHero mmHeroOverview mmHeroCard" width="100%">
+                <HBox alignItems="Start" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="mmHeroCardHead">
+                    <VBox class="mmHeroContent mmHeroTextBlock">
+                        <Title text="Overview" level="H2" class="mmHeroTitle" />
+                        <Text
+                            text="가방과 히트텍 BOM 기준으로 UP 자재 소요량, 재고 상태, 부족 위험을 한눈에 확인하는 요약 화면입니다."
+                            class="mmHeroDescription" />
+                    </VBox>
+                    <HBox alignItems="Center" class="mmHeroActions">
+                        <HBox alignItems="Center" class="mmHeroActionsBox">
+                            <Button
+                                icon="sap-icon://refresh"
+                                type="Transparent"
+                                tooltip="SAP OData 새로고침"
+                                press=".onToolbarRefresh"
+                                class="mmFilterButton" />
+                        </HBox>
+                    </HBox>
+                </HBox>
+                <HBox class="mmHeroKpiStrip" wrap="Wrap" items="{dashboard>/mmOverview/primaryKpis}">
+                    <items>
+                        <VBox class="mmHeroKpiItem">
+                            <Text text="{dashboard>displayTitle}" class="mmHeroKpiLabel" />
+                            <HBox alignItems="Baseline" class="mmHeroKpiValueRow">
+                                <Text text="{dashboard>value}" class="mmHeroKpiValue" />
+                                <Text text="{dashboard>unit}" visible="{= !!${dashboard>unit} }" class="mmHeroKpiUnit" />
+                            </HBox>
+                            <Text text="{dashboard>hint}" class="mmHeroKpiHint" />
+                        </VBox>
+                    </items>
+                </HBox>
+            </VBox>
+
+            <HBox class="nxMmBomOverviewGrid" width="100%" renderType="Bare" wrap="Wrap">
+                <VBox class="nxMmBomOverviewCard nxMmBomOverviewCardWide">
+                    <HBox class="nxMmBomCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                        <VBox>
+                            <Title text="BOM Structure" level="H5" />
+                            <Text text="히트텍 · 가방 완제품별 원자재 구성" class="nxMmBomCardSub" />
+                        </VBox>
+                        <ObjectStatus text="{dashboard>/mmOverview/odataBadge}" state="Success" />
+                    </HBox>
+                    <VBox items="{dashboard>/mmOverview/bomStructure}" width="100%" class="nxMmBomStructureList">
+                        <items>
+                            <VBox class="nxMmBomProductBlock">
+                                <HBox alignItems="Center" class="nxMmBomProductHead">
+                                    <Title text="{dashboard>productName}" level="H6" />
+                                    <Text text="{= ${dashboard>productCode} + ' · ' + ${dashboard>baseQty} + ' ' + ${dashboard>unit} }" class="nxMmBomProductCode" />
+                                </HBox>
+                                <Table
+                                    items="{dashboard>components}"
+                                    growing="false"
+                                    fixedLayout="Strict"
+                                    class="nxMmBomComponentTable"
+                                    width="100%">
+                                    <columns>
+                                        <Column width="9rem"><Text text="Material" /></Column>
+                                        <Column><Text text="Name" /></Column>
+                                        <Column width="5rem" hAlign="End"><Text text="Qty" /></Column>
+                                        <Column width="6rem" hAlign="Center"><Text text="Badge" /></Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem>
+                                            <cells>
+                                                <Text text="{dashboard>material}" />
+                                                <Text text="{dashboard>materialName}" />
+                                                <Text text="{= ${dashboard>qty} + ' ' + ${dashboard>unit} }" />
+                                                <ObjectStatus
+                                                    text="공통 자재"
+                                                    state="Warning"
+                                                    visible="{dashboard>isShared}" />
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </VBox>
+                        </items>
+                    </VBox>
+                </VBox>
+
+                <VBox class="nxMmBomOverviewCard nxMmBomOverviewCardWide">
+                    <HBox class="nxMmBomCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                        <VBox>
+                            <Title text="Requirement Matrix" level="H5" />
+                            <Text text="원자재별 소요량 · 재고 · 부족 비교" class="nxMmBomCardSub" />
+                        </VBox>
+                    </HBox>
+                    <Table
+                        items="{dashboard>/mmOverview/requirementMatrix}"
+                        growing="false"
+                        sticky="ColumnHeaders"
+                        fixedLayout="Strict"
+                        class="nxMmBomMatrixTable"
+                        noDataText="데이터 없음"
+                        width="100%">
+                        <columns>
+                            <Column width="8.5rem"><Text text="Material" /></Column>
+                            <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Name" /></Column>
+                            <Column width="4rem" hAlign="End"><Text text="히트텍" /></Column>
+                            <Column width="4rem" hAlign="End"><Text text="가방" /></Column>
+                            <Column width="4.5rem" hAlign="End"><Text text="총소요" /></Column>
+                            <Column width="5rem" hAlign="End"><Text text="재고" /></Column>
+                            <Column width="5rem" hAlign="End"><Text text="부족" /></Column>
+                            <Column width="5rem" hAlign="Center"><Text text="상태" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem class="{= ${dashboard>isShared} ? 'nxMmBomMatrixRowShared' : '' }">
+                                <cells>
+                                    <Text text="{dashboard>material}" class="nxMmBomCellEllipsis" />
+                                    <Text text="{dashboard>materialName}" class="nxMmBomCellEllipsis" />
+                                    <Text text="{dashboard>heattechQty}" />
+                                    <Text text="{dashboard>bagQty}" />
+                                    <Text text="{dashboard>totalQty}" />
+                                    <Text text="{dashboard>stockDisplay}" />
+                                    <Text text="{dashboard>shortageDisplay}" />
+                                    <ObjectStatus text="{dashboard>status}" state="{dashboard>statusState}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+            </HBox>
+
+            <HBox class="nxMmBomOverviewGrid nxMmBomOverviewGridBottom" width="100%" renderType="Bare" wrap="Wrap">
+                <VBox class="nxMmBomOverviewCard">
+                    <HBox class="nxMmBomCardHead" alignItems="Center">
+                        <VBox>
+                            <Title text="Production Readiness" level="H5" />
+                            <Text text="완제품별 생산 가능 여부" class="nxMmBomCardSub" />
+                        </VBox>
+                    </HBox>
+                    <VBox items="{dashboard>/mmOverview/productionReadiness}" width="100%" class="nxMmBomReadinessList">
+                        <items>
+                            <VBox class="nxMmBomReadinessTile">
+                                <HBox alignItems="Center" justifyContent="SpaceBetween">
+                                    <Title text="{dashboard>productName}" level="H6" />
+                                    <ObjectStatus text="{dashboard>status}" state="{dashboard>statusState}" />
+                                </HBox>
+                                <Text text="{dashboard>productCode}" class="nxMmBomReadinessCode" />
+                                <Text text="{dashboard>message}" class="nxMmBomReadinessMsg" />
+                            </VBox>
+                        </items>
+                    </VBox>
+                </VBox>
+
+                <VBox class="nxMmBomOverviewCard">
+                    <HBox class="nxMmBomCardHead" alignItems="Center">
+                        <VBox>
+                            <Title text="Priority Material Action" level="H5" />
+                            <Text text="가장 먼저 확인해야 할 자재" class="nxMmBomCardSub" />
+                        </VBox>
+                    </HBox>
+                    <VBox
+                        visible="{= !${dashboard>/mmOverview/priorityAction/hasData} }"
+                        class="nxMmBomPriorityEmpty"
+                        alignItems="Center"
+                        justifyContent="Center">
+                        <core:Icon src="sap-icon://information" size="2rem" color="#9CA3AF" />
+                        <Text text="{dashboard>/mmOverview/priorityAction/message}" class="nxMmBomPriorityEmptyText" />
+                    </VBox>
+                    <VBox
+                        visible="{dashboard>/mmOverview/priorityAction/hasData}"
+                        class="nxMmBomPriorityBody">
+                        <HBox alignItems="Center" class="nxMmBomPriorityHead">
+                            <Title text="{dashboard>/mmOverview/priorityAction/material}" level="H4" />
+                            <ObjectStatus
+                                text="공통 자재"
+                                state="Warning"
+                                visible="{dashboard>/mmOverview/priorityAction/isShared}" />
+                        </HBox>
+                        <Text text="{dashboard>/mmOverview/priorityAction/materialName}" class="nxMmBomPriorityName" />
+                        <Text text="{dashboard>/mmOverview/priorityAction/reason}" class="nxMmBomPriorityReason" />
+                        <Text text="{dashboard>/mmOverview/priorityAction/message}" class="nxMmBomPriorityMsg" />
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</mvc:View>

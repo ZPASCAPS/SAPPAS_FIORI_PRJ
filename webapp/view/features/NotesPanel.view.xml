@@ -1,4 +1,4 @@
-<!--
+﻿<!--
   NotesPanel.view.xml — 헤더 메모장 오버레이 (Pastell AI 패널 스타일)
 -->
 <mvc:View
@@ -36,7 +36,7 @@
 
         <VBox class="nxNotesPanelBody" width="100%" height="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmNotes"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmNotes"
                 width="100%"
                 height="100%" />
         </VBox>

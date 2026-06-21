@@ -30,7 +30,7 @@
                         width="9.5rem"
                         forceSelection="true"
                         change=".onPeriodChange"
-                        enabled="{= ${dashboard>/moduleView/activeSubTab} !== 'INVENTORY' &amp;&amp; ${dashboard>/moduleView/activeSubTab} !== 'PURCHASING' &amp;&amp; ${dashboard>/moduleView/activeSubTab} !== 'GOODS_MOVEMENT' }"
+                        enabled="{= ${dashboard>/moduleView/activeSubTab} !== 'INVENTORY' &amp;&amp; ${dashboard>/moduleView/activeSubTab} !== 'PURCHASING' }"
                         class="nxModulePeriodSelect"
                         items="{dashboard>/moduleView/periodOptions}">
                         <core:Item key="{dashboard>key}" text="{dashboard>text}" />
@@ -53,7 +53,8 @@
                 text="Overview"
                 type="Transparent"
                 press=".onSubTabPress"
-                class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? (${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem') : (${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab') }">
+                visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' }"
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="OVERVIEW" /></customData>
             </Button>
             <Button
@@ -88,8 +89,8 @@
                 text="Inventory"
                 type="Transparent"
                 press=".onSubTabPress"
-                visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem' }">
+                visible="false"
+                class="mmSubNavItem">
                 <customData><core:CustomData key="subTabKey" value="INVENTORY" /></customData>
             </Button>
             <Button
@@ -97,8 +98,8 @@
                 text="Purchasing"
                 type="Transparent"
                 press=".onSubTabPress"
-                visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem' }">
+                visible="false"
+                class="mmSubNavItem">
                 <customData><core:CustomData key="subTabKey" value="PURCHASING" /></customData>
             </Button>
             <Button
@@ -106,8 +107,8 @@
                 text="Goods Movement"
                 type="Transparent"
                 press=".onSubTabPress"
-                visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'GOODS_MOVEMENT' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem' }">
+                visible="false"
+                class="mmSubNavItem">
                 <customData><core:CustomData key="subTabKey" value="GOODS_MOVEMENT" /></customData>
             </Button>
             <Button
@@ -115,7 +116,8 @@
                 text="Reports"
                 type="Transparent"
                 press=".onSubTabPress"
-                class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? (${dashboard>/moduleView/activeSubTab} === 'REPORTS' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem') : (${dashboard>/moduleView/activeSubTab} === 'REPORTS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab') }">
+                visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' }"
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'REPORTS' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="REPORTS" /></customData>
             </Button>
             </HBox>
@@ -278,7 +280,7 @@
             <VBox width="100%" class="nxPopoverBody nxMmOverviewFilterBody" renderType="Bare">
                 <VBox class="nxHeaderPopoverTitleRow nxMmOverviewFilterHeader">
                     <Title text="조회 조건" level="H5" class="nxHeaderPopoverTitle" />
-                    <Text text="Overview SAP 데이터 조회 기준을 설정합니다." class="nxMmOverviewFilterSubtitle" />
+                    <Text text="Overview SAP 데이터 조회 기준을 설정합니다. (Z_C_MM_INVENTORY 기준)" class="nxMmOverviewFilterSubtitle" />
                 </VBox>
 
                 <VBox width="100%" class="nxMmOverviewFilterForm">
@@ -307,12 +309,31 @@
                             width="100%" />
                     </VBox>
 
-                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup nxMmOverviewFilterDisabledGroup">
+                    <VBox width="100%" class="nxMmOverviewFilterFieldGroup">
                         <Label text="Plant" class="nxMmOverviewFieldLabel" />
-                        <Input value="데이터 없음" enabled="false" width="100%" />
+                        <Select
+                            selectedKey="{dashboard>/mmOverview/plantFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmOverview/plantOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
                         <Label text="Storage Location" class="nxMmOverviewFieldLabel nxMmOverviewFieldLabelSpaced" />
-                        <Input value="데이터 없음" enabled="false" width="100%" />
-                        <Text text="Plant·Storage Location은 현재 SAP OData 미제공 필드입니다." class="nxMmOverviewFilterDisabledHint" />
+                        <Select
+                            selectedKey="{dashboard>/mmOverview/storageLocationFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmOverview/storageLocationOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
+                        <Label text="Material Type" class="nxMmOverviewFieldLabel nxMmOverviewFieldLabelSpaced" />
+                        <Select
+                            selectedKey="{dashboard>/mmOverview/materialTypeFilter}"
+                            forceSelection="true"
+                            width="100%"
+                            items="{dashboard>/mmOverview/materialTypeOptions}">
+                            <core:Item key="{dashboard>key}" text="{dashboard>text}" />
+                        </Select>
                     </VBox>
                 </VBox>
 

@@ -1,0 +1,88 @@
+<!--
+  FiAccountsReceivable.view.xml ??FI Accounts Receivable (OData ë¯¸ì—°ê²???Empty State)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.fi.FiAccountsReceivable"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    width="100%">
+
+    <VBox class="nxFiAccountsReceivable fiCockpitPage" width="100%" renderType="Bare">
+        <MessageStrip
+            text="{dashboard>/fiAccountsReceivable/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= ${dashboard>/fiAccountsReceivable/error} ? true : false }"
+            class="sapUiSmallMarginBottom" />
+
+        <BusyIndicator visible="{dashboard>/fiAccountsReceivable/loading}" class="nxFiAccountsReceivableBusy" />
+
+        <VBox visible="{= !${dashboard>/fiAccountsReceivable/loading} }" width="100%" renderType="Bare" class="nxFiAccountsReceivableBody">
+            <VBox class="fiFeatureHero fiHeroAccountsReceivable fiHeroCard" width="100%">
+                <HBox alignItems="Start" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="fiHeroCardHead">
+                    <VBox class="fiHeroContent">
+                        <Title text="Accounts Receivable" level="H2" class="fiHeroTitle" />
+                        <Text
+                            text="?ë§¤ ?´í›„ ë°œìƒ??ë¯¸ìˆ˜ê¸ˆê³¼ ?˜ê¸ˆ ì§„í–‰ ?íƒœë¥??•ì¸?˜ëŠ” ?”ë©´?…ë‹ˆ??"
+                            class="fiHeroDescription" />
+                    </VBox>
+                    <HBox alignItems="Center" class="fiHeroActions">
+                        <HBox alignItems="Center" class="fiHeroActionsBox">
+                            <Button
+                                id="fiAccountsReceivableContentFilterBtn"
+                                text="ì¡°íšŒ/?„í„°"
+                                icon="sap-icon://filter"
+                                type="Transparent"
+                                press=".onToolbarFilterOpen"
+                                class="fiFilterButton" />
+                        </HBox>
+                    </HBox>
+                </HBox>
+            </VBox>
+
+            <HBox class="nxFiMasterDetail" width="100%" renderType="Bare">
+                <VBox class="nxFiListPane" renderType="Bare">
+                    <VBox class="nxFiCard nxFiListCard">
+                        <HBox class="nxFiCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                            <VBox>
+                                <Title text="{dashboard>/fiAccountsReceivable/listTitle}" level="H5" />
+                                <Text text="{dashboard>/fiAccountsReceivable/listSubtitle}" class="nxFiCardSub" />
+                            </VBox>
+                            <VBox class="nxFiCardIconWrap nxFiCardIconWrap--receivable">
+                                <core:Icon src="sap-icon://customer-order-entry" size="1.1rem" color="#FFFFFF" />
+                            </VBox>
+                        </HBox>
+                        <VBox class="fiEmptyState" alignItems="Center" justifyContent="Center">
+                            <core:Icon src="sap-icon://database" size="2rem" color="#94A3B8" class="sapUiSmallMarginBottom" />
+                            <Text text="{dashboard>/fiAccountsReceivable/emptyMessage}" class="fiEmptyStateTitle" />
+                            <Text text="{dashboard>/fiAccountsReceivable/emptyHint}" class="fiEmptyStateHint" />
+                        </VBox>
+                    </VBox>
+                </VBox>
+
+                <VBox class="nxFiDetailPane" renderType="Bare">
+                    <VBox class="nxFiCard nxFiDetailCard">
+                        <HBox class="nxFiCardHead" alignItems="Center" justifyContent="SpaceBetween">
+                            <VBox>
+                                <Title text="Receivable Detail" level="H5" />
+                                <Text text="? íƒ ë¯¸ìˆ˜ê¸??ì„¸ ?•ë³´" class="nxFiCardSub" />
+                            </VBox>
+                            <VBox class="nxFiCardIconWrap nxFiCardIconWrap--detail">
+                                <core:Icon src="sap-icon://receipt" size="1.1rem" color="#FFFFFF" />
+                            </VBox>
+                        </HBox>
+                        <VBox
+                            visible="{= !${dashboard>/fiAccountsReceivable/detail/hasSelection} }"
+                            class="fiEmptyState"
+                            alignItems="Center"
+                            justifyContent="Center">
+                            <core:Icon src="sap-icon://cursor" size="2.25rem" color="#9CA3AF" class="sapUiSmallMarginBottom" />
+                            <Text text="{dashboard>/fiAccountsReceivable/detail/emptyMessage}" class="fiEmptyStateTitle" />
+                        </VBox>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+</mvc:View>
