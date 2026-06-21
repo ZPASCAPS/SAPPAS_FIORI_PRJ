@@ -2,62 +2,60 @@
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdKpiTilesSlot"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:mc="sap.suite.ui.microchart"
-    height="100%"
-    width="100%">
+    xmlns:core="sap.ui.core"
+    width="100%"
+    height="100%">
 
-    <HBox class="nxSdKpiTilesRow" width="100%" height="100%" alignItems="Stretch" renderType="Bare">
-        <GenericTile
-            class="nxSdKpiTile nxSdKpiTile--season"
-            header="{sdKpi>/seasonAchievement/header}"
-            subheader="{sdKpi>/seasonAchievement/subheader}"
-            frameType="TwoByOne"
-            width="100%">
-            <TileContent>
-                <content>
-                    <mc:RadialMicroChart
-                        percentage="{sdKpi>/seasonAchievement/percentage}"
-                        total="100"
-                        size="M"
-                        valueColor="{= ${sdKpi>/seasonAchievement/percentage} >= 70 ? 'Good' : 'Critical' }" />
-                </content>
-            </TileContent>
-        </GenericTile>
+    <HBox class="nxSdDashKpiRow" width="100%" height="100%" renderType="Bare" alignItems="Stretch">
+        <VBox class="nxSdDashKpiCard" renderType="Bare">
+            <HBox class="nxSdDashKpiTopRow" width="100%" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                <Text text="{sdKpi>/seasonAchievement/label}" class="nxSdDashKpiLabel" />
+                <VBox renderType="Bare" class="nxSdDashKpiIconWrap">
+                    <core:Icon src="{sdKpi>/seasonAchievement/icon}" size="2rem" color="#7C3AED" />
+                </VBox>
+            </HBox>
+            <VBox class="nxSdDashKpiBottom" renderType="Bare">
+                <HBox alignItems="Center" renderType="Bare" class="nxSdDashKpiValueRow">
+                    <Text text="{sdKpi>/seasonAchievement/valueText}" class="nxSdDashKpiValue" />
+                </HBox>
+                <Text text="{sdKpi>/seasonAchievement/footnote}" class="nxSdDashKpiFootnote" />
+            </VBox>
+        </VBox>
 
-        <GenericTile
-            class="nxSdKpiTile nxSdKpiTile--return"
-            header="{sdKpi>/returnAcceptanceRate/header}"
-            subheader="{sdKpi>/returnAcceptanceRate/subheader}"
-            frameType="TwoByOne"
-            width="100%">
-            <TileContent>
-                <content>
-                    <NumericContent
-                        value="{sdKpi>/returnAcceptanceRate/value}"
-                        scale="%"
-                        valueColor="Error"
-                        indicator="{sdKpi>/returnAcceptanceRate/indicator}"
-                        withMargin="false" />
-                </content>
-            </TileContent>
-        </GenericTile>
+        <VBox class="nxSdDashKpiCard" renderType="Bare">
+            <HBox class="nxSdDashKpiTopRow" width="100%" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                <Text text="{sdKpi>/returnAcceptanceRate/label}" class="nxSdDashKpiLabel" />
+                <VBox renderType="Bare" class="nxSdDashKpiIconWrap">
+                    <core:Icon src="{sdKpi>/returnAcceptanceRate/icon}" size="2rem" color="#7C3AED" />
+                </VBox>
+            </HBox>
+            <VBox class="nxSdDashKpiBottom" renderType="Bare">
+                <HBox alignItems="Center" renderType="Bare" class="nxSdDashKpiValueRow">
+                    <Text text="{sdKpi>/returnAcceptanceRate/valueText}" class="nxSdDashKpiValue" />
+                    <Text
+                        text="{sdKpi>/returnAcceptanceRate/trendPillText}"
+                        visible="{= !!${sdKpi>/returnAcceptanceRate/trendPillText} }"
+                        class="{= 'nxSdDashPill ' + ${sdKpi>/returnAcceptanceRate/trendPillClass} }" />
+                </HBox>
+                <Text text="{sdKpi>/returnAcceptanceRate/footnote}" class="nxSdDashKpiFootnote" />
+            </VBox>
+        </VBox>
 
-        <GenericTile
-            class="nxSdKpiTile nxSdKpiTile--credit"
-            header="{sdKpi>/creditExceed/header}"
-            subheader="{sdKpi>/creditExceed/subheader}"
-            frameType="TwoByOne"
-            width="100%">
-            <TileContent>
-                <content>
-                    <NumericContent
-                        value="{sdKpi>/creditExceed/value}"
-                        scale="건"
-                        valueColor="Critical"
-                        icon="sap-icon://alert"
-                        withMargin="false" />
-                </content>
-            </TileContent>
-        </GenericTile>
+        <VBox id="sdCreditExceedCard" class="nxSdDashKpiCard nxSdDashKpiCard--clickable" renderType="Bare">
+            <HBox class="nxSdDashKpiTopRow" width="100%" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare">
+                <Text text="{sdKpi>/creditExceed/label}" class="nxSdDashKpiLabel" />
+                <VBox renderType="Bare" class="nxSdDashKpiIconWrap">
+                    <core:Icon src="{sdKpi>/creditExceed/icon}" size="2rem" color="#7C3AED" />
+                </VBox>
+            </HBox>
+            <VBox class="nxSdDashKpiBottom" renderType="Bare">
+                <HBox alignItems="Center" renderType="Bare" class="nxSdDashKpiValueRow">
+                    <Text text="{sdKpi>/creditExceed/valueText}" class="nxSdDashKpiValue" />
+                    <Text text="{sdKpi>/creditExceed/valueSuffix}" class="nxSdDashKpiValueUnit" />
+                    <Text text="{sdKpi>/creditExceed/trendPillText}" class="{= 'nxSdDashPill ' + ${sdKpi>/creditExceed/trendPillClass} }" />
+                </HBox>
+                <Text text="{sdKpi>/creditExceed/footnote}" class="nxSdDashKpiFootnote" />
+            </VBox>
+        </VBox>
     </HBox>
 </mvc:View>

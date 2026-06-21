@@ -76,20 +76,39 @@ sap.ui.define([
             loading: true,
             error: "",
             seasonAchievement: {
-                header: "시즌 달성률",
+                header: "목표 주문 비용 달성률",
+                label: "목표 주문 비용 달성률",
                 subheader: "조회 중...",
-                percentage: 0
+                percentage: 0,
+                valueText: "0%",
+                trendPillText: "-",
+                trendPillClass: "nxSdDashPill--neutral",
+                footnote: "조회 중...",
+                icon: "sap-icon://goal"
             },
             returnAcceptanceRate: {
                 header: "반품 접수율",
+                label: "반품 접수율",
                 subheader: "조회 중...",
                 value: 0,
-                indicator: "None"
+                valueText: "0%",
+                indicator: "None",
+                trendPillText: "-",
+                trendPillClass: "nxSdDashPill--neutral",
+                footnote: "조회 중...",
+                icon: "sap-icon://undo"
             },
             creditExceed: {
                 header: "여신 초과",
+                label: "여신 초과",
                 subheader: "조회 중...",
-                value: 0
+                value: 0,
+                valueText: "0",
+                valueSuffix: "건",
+                trendPillText: "-",
+                trendPillClass: "nxSdDashPill--neutral",
+                footnote: "조회 중...",
+                icon: "sap-icon://alert"
             }
         };
     }
@@ -97,6 +116,8 @@ sap.ui.define([
     function _mapRowToTiles(oRow) {
         var sCurrency;
         var nDelta;
+        var nSeasonPct;
+        var nReturnPct;
         var oTiles;
 
         if (!oRow) {
@@ -111,27 +132,50 @@ sap.ui.define([
 
         sCurrency = oRow.Currency || "";
         nDelta = Number(oRow.ReturnRateDelta);
+        nSeasonPct = _roundRate(oRow.SeasonAchievementRate);
+        nReturnPct = _roundRate(oRow.ReturnAcceptanceRate);
 
         return {
             loading: false,
             error: "",
             seasonAchievement: {
-                header: "시즌 달성률",
+                header: "목표 주문 비용 달성률",
+                label: "목표 주문 비용 달성률",
                 subheader: "Season " + (oRow.Season || DEFAULT_SEASON)
                     + " · " + formatter.formatAmountInKrw(oRow.SeasonActualAmount, sCurrency)
                     + " / " + formatter.formatAmountInKrw(oRow.SeasonTargetAmount, sCurrency),
-                percentage: _roundRate(oRow.SeasonAchievementRate)
+                percentage: nSeasonPct,
+                valueText: nSeasonPct + "%",
+                trendPillText: nSeasonPct >= 70 ? "양호" : "주의",
+                trendPillClass: nSeasonPct >= 70 ? "nxSdDashPill--up" : "nxSdDashPill--down",
+                footnote: formatter.formatAmountInKrw(oRow.SeasonActualAmount, sCurrency) + " 실적",
+                icon: "sap-icon://goal"
             },
             returnAcceptanceRate: {
                 header: "반품 접수율",
+                label: "반품 접수율",
                 subheader: (oRow.ReturnOrderCount || 0) + "건 · " + _formatDelta(nDelta),
-                value: _roundRate(oRow.ReturnAcceptanceRate),
-                indicator: nDelta > 0 ? "Up" : (nDelta < 0 ? "Down" : "None")
+                value: nReturnPct,
+                valueText: nReturnPct + "%",
+                indicator: nDelta > 0 ? "Up" : (nDelta < 0 ? "Down" : "None"),
+                trendPillText: nDelta > 0
+                    ? "+" + _roundRate(nDelta) + "%p"
+                    : (nDelta < 0 ? _roundRate(nDelta) + "%p" : ""),
+                trendPillClass: nDelta > 0 ? "nxSdDashPill--down" : (nDelta < 0 ? "nxSdDashPill--up" : "nxSdDashPill--neutral"),
+                footnote: (oRow.ReturnOrderCount || 0) + "건 반품 접수",
+                icon: "sap-icon://undo"
             },
             creditExceed: {
                 header: "여신 초과",
+                label: "여신 초과",
                 subheader: "블로킹 오더 · " + formatter.formatAmountInKrw(oRow.CreditBlockOrderAmount, sCurrency),
-                value: Number(oRow.CreditBlockOrderCount) || 0
+                value: Number(oRow.CreditBlockOrderCount) || 0,
+                valueText: String(Number(oRow.CreditBlockOrderCount) || 0),
+                valueSuffix: "건",
+                trendPillText: "블로킹",
+                trendPillClass: "nxSdDashPill--warn",
+                footnote: formatter.formatAmountInKrw(oRow.CreditBlockOrderAmount, sCurrency),
+                icon: "sap-icon://alert"
             }
         };
     }
@@ -142,11 +186,6 @@ sap.ui.define([
 
         getEmptyViewData: _emptyTileData,
 
-        /**
-         * @param {sap.ui.core.Component} oComponent
-         * @param {string} sPeriodKey THIS_WEEK | THIS_MONTH | THIS_QUARTER
-         * @returns {Promise<object>}
-         */
         load: function (oComponent, sPeriodKey) {
             var oModel = oComponent && oComponent.getModel("sdKpiModel");
             var sSeason = DEFAULT_SEASON;

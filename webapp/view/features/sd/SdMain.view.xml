@@ -1,10 +1,8 @@
 <!--
-  SdMain.view.xml — SD(영업/물류) Overview 메인 컨테이너 (Step 0)
-
-  레이아웃:
-  [ Row 1 ] KPI 타일 3종 (Step 1)
-  [ Row 2 ] 관제 테이블 (Step 2) | RMA + 베스트셀러 (Step 3·4)
-  [ Row 3 ] 사이즈/컬러 매트릭스 (Step 5)
+  SdMain.view.xml — SD Overview 메인 컨테이너
+  [ KPI ]
+  좌측 영역: 상[ 누적 구매량 | 납기 관리 테이블 ] / 하[ 납기 임박 보드 (오늘/D-1~3/이후 3등분, full width) ]
+  우측: 최근 반품 입고 (전체 높이)
 -->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdMain"
@@ -14,59 +12,116 @@
     height="100%"
     width="100%">
 
-    <VBox class="nxSdMain nxSdMain--step1Only" width="100%" height="100%" renderType="Bare">
-        <!-- Step 1: KPI Tiles -->
+    <VBox class="nxSdMain nxSdMain--step2 nxSdMain--modern nxSdMain--dashboard" width="100%" height="100%" renderType="Bare">
         <VBox class="nxSdMainSection nxSdMainSection--kpi" width="100%" renderType="Bare">
+            <layoutData>
+                <FlexItemData growFactor="0" shrinkFactor="0" baseSize="auto" />
+            </layoutData>
             <mvc:XMLView
                 id="sdKpiTilesSlot"
                 viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdKpiTilesSlot"
-                width="100%"
-                height="100%" />
+                width="100%" />
         </VBox>
 
-        <!-- Step 2 · 3 · 4 — Step 1 작업 중 숨김 -->
         <HBox
-            class="nxSdMainMiddleRow"
+            class="nxSdMainBodyRow"
             width="100%"
+            height="100%"
             renderType="Bare"
             alignItems="Stretch"
+            justifyContent="Start"
             visible="{dashboard>/sdMain/showStepsBelow}">
-            <VBox class="nxSdMainSection nxSdMainSection--control" renderType="Bare">
+            <layoutData>
+                <FlexItemData growFactor="1" baseSize="0%" shrinkFactor="1" minHeight="0" />
+            </layoutData>
+
+            <VBox class="nxSdMainLeftStack" renderType="Bare">
+                <HBox class="nxSdMainTopRow" renderType="Bare" alignItems="Stretch">
+                    <VBox class="nxSdMainBestsellerColumn" renderType="Bare">
+                        <mvc:XMLView
+                            id="sdBestsellerSlot"
+                            viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdBestsellerSlot"
+                            width="100%"
+                            height="100%" />
+                    </VBox>
+
+                    <VBox class="nxSdMainControlColumn" renderType="Bare">
+                        <mvc:XMLView
+                            id="sdControlTableSlot"
+                            viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdControlTableSlot"
+                            width="100%"
+                            height="100%" />
+                    </VBox>
+                </HBox>
+
+                <HBox class="nxSdMainBottomRow" renderType="Bare" alignItems="Stretch">
+                    <VBox class="nxSdDashCard nxSdBottomCard nxSdBottomCard--deadline" renderType="Bare">
+                        <HBox class="nxSdControlDeadlineHead" width="100%" alignItems="Center" justifyContent="SpaceBetween" renderType="Bare">
+                            <VBox renderType="Bare">
+                                <Title text="{sdControl>/deadline/title}" level="H6" class="nxSdControlDeadlineTitle" />
+                                <Text text="{sdControl>/deadline/subtitle}" class="nxSdControlDeadlineSub" />
+                            </VBox>
+                            <HBox alignItems="Center" class="nxSdControlDeadlinePills" renderType="Bare">
+                                <Text text="{= ${sdControl>/deadline/overdueCount} + ' 지연' }" class="nxSdDashPill nxSdDashPill--down" />
+                                <Text text="{= ${sdControl>/deadline/urgentCount} + ' 임박' }" class="nxSdDashPill nxSdDashPill--warn" />
+                            </HBox>
+                        </HBox>
+
+                        <Text
+                            text="{sdControl>/deadline/emptyText}"
+                            visible="{= !${sdControl>/deadline/hasItems} }"
+                            class="nxSdControlDeadlineEmpty" />
+
+                        <ScrollContainer
+                            class="nxSdDlBoardScroll"
+                            width="100%"
+                            vertical="false"
+                            horizontal="false"
+                            focusable="false"
+                            visible="{sdControl>/deadline/hasItems}">
+                            <HBox class="nxSdDlBoard" width="100%" renderType="Bare" alignItems="Stretch" items="{sdControl>/deadline/buckets}">
+                                <VBox class="nxSdDlCol" renderType="Bare">
+                                    <customData>
+                                        <core:CustomData key="tone" value="{sdControl>tone}" writeToDom="true" />
+                                    </customData>
+                                    <HBox class="nxSdDlColHead" width="100%" alignItems="Center" justifyContent="SpaceBetween" renderType="Bare">
+                                        <Text text="{sdControl>label}" class="nxSdDlColLabel" />
+                                        <Text text="{sdControl>countText}" class="nxSdDlColCount" />
+                                    </HBox>
+                                    <VBox renderType="Bare" class="nxSdDlColList" items="{sdControl>visibleItems}">
+                                        <VBox class="nxSdDlChip nxSdControlDeadlineItem" renderType="Bare">
+                                            <customData>
+                                                <core:CustomData key="urgency" value="{sdControl>urgency}" writeToDom="true" />
+                                            </customData>
+                                            <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween" renderType="Bare">
+                                                <Text text="{sdControl>ddayText}" class="nxSdControlDeadlineDday" />
+                                                <Text text="{sdControl>amountDisplay}" wrapping="false" class="nxSdDlChipAmt" />
+                                            </HBox>
+                                            <Text text="{sdControl>customerName}" wrapping="false" class="nxSdDlChipCust" />
+                                            <Text text="{= '오더 ' + ${sdControl>salesOrderDisplay} + ' · ' + ${sdControl>dateDisplay} }" wrapping="false" class="nxSdDlChipMeta" />
+                                        </VBox>
+                                    </VBox>
+                                    <Button
+                                        class="nxSdDlMoreBtn"
+                                        type="Transparent"
+                                        width="100%"
+                                        text="{sdControl>overflowText}"
+                                        visible="{sdControl>hasOverflow}"
+                                        press="onDeadlineMore" />
+                                </VBox>
+                            </HBox>
+                        </ScrollContainer>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <VBox class="nxSdMainRmaColumn" renderType="Bare">
                 <mvc:XMLView
-                    id="sdControlTableSlot"
-                    viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdControlTableSlot"
+                    id="sdRmaMonitorSlot"
+                    viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdRmaMonitorSlot"
                     width="100%"
                     height="100%" />
             </VBox>
-            <VBox class="nxSdMainSideStack" renderType="Bare">
-                <VBox class="nxSdMainSection nxSdMainSection--rma" renderType="Bare">
-                    <mvc:XMLView
-                        id="sdRmaMonitorSlot"
-                        viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdRmaMonitorSlot"
-                        width="100%"
-                        height="100%" />
-                </VBox>
-                <VBox class="nxSdMainSection nxSdMainSection--bestseller" renderType="Bare">
-                    <mvc:XMLView
-                        id="sdBestsellerSlot"
-                        viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdBestsellerSlot"
-                        width="100%"
-                        height="100%" />
-                </VBox>
-            </VBox>
         </HBox>
-
-        <!-- Step 5: Matrix — Step 1 작업 중 숨김 -->
-        <VBox
-            class="nxSdMainSection nxSdMainSection--matrix"
-            width="100%"
-            renderType="Bare"
-            visible="{dashboard>/sdMain/showStepsBelow}">
-            <mvc:XMLView
-                id="sdMatrixQuickViewSlot"
-                viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdMatrixQuickViewSlot"
-                width="100%"
-                height="100%" />
-        </VBox>
     </VBox>
 </mvc:View>

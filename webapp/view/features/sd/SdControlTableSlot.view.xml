@@ -1,15 +1,112 @@
+<!--
+  SdControlTableSlot.view.xml — Step 2: 여신 초과 · 납기 지연 관제 테이블 (OData)
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdControlTableSlot"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     height="100%"
     width="100%">
-    <Panel
-        headerText="Step 2 · Credit &amp; Delivery Control Table"
-        width="100%"
-        class="nxSdMainPlaceholderPanel nxSdMainPlaceholderPanel--control">
-        <content>
-            <Text text="여신 초과 · 납기 지연 관제 테이블 — Step 2에서 구현" />
-        </content>
-    </Panel>
+
+    <VBox class="nxSdDashCard nxSdDashCard--control" width="100%" height="100%" renderType="Bare">
+        <HBox class="nxSdDashCardHead nxSdControlHead" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+            <VBox renderType="Bare" class="nxSdControlHeadText">
+                <Title text="{sdControl>/title}" level="H5" class="nxSdDashCardTitle" />
+                <Text text="{sdControl>/subtitle}" class="nxSdDashCardSub" />
+            </VBox>
+            <HBox alignItems="Center" class="nxSdControlHeadPills" renderType="Bare">
+                <Text text="{= ${sdControl>/deliveryCount} + ' 납기' }" class="nxSdDashPill nxSdDashPill--warn" />
+            </HBox>
+        </HBox>
+
+        <MessageStrip
+            text="{sdControl>/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= !!${sdControl>/error} }"
+            class="nxSdControlMessage nxSdDashMessage" />
+
+        <VBox class="nxSdDashCardBody nxSdDashCardBody--table" width="100%" renderType="Bare">
+            <Table
+                id="sdControlTable"
+                class="nxSdControlTable nxSdDashTable"
+                width="100%"
+                growing="true"
+                growingThreshold="8"
+                sticky="ColumnHeaders"
+                fixedLayout="true"
+                items="{sdControl>/rows}"
+                noDataText="{sdControl>/emptyText}">
+            <columns>
+                <Column width="20%" hAlign="Left" demandPopin="false">
+                    <Text text="고객사" />
+                </Column>
+                <Column width="18%" hAlign="Left" demandPopin="false">
+                    <Text text="제품명" />
+                </Column>
+                <Column width="8%" hAlign="End" demandPopin="false">
+                    <Text text="보류수" />
+                </Column>
+                <Column width="14%" hAlign="End" demandPopin="false">
+                    <Text text="금액" />
+                </Column>
+                <Column width="20%" hAlign="Left" demandPopin="false">
+                    <Text text="보류 사유" />
+                </Column>
+                <Column width="20%" hAlign="Center" demandPopin="false">
+                    <Text text="상태" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem
+                    type="Active"
+                    class="{= 'nxSdControlRow nxSdControlRow--' + ${sdControl>controlType} }">
+                    <cells>
+                        <Text
+                            text="{sdControl>customerName}"
+                            tooltip="{sdControl>customerName}"
+                            wrapping="false"
+                            class="nxSdControlCustomer" />
+                        <VBox renderType="Bare" class="nxSdControlProductCell">
+                            <Link
+                                text="{sdControl>productName}"
+                                visible="{sdControl>hasMultipleProducts}"
+                                press=".onProductDetailPress"
+                                wrapping="false"
+                                class="nxSdControlProductLink" />
+                            <Text
+                                text="{sdControl>productName}"
+                                visible="{= !${sdControl>hasMultipleProducts} }"
+                                tooltip="{sdControl>productName}"
+                                wrapping="false"
+                                class="nxSdControlEllipsis" />
+                        </VBox>
+                        <Text
+                            text="{sdControl>orderCountDisplay}"
+                            textAlign="End"
+                            wrapping="false"
+                            class="nxSdControlOrderCount" />
+                        <Text
+                            text="{sdControl>amountDisplay}"
+                            textAlign="End"
+                            wrapping="false"
+                            class="nxSdControlAmount" />
+                        <Text
+                            text="{sdControl>holdReason}"
+                            wrapping="false"
+                            tooltip="{sdControl>holdReason}"
+                            class="nxSdControlHoldReason" />
+                        <ObjectStatus
+                            text="{sdControl>statusText}"
+                            state="{sdControl>statusState}"
+                            icon="{sdControl>statusIcon}"
+                            class="nxSdControlStatus" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+            </Table>
+        </VBox>
+    </VBox>
 </mvc:View>
+

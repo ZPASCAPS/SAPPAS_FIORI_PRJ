@@ -1,15 +1,63 @@
+<!--
+  SdBestsellerSlot.view.xml — Step 4: 누적 구매량 BP 랭킹
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdBestsellerSlot"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     height="100%"
     width="100%">
-    <Panel
-        headerText="Step 4 · Season Bestseller TOP 5"
-        width="100%"
-        class="nxSdMainPlaceholderPanel nxSdMainPlaceholderPanel--bestseller">
-        <content>
-            <Text text="시즌 베스트셀러 TOP 5 리스트 — Step 4에서 구현" />
-        </content>
-    </Panel>
+
+    <VBox class="nxSdDashCard nxSdDashCard--bestseller" width="100%" height="100%" renderType="Bare">
+        <HBox class="nxSdDashCardHead" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+            <VBox renderType="Bare">
+                <Title text="{sdBestseller>/title}" level="H5" class="nxSdDashCardTitle" />
+                <Text text="{sdBestseller>/subtitle}" class="nxSdDashCardSub" />
+            </VBox>
+            <Text text="{sdBestseller>/totalAllQtyDisplay}" class="nxSdDashHeroMetric nxSdDashHeroMetric--sm" />
+        </HBox>
+
+        <MessageStrip
+            text="{sdBestseller>/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= !!${sdBestseller>/error} }"
+            class="nxSdDashMessage" />
+
+        <VBox class="nxSdDashCardBody nxSdDashCardBody--list" width="100%" renderType="Bare">
+            <List
+                class="nxSdDashProductList nxSdDashListFill nxSdTopBpList"
+                width="100%"
+                growing="false"
+                showSeparators="Inner"
+                noDataText="{sdBestseller>/emptyText}"
+                items="{sdBestseller>/rows}">
+                <CustomListItem
+                    type="Inactive"
+                    class="{= ${sdBestseller>isTopRank} ? 'nxSdDashProductRow nxSdDashProductRow--top' : 'nxSdDashProductRow' }">
+                    <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween" renderType="Bare" class="nxSdDashProductRowInner">
+                        <HBox alignItems="Center" renderType="Bare" class="nxSdDashProductLeft">
+                            <Text text="{sdBestseller>rank}" class="nxSdDashRankBadge" />
+                            <VBox renderType="Bare" class="nxSdDashProductMain">
+                                <Text text="{sdBestseller>customerName}" class="nxSdDashProductTitle" />
+                                <HBox class="nxSdRaceBarTrack nxSdRaceBarTrack--compact" width="100%" renderType="Bare" alignItems="Stretch">
+                                    <VBox
+                                        width="{= (${sdBestseller>hitSharePercent} > 0 ? ${sdBestseller>hitSharePercent} : 0) + '%' }"
+                                        class="nxSdRaceBarBand nxSdRaceBarBand--hit"
+                                        visible="{= ${sdBestseller>hitQty} > 0 }" />
+                                    <VBox
+                                        width="{= (${sdBestseller>bagSharePercent} > 0 ? ${sdBestseller>bagSharePercent} : 0) + '%' }"
+                                        class="nxSdRaceBarBand nxSdRaceBarBand--bag"
+                                        visible="{= ${sdBestseller>bagQty} > 0 }" />
+                                </HBox>
+                                <Text text="{sdBestseller>footerText}" class="nxSdDashProductMeta" />
+                            </VBox>
+                        </HBox>
+                        <Text text="{sdBestseller>infoText}" class="nxSdDashPill nxSdDashPill--qty" />
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </VBox>
+    </VBox>
 </mvc:View>
