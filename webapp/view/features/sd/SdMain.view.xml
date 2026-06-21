@@ -1,0 +1,72 @@
+<!--
+  SdMain.view.xml — SD(영업/물류) Overview 메인 컨테이너 (Step 0)
+
+  레이아웃:
+  [ Row 1 ] KPI 타일 3종 (Step 1)
+  [ Row 2 ] 관제 테이블 (Step 2) | RMA + 베스트셀러 (Step 3·4)
+  [ Row 3 ] 사이즈/컬러 매트릭스 (Step 5)
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdMain"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    height="100%"
+    width="100%">
+
+    <VBox class="nxSdMain nxSdMain--step1Only" width="100%" height="100%" renderType="Bare">
+        <!-- Step 1: KPI Tiles -->
+        <VBox class="nxSdMainSection nxSdMainSection--kpi" width="100%" renderType="Bare">
+            <mvc:XMLView
+                id="sdKpiTilesSlot"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdKpiTilesSlot"
+                width="100%"
+                height="100%" />
+        </VBox>
+
+        <!-- Step 2 · 3 · 4 — Step 1 작업 중 숨김 -->
+        <HBox
+            class="nxSdMainMiddleRow"
+            width="100%"
+            renderType="Bare"
+            alignItems="Stretch"
+            visible="{dashboard>/sdMain/showStepsBelow}">
+            <VBox class="nxSdMainSection nxSdMainSection--control" renderType="Bare">
+                <mvc:XMLView
+                    id="sdControlTableSlot"
+                    viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdControlTableSlot"
+                    width="100%"
+                    height="100%" />
+            </VBox>
+            <VBox class="nxSdMainSideStack" renderType="Bare">
+                <VBox class="nxSdMainSection nxSdMainSection--rma" renderType="Bare">
+                    <mvc:XMLView
+                        id="sdRmaMonitorSlot"
+                        viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdRmaMonitorSlot"
+                        width="100%"
+                        height="100%" />
+                </VBox>
+                <VBox class="nxSdMainSection nxSdMainSection--bestseller" renderType="Bare">
+                    <mvc:XMLView
+                        id="sdBestsellerSlot"
+                        viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdBestsellerSlot"
+                        width="100%"
+                        height="100%" />
+                </VBox>
+            </VBox>
+        </HBox>
+
+        <!-- Step 5: Matrix — Step 1 작업 중 숨김 -->
+        <VBox
+            class="nxSdMainSection nxSdMainSection--matrix"
+            width="100%"
+            renderType="Bare"
+            visible="{dashboard>/sdMain/showStepsBelow}">
+            <mvc:XMLView
+                id="sdMatrixQuickViewSlot"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.sd.SdMatrixQuickViewSlot"
+                width="100%"
+                height="100%" />
+        </VBox>
+    </VBox>
+</mvc:View>

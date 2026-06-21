@@ -94,9 +94,9 @@ sap.ui.define([
                     kpis: []
                 },
                 user: {
-                    name: "박찬영",
+                    name: "김용민",
                     role: "FI",
-                    editName: "박찬영",
+                    editName: "김용민",
                     editModule: "FI",
                     blogUrl: "https://blog.naver.com/channy0210",
                     blogQrSrc: "images/profile-blog-qr.png"
@@ -441,6 +441,11 @@ sap.ui.define([
                         reason: "",
                         message: "데이터 없음"
                     }
+                },
+                sdMain: {
+                    ready: false,
+                    lastUpdated: "데이터 없음",
+                    showStepsBelow: false
                 },
                 mmInventory: {
                     loading: false,

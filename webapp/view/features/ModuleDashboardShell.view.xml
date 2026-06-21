@@ -14,10 +14,16 @@
     xmlns:core="sap.ui.core"
     width="100%">
 
-    <VBox class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleShell nxMmMaterialsShell' : (${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleShell nxFiFinanceShell' : 'nxModuleShell') }" width="100%">
+    <VBox class="{= ${dashboard>/ui/navKey} === 'SD_SALES' ? 'nxModuleShell nxModuleShell--sd' : (${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleShell nxMmMaterialsShell' : (${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleShell nxFiFinanceShell' : 'nxModuleShell')) }" width="100%">
         <VBox class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleShellTop nxMmMaterialsTop' : (${dashboard>/ui/navKey} === 'FI_CO_FINANCE' ? 'nxModuleShellTop nxFiFinanceTop' : 'nxModuleShellTop') }" width="100%" visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' }">
             <HBox class="nxModuleShellHeader" width="100%" alignItems="Center" justifyContent="SpaceBetween" visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' }">
-                <Title text="{dashboard>/moduleView/title}" level="H2" class="nxModuleShellTitle" />
+                <HBox class="nxModuleShellHeaderLeft" alignItems="Center" renderType="Bare">
+                    <Title text="{dashboard>/moduleView/title}" level="H2" class="nxModuleShellTitle" />
+                    <Text
+                        visible="{= ${dashboard>/ui/navKey} === 'SD_SALES' }"
+                        text="수주·출하·여신·반품 현황을 한 화면에서 모니터링합니다."
+                        class="nxSdShellDesc" />
+                </HBox>
                 <HBox alignItems="Center" class="nxModuleShellActions">
                     <Select
                         selectedKey="{dashboard>/moduleView/period}"
@@ -39,7 +45,7 @@
                 </HBox>
             </HBox>
 
-            <VBox id="moduleSubTabsWrap" class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleSubTabsWrap nxMmMaterialsSubTabsWrap mmSubNavBarWrap' : 'nxModuleSubTabsWrap' }" width="100%">
+            <VBox id="moduleSubTabsWrap" class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleSubTabsWrap nxMmMaterialsSubTabsWrap mmSubNavBarWrap' : 'nxModuleSubTabsWrap' }" visible="{= ${dashboard>/ui/navKey} !== 'SD_SALES' }" width="100%">
             <HBox id="moduleSubTabsBar" class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleSubTabsBar mmSubNavBar' : 'nxModuleSubTabsBar' }" width="100%" alignItems="Center" justifyContent="SpaceBetween">
             <HBox class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? 'nxModuleSubTabs nxModuleSubTabsWork mmSubNavList' : 'nxModuleSubTabs nxModuleSubTabsWork' }" alignItems="Center" wrap="Wrap">
             <Button
@@ -171,7 +177,7 @@
         <VBox
             class="nxModuleShellKpiBand"
             width="100%"
-            visible="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' &amp;&amp; ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' }">
+            visible="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' &amp;&amp; ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' &amp;&amp; ${dashboard>/ui/navKey} !== 'SD_SALES' }">
             <HBox class="nxModuleKpiRow" width="100%" alignItems="Stretch">
             <VBox class="nxModuleKpiCard">
                 <Text text="{dashboard>/moduleView/kpis/0/label}" class="nxModuleKpiLabel" />

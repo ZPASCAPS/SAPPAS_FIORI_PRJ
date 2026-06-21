@@ -175,6 +175,26 @@ sap.ui.define([], function () {
                 // ==========================================================
             } else if (sProcessedText.includes("릴리즈")) {
                 this._handlePrdOrdRelease(sProcessedText, oModel, oCallbacks);
+
+
+                // ==========================================================
+                // 🚀 [신규 추가] 3. 제조오더 생산 확정 (Auto GR)
+                // ==========================================================
+            } else if (sProcessedText.includes("확정")) {
+                this._handlePrdOrdConfirmation(sProcessedText, oModel, oCallbacks);
+
+            } else if (sProcessedText.includes("출하")) {
+                this._handleDeliveryCreation(sProcessedText, oModel, oCallbacks); 
+
+            } else if (sProcessedText.includes("피킹") || sProcessedText.includes("출고")) { 
+                this._handlePickingAndPgi(sProcessedText, oModel, oCallbacks); 
+
+            } else if (sProcessedText.includes("대금청구") || sProcessedText.includes("청구")) {
+                this._handleBillingCreation(sProcessedText, oModel, oCallbacks); 
+
+            } else if (sProcessedText.includes("입금전기") || sProcessedText.includes("반제")) {
+                this._handleIncomingPaymentAndClearing(sProcessedText, oModel, oCallbacks); 
+
                 // 5. 예외 처리
             } else {
                 oCallbacks.onError(
@@ -190,7 +210,12 @@ sap.ui.define([], function () {
                     "- 구매요청 변환 [변환]\n" +
                     "- 구매오더 입고 [입고]\n" +
                     "- 계획오더 전환 [전환]\n" +
-                    "- 생산오더 릴리즈 [릴리즈]\n\n" +
+                    "- 생산오더 릴리즈 [릴리즈]\n" +
+                    "- 생산오더 확정 [확정]\n" +
+                    "- 판매오더 출하 [출하]\n" +
+                    "- 피킹 및 출고전기 [피킹or출고]\n" +
+                    "- 대금청구 실행 [청구]\n" +
+                    "- 입금전기 및 반제 [입금전기or반제]\n\n" +
                     "지시를 하실 키워드 [글자]를 입력해주시면 명령 가이드를 드립니다."
                 );
             }
@@ -603,39 +628,41 @@ sap.ui.define([], function () {
 
 
         /**
-         * [API 호출] PR 번호를 PO로 변환하는 백엔드 로직 실행
+         * [API 호출] PR 번호(단일/다중)를 PO로 변환하는 백엔드 로직 실행
          */
         _handlePrToPoConversion: function (sProcessedText, oModel, oCallbacks) {
-            // 1. 문장에서 10자리 숫자(PR 번호)만 쏙 뽑아내기
-            var aMatch = sProcessedText.match(/(\d+)/);
-            var sRawNumber = aMatch ? aMatch[1] : null;
+            // 🌟 1. 정규식 변경: 'g' 플래그를 추가하여 문장 안의 '모든' 숫자를 배열로 추출합니다.
+            // 예: "10000376, 10000381 변환해줘" -> ["10000376", "10000381"]
+            var aMatches = sProcessedText.match(/(\d+)/g);
 
-            if (!sRawNumber) {
-                // 에러 메시지도 자연스럽게 수정
-                oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "변환할 PR 번호를 찾지 못했어요. '10000395 변환해 줘' 처럼 번호를 말씀해 주세요.");
+            if (!aMatches || aMatches.length === 0) {
+                oCallbacks.onError("AI 비서", "sap-icon://sys-cancel", "변환할 PR 번호를 찾지 못했어요. '10000395, 10000396 변환해 줘' 처럼 번호를 말씀해 주세요.");
                 return;
             }
 
-            // 🌟 2. 핵심: 추출한 숫자가 몇 자리든, 무조건 앞에 '0'을 채워 10자리로 강제 변환합니다. (SAP 표준 대응)
-            // 예: "10000395" -> "0010000395"
-            var sPrNumber = sRawNumber.padStart(10, '0');
+            // 🌟 2. 배열을 돌면서 모든 PR 번호에 대해 앞에 '0'을 채워 10자리로 강제 변환합니다.
+            var aPrNumbers = aMatches.map(function (sNum) {
+                return sNum.padStart(10, '0');
+            });
 
-            // 2. 백엔드로 보낼 파라미터 세팅
+            // 🌟 3. 배열을 콤마(,)로 연결된 하나의 문자열로 만듭니다. (백엔드 전달용)
+            // 결과 예시: "0010000376,0010000381,0010000384,0010000392"
+            var sPrListStr = aPrNumbers.join(',');
+
+            // 4. 백엔드로 보낼 파라미터 세팅
             var oPayload = {
-                PR_LIST: sPrNumber
+                PR_LIST: sPrListStr // 단일 번호가 아닌 콤마로 연결된 문자열 전달
             };
 
-            // 3. Function Import 호출
+            // 5. Function Import 호출
             oModel.callFunction("/ConvertPrToPo", {
                 method: "POST",
                 urlParameters: oPayload,
                 success: function (oData) {
-                    // 성공 메시지 추출
                     var sMessage = oData.MSG || (oData.ConvertPrToPo && oData.ConvertPrToPo.MSG) || "변환 성공!";
                     oCallbacks.onSuccess("AI 비서", "sap-icon://accept", "✨ " + sMessage);
                 },
                 error: function (oError) {
-                    // 실패 메시지 추출
                     var sErrMsg = "백엔드 통신 중 에러가 발생했습니다.";
                     try {
                         var oErrorObj = JSON.parse(oError.responseText);
@@ -648,45 +675,49 @@ sap.ui.define([], function () {
 
 
         /**
-         * [기능] 구매오더(PO) 기반 입고(MIGO) 실행
+         * [기능] 다중 구매오더(PO) 기반 연속 입고(MIGO) 실행
          */
         _handlePoToGrCreation: function (sText, oModel, oCallbacks) {
-            // 1. 사용자의 문장에서 10자리 숫자(구매오더 번호) 추출
-            var aMatch = sText.match(/\d{10}/); // 구매오더는 보통 10자리 (예: 4500001234)
+            // 1. 문장에서 모든 숫자 추출 (g 플래그 사용)
+            var aMatches = sText.match(/(\d+)/g);
 
-            if (!aMatch) {
-                oCallbacks.onError("AI 비서", "sap-icon://alert", "어떤 구매오더를 입고할지 10자리 번호를 함께 말씀해 주세요. \n(예: 4500001040 입고해줘)");
+            if (!aMatches || aMatches.length === 0) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "어떤 구매오더를 입고할지 번호를 함께 말씀해 주세요. \n(예: 4500001040, 4500001041 입고해줘)");
                 return;
             }
 
-            var sPoNumber = aMatch[0];
+            // 2. 번호들을 모두 10자리로 강제 패딩
+            var aPoNumbers = aMatches.map(function (sNum) {
+                return sNum.padStart(10, '0');
+            });
 
-            // 2. 진행 중 말풍선 띄우기 (아이콘: 트럭 모양)
-            oCallbacks.onProcess("AI 비서", "sap-icon://shipping-status", "구매오더 " + sPoNumber + "번 입고 처리를 진행합니다. 잠시만 기다려주세요...");
+            // 3. 콤마(,)로 연결된 하나의 문자열 생성
+            var sPoListStr = aPoNumbers.join(',');
 
-            // 3. OData Function Import 호출 (CreateGrFromPo)
-            var sPath = "/CreateGrFromPo";
+            // 진행 중 말풍선 띄우기
+            oCallbacks.onProcess("AI 비서", "sap-icon://shipping-status", "구매오더 여러 건의 입고 처리를 진행합니다. 잠시만 기다려주세요...");
 
-            oModel.callFunction(sPath, {
+            // 4. OData Function Import 호출
+            oModel.callFunction("/CreateGrFromPo", {
                 method: "POST",
                 urlParameters: {
-                    PO_NUMBER: sPoNumber
+                    PO_NUMBER: sPoListStr // 💡 여러 개의 번호가 "450001,450002" 형태로 들어갑니다.
                 },
                 success: function (oData, response) {
-                    // 백엔드에서 넘겨준 GrResult 바구니 데이터 확인
                     var oResult = oData.CreateGrFromPo || oData;
+                    var sMessage = oResult.MSG || "입고가 완료되었습니다.";
 
-                    if (oResult && oResult.MBLNR) {
-                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
-                    } else {
-                        oCallbacks.onError("AI 비서", "sap-icon://error", "입고는 시도했으나, 자재문서 번호를 받지 못했습니다.");
-                    }
+                    // 성공/실패 여부에 상관없이 백엔드에서 조립해준 최종 메시지를 띄움
+                    oCallbacks.onSuccess("AI 비서", "sap-icon://accept", sMessage);
                 }.bind(this),
                 error: function (oError) {
-                    oCallbacks.onError("AI 비서", "sap-icon://error", "입고 처리 중 오류가 발생했습니다. PO 상태를 확인해주세요.");
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "통신 오류가 발생했습니다. 시스템 상태를 확인해주세요.");
                 }.bind(this)
             });
         },
+
+
+
 
         /**
         * [기능] 1. 계획오더 -> 제조오더 전환 (ConvertOrder)
@@ -759,8 +790,192 @@ sap.ui.define([], function () {
                     oCallbacks.onError("AI 비서", "sap-icon://error", "릴리즈 처리 중 통신 오류가 발생했습니다.");
                 }.bind(this)
             });
-        }
+        },
 
+
+        /**
+         * [기능] 3. 제조오더 생산 실적 확정 및 Auto GR (ConfirmOrder)
+         */
+        _handlePrdOrdConfirmation: function (sText, oModel, oCallbacks) {
+            // 사용자의 문장에서 연속된 숫자(제조오더 번호) 추출
+            var aMatch = sText.match(/\d+/);
+
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "확정할 제조오더 번호를 함께 말씀해 주세요. (예: 1000021 확정해줘)");
+                return;
+            }
+            var sOrderNumber = aMatch[0];
+
+            // 진행 중 말풍선 (결재/도장 느낌의 아이콘 사용)
+            oCallbacks.onProcess("AI 비서", "sap-icon://approvals", "제조오더 " + sOrderNumber + "번의 생산 실적 확정 및 자동 입고(Auto GR)를 진행합니다. 잠시만 기다려주세요...");
+
+            oModel.callFunction("/ConfirmOrder", {
+                method: "POST",
+                urlParameters: {
+                    ORDER_NUMBER: sOrderNumber
+                },
+                success: function (oData, response) {
+                    var oResult = oData.ConfirmOrder || oData;
+
+                    // 백엔드에서 넘겨준 메시지에 "실패"라는 단어가 있으면 에러 말풍선으로 띄움
+                    if (oResult && oResult.MSG && oResult.MSG.includes("실패")) {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG);
+                    } else if (oResult) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "생산 확정 처리 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
+        },
+
+
+
+        /**
+         * [기능] 1. 출하문서 생성 (CreateDelivery)
+         */
+        _handleDeliveryCreation: function (sText, oModel, oCallbacks) {
+            // 사용자의 문장에서 연속된 숫자(판매오더 번호) 추출
+            var aMatch = sText.match(/\d+/);
+
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "출하할 판매오더 번호를 함께 말씀해 주세요. (예: 346 출하해줘)");
+                return;
+            }
+            var sOrderNo = aMatch[0];
+
+            // 진행 중 말풍선 (트럭 아이콘 사용)
+            oCallbacks.onProcess("AI 비서", "sap-icon://shipping-status", "판매오더 " + sOrderNo + "번에 대한 출하문서를 생성 중입니다. 잠시만 기다려주세요...");
+
+            oModel.callFunction("/CreateDelivery", {
+                method: "POST",
+                urlParameters: {
+                    SALES_ORDER: sOrderNo
+                },
+                success: function (oData, response) {
+                    var oResult = oData.CreateDelivery || oData;
+
+                    // 백엔드에서 넘겨준 메시지에 "실패"라는 단어가 있으면 에러 말풍선으로 띄움
+                    if (oResult && oResult.MSG && oResult.MSG.includes("실패")) {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG);
+                    } else if (oResult) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "출하 생성 처리 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
+        },
+
+        /**
+         * [기능] 2. 피킹 및 출고전기 (PickingPGI)
+         */
+        _handlePickingAndPgi: function (sText, oModel, oCallbacks) {
+            // 사용자의 문장에서 연속된 숫자(납품문서 번호) 추출
+            var aMatch = sText.match(/\d+/);
+
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "피킹 및 출고할 납품문서 번호를 함께 말씀해 주세요. (예: 80000276 출고해줘)");
+                return;
+            }
+            var sDelivNo = aMatch[0];
+
+            // 진행 중 말풍선 (물류 박스 아이콘 사용)
+            oCallbacks.onProcess("AI 비서", "sap-icon://logistics", "납품문서 " + sDelivNo + "번의 피킹 및 출고전기(PGI)를 진행합니다. 잠시만 기다려주세요...");
+
+            oModel.callFunction("/PickingPGI", {
+                method: "POST",
+                urlParameters: {
+                    DELIVERY_NO: sDelivNo
+                },
+                success: function (oData, response) {
+                    var oResult = oData.PickingPGI || oData;
+
+                    if (oResult && oResult.MSG && oResult.MSG.includes("실패")) {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG);
+                    } else if (oResult) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "피킹 및 출고 처리 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
+        },
+
+        /**
+         * [기능] 3. 대금청구서 발행 (CreateBilling)
+         */
+        _handleBillingCreation: function (sText, oModel, oCallbacks) {
+            // 사용자의 문장에서 연속된 숫자(납품문서 번호) 추출
+            var aMatch = sText.match(/\d+/);
+
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "대금청구할 납품문서 번호를 함께 말씀해 주세요. (예: 80000276 청구해줘)");
+                return;
+            }
+            var sDelivNo = aMatch[0];
+
+            // 진행 중 말풍선 (지폐 아이콘 사용)
+            oCallbacks.onProcess("AI 비서", "sap-icon://money-bills", "납품문서 " + sDelivNo + "번에 대한 대금청구서를 발행 중입니다. 잠시만 기다려주세요...");
+
+            oModel.callFunction("/CreateBilling", {
+                method: "POST",
+                urlParameters: {
+                    DELIVERY_NO: sDelivNo
+                },
+                success: function (oData, response) {
+                    var oResult = oData.CreateBilling || oData;
+
+                    if (oResult && oResult.MSG && oResult.MSG.includes("실패")) {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG);
+                    } else if (oResult) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "대금청구서 발행 처리 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
+        },
+
+        /**
+         * [기능] 4. 입금 전기 및 반제 (PostIncomingPayment)
+         */
+        _handleIncomingPaymentAndClearing: function (sText, oModel, oCallbacks) {
+            // 사용자의 문장에서 연속된 숫자(대금청구서 번호) 추출
+            var aMatch = sText.match(/\d+/);
+
+            if (!aMatch) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "반제할 대금청구서 번호를 함께 말씀해 주세요. (예: 90000080 입금전기 및 반제해줘)");
+                return;
+            }
+            var sBillNo = aMatch[0];
+
+            // 진행 중 말풍선 (영수증 아이콘 사용)
+            oCallbacks.onProcess("AI 비서", "sap-icon://receipt", "대금청구서 " + sBillNo + "번에 대한 입금 전기 및 반제를 진행합니다. 잠시만 기다려주세요...");
+
+            oModel.callFunction("/PostIncomingPayment", {
+                method: "POST",
+                urlParameters: {
+                    BILLING_NO: sBillNo
+                },
+                success: function (oData, response) {
+                    var oResult = oData.PostIncomingPayment || oData;
+
+                    if (oResult && oResult.MSG && oResult.MSG.includes("실패")) {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG);
+                    } else if (oResult) {
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "입금 및 반제 처리 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
+        }
 
 
     };

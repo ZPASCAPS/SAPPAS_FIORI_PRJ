@@ -1,0 +1,15 @@
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdRmaMonitorSlot"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    height="100%"
+    width="100%">
+    <Panel
+        headerText="Step 3 · RMA Inbound Monitor"
+        width="100%"
+        class="nxSdMainPlaceholderPanel nxSdMainPlaceholderPanel--rma">
+        <content>
+            <Text text="반품(RMA) 입고 모니터링 리스트 — Step 3에서 구현" />
+        </content>
+    </Panel>
+</mvc:View>
