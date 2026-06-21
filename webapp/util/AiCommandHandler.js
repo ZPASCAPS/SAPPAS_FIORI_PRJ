@@ -184,29 +184,33 @@ sap.ui.define([], function () {
                 this._handlePrdOrdConfirmation(sProcessedText, oModel, oCallbacks);
 
             } else if (sProcessedText.includes("출하")) {
-                this._handleDeliveryCreation(sProcessedText, oModel, oCallbacks); 
+                this._handleDeliveryCreation(sProcessedText, oModel, oCallbacks);
 
-            } else if (sProcessedText.includes("피킹") || sProcessedText.includes("출고")) { 
-                this._handlePickingAndPgi(sProcessedText, oModel, oCallbacks); 
+            } else if (sProcessedText.includes("피킹") || sProcessedText.includes("출고")) {
+                this._handlePickingAndPgi(sProcessedText, oModel, oCallbacks);
 
             } else if (sProcessedText.includes("대금청구") || sProcessedText.includes("청구")) {
-                this._handleBillingCreation(sProcessedText, oModel, oCallbacks); 
+                this._handleBillingCreation(sProcessedText, oModel, oCallbacks);
 
             } else if (sProcessedText.includes("입금전기") || sProcessedText.includes("반제")) {
-                this._handleIncomingPaymentAndClearing(sProcessedText, oModel, oCallbacks); 
+                this._handleIncomingPaymentAndClearing(sProcessedText, oModel, oCallbacks);
+
+            } else if (sProcessedText.toUpperCase().includes("MRP") || sProcessedText.includes("소요량계획")) {
+                this._handleRunMRP(sProcessedText, oModel, oCallbacks);
 
                 // 5. 예외 처리
             } else {
                 oCallbacks.onError(
                     "AI 비서",
                     "sap-icon://sys-help-2",
-                    "죄송합니다, 용민님. 어떤 업무인지 정확히 파악하지 못했어요. 😅\n\n" +
-                    "사용 가능한 지시에 대해 알려드릴게요.\n" +
+                    "죄송합니다, 어떤 업무인지 정확히 파악하지 못했어요😅\n\n" +
+                    "가능한 지시에 대해 알려드릴게요.\n" +
                     "- 가용재고 조회 [재고]\n" +
                     "- 판매오더 생성 [주문]\n" +
                     "- 판매오더 요약 [요약]\n" +
                     "- 판매오더 추적 [추적]\n" +
                     "- 구매오더 생성 [발주]\n" +
+                    "- MRP 실행 [MRP]\n" +
                     "- 구매요청 변환 [변환]\n" +
                     "- 구매오더 입고 [입고]\n" +
                     "- 계획오더 전환 [전환]\n" +
@@ -582,6 +586,7 @@ sap.ui.define([], function () {
                                     PurchaseOrder: item.PurchaseOrder || "없음",
                                     ProductionOrder: item.ProductionOrder || "없음",
                                     OutboundDelivery: item.OutboundDelivery || "없음",
+                                    GoodsIssueDoc:      item.GoodsIssueDoc     || "없음",
                                     BillingDocument: item.BillingDocument || "없음",
                                     FIDocument: item.FIDocument || "없음",
                                     ClearingDocument: item.ClearingDocument || "없음"
@@ -610,6 +615,7 @@ sap.ui.define([], function () {
                             sMsg += "- 구매오더 : " + oGroup.PurchaseOrder + "\n";
                             sMsg += "- 생산오더 : " + oGroup.ProductionOrder + "\n";
                             sMsg += "- 출하문서 : " + oGroup.OutboundDelivery + "\n";
+                            sMsg += "- 출고전표 : " + oGroup.GoodsIssueDoc + "\n"; 
                             sMsg += "- 송장/회계 : " + oGroup.BillingDocument + " / " + oGroup.FIDocument + "\n";
                             sMsg += "- 입금전기 : " + oGroup.ClearingDocument + "\n\n";
                         }
@@ -975,7 +981,62 @@ sap.ui.define([], function () {
                     oCallbacks.onError("AI 비서", "sap-icon://error", "입금 및 반제 처리 중 통신 오류가 발생했습니다.");
                 }.bind(this)
             });
+        },
+
+
+
+        /**
+                 * [기능] 5. 백그라운드 MRP 실행 (RunMRP)
+                 */
+        _handleRunMRP: function (sProcessedText, oModel, oCallbacks) {
+            // 1. 텍스트에서 정규식을 이용해 자재코드(예: UP-F-BAG-001) 완벽 추출
+            var oMaterialRegex = /UP-[A-Z]-[A-Z0-9-]+/i;
+            var aMatch = sProcessedText.match(oMaterialRegex);
+            var sMaterial = aMatch ? aMatch[0].toUpperCase() : null;
+
+            // 2. 자재코드를 못 찾았을 경우의 예외 처리
+            if (!sMaterial) {
+                oCallbacks.onError("AI 비서", "sap-icon://alert", "어떤 자재의 MRP를 실행할지 찾지 못했어요.\n'가방 MRP 돌려줘' 처럼 정확히 말씀해 주세요!");
+                return;
+            }
+
+            // 3. 자재코드를 이용해 _mappingDict에서 다시 한글명(가방, 히트텍 등) 역산
+            var sKoreanName = sMaterial;
+            for (var key in this._mappingDict) {
+                if (this._mappingDict[key] === sMaterial) {
+                    sKoreanName = key;
+                    break;
+                }
+            }
+
+            // 4. 진행 중 말풍선 띄우기 (공장 아이콘 사용)
+            oCallbacks.onProcess("AI 비서", "sap-icon://factory", sKoreanName + "(" + sMaterial + ") 자재의 MRP 연산을 시작합니다. 백그라운드 작업으로 진행되니 잠시만 기다려주세요...");
+
+            // 5. OData 호출
+            oModel.callFunction("/RunMRP", {
+                method: "POST",
+                urlParameters: {
+                    Matnr: sMaterial
+                },
+                success: function (oData, response) {
+                    var oResult = oData.RunMRP || oData;
+
+                    // 백그라운드 작업 등록 실패 여부 확인
+                    if (oResult && oResult.MSG && (oResult.MSG.includes("실패") || oResult.MSG.includes("에러"))) {
+                        oCallbacks.onError("AI 비서", "sap-icon://error", oResult.MSG);
+                    } else if (oResult) {
+                        // 성공적으로 잡(Job)이 등록되었을 때 (1초 컷 응답)
+                        oCallbacks.onSuccess("AI 비서", "sap-icon://accept", oResult.MSG);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    oCallbacks.onError("AI 비서", "sap-icon://error", "MRP 시스템과 연결하는 중 통신 오류가 발생했습니다.");
+                }.bind(this)
+            });
         }
+
+
+
 
 
     };
