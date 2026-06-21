@@ -109,7 +109,7 @@
                                 <VBox class="chatBubble aiBubble">
                                     <Text text="{chatModel>text}" />
                                 </VBox>
-                                <Text text="{chatModel>time}" class="sapUiTinyMarginBegin sapUiTinyMarginBottom" />
+                                <Text text="{chatModel>time}" class="sapUiTinyMarginBegin sapUiTinyMarginBottom" wrapping="false" />
                             </HBox>
                         </VBox>
                     </HBox>
@@ -117,7 +117,7 @@
                     <HBox visible="{chatModel>isUser}" justifyContent="End" class="sapUiSmallMarginBottom" width="100%">
                         <VBox width="85%" alignItems="End">
                             <HBox alignItems="End" justifyContent="End">
-                                <Text text="{chatModel>time}" class="sapUiTinyMarginEnd sapUiTinyMarginBottom" />
+                                <Text text="{chatModel>time}" class="sapUiTinyMarginEnd sapUiTinyMarginBottom" wrapping="false" />
                                 <VBox class="chatBubble userBubble">
                                     <Text text="{chatModel>text}" />
                                 </VBox>

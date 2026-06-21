@@ -422,7 +422,7 @@ sap.ui.define([
                 this._mergeFlowField(oMerged, "ProductionOrder", item.ProductionOrder);
                 this._mergeFlowField(oMerged, "ProdMigo", item.ProdMigoDoc);
                 this._mergeFlowField(oMerged, "Delivery", item.OutboundDelivery);
-                this._mergeFlowField(oMerged, "Picking", item.OutboundDelivery);
+                this._mergeFlowField(oMerged, "Picking", item.GoodsIssueDoc);
                 this._mergeFlowField(oMerged, "Billing", item.BillingDocument);
                 this._mergeFlowField(oMerged, "FI", item.FIDocument);
                 this._mergeFlowField(oMerged, "Clearing", item.ClearingDocument);
