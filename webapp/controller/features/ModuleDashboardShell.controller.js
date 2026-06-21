@@ -155,6 +155,7 @@ sap.ui.define([
                 return;
             }
 
+            sKey = ModuleViewConfig.normalizeActiveSubTab(oModel.getProperty("/ui/navKey"), sKey);
             oModel.setProperty("/moduleView/activeSubTab", sKey);
             this._updateSubTabIndicator(true);
 

@@ -1,8 +1,8 @@
-/**
+﻿/**
  * MmNotes.controller.js
  *
- * View: com.capstone.dashboard.fioridashboard.view.features.MmNotes
- * Controller: com.capstone.dashboard.fioridashboard.controller.features.MmNotes
+ * View: com.capstone.dashboard.fioridashboard.view.features.mm.MmNotes
+ * Controller: com.capstone.dashboard.fioridashboard.controller.features.mm.MmNotes
  *
  * 역할:
  * - MM 업무 노트 (OData 공유 저장 + LocalStorage fallback).
@@ -11,7 +11,7 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
-    "com/capstone/dashboard/fioridashboard/util/MmNotesStorage",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmNotesStorage",
     "com/capstone/dashboard/fioridashboard/service/NotesDataService"
 ], function (Controller, JSONModel, MessageToast, MmNotesStorage, NotesDataService) {
     "use strict";
@@ -174,7 +174,7 @@ sap.ui.define([
         return sModule === "MM" ? MM_SECTION_OPTIONS.slice() : GENERAL_SECTION_OPTIONS.slice();
     }
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.MmNotes", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmNotes", {
 
         onInit: function () {
             var that = this;

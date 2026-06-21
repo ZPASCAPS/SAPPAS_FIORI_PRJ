@@ -1,8 +1,8 @@
-/**
+﻿/**
  * StatusSummary.controller.js
  *
- * View: com.capstone.dashboard.fioridashboard.view.features.StatusSummary
- * Controller: com.capstone.dashboard.fioridashboard.controller.features.StatusSummary
+ * View: com.capstone.dashboard.fioridashboard.view.features.mm.StatusSummary
+ * Controller: com.capstone.dashboard.fioridashboard.controller.features.mm.StatusSummary
  *
  * 역할:
  * - 자재 상태 pill (전체/정상/확인/부족). dashboard/counts 바인딩.
@@ -16,5 +16,5 @@ sap.ui.define([
 ], function (Controller) {
     "use strict";
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.StatusSummary", {});
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.StatusSummary", {});
 });

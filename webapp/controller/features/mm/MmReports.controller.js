@@ -1,8 +1,8 @@
-/**
+﻿/**
  * MmReports.controller.js
  *
- * View: com.capstone.dashboard.fioridashboard.view.features.MmReports
- * Controller: com.capstone.dashboard.fioridashboard.controller.features.MmReports
+ * View: com.capstone.dashboard.fioridashboard.view.features.mm.MmReports
+ * Controller: com.capstone.dashboard.fioridashboard.controller.features.mm.MmReports
  *
  * 역할:
  * - MM Reports SAP BomStock 실데이터 차트 화면
@@ -13,7 +13,7 @@ sap.ui.define([
 ], function (Controller) {
     "use strict";
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.MmReports", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmReports", {
 
         onRefreshPress: function () {
             sap.ui.getCore().getEventBus().publish("dashboard", "refreshData");

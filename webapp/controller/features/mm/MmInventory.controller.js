@@ -1,0 +1,623 @@
+﻿/**
+ * MmInventory.controller.js — MM Inventory 2x2 생산 연계형 재고 대시보드
+ */
+sap.ui.define([
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast",
+    "com/capstone/dashboard/fioridashboard/service/mm/MmInventoryDataService"
+], function (Controller, JSONModel, MessageToast, MmInventoryDataService) {
+    "use strict";
+
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmInventory", {
+
+        onInit: function () {
+            this._oCache = null;
+            this._bLoading = false;
+            this._oWhatIf = MmInventoryDataService.getDefaultWhatIf();
+            this._sActiveTab = "CURRENT";
+            this._sMaterialCategoryFilter = "ALL";
+            this._sDistributionCategoryFilter = "ALL";
+            this._sCompositionTab = "DISTRIBUTION";
+            this._sBomVisualizationTab = "HEATTECH";
+            this._oEventBus = sap.ui.getCore().getEventBus();
+            this._fnRefreshHandler = this._onGlobalRefresh.bind(this);
+            this._fnInventoryActionHandler = this._onMmInventoryAction.bind(this);
+
+            this.getView().setModel(
+                new JSONModel(MmInventoryDataService.getEmptyAnalysisState()),
+                "inventoryView"
+            );
+            this.getView().setModel(
+                new JSONModel(MmInventoryDataService.getEmptyStockPositionViewState()),
+                "stockPositionView"
+            );
+
+            this._oEventBus.subscribe("dashboard", "refreshData", this._fnRefreshHandler, this);
+            this._oEventBus.subscribe("dashboard", "mmInventoryAction", this._fnInventoryActionHandler, this);
+            this._waitForDashboardModel();
+        },
+
+        onExit: function () {
+            var oModel = this._getDashboardModel();
+
+            if (this._oEventBus) {
+                if (this._fnRefreshHandler) {
+                    this._oEventBus.unsubscribe("dashboard", "refreshData", this._fnRefreshHandler, this);
+                }
+                if (this._fnInventoryActionHandler) {
+                    this._oEventBus.unsubscribe("dashboard", "mmInventoryAction", this._fnInventoryActionHandler, this);
+                }
+            }
+
+            if (oModel && this._fnNavChange) {
+                oModel.detachPropertyChange(this._fnNavChange, this);
+            }
+        },
+
+        _getDashboardModel: function () {
+            var oView = this.getView();
+            return (oView && oView.getModel("dashboard")) || this.getOwnerComponent().getModel("dashboard");
+        },
+
+        _getStockPositionViewModel: function () {
+            return this.getView().getModel("stockPositionView");
+        },
+
+        _getViewModel: function () {
+            return this.getView().getModel("inventoryView");
+        },
+
+        _loadStockPositionForSelectedMaterial: function (sMaterial, sMaterialName) {
+            var oStockView = this._getStockPositionViewModel();
+            var oComponent = this.getOwnerComponent();
+            var sMat = _normalize(sMaterial);
+
+            if (!oStockView || !oComponent || !sMat) {
+                return;
+            }
+
+            oStockView.setProperty("/loading", true);
+            oStockView.setProperty("/material", sMat);
+            oStockView.setProperty("/materialName", sMaterialName || sMat);
+            oStockView.setProperty("/hasSelection", true);
+            oStockView.setProperty("/showNoRows", false);
+
+            if (this._oCache && this._oCache.stockPositionRows) {
+                oStockView.setProperty("/rows", MmInventoryDataService.buildMmbeRowsForMaterial(
+                    this._oCache,
+                    sMat,
+                    this._getFiltersFromModel()
+                ));
+            }
+
+            MmInventoryDataService.loadStockPositionForMaterial(
+                oComponent,
+                sMat,
+                this._getFiltersFromModel(),
+                {
+                    stockTypeCatalog: this._oCache && this._oCache.stockTypeCatalog,
+                    inventoryItems: this._oCache && this._oCache.items,
+                    allStockPositionRows: this._oCache && this._oCache.stockPositionRows
+                }
+            ).then(function (aRows) {
+                oStockView.setProperty("/rows", aRows);
+                oStockView.setProperty("/showNoRows", aRows.length === 0);
+                oStockView.setProperty("/loading", false);
+            }.bind(this)).catch(function (oError) {
+                oStockView.setProperty("/rows", []);
+                oStockView.setProperty("/showNoRows", true);
+                oStockView.setProperty("/loading", false);
+                oStockView.setProperty("/noRowsMessage", oError.message || "Stock Position 조회에 실패했습니다.");
+            });
+        },
+
+        _waitForDashboardModel: function () {
+            var oModel = this._getDashboardModel();
+
+            if (!oModel) {
+                setTimeout(this._waitForDashboardModel.bind(this), 50);
+                return;
+            }
+
+            if (!oModel.getProperty("/mmInventory")) {
+                oModel.setProperty("/mmInventory", MmInventoryDataService.getEmptyState());
+            }
+
+            this._fnNavChange = this._onDashboardPropertyChange.bind(this);
+            oModel.attachPropertyChange(this._fnNavChange, this);
+            this._ensureInventoryLoaded();
+        },
+
+        onAfterRendering: function () {
+            this._ensureInventoryLoaded();
+        },
+
+        _ensureInventoryLoaded: function () {
+            if (!this._isInventoryActive()) {
+                return;
+            }
+            if (this._bLoading) {
+                return;
+            }
+            var oModel = this._getDashboardModel();
+            if (!oModel) {
+                return;
+            }
+            if (!this._oCache || !oModel.getProperty("/mmInventory/loaded")) {
+                this._setLoading(true);
+                this._loadInventory(true);
+            }
+        },
+
+        _isInventoryActive: function () {
+            var oModel = this._getDashboardModel();
+            if (!oModel) {
+                return false;
+            }
+            return oModel.getProperty("/ui/navKey") === "MM_MATERIALS"
+                && oModel.getProperty("/moduleView/activeSubTab") === "INVENTORY";
+        },
+
+        _onDashboardPropertyChange: function (oEvent) {
+            var sPath = oEvent.getPath();
+            if (sPath === "/ui/navKey" || sPath === "/moduleView/activeSubTab") {
+                this._ensureInventoryLoaded();
+            }
+        },
+
+        _loadIfActive: function () {
+            this._ensureInventoryLoaded();
+        },
+
+        _getFiltersFromModel: function () {
+            var oModel = this._getDashboardModel();
+            return {
+                materialSearch: oModel.getProperty("/mmInventory/materialSearch") || "",
+                plantFilter: oModel.getProperty("/mmInventory/plantFilter") || "ALL",
+                storageLocationFilter: oModel.getProperty("/mmInventory/storageLocationFilter") || "ALL",
+                materialTypeFilter: oModel.getProperty("/mmInventory/materialTypeFilter") || "ALL"
+            };
+        },
+
+        _setLoading: function (bLoading) {
+            var oModel = this._getDashboardModel();
+            if (oModel) {
+                oModel.setProperty("/mmInventory/loading", bLoading);
+            }
+        },
+
+        _syncWhatIfFromModel: function () {
+            var oViewModel = this._getViewModel();
+            if (!oViewModel) {
+                return;
+            }
+            this._oWhatIf = {
+                heattechTarget: oViewModel.getProperty("/production/whatIf/heattechTarget"),
+                bagTarget: oViewModel.getProperty("/production/whatIf/bagTarget")
+            };
+        },
+
+        _logStockPositionDebug: function (oCache, oAnalysis) {
+            if (!oCache) {
+                return;
+            }
+
+            /* eslint-disable no-console */
+            console.table((oCache.stockPositionRows || []).map(function (oRow) {
+                return {
+                    Material: oRow.Material,
+                    StockType: oRow.StockType,
+                    StockTypeName: oRow.StockTypeName,
+                    Plant: oRow.Plant,
+                    StorageLocation: oRow.StorageLocation,
+                    Quantity: oRow.Quantity,
+                    BaseUnit: oRow.BaseUnit
+                };
+            }));
+
+            console.table(Object.keys(oAnalysis.stockSummaryByMaterial || {}).map(function (sCode) {
+                var oSum = oAnalysis.stockSummaryByMaterial[sCode];
+                return {
+                    Material: sCode,
+                    UnrestrictedStock: oSum.UnrestrictedStock,
+                    ReservedStock: oSum.ReservedStock,
+                    QualityStock: oSum.QualityStock,
+                    BlockedStock: oSum.BlockedStock,
+                    TransferStock: oSum.TransferStock,
+                    SalesOrderStock: oSum.SalesOrderStock,
+                    TotalStock: oSum.TotalStock
+                };
+            }));
+
+            console.table((oAnalysis.mergedMaterials || []).map(function (oMat) {
+                return {
+                    Material: oMat.material,
+                    MaterialName: oMat.materialName,
+                    UnrestrictedStock: oMat.unrestrictedStock,
+                    TotalStock: oMat.totalStock,
+                    DisplayStock: oMat.displayStock
+                };
+            }));
+            /* eslint-enable no-console */
+        },
+
+        _applyInventoryState: function (sSelectedMaterial) {
+            var oModel = this._getDashboardModel();
+            var oViewModel = this._getViewModel();
+            var sResolved;
+            var oDashState;
+            var oAnalysis;
+
+            if (!oModel || !oViewModel || !this._oCache) {
+                return;
+            }
+
+            this._syncWhatIfFromModel();
+
+            sResolved = (sSelectedMaterial !== undefined && sSelectedMaterial !== null)
+                ? _normalize(sSelectedMaterial)
+                : _normalize(oModel.getProperty("/mmInventory/selectedMaterial"));
+
+            oDashState = MmInventoryDataService.buildInventoryState(
+                this._oCache,
+                this._getFiltersFromModel(),
+                sResolved,
+                this._oWhatIf,
+                this._sActiveTab
+            );
+
+            oAnalysis = MmInventoryDataService.buildInventoryAnalysis(
+                this._oCache,
+                this._getFiltersFromModel(),
+                sResolved,
+                this._oWhatIf,
+                this._sActiveTab,
+                this._sMaterialCategoryFilter,
+                this._sDistributionCategoryFilter,
+                this._sCompositionTab,
+                this._sBomVisualizationTab
+            );
+
+            oModel.setProperty("/mmInventory", oDashState);
+            oViewModel.setData(oAnalysis);
+
+            if (oAnalysis.selectedMaterial) {
+                this._loadStockPositionForSelectedMaterial(
+                    oAnalysis.selectedMaterial,
+                    oAnalysis.selectedMaterialDisplayName || oAnalysis.selectedMaterialName
+                );
+            }
+
+            setTimeout(function () {
+                this._syncListSelection(oAnalysis.selectedMaterial);
+                this._wireDonutTooltips();
+            }.bind(this), 80);
+        },
+
+        _wireDonutTooltips: function () {
+            var oRoot = this.getView().getDomRef();
+            var aHosts;
+            var i;
+            var j;
+
+            if (!oRoot) {
+                return;
+            }
+
+            aHosts = oRoot.querySelectorAll(".nxMmInvAnalysisHost--donutTip");
+            for (i = 0; i < aHosts.length; i++) {
+                var oHost = aHosts[i];
+                var oTip = oHost.querySelector(".nxMmInvDonutTooltip");
+                var aSlices = oHost.querySelectorAll(".nxMmInvDonutSlice");
+
+                if (!oTip || !aSlices.length || oHost.getAttribute("data-tip-wired") === "true") {
+                    continue;
+                }
+
+                oHost.setAttribute("data-tip-wired", "true");
+
+                for (j = 0; j < aSlices.length; j++) {
+                    (function (oSliceEl, oTipEl, oHostEl) {
+                        oSliceEl.addEventListener("mouseenter", function () {
+                            oTipEl.textContent = oSliceEl.getAttribute("data-tip") || "";
+                            oTipEl.style.opacity = "1";
+                        });
+                        oSliceEl.addEventListener("mousemove", function (oEvent) {
+                            var oRect = oHostEl.getBoundingClientRect();
+                            oTipEl.style.left = (oEvent.clientX - oRect.left + 12) + "px";
+                            oTipEl.style.top = (oEvent.clientY - oRect.top - 28) + "px";
+                        });
+                        oSliceEl.addEventListener("mouseleave", function () {
+                            oTipEl.style.opacity = "0";
+                        });
+                    }(aSlices[j], oTip, oHost));
+                }
+            }
+        },
+
+        _syncListSelection: function (sSelectedMaterial) {
+            var oList = this.byId("mmInventoryMaterialList");
+            var aItems;
+            var i;
+
+            if (!oList || !sSelectedMaterial) {
+                return;
+            }
+
+            aItems = oList.getItems();
+            for (i = 0; i < aItems.length; i++) {
+                if (aItems[i].getBindingContext("inventoryView")
+                    && aItems[i].getBindingContext("inventoryView").getProperty("material") === sSelectedMaterial) {
+                    oList.setSelectedItem(aItems[i]);
+                    return;
+                }
+            }
+        },
+
+        _showInventoryToast: function (sMessage) {
+            MessageToast.show(sMessage, {
+                duration: 2000,
+                width: "15em",
+                my: "RightTop",
+                at: "RightTop",
+                offset: "-12 72"
+            });
+        },
+
+        _onGlobalRefresh: function () {
+            if (!this._isInventoryActive()) {
+                return;
+            }
+            this._loadInventory(false);
+        },
+
+        _loadInventory: function (bApplyCurrentQuery) {
+            var oModel = this._getDashboardModel();
+            var oViewModel = this._getViewModel();
+            var oComponent = this.getOwnerComponent();
+            var sSelected = "";
+
+            if (!oModel || !oComponent || !oViewModel) {
+                return;
+            }
+
+            if (this._bLoading) {
+                return;
+            }
+            this._bLoading = true;
+
+            if (bApplyCurrentQuery) {
+                sSelected = oModel.getProperty("/mmInventory/selectedMaterial") || "";
+            } else {
+                this._oWhatIf = MmInventoryDataService.getDefaultWhatIf();
+                this._sActiveTab = "CURRENT";
+            }
+
+            this._setLoading(true);
+            oModel.setProperty("/mmInventory/error", "");
+
+            MmInventoryDataService.loadInventoryData(oComponent)
+                .then(function (oCache) {
+                    this._oCache = oCache;
+                    this._logStockPositionDebug(oCache, MmInventoryDataService.buildInventoryAnalysis(
+                        oCache,
+                        this._getFiltersFromModel(),
+                        sSelected,
+                        this._oWhatIf,
+                        this._sActiveTab,
+                        this._sMaterialCategoryFilter,
+                        this._sDistributionCategoryFilter,
+                        this._sCompositionTab,
+                        this._sBomVisualizationTab
+                    ));
+
+                    if (!bApplyCurrentQuery) {
+                        var oDefaults = MmInventoryDataService.getDefaultFilters();
+                        oModel.setProperty("/mmInventory/materialSearch", oDefaults.materialSearch);
+                        oModel.setProperty("/mmInventory/plantFilter", oDefaults.plantFilter);
+                        oModel.setProperty("/mmInventory/storageLocationFilter", oDefaults.storageLocationFilter);
+                        oModel.setProperty("/mmInventory/materialTypeFilter", oDefaults.materialTypeFilter);
+                        sSelected = "";
+                    }
+
+                    this._applyInventoryState(sSelected);
+                    this._setLoading(false);
+                    this._bLoading = false;
+                }.bind(this))
+                .catch(function (oError) {
+                    this._setLoading(false);
+                    this._bLoading = false;
+                    this._oCache = null;
+                    oModel.setProperty("/mmInventory/loaded", false);
+                    oModel.setProperty("/mmInventory/error", oError.message || "재고 데이터를 불러올 수 없습니다");
+                    oViewModel.setData(MmInventoryDataService.getEmptyAnalysisState());
+                }.bind(this));
+        },
+
+        _onMmInventoryAction: function (sChannel, sEvent, oData) {
+            if (!oData || !oData.action) {
+                return;
+            }
+
+            switch (oData.action) {
+                case "search":
+                    this.onSearchPress();
+                    break;
+                case "reset":
+                    this.onResetPress();
+                    break;
+                case "refresh":
+                    this.onRefreshPress();
+                    break;
+                default:
+                    break;
+            }
+        },
+
+        onSearchPress: function () {
+            if (!this._oCache) {
+                this._loadInventory(true);
+                return;
+            }
+            this._applyInventoryState("");
+            this._showInventoryToast("조회 조건을 적용했습니다.");
+        },
+
+        onResetPress: function () {
+            var oModel = this._getDashboardModel();
+            var oDefaults = MmInventoryDataService.getDefaultFilters();
+
+            if (!oModel) {
+                return;
+            }
+
+            oModel.setProperty("/mmInventory/materialSearch", oDefaults.materialSearch);
+            oModel.setProperty("/mmInventory/plantFilter", oDefaults.plantFilter);
+            oModel.setProperty("/mmInventory/storageLocationFilter", oDefaults.storageLocationFilter);
+            oModel.setProperty("/mmInventory/materialTypeFilter", oDefaults.materialTypeFilter);
+            this._oWhatIf = MmInventoryDataService.getDefaultWhatIf();
+            this._sMaterialCategoryFilter = "ALL";
+            this._sDistributionCategoryFilter = "ALL";
+            this._sCompositionTab = "DISTRIBUTION";
+            this._sBomVisualizationTab = "HEATTECH";
+
+            if (this._oCache) {
+                this._applyInventoryState("");
+            } else {
+                this._loadInventory(true);
+            }
+        },
+
+        onRefreshPress: function () {
+            this._loadInventory(true);
+            this._showInventoryToast("SAP 데이터 새로고침");
+        },
+
+        onMaterialSelect: function (oEvent) {
+            var oItem = oEvent.getParameter("listItem");
+            var oContext;
+            var oMaterial;
+            var sMaterial;
+
+            if (!oItem) {
+                return;
+            }
+
+            oContext = oItem.getBindingContext("inventoryView");
+            if (!oContext) {
+                return;
+            }
+
+            oMaterial = oContext.getObject();
+            sMaterial = oMaterial && oMaterial.material;
+
+            /* eslint-disable no-console */
+            console.log("[Inventory] selected material", oMaterial);
+            /* eslint-enable no-console */
+
+            this._applyInventoryState(sMaterial);
+        },
+
+        onMaterialItemPress: function (oEvent) {
+            var oItem = oEvent.getSource();
+            var oList = this.byId("mmInventoryMaterialList");
+            var oContext;
+            var oMaterial;
+
+            if (!oItem || !oList) {
+                return;
+            }
+
+            oList.setSelectedItem(oItem);
+            oContext = oItem.getBindingContext("inventoryView");
+            if (!oContext) {
+                return;
+            }
+
+            oMaterial = oContext.getObject();
+
+            /* eslint-disable no-console */
+            console.log("[Inventory] selected material", oMaterial);
+            /* eslint-enable no-console */
+
+            this._applyInventoryState(oMaterial && oMaterial.material);
+        },
+
+        onMaterialCategoryFilter: function (oEvent) {
+            var oItem = oEvent.getParameter("item");
+            var sKey = oItem ? oItem.getKey() : "ALL";
+
+            if (oEvent.stopPropagation) {
+                oEvent.stopPropagation();
+            }
+
+            this._sMaterialCategoryFilter = sKey;
+            this._applyInventoryState(undefined);
+        },
+
+        onMaterialTypeBadgePress: function (oEvent) {
+            var oSource = oEvent.getSource();
+            var oContext = oSource.getBindingContext("inventoryView");
+            var oMaterial = oContext && oContext.getObject();
+            var sKey = "ALL";
+
+            if (oEvent.stopPropagation) {
+                oEvent.stopPropagation();
+            }
+
+            if (oMaterial && oMaterial.isRawMaterial) {
+                sKey = "RAW";
+            } else if (oMaterial && oMaterial.isFinishedProduct) {
+                sKey = "FINISHED";
+            }
+
+            this._sMaterialCategoryFilter = sKey;
+            this._applyInventoryState(undefined);
+        },
+
+        onDistributionCategoryFilter: function (oEvent) {
+            var oItem = oEvent.getParameter("item");
+            var sKey = oItem ? oItem.getKey() : "ALL";
+
+            if (oEvent.stopPropagation) {
+                oEvent.stopPropagation();
+            }
+
+            this._sDistributionCategoryFilter = sKey;
+            this._applyInventoryState(undefined);
+        },
+
+        onCompositionTabSelect: function (oEvent) {
+            var sKey = oEvent.getParameter("key");
+            this._sCompositionTab = sKey || "DISTRIBUTION";
+            this._applyInventoryState(undefined);
+        },
+
+        onBomVisualizationTabSelect: function (oEvent) {
+            var sKey = oEvent.getParameter("key");
+            this._sBomVisualizationTab = sKey || "HEATTECH";
+            this._applyInventoryState(undefined);
+        },
+
+        onProductionTabSelect: function (oEvent) {
+            var sKey = oEvent.getParameter("key");
+            this._sActiveTab = sKey || "CURRENT";
+            this._applyInventoryState(undefined);
+        },
+
+        onWhatIfTargetChange: function () {
+            this._syncWhatIfFromModel();
+        },
+
+        onWhatIfCalculate: function () {
+            this.onWhatIfTargetChange();
+            this._applyInventoryState(undefined);
+            this._showInventoryToast("MRP 시뮬레이션을 계산했습니다.");
+        }
+    });
+
+    function _normalize(sText) {
+        return String(sText || "").trim().toUpperCase();
+    }
+});

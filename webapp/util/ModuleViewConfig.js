@@ -27,10 +27,10 @@ sap.ui.define([], function () {
     var MM_SUB_TABS = [
         { key: "OVERVIEW", text: "Overview" },
         { key: "INVENTORY", text: "Inventory" },
-        { key: "PURCHASING", text: "Purchasing" },
-        { key: "GOODS_MOVEMENT", text: "Goods Movement" },
-        { key: "REPORTS", text: "Reports" }
+        { key: "PURCHASING", text: "Purchasing" }
     ];
+
+    var MM_ALLOWED_SUB_TABS = ["OVERVIEW", "INVENTORY", "PURCHASING"];
 
     var COMMON_KPIS = [
         { label: "Revenue", valueMain: "$1 248", valueSuffix: ",320", trendHint: "per last week", trend: "14%", trendUp: true },
@@ -49,18 +49,16 @@ sap.ui.define([], function () {
     var MM_FLYOUT_ITEMS = [
         { key: "OVERVIEW", text: "Overview" },
         { key: "INVENTORY", text: "Inventory" },
-        { key: "PURCHASING", text: "Purchasing" },
-        { key: "GOODS_MOVEMENT", text: "Goods Movement" },
-        { key: "REPORTS", text: "Reports" }
+        { key: "PURCHASING", text: "Purchasing" }
     ];
 
     var FI_SUB_TABS = [
         { key: "OVERVIEW", text: "Overview" },
         { key: "GENERAL_LEDGER", text: "General Ledger" },
-        { key: "ACCOUNTS_PAYABLE", text: "Accounts Payable" },
-        { key: "ACCOUNTS_RECEIVABLE", text: "Accounts Receivable" },
-        { key: "REPORT", text: "Report" }
+        { key: "ACCOUNTS_PAYABLE", text: "Accounts Payable" }
     ];
+
+    var FI_ALLOWED_SUB_TABS = ["OVERVIEW", "GENERAL_LEDGER", "ACCOUNTS_PAYABLE"];
 
     var FI_FLYOUT_ITEMS = FI_SUB_TABS.slice();
 
@@ -75,6 +73,24 @@ sap.ui.define([], function () {
         PP_PRODUCTION: "Production Planning",
         FI_CO_FINANCE: "Financial Accounting"
     };
+
+    function normalizeActiveSubTab(sNavKey, sActiveSubTab) {
+        var aAllowed;
+
+        if (sNavKey === "MM_MATERIALS") {
+            aAllowed = MM_ALLOWED_SUB_TABS;
+        } else if (sNavKey === "FI_CO_FINANCE") {
+            aAllowed = FI_ALLOWED_SUB_TABS;
+        } else {
+            return sActiveSubTab || "OVERVIEW";
+        }
+
+        if (aAllowed.indexOf(sActiveSubTab) >= 0) {
+            return sActiveSubTab;
+        }
+
+        return "OVERVIEW";
+    }
 
     function buildFiModuleConfig() {
         return {
@@ -137,9 +153,7 @@ sap.ui.define([], function () {
             }
 
             oConfig = JSON.parse(JSON.stringify(MODULE_CONFIGS[sNavKey]));
-            if ((sNavKey === "MM_MATERIALS" || sNavKey === "FI_CO_FINANCE") && oConfig.activeSubTab === "NOTES") {
-                oConfig.activeSubTab = "OVERVIEW";
-            }
+            oConfig.activeSubTab = normalizeActiveSubTab(sNavKey, oConfig.activeSubTab);
             oModel.setProperty("/moduleView", oConfig);
         },
 
@@ -151,6 +165,12 @@ sap.ui.define([], function () {
         getFlyoutItems: function (sNavKey) {
             var aItems = MODULE_FLYOUT_ITEMS[sNavKey];
             return aItems ? aItems.slice() : [];
+        },
+
+        normalizeActiveSubTab: normalizeActiveSubTab,
+
+        isAllowedSubTab: function (sNavKey, sSubTab) {
+            return normalizeActiveSubTab(sNavKey, sSubTab) === sSubTab;
         }
     };
 });

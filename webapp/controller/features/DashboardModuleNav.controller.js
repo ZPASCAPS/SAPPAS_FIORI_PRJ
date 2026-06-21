@@ -377,6 +377,7 @@ sap.ui.define([
                 this._setNavKey(sNavKey);
             }
 
+            sSubTabKey = ModuleViewConfig.normalizeActiveSubTab(sNavKey, sSubTabKey);
             oModel.setProperty("/moduleView/activeSubTab", sSubTabKey);
             this._closeModuleFlyout();
         },

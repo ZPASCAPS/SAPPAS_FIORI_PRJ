@@ -1,8 +1,8 @@
-/**
+﻿/**
  * MmCockpit.controller.js
  *
- * View: com.capstone.dashboard.fioridashboard.view.features.MmCockpit
- * Controller: com.capstone.dashboard.fioridashboard.controller.features.MmCockpit
+ * View: com.capstone.dashboard.fioridashboard.view.features.mm.MmCockpit
+ * Controller: com.capstone.dashboard.fioridashboard.controller.features.mm.MmCockpit
  *
  * 역할:
  * - MM Extended 관제 콕핏 UI 이벤트 처리
@@ -47,7 +47,7 @@ sap.ui.define([
         "BLOCKED"
     ];
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.MmCockpit", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmCockpit", {
 
         onInit: function () {
             // dashboard 모델은 Main.controller.js _initModels()에서 Component에 등록됨

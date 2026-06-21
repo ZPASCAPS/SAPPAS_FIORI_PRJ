@@ -1,13 +1,13 @@
-/**
+﻿/**
  * MmPurchasingDataService.js
  *
- * MM Purchasing Control Tower — OrderTracker + BomStockSet + InventoryStatus.
- * OData read는 MmOverviewDataService.loadOverviewData 재사용.
+ * MM Purchasing Control Tower — OrderTracker + Z_C_MM_INVENTORY (히트텍/가방 BOM 부족 계산).
+ * OData read는 MmOverviewDataService.loadSharedMmData 재사용.
  */
 sap.ui.define([
-    "com/capstone/dashboard/fioridashboard/service/MmOverviewDataService",
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil",
-    "com/capstone/dashboard/fioridashboard/util/MmHeroUiUtil"
+    "com/capstone/dashboard/fioridashboard/service/mm/MmOverviewDataService",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmChartHtmlUtil",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmHeroUiUtil"
 ], function (MmOverviewDataService, MmChartHtmlUtil, MmHeroUiUtil) {
     "use strict";
 
@@ -452,7 +452,7 @@ sap.ui.define([
             },
             {
                 title: "Procurement Risk Materials",
-                subtitle: "부족 자재 ShortageQty",
+                subtitle: "BOM 소요량 대비 부족 원자재",
                 html: aRiskRows.length
                     ? MmChartHtmlUtil.buildInventoryAnalysisTypeBar(aRiskRows)
                     : _emptyChart(NO_DATA),
@@ -528,7 +528,7 @@ sap.ui.define([
             poValue: NO_DATA,
             openQty: NO_DATA,
             receivedQty: NO_DATA,
-            dataSource: "Z_C_E2E_OrderTracker / BomStockSet / Z_C_InventoryStatus",
+            dataSource: "Z_C_E2E_OrderTracker / Z_C_MM_INVENTORY",
             warningMessage: oRisk.label === "Risk"
                 ? "부족 자재의 PO/MIGO 연결 확인이 필요합니다."
                 : "",
@@ -580,8 +580,8 @@ sap.ui.define([
     return {
         NO_DATA: NO_DATA,
 
-        loadPurchasingData: function (oComponent, sImageBase) {
-            return MmOverviewDataService.loadOverviewData(oComponent, sImageBase);
+        loadPurchasingData: function (oComponent) {
+            return MmOverviewDataService.loadSharedMmData(oComponent);
         },
 
         buildPurchasingState: buildPurchasingState,

@@ -1,47 +1,47 @@
-/**
+﻿/**
  * MmUpMaterialFilterUtil.js
  *
- * MM Cockpit 공통 자재 필터:
- * - Material starts with "UP"
- * - excludes UP-R-COT-001, UP-F-ONT-001
+ * Uniqlo MM 자재 필터 — 히트텍/가방 BOM 원자재 6종 + 완제품 2종만 허용.
  */
 sap.ui.define([
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmBomOverviewConfig"
+], function (Filter, FilterOperator, MmBomOverviewConfig) {
     "use strict";
-
-    var PREFIX = "UP";
-    var EXCLUDED_MATERIALS = ["UP-R-COT-001", "UP-F-ONT-001"];
 
     function normalizeCode(sText) {
         return String(sText || "").trim().toUpperCase();
     }
 
+    function getAllowedMaterialCodes() {
+        return MmBomOverviewConfig.getAllMaterialCodes();
+    }
+
     function matchesUpMaterial(sCode) {
-        var sMat = normalizeCode(sCode);
-
-        if (!sMat || sMat.indexOf(PREFIX) !== 0) {
-            return false;
-        }
-
-        return EXCLUDED_MATERIALS.indexOf(sMat) < 0;
+        return getAllowedMaterialCodes().indexOf(normalizeCode(sCode)) >= 0;
     }
 
     function getODataFilters(sMaterialField) {
-        if (!sMaterialField) {
+        var aCodes = getAllowedMaterialCodes();
+        var aFilters;
+
+        if (!sMaterialField || !aCodes.length) {
             return [];
         }
 
-        return [
-            new Filter(sMaterialField, FilterOperator.StartsWith, PREFIX),
-            new Filter(sMaterialField, FilterOperator.NE, "UP-R-COT-001"),
-            new Filter(sMaterialField, FilterOperator.NE, "UP-F-ONT-001")
-        ];
+        aFilters = aCodes.map(function (sCode) {
+            return new Filter(sMaterialField, FilterOperator.EQ, sCode);
+        });
+
+        return [new Filter({
+            filters: aFilters,
+            and: false
+        })];
     }
 
     function getBomMaterialCode(oItem) {
-        return oItem && (oItem.Component || oItem.MaterialCode || "");
+        return oItem && (oItem.Component || oItem.MaterialCode || oItem.Material || "");
     }
 
     function getRowMaterialCode(oRow, sField) {
@@ -65,8 +65,7 @@ sap.ui.define([
     }
 
     return {
-        PREFIX: PREFIX,
-        EXCLUDED_MATERIALS: EXCLUDED_MATERIALS,
+        getAllowedMaterialCodes: getAllowedMaterialCodes,
         normalizeCode: normalizeCode,
         matchesUpMaterial: matchesUpMaterial,
         getODataFilters: getODataFilters,

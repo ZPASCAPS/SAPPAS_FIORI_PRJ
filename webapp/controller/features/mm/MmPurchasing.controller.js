@@ -1,19 +1,19 @@
-/**
+﻿/**
  * MmPurchasing.controller.js — MM Purchasing Control Tower (SAP OData)
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-    "com/capstone/dashboard/fioridashboard/service/MmPurchasingDataService"
+    "com/capstone/dashboard/fioridashboard/service/mm/MmPurchasingDataService"
 ], function (Controller, MessageToast, MessageBox, MmPurchasingDataService) {
     "use strict";
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.MmPurchasing", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmPurchasing", {
 
         onInit: function () {
             this._oCache = null;
-            this._bDataLoaded = false;
+            this._bLoading = false;
             this._oEventBus = sap.ui.getCore().getEventBus();
             this._fnRefreshHandler = this._onGlobalRefresh.bind(this);
             this._fnPurchasingActionHandler = this._onMmPurchasingAction.bind(this);
@@ -81,17 +81,11 @@ sap.ui.define([
             if (!this._isPurchasingActive()) {
                 return;
             }
-            if (!this._bDataLoaded) {
-                this._bDataLoaded = true;
-                this._loadPurchasing(true);
+            if (this._bLoading) {
+                return;
             }
-        },
-
-        _resolveImageBase: function () {
-            try {
-                return sap.ui.require.toUrl("com/capstone/dashboard/fioridashboard/images/");
-            } catch (e) {
-                return "images/";
+            if (!this._oCache || !this._getDashboardModel().getProperty("/mmPurchasing/loaded")) {
+                this._loadPurchasing(true);
             }
         },
 
@@ -208,6 +202,11 @@ sap.ui.define([
                 return;
             }
 
+            if (this._bLoading) {
+                return;
+            }
+            this._bLoading = true;
+
             if (bApplyCurrentQuery) {
                 sSelectedId = oModel.getProperty("/mmPurchasing/selectedTrackerId") || "";
             }
@@ -215,7 +214,7 @@ sap.ui.define([
             this._setLoading(true);
             oModel.setProperty("/mmPurchasing/error", "");
 
-            MmPurchasingDataService.loadPurchasingData(oComponent, this._resolveImageBase())
+            MmPurchasingDataService.loadPurchasingData(oComponent)
                 .then(function (oCache) {
                     this._oCache = oCache;
 
@@ -232,9 +231,12 @@ sap.ui.define([
 
                     this._applyPurchasingState(sSelectedId);
                     this._setLoading(false);
+                    this._bLoading = false;
                 }.bind(this))
                 .catch(function (oError) {
                     this._setLoading(false);
+                    this._bLoading = false;
+                    this._oCache = null;
                     oModel.setProperty("/mmPurchasing/loaded", false);
                     oModel.setProperty("/mmPurchasing/error", oError.message || "SAP OData 조회 실패");
                     MessageBox.error(oError.message || "SAP OData 조회에 실패했습니다.");
@@ -273,10 +275,11 @@ sap.ui.define([
 
         onSearchPress: function () {
             if (!this._oCache) {
-                this._showPurchasingToast("데이터를 먼저 조회해 주세요.");
+                this._loadPurchasing(true);
                 return;
             }
             this._applyPurchasingState("");
+            this._showPurchasingToast("조회 조건을 적용했습니다.");
         },
 
         onResetPress: function () {
@@ -296,27 +299,14 @@ sap.ui.define([
 
             if (this._oCache) {
                 this._applyPurchasingState("");
+            } else {
+                this._loadPurchasing(true);
             }
         },
 
         onRefreshPress: function () {
             this._loadPurchasing(true);
             this._showPurchasingToast("SAP 데이터 새로고침");
-        },
-
-        onToolbarFilterOpen: function (oEvent) {
-            var oSource = oEvent.getSource();
-
-            if (this._oEventBus && oSource) {
-                this._oEventBus.publish("dashboard", "mmShellUiAction", {
-                    action: "purchasingFilterOpen",
-                    openById: oSource.getId()
-                });
-            }
-        },
-
-        onToolbarRefresh: function () {
-            this.onRefreshPress();
         },
 
         onTrackerSelect: function (oEvent) {

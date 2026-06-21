@@ -1,8 +1,8 @@
-<!--
+﻿<!--
   MmCockpit.view.xml
 
-  View: com.capstone.dashboard.fioridashboard.view.features.MmCockpit
-  Controller: com.capstone.dashboard.fioridashboard.controller.features.MmCockpit
+  View: com.capstone.dashboard.fioridashboard.view.features.mm.MmCockpit
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.mm.MmCockpit
 
   역할:
   - MM Extended 관제 인터랙티브 콕핏 (단일 화면)
@@ -16,7 +16,7 @@
   - 바인딩 예: {dashboard>/ui/showPhysicalDiff}, {dashboard>/mmDetailList}
 -->
 <mvc:View
-    controllerName="com.capstone.dashboard.fioridashboard.controller.features.MmCockpit"
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.mm.MmCockpit"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"

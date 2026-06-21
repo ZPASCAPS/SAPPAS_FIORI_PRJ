@@ -1,8 +1,8 @@
-<!--
+﻿<!--
   MmGoodsMovement.view.xml — Movement Flow Monitor (SAP OData)
 -->
 <mvc:View
-    controllerName="com.capstone.dashboard.fioridashboard.controller.features.MmGoodsMovement"
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.mm.MmGoodsMovement"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"

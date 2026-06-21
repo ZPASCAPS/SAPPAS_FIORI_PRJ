@@ -1,13 +1,13 @@
-/**
+﻿/**
  * MmGoodsMovementDataService.js
  *
  * MM Goods Movement Monitor — MIGO/PO/Material tracking + BomStock + InventoryStatus.
  * OData read는 MmOverviewDataService.loadOverviewData 재사용.
  */
 sap.ui.define([
-    "com/capstone/dashboard/fioridashboard/service/MmOverviewDataService",
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil",
-    "com/capstone/dashboard/fioridashboard/util/MmHeroUiUtil"
+    "com/capstone/dashboard/fioridashboard/service/mm/MmOverviewDataService",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmChartHtmlUtil",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmHeroUiUtil"
 ], function (MmOverviewDataService, MmChartHtmlUtil, MmHeroUiUtil) {
     "use strict";
 
@@ -728,7 +728,7 @@ sap.ui.define([
         NO_DATA: NO_DATA,
 
         loadGoodsMovementData: function (oComponent, sImageBase) {
-            return MmOverviewDataService.loadOverviewData(oComponent, sImageBase);
+            return MmOverviewDataService.loadSharedMmData(oComponent);
         },
 
         buildGoodsMovementState: buildGoodsMovementState,

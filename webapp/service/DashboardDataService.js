@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DashboardDataService.js
  *
  * 역할:
@@ -11,7 +11,7 @@
  * - OData 매핑·집계 로직 → 이 Service (View/Controller에 OData 직접 넣지 않음)
  */
 sap.ui.define([
-    "com/capstone/dashboard/fioridashboard/util/MmChartHtmlUtil"
+    "com/capstone/dashboard/fioridashboard/util/mm/MmChartHtmlUtil"
 ], function (MmChartHtmlUtil) {
     "use strict";
 

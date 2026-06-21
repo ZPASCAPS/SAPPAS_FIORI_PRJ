@@ -99,6 +99,20 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "fiAPService": {
+        "uri": "/sap/opu/odata/sap/Z_C_FI_AP_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "mmStockPositionService": {
+        "uri": "/sap/opu/odata/sap/Z_C_MM_STOCK_POSITION_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
 
     }
@@ -202,6 +216,23 @@
           "defaultBindingMode": "TwoWay",
           "defaultCountMode": "Inline",
           "useBatch": false
+        }
+      },
+      "fiAP": {
+        "dataSource": "fiAPService",
+        "preload": false,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": false
+        }
+      },
+      "mmStockPosition": {
+        "dataSource": "mmStockPositionService",
+        "preload": false,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "useBatch": true
         }
       }
     },

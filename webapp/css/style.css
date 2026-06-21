@@ -2780,6 +2780,71 @@ html, body, body > div, #container, #container-uiarea,
     justify-content: center;
 }
 
+.nxMmInvAnalysisDonutSvgWrap {
+    position: relative;
+    width: 9rem;
+    height: 9rem;
+    flex-shrink: 0;
+}
+
+.nxMmInvAnalysisDonutSvg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.nxMmInvDonutSlice {
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.nxMmInvDonutSlice:hover {
+    opacity: 0.82;
+}
+
+.nxMmInvDonutSvgValue {
+    font-size: 18px;
+    font-weight: 800;
+    fill: #111827;
+}
+
+.nxMmInvDonutSvgLabel {
+    font-size: 8px;
+    font-weight: 600;
+    fill: #6B7280;
+    letter-spacing: 0.03em;
+}
+
+.nxMmInvDonutTooltip {
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    background: rgba(15, 23, 42, 0.92);
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.3;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.35rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+}
+
+.nxMmInvAnalysisLegendItem {
+    cursor: help;
+}
+
+.nxMmInvDashMatFilterBar {
+    margin-bottom: 0.35rem;
+    gap: 0.5rem;
+}
+
+.nxMmInvDashMatSegment .sapMSegBBtn {
+    min-width: 3.2rem;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     .nxMmInventoryMain {
@@ -14400,6 +14465,870 @@ html, body, body > div, #container, #container-uiarea,
 .nxDarkMode .nxNotesPanelHeader {
     background: var(--nx-dm-zone) !important;
     border-bottom-color: var(--nx-dm-border) !important;
+}
+
+/* MM BOM Overview (히트텍/가방) */
+.nxMmBomOverview {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.nxMmBomOverviewGrid {
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmBomOverviewGridBottom {
+    margin-top: 0;
+}
+
+.nxMmBomOverviewCard {
+    flex: 1 1 20rem;
+    min-width: 0;
+    max-width: 100%;
+    padding: 0.85rem 0.95rem;
+    border-radius: 0.75rem;
+    border: 1px solid #E2E8F0;
+    background: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.nxMmBomOverviewCardWide {
+    flex: 1 1 100%;
+}
+
+.nxMmBomCardHead {
+    margin-bottom: 0.65rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.nxMmBomCardSub,
+.nxMmBomCardSub .sapMText {
+    font-size: 0.74rem !important;
+    color: #64748B !important;
+}
+
+.nxMmBomProductBlock {
+    margin-bottom: 0.75rem;
+}
+
+.nxMmBomProductHead {
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.nxMmBomProductCode,
+.nxMmBomProductCode .sapMText {
+    font-size: 0.72rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmBomComponentTable,
+.nxMmBomMatrixTable {
+    border: none !important;
+}
+
+.nxMmBomMatrixRowShared {
+    background: #FFFBEB !important;
+}
+
+.nxMmBomCellEllipsis,
+.nxMmBomCellEllipsis .sapMText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.nxMmBomReadinessList {
+    gap: 0.55rem;
+}
+
+.nxMmBomReadinessTile {
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.55rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+.nxMmBomReadinessCode,
+.nxMmBomReadinessCode .sapMText {
+    font-size: 0.72rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmBomReadinessMsg,
+.nxMmBomReadinessMsg .sapMText {
+    margin-top: 0.35rem;
+    font-size: 0.78rem !important;
+    color: #475569 !important;
+    word-break: break-word;
+}
+
+.nxMmBomPriorityEmpty {
+    min-height: 10rem;
+    padding: 1rem;
+}
+
+.nxMmBomPriorityEmptyText,
+.nxMmBomPriorityEmptyText .sapMText {
+    margin-top: 0.5rem;
+    color: #94A3B8 !important;
+    text-align: center;
+}
+
+.nxMmBomPriorityBody {
+    padding: 0.35rem 0.15rem;
+}
+
+.nxMmBomPriorityHead {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nxMmBomPriorityName,
+.nxMmBomPriorityName .sapMText {
+    font-size: 0.82rem !important;
+    color: #64748B !important;
+}
+
+.nxMmBomPriorityReason,
+.nxMmBomPriorityReason .sapMText {
+    margin-top: 0.25rem;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    color: #0F172A !important;
+}
+
+.nxMmBomPriorityMsg,
+.nxMmBomPriorityMsg .sapMText {
+    margin-top: 0.35rem;
+    font-size: 0.76rem !important;
+    color: #475569 !important;
+    word-break: break-word;
+}
+
+/* MM Inventory / Purchasing inline filter bar (SAP horizontal style) */
+.nxMmInlineFilterBar {
+    width: 100%;
+    max-width: 100%;
+    min-height: 2.5rem;
+    margin-bottom: 0.65rem;
+    padding: 0.45rem 0.75rem;
+    gap: 0.5rem;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.35rem;
+}
+
+.nxMmInlineFilterFields {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0.55rem 0.75rem;
+}
+
+.nxMmInlineFilterField {
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 0.35rem;
+}
+
+.nxMmInlineFilterField--check {
+    padding-top: 0.1rem;
+}
+
+.nxMmInlineFilterLabel,
+.nxMmInlineFilterLabel.sapMLabel {
+    flex-shrink: 0;
+    font-size: 0.76rem !important;
+    color: #374151 !important;
+    white-space: nowrap;
+}
+
+.nxMmInlineFilterSearch,
+.nxMmInlineFilterSelect {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.nxMmInlineFilterSearch .sapMSFF,
+.nxMmInlineFilterSelect .sapMSlt {
+    height: 1.75rem !important;
+    min-height: 1.75rem !important;
+    border-radius: 0.25rem !important;
+    background: #FFFFFF !important;
+}
+
+.nxMmInlineFilterSearch .sapMSFI,
+.nxMmInlineFilterSelect .sapMSltLabel {
+    height: 1.75rem !important;
+    line-height: 1.75rem !important;
+    font-size: 0.78rem !important;
+}
+
+.nxMmInlineFilterActions {
+    flex-shrink: 0;
+    gap: 0.4rem;
+    margin-left: auto;
+}
+
+.nxMmInlineFilterResetBtn .sapMBtnInner,
+.nxMmInlineFilterSearchBtn .sapMBtnInner {
+    height: 1.75rem !important;
+    min-width: 3.25rem !important;
+    border-radius: 0.25rem !important;
+    font-size: 0.78rem !important;
+}
+
+.nxMmInlineFilterSearchBtn .sapMBtnInner {
+    background: #0B74F0 !important;
+    border-color: #0B74F0 !important;
+}
+
+.nxMmInlineFilterResetBtn .sapMBtnInner {
+    background: #FFFFFF !important;
+    border: 1px solid #D1D5DB !important;
+    color: #111827 !important;
+}
+
+.nxMmInlineFilterField--check .sapMCb {
+    height: 1.75rem;
+}
+
+.nxMmInlineFilterField--check .sapMCbLabel {
+    font-size: 0.76rem !important;
+    color: #374151 !important;
+}
+
+/* MM Inventory 2x2 Dashboard */
+.nxMmInvDashPage {
+    background: #F0F9FF;
+}
+
+.nxMmInvDashGrid {
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashRow {
+    gap: 0.75rem;
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+}
+
+.nxMmInvDashCard {
+    flex: 1 1 calc(50% - 0.4rem);
+    min-width: 0;
+    max-width: 100%;
+    min-height: 18rem;
+    padding: 0.85rem 0.95rem;
+    border-radius: 0.75rem;
+    border: 1px solid #BAE6FD;
+    background: #FFFFFF;
+    box-shadow: 0 4px 18px rgba(14, 165, 233, 0.08);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.nxMmInvDashCardHead {
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid #E0F2FE;
+}
+
+.nxMmInvDashCardHead .sapMTitle {
+    color: #0C4A6E !important;
+    font-weight: 700 !important;
+}
+
+.nxMmInvDashCardSub,
+.nxMmInvDashCardSub .sapMText {
+    font-size: 0.72rem !important;
+    color: #64748B !important;
+}
+
+.nxMmInvDashSplit {
+    gap: 0.65rem;
+    width: 100%;
+    min-width: 0;
+}
+
+.nxMmInvDashListPane {
+    flex: 1 1 14rem;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.nxMmInvDashMmbePane {
+    flex: 1 1 16rem;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.nxMmInvDashSubLabel,
+.nxMmInvDashSubLabel.sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    color: #0369A1 !important;
+    margin-bottom: 0;
+}
+
+.nxMmInvDashMatList {
+    border: 1px solid #E0F2FE;
+    border-radius: 0.5rem;
+    max-height: 14rem;
+    overflow: auto;
+}
+
+.nxMmInvDashMatItem {
+    border-bottom: 1px solid #F0F9FF;
+}
+
+.nxMmInvDashMatBody {
+    padding: 0.45rem 0.55rem;
+    gap: 0.15rem;
+}
+
+.nxMmInvDashMatCode,
+.nxMmInvDashMatCode .sapMText {
+    font-size: 0.66rem !important;
+    font-weight: 500 !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmInvDashMatName,
+.nxMmInvDashMatName .sapMText {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
+}
+
+.nxMmInvDashMatMeta {
+    margin-top: 0.15rem;
+}
+
+.nxMmInvDashMatType,
+.nxMmInvDashMatType .sapMText {
+    font-size: 0.7rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmInvDashMatHint,
+.nxMmInvDashMatHint .sapMText {
+    font-size: 0.65rem !important;
+    color: #64748B !important;
+    margin-top: 0.1rem;
+}
+
+.nxMmInvDashMmbeTable {
+    border: 1px solid #E0F2FE;
+    border-radius: 0.5rem;
+}
+
+.nxMmInvDashProdTabs .sapMITBHead {
+    background: transparent !important;
+}
+
+.nxMmInvDashProdBody {
+    padding: 0.5rem 0.15rem;
+    gap: 0.45rem;
+}
+
+.nxMmInvDashHint,
+.nxMmInvDashHint .sapMText {
+    font-size: 0.74rem !important;
+    color: #64748B !important;
+    line-height: 1.4;
+}
+
+.nxMmInvDashProdTiles {
+    gap: 0.55rem;
+    margin-top: 0.35rem;
+}
+
+.nxMmInvDashProdTile {
+    flex: 1 1 10rem;
+    min-width: 0;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.55rem;
+    background: linear-gradient(145deg, #F0F9FF, #ECFEFF);
+    border: 1px solid #BAE6FD;
+}
+
+.nxMmInvDashTileLabel,
+.nxMmInvDashTileLabel .sapMText {
+    font-size: 0.72rem !important;
+    color: #0369A1 !important;
+    font-weight: 600 !important;
+}
+
+.nxMmInvDashTileHint,
+.nxMmInvDashTileHint .sapMText {
+    margin-top: 0.35rem;
+    font-size: 0.7rem !important;
+    color: #64748B !important;
+    word-break: break-word;
+}
+
+.nxMmInvDashWhatIfInputs {
+    gap: 0.55rem;
+}
+
+.nxMmInvDashWhatIfField {
+    gap: 0.2rem;
+}
+
+.nxMmInvDashWhatIfTable {
+    border: 1px solid #E0F2FE;
+    border-radius: 0.5rem;
+}
+
+.nxMmInvDashBomBody {
+    gap: 0.45rem;
+}
+
+.nxMmInvDashBomNote {
+    margin-top: 0.15rem;
+}
+
+.nxMmInvDashBomGrid {
+    gap: 0.55rem;
+    margin-top: 0.25rem;
+}
+
+.nxMmInvDashBomCard {
+    flex: 1 1 14rem;
+    min-width: 0;
+    padding: 0.65rem 0.7rem;
+    border-radius: 0.65rem;
+    border: 1px solid #E0F2FE;
+    background: #FFFFFF;
+    box-shadow: 0 8px 18px rgba(14, 165, 233, 0.06);
+}
+
+.nxMmInvDashBomCard--heat {
+    background: linear-gradient(180deg, #FFF7ED 0%, #FFFFFF 42%);
+    border-color: #FED7AA;
+}
+
+.nxMmInvDashBomCard--bag {
+    background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 42%);
+    border-color: #BAE6FD;
+}
+
+.nxMmInvDashBomCardHead {
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInvDashBomCode,
+.nxMmInvDashBomCode .sapMText {
+    font-size: 0.68rem !important;
+    color: #64748B !important;
+}
+
+.nxMmInvDashBomSummary,
+.nxMmInvDashBomSummary .sapMText {
+    font-size: 0.72rem !important;
+    color: #0369A1 !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInvDashBomTable {
+    border: 1px solid #E0F2FE;
+    border-radius: 0.45rem;
+}
+
+.nxMmInvDashBomMatName,
+.nxMmInvDashBomMatName .sapMText {
+    font-size: 0.74rem !important;
+    font-weight: 600 !important;
+    color: #0F172A !important;
+}
+
+.nxMmInvDashBomMatCode,
+.nxMmInvDashBomMatCode .sapMText {
+    font-size: 0.66rem !important;
+    color: #94A3B8 !important;
+}
+
+.nxMmInvAnalysisHost--bomCompare {
+    padding: 0.15rem 0;
+}
+
+.nxMmInvBomCompareChart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    width: 100%;
+}
+
+.nxMmInvBomCompareRow {
+    padding: 0.45rem 0.5rem;
+    border-radius: 0.5rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+.nxMmInvBomCompareHead {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInvBomCompareName {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.nxMmInvBomCompareCode {
+    font-size: 0.66rem;
+    color: #94A3B8;
+}
+
+.nxMmInvBomCompareShared {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #C2410C;
+    background: #FFEDD5;
+    border-radius: 999px;
+    padding: 0.08rem 0.4rem;
+}
+
+.nxMmInvBomCompareBars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+}
+
+.nxMmInvBomCompareTrack {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr 3rem;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.nxMmInvBomCompareTag {
+    font-size: 0.64rem;
+    font-weight: 700;
+}
+
+.nxMmInvBomCompareTag--heat {
+    color: #EA580C;
+}
+
+.nxMmInvBomCompareTag--bag {
+    color: #0284C7;
+}
+
+.nxMmInvBomCompareBarWrap {
+    height: 0.55rem;
+    border-radius: 999px;
+    background: #E2E8F0;
+    overflow: hidden;
+}
+
+.nxMmInvBomCompareBar {
+    height: 100%;
+    border-radius: 999px;
+    min-width: 0;
+}
+
+.nxMmInvBomCompareBar--heat {
+    background: linear-gradient(90deg, #FB923C, #EA580C);
+}
+
+.nxMmInvBomCompareBar--bag {
+    background: linear-gradient(90deg, #38BDF8, #0284C7);
+}
+
+.nxMmInvBomCompareVal {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #334155;
+    text-align: right;
+}
+
+.nxMmInvDashChartBody--bomViz {
+    min-height: 11rem;
+    padding: 0.1rem 0 0;
+}
+
+.nxMmInvDashBomVizTabs {
+    margin-top: 0.05rem;
+}
+
+.nxMmInvDashBomVizBody {
+    padding-top: 0.2rem;
+}
+
+.nxMmInvAnalysisHost--bomMix {
+    width: 100%;
+    padding: 0.15rem 0.05rem;
+}
+
+.nxMmInvBomMixChart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    width: 100%;
+}
+
+.nxMmInvBomMixRow {
+    padding: 0.2rem 0.15rem;
+    border-radius: 0.4rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+.nxMmInvBomMixHead {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 0.3rem;
+}
+
+.nxMmInvBomMixName {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.nxMmInvBomMixShared {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #C2410C;
+    background: #FFEDD5;
+    border-radius: 999px;
+    padding: 0.06rem 0.38rem;
+}
+
+.nxMmInvBomMixTrackRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.nxMmInvBomMixTrack {
+    height: 0.65rem;
+    border-radius: 999px;
+    background: #E2E8F0;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.nxMmInvBomMixFill {
+    height: 100%;
+    border-radius: 999px;
+    min-width: 0;
+    transition: width 0.25s ease;
+}
+
+.nxMmInvBomMixMeta {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #334155;
+    white-space: nowrap;
+}
+
+.nxMmInvDashChartBody {
+    min-height: 11rem;
+    padding: 0.35rem 0;
+}
+
+.nxMmInvDashChartBody--dist {
+    min-height: 12rem;
+    padding: 0.1rem 0 0.2rem;
+}
+
+.nxMmInvDashCompTabs {
+    margin-top: 0.1rem;
+}
+
+.nxMmInvDashCompBody {
+    padding-top: 0.25rem;
+    gap: 0.2rem;
+}
+
+.nxMmInvDashChartBody--mmbe {
+    min-height: 11rem;
+    padding: 0.15rem 0 0.1rem;
+}
+
+.nxMmInvDashChartBody--mmbe .nxMmInvAnalysisHost--status {
+    min-height: 10rem;
+}
+
+.nxMmInvDashDistFilterBar {
+    margin: 0.15rem 0 0.2rem;
+    gap: 0.35rem;
+}
+
+.nxMmInvDashDistSegment .sapMSegBBtn {
+    min-width: 3.4rem;
+}
+
+.nxMmInvAnalysisHost--dist {
+    width: 100%;
+    padding: 0.25rem 0.35rem 0.15rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistColChart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    gap: 0.35rem;
+    width: 100%;
+    min-height: 10.5rem;
+    height: 10.5rem;
+    padding: 0 0.15rem 0.1rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistCol {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 3.75rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.28rem;
+    padding: 0.15rem 0.12rem 0.1rem;
+    border-radius: 0.45rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistCol--selected {
+    background: #F0F9FF;
+    box-shadow: inset 0 0 0 1px #BAE6FD;
+}
+
+.nxMmInvDistColValue {
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: #0F172A;
+    line-height: 1.1;
+    text-align: center;
+    white-space: nowrap;
+    min-height: 0.85rem;
+}
+
+.nxMmInvDistColTrack {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 2rem;
+    min-height: 5.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    border-radius: 0.45rem 0.45rem 0.2rem 0.2rem;
+    background: #E2E8F0;
+    overflow: hidden;
+}
+
+.nxMmInvDistColFill {
+    width: 100%;
+    border-radius: 0.45rem 0.45rem 0.15rem 0.15rem;
+    min-height: 0;
+    transition: height 0.25s ease;
+}
+
+.nxMmInvDistColFill--selected {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.75);
+}
+
+.nxMmInvDistColLabel {
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+    line-height: 1.15;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 0.9rem;
+}
+
+.nxMmInvDashGaugeList {
+    gap: 0.55rem;
+    padding: 0.35rem 0;
+    max-height: 14rem;
+    overflow-y: auto;
+}
+
+.nxMmInvDashGaugeItem {
+    padding: 0.35rem 0.15rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.nxMmInvDashGaugeLabel,
+.nxMmInvDashGaugeLabel .sapMText {
+    font-size: 0.78rem !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+}
+
+.nxMmInvDashGaugeBar {
+    margin-top: 0.25rem;
+}
+
+.nxMmInvDashPaneEmpty {
+    min-height: 10rem;
+    padding: 1rem;
+    background: #F8FAFC;
+    border-radius: 0.5rem;
+    border: 1px dashed #CBD5E1;
+}
+
+.nxMmInvDashPaneEmpty--chart {
+    min-height: 11rem;
+}
+
+.nxMmInvDashEmptyText,
+.nxMmInvDashEmptyText .sapMText {
+    color: #94A3B8 !important;
+    text-align: center;
+    font-size: 0.82rem !important;
+}
+
+.nxMmInvDashGlobalEmpty {
+    min-height: 16rem;
+    padding: 2rem 1rem;
+    background: #FFFFFF;
+    border-radius: 0.75rem;
+    border: 1px dashed #BAE6FD;
+}
+
+.nxMmInvDashEmptyTitle,
+.nxMmInvDashEmptyTitle .sapMTitle {
+    color: #64748B !important;
+    font-weight: 600 !important;
+}
+
+@media (max-width: 960px) {
+    .nxMmInvDashCard {
+        flex: 1 1 100%;
+    }
 }
 
 .nxDarkMode .nxNotesPanelBody {

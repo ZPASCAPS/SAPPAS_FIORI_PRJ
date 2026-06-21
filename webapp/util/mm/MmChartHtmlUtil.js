@@ -1,12 +1,12 @@
-/**
+﻿/**
  * MmChartHtmlUtil.js
  *
  * 역할:
  * - MM Reports 차트 HTML 생성 (SAP BomStock 실데이터, core:HTML 렌더링용)
  */
 sap.ui.define([
-    "com/capstone/dashboard/fioridashboard/util/MmUpMaterialFilterUtil",
-    "com/capstone/dashboard/fioridashboard/util/MmHeroUiUtil"
+    "com/capstone/dashboard/fioridashboard/util/mm/MmUpMaterialFilterUtil",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmHeroUiUtil"
 ], function (MmUpMaterialFilterUtil, MmHeroUiUtil) {
     "use strict";
 
@@ -288,6 +288,40 @@ sap.ui.define([
         return "<div class='nxMmOverviewBarChart nxMmOverviewBarChart--fillrate'>" + sRows + "</div>";
     }
 
+    function buildInventoryMaterialDistributionBar(aRows) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("재고 분포 데이터 없음");
+        }
+
+        var fMax = Math.max.apply(null, aRows.map(function (r) {
+            return Number(r.value || 0);
+        }).concat([1]));
+
+        var sCols = aRows.map(function (oRow, idx) {
+            var fVal = Number(oRow.value || 0);
+            var iH = fVal > 0 ? Math.max(8, Math.round((fVal / fMax) * 100)) : 0;
+            var sLabel = _shortLabel(oRow.label, 8);
+            var sColor = oRow.isFinished
+                ? "#0284C7"
+                : (oRow.isRaw ? "#0D9488" : TYPE_COLORS_OVERVIEW[idx % TYPE_COLORS_OVERVIEW.length]);
+            var sSelectedColClass = oRow.isSelected ? " nxMmInvDistCol--selected" : "";
+            var sSelectedFillClass = oRow.isSelected ? " nxMmInvDistColFill--selected" : "";
+            var sValueDisplay = _formatDonutQty(fVal);
+
+            return "<div class='nxMmInvDistCol" + sSelectedColClass + "' title='" +
+                _esc(oRow.label) + " · " + _esc(oRow.material) + "'>" +
+                "<div class='nxMmInvDistColValue'>" + sValueDisplay + "</div>" +
+                "<div class='nxMmInvDistColTrack'>" +
+                "<div class='nxMmInvDistColFill" + sSelectedFillClass +
+                "' style='height:" + iH + "%;background:" + sColor + "'></div></div>" +
+                "<div class='nxMmInvDistColLabel'>" + _esc(sLabel) + "</div>" +
+                "</div>";
+        }).join("");
+
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--dist'>" +
+            "<div class='nxMmInvDistColChart'>" + sCols + "</div></div>";
+    }
+
     function buildInventoryAnalysisTypeBar(aRows) {
         if (!aRows || !aRows.length) {
             return _overviewEmpty("데이터 없음");
@@ -338,6 +372,41 @@ sap.ui.define([
             "<div class='nxMmInvAnalysisBarChart'>" + sRows + "</div></div>";
     }
 
+    function _polarToCartesian(cx, cy, r, angleDeg) {
+        var rad = (angleDeg - 90) * Math.PI / 180;
+        return {
+            x: cx + (r * Math.cos(rad)),
+            y: cy + (r * Math.sin(rad))
+        };
+    }
+
+    function _describeDonutSlice(cx, cy, rOuter, rInner, startAngle, endAngle) {
+        var p1 = _polarToCartesian(cx, cy, rOuter, endAngle);
+        var p2 = _polarToCartesian(cx, cy, rOuter, startAngle);
+        var p3 = _polarToCartesian(cx, cy, rInner, startAngle);
+        var p4 = _polarToCartesian(cx, cy, rInner, endAngle);
+        var iLarge = (endAngle - startAngle) <= 180 ? 0 : 1;
+
+        return [
+            "M", p1.x, p1.y,
+            "A", rOuter, rOuter, 0, iLarge, 0, p2.x, p2.y,
+            "L", p3.x, p3.y,
+            "A", rInner, rInner, 0, iLarge, 1, p4.x, p4.y,
+            "Z"
+        ].join(" ");
+    }
+
+    function _formatDonutQty(nValue) {
+        var n = Number(nValue || 0);
+        if (isNaN(n)) {
+            return "0";
+        }
+        if (n % 1 === 0) {
+            return String(n);
+        }
+        return n.toFixed(2);
+    }
+
     function buildInventoryAnalysisStatusDonut(mCounts, iCenterTotal) {
         var aKeys = Object.keys(mCounts || {});
 
@@ -347,38 +416,125 @@ sap.ui.define([
 
         var iSum = aKeys.reduce(function (s, k) { return s + mCounts[k]; }, 0) || 1;
         var fCursor = 0;
-        var sGradient = "";
         var sLegend = "";
+        var sSlices = "";
+        var cx = 100;
+        var cy = 100;
+        var rOuter = 88;
+        var rInner = 54;
 
         aKeys.forEach(function (sKey, idx) {
             var iCount = mCounts[sKey];
             var fPct = (iCount / iSum) * 100;
+            var fStart = fCursor;
+            var fEnd = fCursor + (fPct / 100) * 360;
             var sColor = _statusColor(sKey);
+            var sTip = _esc(sKey) + " · " + fPct.toFixed(1) + "% · " + _formatDonutQty(iCount);
+            var sPath;
+
             if (sColor === STATUS_COLORS.UNKNOWN) {
                 sColor = TYPE_COLORS_OVERVIEW[idx % TYPE_COLORS_OVERVIEW.length];
             }
-            sGradient += sColor + " " + fCursor.toFixed(2) + "% " + (fCursor + fPct).toFixed(2) + "%";
-            if (idx < aKeys.length - 1) {
-                sGradient += ",";
+
+            if (fPct > 0) {
+                sPath = _describeDonutSlice(cx, cy, rOuter, rInner, fStart, fEnd);
+                sSlices += "<path class='nxMmInvDonutSlice' d='" + sPath + "' fill='" + sColor +
+                    "' data-tip='" + sTip + "'><title>" + sTip + "</title></path>";
             }
-            sLegend += "<div class='nxMmInvAnalysisLegendItem'>" +
+
+            sLegend += "<div class='nxMmInvAnalysisLegendItem' title='" + sTip + "'>" +
                 "<span class='nxMmInvAnalysisLegendSwatch' style='background:" + sColor + "'></span>" +
-                "<span class='nxMmInvAnalysisLegendText'>" + _esc(sKey) + " · " + iCount +
-                " (" + fPct.toFixed(0) + "%)</span></div>";
-            fCursor += fPct;
+                "<span class='nxMmInvAnalysisLegendText'>" + _esc(sKey) + " · " + _formatDonutQty(iCount) +
+                " (" + fPct.toFixed(1) + "%)</span></div>";
+            fCursor = fEnd;
         });
 
         var sCenter = iCenterTotal !== null && iCenterTotal !== undefined
-            ? String(iCenterTotal)
-            : String(iSum);
+            ? _formatDonutQty(iCenterTotal)
+            : _formatDonutQty(iSum);
 
-        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--status'>" +
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--status nxMmInvAnalysisHost--donutTip'>" +
             "<div class='nxMmInvAnalysisDonutWrap'>" +
-            "<div class='nxMmInvAnalysisDonut' style='background:conic-gradient(" + sGradient + ")'>" +
-            "<div class='nxMmInvAnalysisDonutHole'>" +
-            "<div class='nxMmInvAnalysisDonutValue'>" + _esc(sCenter) + "</div>" +
-            "<div class='nxMmInvAnalysisDonutLabel'>Total Materials</div></div></div>" +
+            "<div class='nxMmInvAnalysisDonutSvgWrap'>" +
+            "<svg class='nxMmInvAnalysisDonutSvg' viewBox='0 0 200 200' role='img' aria-label='재고 구성 비율'>" +
+            sSlices +
+            "<circle cx='" + cx + "' cy='" + cy + "' r='" + rInner + "' fill='#FFFFFF'></circle>" +
+            "<text x='" + cx + "' y='" + (cy - 4) + "' text-anchor='middle' class='nxMmInvDonutSvgValue'>" + _esc(sCenter) + "</text>" +
+            "<text x='" + cx + "' y='" + (cy + 14) + "' text-anchor='middle' class='nxMmInvDonutSvgLabel'>Total Stock</text>" +
+            "</svg>" +
+            "<div class='nxMmInvDonutTooltip' aria-hidden='true'></div>" +
+            "</div>" +
             "<div class='nxMmInvAnalysisLegend'>" + sLegend + "</div></div></div>";
+    }
+
+    function buildInventoryUnitBomMixChart(aRows, sTheme, bStockMode) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("BOM 데이터 없음");
+        }
+
+        var aHeatColors = ["#EA580C", "#F97316", "#FB923C", "#FDBA74"];
+        var aBagColors = ["#0284C7", "#0D9488", "#6366F1", "#0891B2"];
+        var aColors = sTheme === "bag" ? aBagColors : aHeatColors;
+        var sThemeClass = sTheme === "bag" ? "nxMmInvBomMixChart--bag" : "nxMmInvBomMixChart--heat";
+        var sQtyLabel = bStockMode ? "가용" : "1PC";
+
+        var sRows = aRows.map(function (oRow, idx) {
+            var sColor = aColors[idx % aColors.length];
+            var sShared = oRow.shared
+                ? "<span class='nxMmInvBomMixShared'>공용</span>"
+                : "";
+            var sMeta = bStockMode
+                ? _esc(oRow.qtyDisplay) + " " + sQtyLabel + " · " + _esc(oRow.mixDisplay)
+                : _esc(oRow.qtyDisplay) + " · " + _esc(oRow.mixDisplay);
+
+            return "<div class='nxMmInvBomMixRow'>" +
+                "<div class='nxMmInvBomMixHead'>" +
+                "<span class='nxMmInvBomMixName'>" + _esc(oRow.materialName) + "</span>" +
+                sShared +
+                "</div>" +
+                "<div class='nxMmInvBomMixTrackRow'>" +
+                "<div class='nxMmInvBomMixTrack'><div class='nxMmInvBomMixFill' style='width:" + oRow.barPct +
+                "%;background:" + sColor + "'></div></div>" +
+                "<span class='nxMmInvBomMixMeta'>" + sMeta + "</span>" +
+                "</div></div>";
+        }).join("");
+
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--bomMix " + sThemeClass + "'>" +
+            "<div class='nxMmInvBomMixChart'>" + sRows + "</div></div>";
+    }
+
+    function buildInventoryUnitBomCompare(aRows) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("BOM 데이터 없음");
+        }
+
+        var sRows = aRows.map(function (oRow) {
+            var sShared = oRow.shared
+                ? "<span class='nxMmInvBomCompareShared'>공용</span>"
+                : "";
+            return "<div class='nxMmInvBomCompareRow'>" +
+                "<div class='nxMmInvBomCompareHead'>" +
+                "<span class='nxMmInvBomCompareName'>" + _esc(oRow.materialName) + "</span>" +
+                sShared +
+                "<span class='nxMmInvBomCompareCode'>" + _esc(oRow.material) + "</span>" +
+                "</div>" +
+                "<div class='nxMmInvBomCompareBars'>" +
+                "<div class='nxMmInvBomCompareTrack'>" +
+                "<span class='nxMmInvBomCompareTag nxMmInvBomCompareTag--heat'>히트텍</span>" +
+                "<div class='nxMmInvBomCompareBarWrap'><div class='nxMmInvBomCompareBar nxMmInvBomCompareBar--heat' style='width:" +
+                oRow.heattechPct + "%'></div></div>" +
+                "<span class='nxMmInvBomCompareVal'>" + _esc(oRow.heattechDisplay) + "</span>" +
+                "</div>" +
+                "<div class='nxMmInvBomCompareTrack'>" +
+                "<span class='nxMmInvBomCompareTag nxMmInvBomCompareTag--bag'>가방</span>" +
+                "<div class='nxMmInvBomCompareBarWrap'><div class='nxMmInvBomCompareBar nxMmInvBomCompareBar--bag' style='width:" +
+                oRow.bagPct + "%'></div></div>" +
+                "<span class='nxMmInvBomCompareVal'>" + _esc(oRow.bagDisplay) + "</span>" +
+                "</div></div></div>";
+        }).join("");
+
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--bomCompare'>" +
+            "<div class='nxMmInvBomCompareChart'>" + sRows + "</div></div>";
     }
 
     function buildInventoryAnalysisShortageBar(aRows) {
@@ -979,9 +1135,12 @@ sap.ui.define([
 
         buildOverviewShortageBar: buildOverviewShortageBar,
         buildInventoryFillRateBar: buildInventoryFillRateBar,
+        buildInventoryMaterialDistributionBar: buildInventoryMaterialDistributionBar,
         buildInventoryAnalysisTypeBar: buildInventoryAnalysisTypeBar,
         buildInventoryAnalysisFillRateBar: buildInventoryAnalysisFillRateBar,
         buildInventoryAnalysisStatusDonut: buildInventoryAnalysisStatusDonut,
+        buildInventoryUnitBomMixChart: buildInventoryUnitBomMixChart,
+        buildInventoryUnitBomCompare: buildInventoryUnitBomCompare,
         buildInventoryAnalysisShortageBar: buildInventoryAnalysisShortageBar,
         buildPurchasingLinkDonut: buildPurchasingLinkDonut,
         buildPurchasingDataAvailability: buildPurchasingDataAvailability,

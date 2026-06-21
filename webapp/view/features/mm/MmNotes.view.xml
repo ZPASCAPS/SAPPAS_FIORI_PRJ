@@ -1,8 +1,8 @@
-<!--
+﻿<!--
   MmNotes.view.xml — MM 업무 노트 (LocalStorage, OData 미사용)
 -->
 <mvc:View
-    controllerName="com.capstone.dashboard.fioridashboard.controller.features.MmNotes"
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.mm.MmNotes"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"

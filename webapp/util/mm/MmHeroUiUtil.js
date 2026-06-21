@@ -6,7 +6,7 @@
 sap.ui.define([], function () {
     "use strict";
 
-    var UNIQLO_LABEL = "Uniqlo Material";
+    var UNIQLO_LABEL = "Uniqlo BOM 자재";
     var NO_DATA = "데이터 없음";
 
     function formatCount(nCount) {

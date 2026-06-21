@@ -1,7 +1,7 @@
-<!--
+﻿<!--
   DashboardCanvas.view.xml
-  MM: MmOverview | MmInventory | MmPurchasing | MmGoodsMovement | MmReports
-  FI: FiOverview | FiGeneralLedger | FiAccountsPayable | FiAccountsReceivable | FiReport
+  MM: MmOverview | MmInventory | MmPurchasing
+  FI: FiOverview | FiGeneralLedger | FiAccountsPayable
   메모장: DashboardHeader → NotesPanel (오버레이)
 -->
 <mvc:View
@@ -46,7 +46,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmOverview"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmOverview"
                 width="100%" />
         </ScrollContainer>
 
@@ -70,7 +70,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmInventory"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmInventory"
                 width="100%" />
         </ScrollContainer>
 
@@ -94,7 +94,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmPurchasing"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmPurchasing"
                 width="100%" />
         </ScrollContainer>
 
@@ -118,7 +118,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmGoodsMovement"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmGoodsMovement"
                 width="100%" />
         </ScrollContainer>
 
@@ -142,7 +142,7 @@
             height="100%"
             width="100%">
             <mvc:XMLView
-                viewName="com.capstone.dashboard.fioridashboard.view.features.MmReports"
+                viewName="com.capstone.dashboard.fioridashboard.view.features.mm.MmReports"
                 width="100%" />
         </ScrollContainer>
 

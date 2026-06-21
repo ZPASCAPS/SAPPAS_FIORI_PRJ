@@ -59,11 +59,26 @@
                                 <core:Icon src="sap-icon://money-bills" size="1.1rem" color="#FFFFFF" />
                             </VBox>
                         </HBox>
-                        <VBox class="fiEmptyState" alignItems="Center" justifyContent="Center">
+                        <VBox
+                            visible="{= !${dashboard>/fiAccountsPayable/odataConnected} }"
+                            class="fiEmptyState"
+                            alignItems="Center"
+                            justifyContent="Center">
                             <core:Icon src="sap-icon://database" size="2rem" color="#94A3B8" class="sapUiSmallMarginBottom" />
                             <Text text="{dashboard>/fiAccountsPayable/emptyMessage}" class="fiEmptyStateTitle" />
                             <Text text="{dashboard>/fiAccountsPayable/emptyHint}" class="fiEmptyStateHint" />
                         </VBox>
+                        <List
+                            visible="{dashboard>/fiAccountsPayable/odataConnected}"
+                            items="{fiAP>/Z_C_FI_AP}"
+                            growing="true"
+                            growingThreshold="20"
+                            noDataText="데이터 없음"
+                            width="100%">
+                            <items>
+                                <StandardListItem type="Active" />
+                            </items>
+                        </List>
                     </VBox>
                 </VBox>
 

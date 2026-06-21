@@ -1,19 +1,19 @@
-/**
+﻿/**
  * MmGoodsMovement.controller.js — MM Goods Movement Monitor (SAP OData)
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-    "com/capstone/dashboard/fioridashboard/service/MmGoodsMovementDataService"
+    "com/capstone/dashboard/fioridashboard/service/mm/MmGoodsMovementDataService"
 ], function (Controller, MessageToast, MessageBox, MmGoodsMovementDataService) {
     "use strict";
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.MmGoodsMovement", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmGoodsMovement", {
 
         onInit: function () {
             this._oCache = null;
-            this._bDataLoaded = false;
+            this._bLoading = false;
             this._oEventBus = sap.ui.getCore().getEventBus();
             this._fnRefreshHandler = this._onGlobalRefresh.bind(this);
             this._fnGoodsMovementActionHandler = this._onMmGoodsMovementAction.bind(this);
@@ -81,8 +81,10 @@ sap.ui.define([
             if (!this._isGoodsMovementActive()) {
                 return;
             }
-            if (!this._bDataLoaded) {
-                this._bDataLoaded = true;
+            if (this._bLoading) {
+                return;
+            }
+            if (!this._oCache || !this._getDashboardModel().getProperty("/mmGoodsMovement/loaded")) {
                 this._loadGoodsMovement(true);
             }
         },
@@ -189,6 +191,11 @@ sap.ui.define([
                 return;
             }
 
+            if (this._bLoading) {
+                return;
+            }
+            this._bLoading = true;
+
             if (bApplyCurrentQuery) {
                 sSelectedId = oModel.getProperty("/mmGoodsMovement/selectedMovementId") || "";
             }
@@ -212,9 +219,12 @@ sap.ui.define([
 
                     this._applyGoodsMovementState(sSelectedId);
                     this._setLoading(false);
+                    this._bLoading = false;
                 }.bind(this))
                 .catch(function (oError) {
                     this._setLoading(false);
+                    this._bLoading = false;
+                    this._oCache = null;
                     oModel.setProperty("/mmGoodsMovement/loaded", false);
                     oModel.setProperty("/mmGoodsMovement/error", oError.message || "SAP OData 조회 실패");
                     MessageBox.error(oError.message || "SAP OData 조회에 실패했습니다.");
@@ -253,10 +263,11 @@ sap.ui.define([
 
         onSearchPress: function () {
             if (!this._oCache) {
-                this._showGoodsMovementToast("데이터를 먼저 조회해 주세요.");
+                this._loadGoodsMovement(true);
                 return;
             }
             this._applyGoodsMovementState("");
+            this._showGoodsMovementToast("조회 조건을 적용했습니다.");
         },
 
         onResetPress: function () {
@@ -275,6 +286,8 @@ sap.ui.define([
 
             if (this._oCache) {
                 this._applyGoodsMovementState("");
+            } else {
+                this._loadGoodsMovement(true);
             }
         },
 

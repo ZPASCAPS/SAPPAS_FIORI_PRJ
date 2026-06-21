@@ -1,8 +1,8 @@
-<!--
+﻿<!--
   MmReports.view.xml
 
-  View: com.capstone.dashboard.fioridashboard.view.features.MmReports
-  Controller: com.capstone.dashboard.fioridashboard.controller.features.MmReports
+  View: com.capstone.dashboard.fioridashboard.view.features.mm.MmReports
+  Controller: com.capstone.dashboard.fioridashboard.controller.features.mm.MmReports
 
   역할:
   - MM Reports — SAP BomStock 실데이터 기반 차트 + 재고 테이블 (화려한 OVP 스타일)
@@ -11,7 +11,7 @@
   - dashboard>/mmReports/* (OData BomStockSet → DashboardDataService.refreshDashboard)
 -->
 <mvc:View
-    controllerName="com.capstone.dashboard.fioridashboard.controller.features.MmReports"
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.mm.MmReports"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
