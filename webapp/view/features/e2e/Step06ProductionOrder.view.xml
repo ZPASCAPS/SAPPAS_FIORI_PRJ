@@ -22,14 +22,14 @@
     xmlns="sap.m" 
     xmlns:core="sap.ui.core">
     
-    <VBox id="e2eStepCard" class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos05" renderType="Bare">
+    <VBox id="e2eStepCard" class="e2eMtoProcessCard e2eMtoCardPending e2eStepPos06" renderType="Bare">
         <HBox alignItems="Center" justifyContent="SpaceBetween">
-            <Text text="6. Production Order" class="e2eMtoCardTitle" />
+            <Text text="6. 생산 오더" class="e2eMtoCardTitle" />
             <ObjectStatus id="e2eStepStatus" text="예정" state="None" class="e2eMtoCardStatus" />
         </HBox>
         
         <Text text="{flowModel>/ProductionOrder}" class="e2eMtoCardDoc" />
         
-        <Text text="작업장 M001" class="e2eMtoCardDetail" />
+        <Text text="Production Order" class="e2eMtoCardDetail" />
     </VBox>
 </mvc:View>

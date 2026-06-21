@@ -1,0 +1,131 @@
+<!--
+  FiOverview.view.xml - FI Overview onboarding landing page
+-->
+<mvc:View
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.fi.FiOverview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    width="100%">
+
+    <VBox class="nxFiOverview fiCockpitPage fiOnboardingPage" width="100%" renderType="Bare">
+        <MessageStrip
+            text="{dashboard>/fiOverview/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= !!${dashboard>/fiOverview/error} }"
+            class="sapUiSmallMarginBottom" />
+
+        <BusyIndicator visible="{dashboard>/fiOverview/loading}" class="nxFiOverviewBusy" />
+
+        <VBox visible="{= !${dashboard>/fiOverview/loading} }" width="100%" renderType="Bare" class="nxFiOverviewBody fiOnboardingBody">
+            <VBox class="fiOnboardingHero" width="100%">
+                <HBox alignItems="Start" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="fiOnboardingHeroRow">
+                    <VBox class="fiOnboardingHeroText" width="100%">
+                        <HBox alignItems="Center" class="fiOnboardingBadgeRow" wrap="Wrap">
+                            <ObjectStatus
+                                text="FI Module"
+                                state="Success"
+                                class="fiOnboardingModuleBadge" />
+                            <Text text="SAP Fiori Dashboard" class="fiOnboardingHeroMeta" />
+                        </HBox>
+                        <Title text="Financial Accounting" level="H2" class="fiOnboardingHeroTitle" />
+                        <Title
+                            text="&#xC7AC;&#xBB34;&#xB7;&#xD68C;&#xACC4; &#xC628;&#xBCF4;&#xB529;"
+                            level="H3"
+                            class="fiOnboardingHeroSubtitle" />
+                        <Text
+                            text="&#xACE0;&#xAC1D; &#xBBF8;&#xC218;&#xAE08;, &#xCCAD;&#xAD6C;&#xB7;&#xC785;&#xAE08;, &#xCC44;&#xAD8C;&#xB7;&#xCC44;&#xBB34; &#xD604;&#xD669;&#xC744; Fiori &#xB300;&#xC2DC;&#xBCF4;&#xB4DC;&#xC5D0;&#xC11C; &#xD655;&#xC778;&#xD558;&#xC138;&#xC694;. &#xC544;&#xB798; &#xAE30;&#xB2A5;&#xCE74;&#xB4DC;&#xB97C; &#xD074;&#xB9AD;&#xD558;&#xBA74; &#xBC14;&#xB85C; &#xC774;&#xB3D9;&#xD569;&#xB2C8;&#xB2E4;."
+                            class="fiOnboardingHeroDesc" />
+                        <HBox alignItems="Center" wrap="Wrap" class="fiOnboardingHeroActions">
+                            <Button
+                                text="Customer Receipt &#xBC14;&#xB85C;&#xAC00;&#xAE30;"
+                                icon="sap-icon://money-bills"
+                                type="Emphasized"
+                                press=".onOpenCustomerReceipt"
+                                class="fiOnboardingPrimaryBtn" />
+                            <Button
+                                text="&#xAE30;&#xB2A5; &#xBAA9;&#xB85D; &#xBC14;&#xB85C;&#xAC00;&#xAE30;"
+                                icon="sap-icon://arrow-down"
+                                type="Transparent"
+                                press=".onScrollToFeatures"
+                                class="fiOnboardingGhostBtn" />
+                        </HBox>
+                    </VBox>
+                    <VBox alignItems="Center" justifyContent="Center" class="fiOnboardingHeroVisual">
+                        <VBox alignItems="Center" class="fiOnboardingIconCluster">
+                            <core:Icon src="sap-icon://money-bills" size="2.4rem" color="#FFFFFF" class="fiOnboardingIconMain" />
+                            <HBox class="fiOnboardingIconOrbit" wrap="Wrap" justifyContent="Center">
+                                <core:Icon src="sap-icon://ledger" size="1.35rem" color="rgba(255,255,255,0.92)" />
+                                <core:Icon src="sap-icon://payment-approval" size="1.35rem" color="rgba(255,255,255,0.92)" />
+                                <core:Icon src="sap-icon://customer-financial-fact-sheet" size="1.35rem" color="rgba(255,255,255,0.92)" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <VBox class="fiOnboardingSection" width="100%">
+                <Title text="&#xBE60;&#xB978; &#xC2DC;&#xC791;" level="H4" class="fiOnboardingSectionTitle" />
+                <HBox class="fiOnboardingStepGrid" width="100%" wrap="Wrap" renderType="Bare" items="{dashboard>/fiOverview/steps}">
+                    <items>
+                        <VBox class="fiOnboardingStepCard">
+                            <Text text="{dashboard>number}" class="fiOnboardingStepNumber" />
+                            <Title text="{dashboard>title}" level="H5" class="fiOnboardingStepTitle" />
+                            <Text text="{dashboard>description}" class="fiOnboardingStepDesc" />
+                        </VBox>
+                    </items>
+                </HBox>
+            </VBox>
+
+            <VBox id="fiOverviewFeatureSection" class="fiOnboardingSection" width="100%">
+                <HBox alignItems="Center" justifyContent="SpaceBetween" wrap="Wrap" width="100%" class="fiOnboardingSectionHead">
+                    <Title text="&#xAE30;&#xB2A5; &#xBAA9;&#xB85D;" level="H4" class="fiOnboardingSectionTitle" />
+                    <Text
+                        text="&#xC0AC;&#xC6A9; &#xAC00;&#xB2A5;&#xD55C; &#xAE30;&#xB2A5;&#xC740; &#xCE74;&#xB4DC;&#xB97C; &#xD074;&#xB9AD;&#xD558;&#xC138;&#xC694;"
+                        class="fiOnboardingSectionHint" />
+                </HBox>
+                <HBox class="fiOnboardingFeatureGrid" width="100%" wrap="Wrap" renderType="Bare" items="{dashboard>/fiOverview/features}">
+                    <items>
+                        <VBox
+                            class="{= ${dashboard>available} ? 'fiOnboardingFeatureTile fiOnboardingFeatureTile--available' : 'fiOnboardingFeatureTile fiOnboardingFeatureTile--soon' }"
+                            width="100%">
+                            <customData>
+                                <core:CustomData key="featureKey" value="{dashboard>key}" />
+                            </customData>
+                            <HBox alignItems="Start" justifyContent="SpaceBetween" width="100%" class="fiOnboardingFeatureHead">
+                                <VBox class="fiOnboardingFeatureIconWrap">
+                                    <core:Icon src="{dashboard>icon}" size="1.35rem" color="#FFFFFF" />
+                                </VBox>
+                                <ObjectStatus
+                                    text="{dashboard>badge}"
+                                    state="{= ${dashboard>available} ? 'Success' : 'None' }"
+                                    class="fiOnboardingFeatureBadge" />
+                            </HBox>
+                            <Title text="{dashboard>title}" level="H5" class="fiOnboardingFeatureTitle" />
+                            <Text text="{dashboard>subtitle}" class="fiOnboardingFeatureSub" />
+                            <Text text="{dashboard>description}" class="fiOnboardingFeatureDesc" />
+                            <Button
+                                text="{dashboard>actionText}"
+                                type="{= ${dashboard>available} ? 'Emphasized' : 'Transparent' }"
+                                icon="{dashboard>actionIcon}"
+                                enabled="{dashboard>available}"
+                                press=".onFeaturePress"
+                                class="fiOnboardingFeatureBtn">
+                                <customData>
+                                    <core:CustomData key="featureKey" value="{dashboard>key}" />
+                                </customData>
+                            </Button>
+                        </VBox>
+                    </items>
+                </HBox>
+            </VBox>
+
+            <MessageStrip
+                text="&#xC0C1;&#xB2E8; Financial Accounting &#xBA54;&#xB274;&#xC758; Customer Receipt&#xC5D0;&#xC11C; &#xACE0;&#xAC1D;&#xBCC4; &#xCCAD;&#xAD6C;&#xB7;&#xC785;&#xAE08; &#xD604;&#xD669;&#xC744; &#xC870;&#xD68C;&#xD560; &#xC218; &#xC788;&#xC2B5;&#xB2C8;&#xB2E4;."
+                type="Information"
+                showIcon="true"
+                class="fiOnboardingInfoStrip" />
+        </VBox>
+    </VBox>
+</mvc:View>

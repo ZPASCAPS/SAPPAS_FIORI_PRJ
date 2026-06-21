@@ -53,7 +53,8 @@
                 text="Overview"
                 type="Transparent"
                 press=".onSubTabPress"
-                class="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' ? (${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem') : (${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab') }">
+                visible="{= ${dashboard>/ui/navKey} !== 'MM_MATERIALS' &amp;&amp; ${dashboard>/ui/navKey} !== 'FI_CO_FINANCE' }"
+                class="{= ${dashboard>/moduleView/activeSubTab} === 'OVERVIEW' ? 'nxModuleSubTab nxModuleSubTabActive' : 'nxModuleSubTab' }">
                 <customData><core:CustomData key="subTabKey" value="OVERVIEW" /></customData>
             </Button>
             <Button
@@ -88,8 +89,8 @@
                 text="Inventory"
                 type="Transparent"
                 press=".onSubTabPress"
-                visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'INVENTORY' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem' }">
+                visible="false"
+                class="mmSubNavItem">
                 <customData><core:CustomData key="subTabKey" value="INVENTORY" /></customData>
             </Button>
             <Button
@@ -97,8 +98,8 @@
                 text="Purchasing"
                 type="Transparent"
                 press=".onSubTabPress"
-                visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' }"
-                class="{= ${dashboard>/moduleView/activeSubTab} === 'PURCHASING' ? 'mmSubNavItem mmSubNavItemActive' : 'mmSubNavItem' }">
+                visible="false"
+                class="mmSubNavItem">
                 <customData><core:CustomData key="subTabKey" value="PURCHASING" /></customData>
             </Button>
             <Button

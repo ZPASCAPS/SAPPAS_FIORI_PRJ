@@ -5,8 +5,12 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
-    "com/capstone/dashboard/fioridashboard/service/mm/MmInventoryDataService"
-], function (Controller, JSONModel, MessageToast, MmInventoryDataService) {
+    "sap/m/Column",
+    "sap/m/ColumnListItem",
+    "sap/m/Text",
+    "com/capstone/dashboard/fioridashboard/service/mm/MmInventoryDataService",
+    "com/capstone/dashboard/fioridashboard/service/mm/MmStockLogDataService"
+], function (Controller, JSONModel, MessageToast, Column, ColumnListItem, Text, MmInventoryDataService, MmStockLogDataService) {
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmInventory", {
@@ -32,6 +36,12 @@ sap.ui.define([
                 new JSONModel(MmInventoryDataService.getEmptyStockPositionViewState()),
                 "stockPositionView"
             );
+            this.getView().setModel(
+                new JSONModel(MmStockLogDataService.getEmptyPopoverState()),
+                "stockLogView"
+            );
+
+            this._oStockLogRequestToken = 0;
 
             this._oEventBus.subscribe("dashboard", "refreshData", this._fnRefreshHandler, this);
             this._oEventBus.subscribe("dashboard", "mmInventoryAction", this._fnInventoryActionHandler, this);
@@ -53,6 +63,8 @@ sap.ui.define([
             if (oModel && this._fnNavChange) {
                 oModel.detachPropertyChange(this._fnNavChange, this);
             }
+
+            this._closeStockLogPopover();
         },
 
         _getDashboardModel: function () {
@@ -68,6 +80,242 @@ sap.ui.define([
             return this.getView().getModel("inventoryView");
         },
 
+        _getStockLogViewModel: function () {
+            return this.getView().getModel("stockLogView");
+        },
+
+        _sortMmbeRows: function (aRows) {
+            return MmInventoryDataService.sortMmbeDisplayRows(aRows);
+        },
+
+        _enrichMmbeRowsForView: function (aRows) {
+            return this._sortMmbeRows(aRows).map(function (oRow) {
+                return Object.assign({}, oRow, {
+                    logClickable: MmStockLogDataService.parseRowQuantity(oRow.Quantity) > 0
+                });
+            });
+        },
+
+        _closeStockLogPopover: function () {
+            var oPopover = this.byId("mmStockLogPopover");
+            var oLogView = this._getStockLogViewModel();
+
+            if (oPopover && oPopover.isOpen()) {
+                oPopover.close();
+            }
+
+            this._oStockLogRequestToken += 1;
+
+            if (oLogView) {
+                oLogView.setData(MmStockLogDataService.getEmptyPopoverState());
+            }
+        },
+
+        _refreshStockLogTableBinding: function () {
+            var oTable = this.byId("mmStockLogPopoverTable");
+            var oBinding;
+
+            if (!oTable) {
+                return;
+            }
+
+            oBinding = oTable.getBinding("items");
+            if (oBinding) {
+                oBinding.refresh(true);
+            }
+            oTable.invalidate();
+        },
+
+        _rebuildStockLogTable: function (aColumnDefs) {
+            var oTable = this.byId("mmStockLogPopoverTable");
+            var i;
+
+            if (!oTable) {
+                return;
+            }
+
+            oTable.setFixedLayout(false);
+            oTable.destroyColumns();
+            oTable.destroyItems();
+            oTable.unbindItems();
+
+            for (i = 0; i < aColumnDefs.length; i++) {
+                oTable.addColumn(new Column({
+                    width: aColumnDefs[i].width || "auto",
+                    hAlign: aColumnDefs[i].hAlign || "Begin",
+                    header: new Text({
+                        text: aColumnDefs[i].label,
+                        wrapping: false
+                    })
+                }));
+            }
+
+            oTable.bindItems({
+                path: "stockLogView>/rows",
+                factory: function (sId, oContext) {
+                    var aCells = aColumnDefs.map(function (oCol) {
+                        var vValue = oContext.getProperty(oCol.key);
+                        var sText = MmStockLogDataService.formatDisplayValue(oCol.key, vValue);
+                        var sAlignClass = oCol.hAlign === "End"
+                            ? " nxMmStockLogCell--end"
+                            : (oCol.hAlign === "Center" ? " nxMmStockLogCell--center" : "");
+
+                        return new Text({
+                            text: sText,
+                            wrapping: false,
+                            maxLines: 1,
+                            tooltip: sText,
+                            textAlign: oCol.hAlign === "End" ? "End" : (oCol.hAlign === "Center" ? "Center" : "Begin")
+                        }).addStyleClass("nxMmStockLogCell" + sAlignClass);
+                    });
+
+                    return new ColumnListItem({ cells: aCells });
+                }
+            });
+        },
+
+        _applyStockLogViewState: function (oState) {
+            var oLogView = this._getStockLogViewModel();
+
+            if (!oLogView) {
+                return;
+            }
+
+            oLogView.setData(Object.assign(MmStockLogDataService.getEmptyPopoverState(), oState));
+            oLogView.refresh(true);
+        },
+
+        _loadStockLogData: function (oRow) {
+            var oLogView = this._getStockLogViewModel();
+            var oComponent = this.getOwnerComponent();
+            var oStockView = this._getStockPositionViewModel();
+            var oContext;
+            var oCfg;
+            var nToken;
+            var sStockTypeName;
+
+            if (!oLogView || !oComponent || !oRow) {
+                return;
+            }
+
+            sStockTypeName = String(oRow.StockTypeName || "").trim();
+            oCfg = MmStockLogDataService.getStockLogConfig(sStockTypeName);
+
+            if (!oCfg) {
+                this._applyStockLogViewState({
+                    loading: false,
+                    error: "지원하지 않는 Stock Type입니다.",
+                    title: sStockTypeName || "재고 근거 문서"
+                });
+                return;
+            }
+
+            oContext = {
+                material: String(oRow.Material || oStockView.getProperty("/material") || "").trim(),
+                materialName: oRow.MaterialName || oStockView.getProperty("/materialName"),
+                plant: oRow.Plant || MmStockLogDataService.FIXED_PLANT,
+                storageLocation: oRow.StorageLocation,
+                stockTypeName: sStockTypeName
+            };
+
+            nToken = ++this._oStockLogRequestToken;
+
+            this._applyStockLogViewState({
+                loading: true,
+                error: "",
+                hasData: false,
+                rows: [],
+                title: sStockTypeName,
+                contextLine: MmStockLogDataService.buildContextLine(oContext),
+                hint: oCfg.hint
+            });
+            this._rebuildStockLogTable(oCfg.fields);
+
+            MmStockLogDataService.loadStockLog(oComponent, sStockTypeName, oContext)
+                .then(function (oResult) {
+                    var aResults = oResult && oResult.rows ? oResult.rows : [];
+
+                    if (nToken !== this._oStockLogRequestToken) {
+                        return;
+                    }
+
+                    this._applyStockLogViewState({
+                        loading: false,
+                        error: "",
+                        hasData: aResults.length > 0,
+                        rows: aResults,
+                        title: sStockTypeName,
+                        contextLine: MmStockLogDataService.buildContextLine(oContext),
+                        hint: oCfg.hint
+                    });
+
+                    setTimeout(function () {
+                        if (nToken !== this._oStockLogRequestToken) {
+                            return;
+                        }
+                        this._rebuildStockLogTable(oCfg.fields);
+                        this._refreshStockLogTableBinding();
+                    }.bind(this), 0);
+                }.bind(this))
+                .catch(function (oError) {
+                    if (nToken !== this._oStockLogRequestToken) {
+                        return;
+                    }
+
+                    this._applyStockLogViewState({
+                        loading: false,
+                        error: (oError && oError.message) || MmStockLogDataService.LOAD_ERROR,
+                        hasData: false,
+                        rows: [],
+                        title: sStockTypeName,
+                        contextLine: MmStockLogDataService.buildContextLine(oContext),
+                        hint: oCfg.hint
+                    });
+                    this._rebuildStockLogTable(oCfg.fields);
+                }.bind(this));
+        },
+
+        onStockTypePress: function (oEvent) {
+            var oSource = oEvent.getSource();
+            var oCtx = oSource.getBindingContext("stockPositionView");
+            var oRow = oCtx && oCtx.getObject();
+            var oPopover = this.byId("mmStockLogPopover");
+            var nQuantity;
+
+            if (!oRow || !oPopover) {
+                return;
+            }
+
+            nQuantity = MmStockLogDataService.parseRowQuantity(oRow.Quantity);
+
+            /* eslint-disable no-console */
+            console.log("[StockLog] click", {
+                stockType: oRow.StockTypeName,
+                material: oRow.Material,
+                plant: oRow.Plant,
+                storageLocation: oRow.StorageLocation,
+                quantity: oRow.Quantity
+            });
+            /* eslint-enable no-console */
+
+            if (nQuantity <= 0) {
+                /* eslint-disable no-console */
+                console.log("[StockLog] skip because quantity is zero", {
+                    stockType: oRow.StockTypeName,
+                    quantity: oRow.Quantity
+                });
+                /* eslint-enable no-console */
+                return;
+            }
+
+            oPopover.openBy(oSource);
+            this._loadStockLogData(oRow);
+        },
+
+        onStockLogPopoverClose: function () {
+            this._closeStockLogPopover();
+        },
+
         _loadStockPositionForSelectedMaterial: function (sMaterial, sMaterialName) {
             var oStockView = this._getStockPositionViewModel();
             var oComponent = this.getOwnerComponent();
@@ -77,6 +325,8 @@ sap.ui.define([
                 return;
             }
 
+            this._closeStockLogPopover();
+
             oStockView.setProperty("/loading", true);
             oStockView.setProperty("/material", sMat);
             oStockView.setProperty("/materialName", sMaterialName || sMat);
@@ -84,11 +334,11 @@ sap.ui.define([
             oStockView.setProperty("/showNoRows", false);
 
             if (this._oCache && this._oCache.stockPositionRows) {
-                oStockView.setProperty("/rows", MmInventoryDataService.buildMmbeRowsForMaterial(
+                oStockView.setProperty("/rows", this._enrichMmbeRowsForView(MmInventoryDataService.buildMmbeRowsForMaterial(
                     this._oCache,
                     sMat,
                     this._getFiltersFromModel()
-                ));
+                )));
             }
 
             MmInventoryDataService.loadStockPositionForMaterial(
@@ -101,7 +351,7 @@ sap.ui.define([
                     allStockPositionRows: this._oCache && this._oCache.stockPositionRows
                 }
             ).then(function (aRows) {
-                oStockView.setProperty("/rows", aRows);
+                oStockView.setProperty("/rows", this._enrichMmbeRowsForView(aRows));
                 oStockView.setProperty("/showNoRows", aRows.length === 0);
                 oStockView.setProperty("/loading", false);
             }.bind(this)).catch(function (oError) {

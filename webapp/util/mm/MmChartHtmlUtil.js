@@ -230,6 +230,15 @@ sap.ui.define([
 
     var TYPE_COLORS_OVERVIEW = ["#0070F2", "#5899DA", "#36A41D", "#EAC20B", "#8B5CF6", "#06B6D4"];
 
+    var MMBE_STOCK_TYPE_COLORS = {
+        "UNRESTRICTED USE": "#0070F2",
+        "RESERVED": "#5899DA",
+        "ON-ORDER STOCK": "#14B8A6",
+        "SALES ORDER STOCK": "#F59E0B"
+    };
+
+    var BOM_STOCK_CRITERIA_NOTE = "Unrestricted Use = MMBE 자유 사용 재고 · % = 해당 BOM 원자재 가용 합계 대비 비중";
+
     function _overviewEmpty(sMsg) {
         return "<div class='nxMmOverviewChartEmpty'>" + _esc(sMsg || "데이터 없음") + "</div>";
     }
@@ -300,12 +309,12 @@ sap.ui.define([
         var sCols = aRows.map(function (oRow, idx) {
             var fVal = Number(oRow.value || 0);
             var iH = fVal > 0 ? Math.max(8, Math.round((fVal / fMax) * 100)) : 0;
-            var sLabel = _shortLabel(oRow.label, 8);
+            var sLabel = _shortLabel(oRow.label, 12);
             var sColor = oRow.isFinished
                 ? "#0284C7"
                 : (oRow.isRaw ? "#0D9488" : TYPE_COLORS_OVERVIEW[idx % TYPE_COLORS_OVERVIEW.length]);
-            var sSelectedColClass = oRow.isSelected ? " nxMmInvDistCol--selected" : "";
-            var sSelectedFillClass = oRow.isSelected ? " nxMmInvDistColFill--selected" : "";
+            var sSelectedColClass = "";
+            var sSelectedFillClass = "";
             var sValueDisplay = _formatDonutQty(fVal);
 
             return "<div class='nxMmInvDistCol" + sSelectedColClass + "' title='" +
@@ -428,7 +437,7 @@ sap.ui.define([
             var fPct = (iCount / iSum) * 100;
             var fStart = fCursor;
             var fEnd = fCursor + (fPct / 100) * 360;
-            var sColor = _statusColor(sKey);
+            var sColor = _mmbeStockTypeColor(sKey) || _statusColor(sKey);
             var sTip = _esc(sKey) + " · " + fPct.toFixed(1) + "% · " + _formatDonutQty(iCount);
             var sPath;
 
@@ -439,10 +448,10 @@ sap.ui.define([
             if (fPct > 0) {
                 sPath = _describeDonutSlice(cx, cy, rOuter, rInner, fStart, fEnd);
                 sSlices += "<path class='nxMmInvDonutSlice' d='" + sPath + "' fill='" + sColor +
-                    "' data-tip='" + sTip + "'><title>" + sTip + "</title></path>";
+                    "' stroke='#FFFFFF' stroke-width='2' data-tip='" + sTip + "'><title>" + sTip + "</title></path>";
             }
 
-            sLegend += "<div class='nxMmInvAnalysisLegendItem' title='" + sTip + "'>" +
+            sLegend += "<div class='nxMmInvAnalysisLegendItem nxMmInvAnalysisLegendItem--mmbe' title='" + sTip + "'>" +
                 "<span class='nxMmInvAnalysisLegendSwatch' style='background:" + sColor + "'></span>" +
                 "<span class='nxMmInvAnalysisLegendText'>" + _esc(sKey) + " · " + _formatDonutQty(iCount) +
                 " (" + fPct.toFixed(1) + "%)</span></div>";
@@ -453,18 +462,21 @@ sap.ui.define([
             ? _formatDonutQty(iCenterTotal)
             : _formatDonutQty(iSum);
 
-        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--status nxMmInvAnalysisHost--donutTip'>" +
-            "<div class='nxMmInvAnalysisDonutWrap'>" +
-            "<div class='nxMmInvAnalysisDonutSvgWrap'>" +
-            "<svg class='nxMmInvAnalysisDonutSvg' viewBox='0 0 200 200' role='img' aria-label='재고 구성 비율'>" +
-            sSlices +
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--status nxMmInvAnalysisHost--donutTip nxMmInvAnalysisHost--mmbeDonut'>" +
+            "<div class='nxMmInvAnalysisDonutWrap nxMmInvAnalysisDonutWrap--mmbe'>" +
+            "<div class='nxMmInvAnalysisDonutSvgWrap nxMmInvAnalysisDonutSvgWrap--mmbe'>" +
+            "<svg class='nxMmInvAnalysisDonutSvg' viewBox='0 0 200 200' role='img' aria-label='재고 유형 구성'>" +
+            "<defs><filter id='nxMmInvDonutShadow' x='-20%' y='-20%' width='140%' height='140%'>" +
+            "<feDropShadow dx='0' dy='2' stdDeviation='3' flood-color='#0F172A' flood-opacity='0.12'/>" +
+            "</filter></defs>" +
+            "<g filter='url(#nxMmInvDonutShadow)'>" + sSlices + "</g>" +
             "<circle cx='" + cx + "' cy='" + cy + "' r='" + rInner + "' fill='#FFFFFF'></circle>" +
             "<text x='" + cx + "' y='" + (cy - 4) + "' text-anchor='middle' class='nxMmInvDonutSvgValue'>" + _esc(sCenter) + "</text>" +
             "<text x='" + cx + "' y='" + (cy + 14) + "' text-anchor='middle' class='nxMmInvDonutSvgLabel'>Total Stock</text>" +
             "</svg>" +
             "<div class='nxMmInvDonutTooltip' aria-hidden='true'></div>" +
             "</div>" +
-            "<div class='nxMmInvAnalysisLegend'>" + sLegend + "</div></div></div>";
+            "<div class='nxMmInvAnalysisLegend nxMmInvAnalysisLegend--mmbe'>" + sLegend + "</div></div></div>";
     }
 
     function buildInventoryUnitBomMixChart(aRows, sTheme, bStockMode) {
@@ -476,7 +488,6 @@ sap.ui.define([
         var aBagColors = ["#0284C7", "#0D9488", "#6366F1", "#0891B2"];
         var aColors = sTheme === "bag" ? aBagColors : aHeatColors;
         var sThemeClass = sTheme === "bag" ? "nxMmInvBomMixChart--bag" : "nxMmInvBomMixChart--heat";
-        var sQtyLabel = bStockMode ? "가용" : "1PC";
 
         var sRows = aRows.map(function (oRow, idx) {
             var sColor = aColors[idx % aColors.length];
@@ -484,7 +495,7 @@ sap.ui.define([
                 ? "<span class='nxMmInvBomMixShared'>공용</span>"
                 : "";
             var sMeta = bStockMode
-                ? _esc(oRow.qtyDisplay) + " " + sQtyLabel + " · " + _esc(oRow.mixDisplay)
+                ? _esc(oRow.qtyDisplay) + " · Unrestricted Use · " + _esc(oRow.mixDisplay)
                 : _esc(oRow.qtyDisplay) + " · " + _esc(oRow.mixDisplay);
 
             return "<div class='nxMmInvBomMixRow'>" +
@@ -494,7 +505,7 @@ sap.ui.define([
                 "</div>" +
                 "<div class='nxMmInvBomMixTrackRow'>" +
                 "<div class='nxMmInvBomMixTrack'><div class='nxMmInvBomMixFill' style='width:" + oRow.barPct +
-                "%;background:" + sColor + "'></div></div>" +
+                "%;background:linear-gradient(90deg," + sColor + ",#FFFFFF33)'></div></div>" +
                 "<span class='nxMmInvBomMixMeta'>" + sMeta + "</span>" +
                 "</div></div>";
         }).join("");
@@ -710,6 +721,10 @@ sap.ui.define([
         }
 
         return buildOverviewTypeColumn(aRows);
+    }
+
+    function _mmbeStockTypeColor(sKey) {
+        return MMBE_STOCK_TYPE_COLORS[String(sKey || "").toUpperCase()] || null;
     }
 
     function _statusColor(sKey) {

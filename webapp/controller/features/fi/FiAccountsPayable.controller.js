@@ -1,5 +1,5 @@
 /**
- * FiAccountsPayable.controller.js — FI Accounts Payable (Z_C_FI_AP CDS OData 준비)
+ * FiAccountsPayable.controller.js ??FI Accounts Payable (Z_C_FI_AP CDS OData 준�?
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
@@ -7,7 +7,7 @@ sap.ui.define([
 ], function (Controller, FiEmptyStateUtil) {
     "use strict";
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.FiAccountsPayable", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.fi.FiAccountsPayable", {
 
         onInit: function () {
             this._waitForDashboardModel();
@@ -69,15 +69,15 @@ sap.ui.define([
             if (!oFiAP) {
                 oModel.setProperty("/fiAccountsPayable/error", "");
                 oModel.setProperty("/fiAccountsPayable/odataConnected", false);
-                oModel.setProperty("/fiAccountsPayable/emptyMessage", "데이터 없음");
-                oModel.setProperty("/fiAccountsPayable/emptyHint", "FI Accounts Payable OData(fiAP) 서비스가 등록되지 않았습니다.");
+                oModel.setProperty("/fiAccountsPayable/emptyMessage", "?�이???�음");
+                oModel.setProperty("/fiAccountsPayable/emptyHint", "FI Accounts Payable OData(fiAP) ?�비?��? ?�록?��? ?�았?�니??");
                 return;
             }
 
             oModel.setProperty("/fiAccountsPayable/error", "");
             oModel.setProperty("/fiAccountsPayable/odataConnected", true);
-            oModel.setProperty("/fiAccountsPayable/emptyMessage", "데이터 없음");
-            oModel.setProperty("/fiAccountsPayable/emptyHint", "Z_C_FI_AP CDS에 미지급금 데이터가 없습니다.");
+            oModel.setProperty("/fiAccountsPayable/emptyMessage", "?�이???�음");
+            oModel.setProperty("/fiAccountsPayable/emptyHint", "Z_C_FI_AP CDS??미�?급금 ?�이?��? ?�습?�다.");
 
             this._fnFiAPMetadataFailed = this._onFiAPMetadataFailed.bind(this);
             this._fnFiAPRequestFailed = this._onFiAPRequestFailed.bind(this);
@@ -86,7 +86,7 @@ sap.ui.define([
         },
 
         _onDashboardPropertyChange: function () {
-            // 탭 전환 시 선택 유지 — 추후 상세 연동 시 확장
+            // ???�환 ???�택 ?��? ??추후 ?�세 ?�동 ???�장
         },
 
         _setDashboardError: function (sMessage) {
@@ -108,7 +108,7 @@ sap.ui.define([
             if (oParams && oParams.message) {
                 return oParams.message;
             }
-            return "FI Accounts Payable OData 요청에 실패했습니다.";
+            return "FI Accounts Payable OData ?�청???�패?�습?�다.";
         },
 
         _onFiAPMetadataFailed: function (oEvent) {
@@ -120,7 +120,7 @@ sap.ui.define([
         },
 
         onToolbarFilterOpen: function () {
-            // UI only — fiAP OData 연결 후 필터 로직 추가 예정
+            // UI only ??fiAP OData ?�결 ???�터 로직 추�? ?�정
         }
     });
 });

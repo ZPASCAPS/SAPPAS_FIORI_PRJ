@@ -1,7 +1,7 @@
 /**
- * Step10AccountingDocument.controller.js — E2E Step 10: 회계전표
+ * Step12PaymentPosting.controller.js — E2E Step 12: 입금 전기
  *
- * View: com.capstone.dashboard.fioridashboard.view.features.e2e.Step10AccountingDocument
+ * View: com.capstone.dashboard.fioridashboard.view.features.e2e.Step12PaymentPosting
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
@@ -9,9 +9,9 @@ sap.ui.define([
 ], function (Controller, MessageToast) {
     "use strict";
 
-    var STEP_KEY = "step10";
+    var STEP_KEY = "step12";
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.e2e.Step10AccountingDocument", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.e2e.Step12PaymentPosting", {
 
         onInit: function () {
             // dashboard 모델은 Main.controller.js에서 Component에 등록됨
@@ -44,10 +44,10 @@ sap.ui.define([
                 this.loadDocuments();
             }
 
-            MessageToast.show("Step 10 — 회계전표 selected");
+            MessageToast.show("Step 12 — 입금 전기 selected");
         },
 
-        /** TODO: OData Accounting Document read → dashboard>/e2eProcessFlow/steps/step10/documents */
+        /** TODO: OData Payment Posting read → dashboard>/e2eProcessFlow/steps/step12/documents */
         loadDocuments: function () {}
     });
 });

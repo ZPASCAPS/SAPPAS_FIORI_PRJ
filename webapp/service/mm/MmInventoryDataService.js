@@ -29,10 +29,38 @@ sap.ui.define([
 
     var MMBE_TABLE_STOCK_TYPES = [
         { StockType: "UNRESTRICTED", StockTypeName: "Unrestricted Use", SortOrder: 10 },
-        { StockType: "ON_ORDER", StockTypeName: "On-order Stock", SortOrder: 20 },
-        { StockType: "RESERVED", StockTypeName: "Reserved Stock", SortOrder: 30 },
-        { StockType: "SALES_ORDER", StockTypeName: "Sales Order", SortOrder: 40 }
+        { StockType: "RESERVED", StockTypeName: "Reserved", SortOrder: 20 },
+        { StockType: "ON_ORDER", StockTypeName: "On-Order Stock", SortOrder: 30 },
+        { StockType: "SALES_ORDER", StockTypeName: "Sales Order Stock", SortOrder: 40 }
     ];
+
+    var MMBE_DISPLAY_ORDER = {
+        UNRESTRICTED: 1,
+        RESERVED: 2,
+        ON_ORDER: 3,
+        SALES_ORDER: 4
+    };
+
+    var MMBE_NAME_ORDER = {
+        "UNRESTRICTED USE": 1,
+        "RESERVED": 2,
+        "ON-ORDER STOCK": 3,
+        "SALES ORDER STOCK": 4
+    };
+
+    var EXCLUDED_MMBE_STORAGE_LOCATIONS = ["101A"];
+
+    function _productionSectionTitle(sActiveTab) {
+        var sTab = String(sActiveTab || "CURRENT").toUpperCase();
+
+        if (sTab === "WHATIF") {
+            return "MRP";
+        }
+        if (sTab === "BOM") {
+            return "BOM";
+        }
+        return "현재 생산 가능 수량";
+    }
 
     function _normalizeCode(sText) {
         return String(sText || "").trim().toUpperCase();
@@ -343,11 +371,41 @@ sap.ui.define([
     }
 
     function _sortStockPositionRows(aRows) {
-        return aRows.slice().sort(function (a, b) {
-            if (a.SortOrder !== b.SortOrder) {
-                return a.SortOrder - b.SortOrder;
+        return sortMmbeDisplayRows(aRows);
+    }
+
+    function _isExcludedMmbeStorageLocation(sStorageLocation) {
+        return EXCLUDED_MMBE_STORAGE_LOCATIONS.indexOf(_normalizeCode(sStorageLocation)) >= 0;
+    }
+
+    function filterMmbeDisplayRows(aRows) {
+        return (aRows || []).filter(function (oRow) {
+            return !_isExcludedMmbeStorageLocation(oRow.StorageLocation);
+        });
+    }
+
+    function sortMmbeDisplayRows(aRows) {
+        return filterMmbeDisplayRows(aRows).slice().sort(function (a, b) {
+            var sNameA = String(a.StockTypeName || "").trim().toUpperCase();
+            var sNameB = String(b.StockTypeName || "").trim().toUpperCase();
+            var nA = MMBE_NAME_ORDER[sNameA]
+                || MMBE_DISPLAY_ORDER[_canonicalMmbeTableStockType(a.StockType)]
+                || 99;
+            var nB = MMBE_NAME_ORDER[sNameB]
+                || MMBE_DISPLAY_ORDER[_canonicalMmbeTableStockType(b.StockType)]
+                || 99;
+
+            if (nA !== nB) {
+                return nA - nB;
             }
-            return String(a.StockTypeName).localeCompare(String(b.StockTypeName));
+
+            var sPlant = String(a.Plant || "").localeCompare(String(b.Plant || ""));
+
+            if (sPlant !== 0) {
+                return sPlant;
+            }
+
+            return String(a.StorageLocation || "").localeCompare(String(b.StorageLocation || ""));
         });
     }
 
@@ -455,9 +513,6 @@ sap.ui.define([
                     return;
                 }
 
-                if (oType.StockTypeName) {
-                    mBase[sCanon].StockTypeName = String(oType.StockTypeName).trim();
-                }
                 if (Number(oType.SortOrder || 0) > 0) {
                     mBase[sCanon].SortOrder = Number(oType.SortOrder);
                 }
@@ -644,6 +699,10 @@ sap.ui.define([
                 return;
             }
 
+            if (_isExcludedMmbeStorageLocation(sSlocVal)) {
+                return;
+            }
+
             sKey = sPlantVal + "|" + sSlocVal;
             if (!mLoc[sKey]) {
                 mLoc[sKey] = true;
@@ -827,7 +886,7 @@ sap.ui.define([
             bagDisplay: oBag.display,
             heattechBottleneck: oHeat.bottleneck,
             bagBottleneck: oBag.bottleneck,
-            description: "현재 사용 가능 재고(UnrestrictedStock) 기준으로 계산된 생산 가능 수량입니다."
+            description: ""
         };
     }
 
@@ -940,7 +999,7 @@ sap.ui.define([
             iTotalQty += fStock;
             aRows.push({
                 material: oMat.material,
-                label: oMat.materialName || oMat.material,
+                label: oMat.displayName || oMat.materialName || oMat.material,
                 value: fStock,
                 unit: oMat.baseUnit || "PC",
                 isSelected: !!sSel && sSel === oMat.material,
@@ -992,34 +1051,30 @@ sap.ui.define([
         var sMat = _normalizeCode(sSelectedMaterial);
         var sName = oSelectedMeta ? (oSelectedMeta.materialName || sMat) : sMat;
         var sDesc = sMat
-            ? sName + " · MMBE Stock Type별 재고 구성"
-            : "자재를 선택하면 Stock Type별 재고 구성이 표시됩니다.";
+            ? sName + " 재고 유형"
+            : "자재를 선택하면 MMBE Stock Type별 재고 구성이 표시됩니다.";
 
         if (sMat && mStockSummary[sMat]) {
             var oSel = mStockSummary[sMat];
+            var fUnrestricted = Number(oSel.UnrestrictedStock || 0);
+            var fReserved = Number(oSel.ReservedStock || 0);
+            var fOnOrder = Number(oSel.OnOrderStock || 0);
+            var fSalesOrder = Number(oSel.SalesOrderStock || 0) +
+                Number(oSel.SalesOrderUnrestrictedStock || 0);
 
-            if (oSel.UnrestrictedStock > 0) {
-                mCounts["사용 가능 재고"] = oSel.UnrestrictedStock;
+            if (fUnrestricted > 0) {
+                mCounts["Unrestricted Use"] = fUnrestricted;
             }
-            if (oSel.ReservedStock > 0) {
-                mCounts["Reserved Stock"] = oSel.ReservedStock;
+            if (fReserved > 0) {
+                mCounts["Reserved"] = fReserved;
             }
-            if (oSel.QualityStock > 0) {
-                mCounts["품질검사 재고"] = oSel.QualityStock;
+            if (fOnOrder > 0) {
+                mCounts["On-Order Stock"] = fOnOrder;
             }
-            if (oSel.BlockedStock > 0) {
-                mCounts["보류 재고"] = oSel.BlockedStock;
+            if (fSalesOrder > 0) {
+                mCounts["Sales Order Stock"] = fSalesOrder;
             }
-            if (oSel.TransferStock > 0) {
-                mCounts["이전/이송 재고"] = oSel.TransferStock;
-            }
-            if (oSel.SalesOrderStock > 0) {
-                mCounts["Sales Order 재고"] = oSel.SalesOrderStock;
-            }
-            if (oSel.OtherStock > 0) {
-                mCounts["기타 재고"] = oSel.OtherStock;
-            }
-            iTotal = oSel.TotalStock;
+            iTotal = fUnrestricted + fReserved + fOnOrder + fSalesOrder;
         }
 
         if (iTotal <= 0) {
@@ -1096,7 +1151,7 @@ sap.ui.define([
             theme: sTheme,
             componentCount: aComponents.length,
             totalQtyPerUnit: iTotalQty,
-            summaryText: "원자재 " + aComponents.length + "종 · 1PC당 총 " + iTotalQty + " PC 투입",
+            summaryText: "",
             components: aComponents
         };
     }
@@ -1140,7 +1195,8 @@ sap.ui.define([
         return {
             rows: aRows,
             totalStock: iTotalStock,
-            hasChart: iTotalStock > 0
+            hasChart: iTotalStock > 0,
+            criteriaNote: "Unrestricted Use = MMBE 자유 사용 재고 · % = 해당 BOM 원자재 가용 합계 대비 비중"
         };
     }
 
@@ -1231,8 +1287,8 @@ sap.ui.define([
         );
 
         return {
-            description: "완제품 1PC 생산 시 투입되는 원자재 수량입니다. 생산 가능·MRP 계산과 동일한 BOM 기준입니다.",
-            note: "폴리에스터 N(UP-R-PES-001)은 히트텍·가방 BOM에서 공용으로 사용됩니다.",
+            description: "",
+            note: "",
             heattech: oHeat,
             bag: oBag,
             comparison: _buildUnitBomComparison(oHeat.components, oBag.components)
@@ -1272,24 +1328,26 @@ sap.ui.define([
                 mUnrestricted || {}
             );
             var sTab = String(sBomVizTab || "HEATTECH").toUpperCase();
-            var oHeatPanel = {
-                description: "히트텍 BOM 원자재 가용 재고 · 총 " + _formatDisplayQty(oHeatStock.totalStock) + " PC",
-                hasChart: oHeatStock.hasChart,
-                emptyMessage: "히트텍 BOM 원자재의 가용 재고가 없습니다.",
-                html: MmChartHtmlUtil.buildInventoryUnitBomMixChart(oHeatStock.rows, "heat", true)
-            };
-            var oBagPanel = {
-                description: "가방 BOM 원자재 가용 재고 · 총 " + _formatDisplayQty(oBagStock.totalStock) + " PC",
-                hasChart: oBagStock.hasChart,
-                emptyMessage: "가방 BOM 원자재의 가용 재고가 없습니다.",
-                html: MmChartHtmlUtil.buildInventoryUnitBomMixChart(oBagStock.rows, "bag", true)
-            };
+        var sCriteriaNote = oHeatStock.criteriaNote || oBagStock.criteriaNote || "";
+        var oHeatPanel = {
+            description: sCriteriaNote,
+            hasChart: oHeatStock.hasChart,
+            emptyMessage: "히트텍 BOM 원자재의 Unrestricted Use 재고가 없습니다.",
+            html: MmChartHtmlUtil.buildInventoryUnitBomMixChart(oHeatStock.rows, "heat", true)
+        };
+        var oBagPanel = {
+            description: sCriteriaNote,
+            hasChart: oBagStock.hasChart,
+            emptyMessage: "가방 BOM 원자재의 Unrestricted Use 재고가 없습니다.",
+            html: MmChartHtmlUtil.buildInventoryUnitBomMixChart(oBagStock.rows, "bag", true)
+        };
             var oActive = sTab === "BAG" ? oBagPanel : oHeatPanel;
 
             return {
                 mode: "BOM",
+                sectionTitle: _productionSectionTitle("BOM"),
                 title: "완제품별 BOM 가용 재고 비율",
-                description: "BOM 원자재별 현재 UnrestrictedStock 구성 비율입니다.",
+                description: sCriteriaNote,
                 activeTab: sTab,
                 hasChart: oHeatPanel.hasChart || oBagPanel.hasChart,
                 emptyMessage: "가용 재고가 없습니다.",
@@ -1307,8 +1365,9 @@ sap.ui.define([
             if (!oWhatIf.hasTarget) {
                 return {
                     mode: "WHATIF",
+                    sectionTitle: _productionSectionTitle("WHATIF"),
                     title: "MRP 자재 충족률",
-                    description: "MRP 목표 생산 기준 원자재 충족률입니다.",
+                    description: "",
                     hasChart: false,
                     emptyMessage: "목표 생산량을 입력하면 MRP 자재 충족률이 표시됩니다.",
                     html: "",
@@ -1318,8 +1377,9 @@ sap.ui.define([
 
             return {
                 mode: "WHATIF",
+                sectionTitle: _productionSectionTitle("WHATIF"),
                 title: "MRP 자재 충족률",
-                description: "MRP 목표 생산 기준 UnrestrictedStock 충족률입니다.",
+                description: "",
                 hasChart: oWhatIf.materials.length > 0,
                 emptyMessage: NO_DATA,
                 html: "",
@@ -1330,8 +1390,9 @@ sap.ui.define([
         var sHtml = _buildProductionBarHtml(oCurrent);
         return {
             mode: "CURRENT",
+            sectionTitle: _productionSectionTitle("CURRENT"),
             title: "현재 생산 가능 수량",
-            description: "UnrestrictedStock 기준으로 계산된 완제품별 생산 가능 수량입니다.",
+            description: "",
             hasChart: !!sHtml,
             emptyMessage: DATA_SHORT,
             html: sHtml,
@@ -1415,7 +1476,7 @@ sap.ui.define([
             selectedStockPosition: aSelectedStock,
             stockPosition: {
                 hasSelection: !!sSelected,
-                emptyMessage: "자재를 선택하면 재고 위치와 상태가 표시됩니다.",
+                emptyMessage: "자재를 선택하면 MMBE Stock Type별 재고 구성이 표시됩니다.",
                 showNoStock: !!sSelected && aSelectedStock.length === 0,
                 noStockMessage: "표시할 재고가 없습니다.",
                 stockTypes: aSelectedStock
@@ -1451,7 +1512,7 @@ sap.ui.define([
             criteriaLabel: _criteriaLabel(oFilters),
             heroFilterLine: MmHeroUiUtil.buildFilterLine(aFiltered.length),
             recordCount: aFiltered.length,
-            odataBadge: "Z_C_MM_INVENTORY + Z_C_MM_STOCK_POSITION",
+            odataBadge: "",
             lastUpdated: oCache.lastUpdated || NO_DATA,
             materialSearch: oFilters.materialSearch || "",
             plantFilter: oFilters.plantFilter || "ALL",
@@ -1612,6 +1673,8 @@ sap.ui.define([
         buildUnitBomReference: buildUnitBomReference,
         buildMmbeRowsForMaterial: buildMmbeRowsForMaterial,
         loadStockPositionForMaterial: loadStockPositionForMaterial,
+        sortMmbeDisplayRows: sortMmbeDisplayRows,
+        filterMmbeDisplayRows: filterMmbeDisplayRows,
 
         getEmptyStockPositionViewState: function () {
             return {
@@ -1620,7 +1683,7 @@ sap.ui.define([
                 materialName: "",
                 hasSelection: false,
                 showNoRows: false,
-                emptyMessage: "자재를 선택하면 재고 위치와 상태가 표시됩니다.",
+                emptyMessage: "자재를 선택하면 MMBE Stock Type별 재고 구성이 표시됩니다.",
                 noRowsMessage: "표시할 재고가 없습니다.",
                 rows: []
             };
@@ -1649,7 +1712,7 @@ sap.ui.define([
                 criteriaLabel: MmHeroUiUtil.UNIQLO_LABEL,
                 heroFilterLine: MmHeroUiUtil.buildFilterLine(0),
                 recordCount: 0,
-                odataBadge: "Z_C_MM_INVENTORY + Z_C_MM_STOCK_POSITION",
+                odataBadge: "",
                 lastUpdated: NO_DATA,
                 materialSearch: "",
                 plantFilter: "ALL",

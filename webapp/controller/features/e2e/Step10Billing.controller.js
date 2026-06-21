@@ -1,5 +1,5 @@
 /**
- * Step09Billing.controller.js — E2E Step 9: Billing
+ * Step10Billing.controller.js — E2E Step 10: Billing
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
@@ -7,9 +7,9 @@ sap.ui.define([
 ], function (Controller, MessageToast) {
     "use strict";
 
-    var STEP_KEY = "step09";
+    var STEP_KEY = "step10";
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.e2e.Step09Billing", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.e2e.Step10Billing", {
 
         onAfterRendering: function () {
             if (!this._bNodePressBound) {
@@ -28,7 +28,7 @@ sap.ui.define([
             oModel.setProperty("/e2eProcessFlow/selectedStepId", STEP_KEY);
             oModel.setProperty(sPath + "/showDetail", !bShow);
             if (!bShow) { this.loadDocuments(); }
-            MessageToast.show("Step 9 — Billing selected");
+            MessageToast.show("Step 10 — Billing selected");
         },
 
         /** TODO: OData Billing Document read */

@@ -1,8 +1,8 @@
 <!--
-  FiAccountsReceivable.view.xml — FI Accounts Receivable (OData 미연결 시 Empty State)
+  FiAccountsReceivable.view.xml ??FI Accounts Receivable (OData 미연�???Empty State)
 -->
 <mvc:View
-    controllerName="com.capstone.dashboard.fioridashboard.controller.features.FiAccountsReceivable"
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.fi.FiAccountsReceivable"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
@@ -24,14 +24,14 @@
                     <VBox class="fiHeroContent">
                         <Title text="Accounts Receivable" level="H2" class="fiHeroTitle" />
                         <Text
-                            text="판매 이후 발생한 미수금과 수금 진행 상태를 확인하는 화면입니다."
+                            text="?�매 ?�후 발생??미수금과 ?�금 진행 ?�태�??�인?�는 ?�면?�니??"
                             class="fiHeroDescription" />
                     </VBox>
                     <HBox alignItems="Center" class="fiHeroActions">
                         <HBox alignItems="Center" class="fiHeroActionsBox">
                             <Button
                                 id="fiAccountsReceivableContentFilterBtn"
-                                text="조회/필터"
+                                text="조회/?�터"
                                 icon="sap-icon://filter"
                                 type="Transparent"
                                 press=".onToolbarFilterOpen"
@@ -66,7 +66,7 @@
                         <HBox class="nxFiCardHead" alignItems="Center" justifyContent="SpaceBetween">
                             <VBox>
                                 <Title text="Receivable Detail" level="H5" />
-                                <Text text="선택 미수금 상세 정보" class="nxFiCardSub" />
+                                <Text text="?�택 미수�??�세 ?�보" class="nxFiCardSub" />
                             </VBox>
                             <VBox class="nxFiCardIconWrap nxFiCardIconWrap--detail">
                                 <core:Icon src="sap-icon://receipt" size="1.1rem" color="#FFFFFF" />

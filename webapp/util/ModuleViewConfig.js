@@ -25,12 +25,10 @@ sap.ui.define([], function () {
     ];
 
     var MM_SUB_TABS = [
-        { key: "OVERVIEW", text: "Overview" },
-        { key: "INVENTORY", text: "Inventory" },
-        { key: "PURCHASING", text: "Purchasing" }
+        { key: "INVENTORY", text: "Inventory" }
     ];
 
-    var MM_ALLOWED_SUB_TABS = ["OVERVIEW", "INVENTORY", "PURCHASING"];
+    var MM_ALLOWED_SUB_TABS = ["INVENTORY"];
 
     var COMMON_KPIS = [
         { label: "Revenue", valueMain: "$1 248", valueSuffix: ",320", trendHint: "per last week", trend: "14%", trendUp: true },
@@ -46,26 +44,11 @@ sap.ui.define([], function () {
         { label: "GR This Month", valueMain: "1,284", valueSuffix: " EA", trendHint: "goods receipt", trend: "9.4%", trendUp: true }
     ];
 
-    var MM_FLYOUT_ITEMS = [
-        { key: "OVERVIEW", text: "Overview" },
-        { key: "INVENTORY", text: "Inventory" },
-        { key: "PURCHASING", text: "Purchasing" }
-    ];
-
     var FI_SUB_TABS = [
-        { key: "OVERVIEW", text: "Overview" },
-        { key: "GENERAL_LEDGER", text: "General Ledger" },
-        { key: "ACCOUNTS_PAYABLE", text: "Accounts Payable" }
+        { key: "CUSTOMER_RECEIPT", text: "Customer Receipt" }
     ];
 
-    var FI_ALLOWED_SUB_TABS = ["OVERVIEW", "GENERAL_LEDGER", "ACCOUNTS_PAYABLE"];
-
-    var FI_FLYOUT_ITEMS = FI_SUB_TABS.slice();
-
-    var MODULE_FLYOUT_ITEMS = {
-        MM_MATERIALS: MM_FLYOUT_ITEMS,
-        FI_CO_FINANCE: FI_FLYOUT_ITEMS
-    };
+    var FI_ALLOWED_SUB_TABS = ["CUSTOMER_RECEIPT"];
 
     var MODULE_TITLES = {
         SD_SALES: "Sales and Distribution",
@@ -75,21 +58,15 @@ sap.ui.define([], function () {
     };
 
     function normalizeActiveSubTab(sNavKey, sActiveSubTab) {
-        var aAllowed;
-
         if (sNavKey === "MM_MATERIALS") {
-            aAllowed = MM_ALLOWED_SUB_TABS;
-        } else if (sNavKey === "FI_CO_FINANCE") {
-            aAllowed = FI_ALLOWED_SUB_TABS;
-        } else {
-            return sActiveSubTab || "OVERVIEW";
+            return MM_ALLOWED_SUB_TABS.indexOf(sActiveSubTab) >= 0 ? sActiveSubTab : "INVENTORY";
         }
 
-        if (aAllowed.indexOf(sActiveSubTab) >= 0) {
-            return sActiveSubTab;
+        if (sNavKey === "FI_CO_FINANCE") {
+            return FI_ALLOWED_SUB_TABS.indexOf(sActiveSubTab) >= 0 ? sActiveSubTab : "CUSTOMER_RECEIPT";
         }
 
-        return "OVERVIEW";
+        return sActiveSubTab || "OVERVIEW";
     }
 
     function buildFiModuleConfig() {
@@ -97,7 +74,7 @@ sap.ui.define([], function () {
             title: MODULE_TITLES.FI_CO_FINANCE,
             period: "THIS_WEEK",
             periodOptions: PERIOD_OPTIONS.slice(),
-            activeSubTab: "OVERVIEW",
+            activeSubTab: "CUSTOMER_RECEIPT",
             subTabs: FI_SUB_TABS.slice(),
             kpis: [],
             settings: {
@@ -116,12 +93,13 @@ sap.ui.define([], function () {
         var aSubTabs = sNavKey === "MM_MATERIALS"
             ? MM_SUB_TABS.slice()
             : COMMON_SUB_TABS.slice();
+        var sDefaultSubTab = sNavKey === "MM_MATERIALS" ? "INVENTORY" : "OVERVIEW";
 
         return {
             title: MODULE_TITLES[sNavKey] || sNavKey,
             period: "THIS_WEEK",
             periodOptions: PERIOD_OPTIONS.slice(),
-            activeSubTab: "OVERVIEW",
+            activeSubTab: sDefaultSubTab,
             subTabs: aSubTabs,
             kpis: aKpis.map(function (oKpi) {
                 return JSON.parse(JSON.stringify(oKpi));
@@ -157,14 +135,12 @@ sap.ui.define([], function () {
             oModel.setProperty("/moduleView", oConfig);
         },
 
-        hasFlyout: function (sNavKey) {
-            var aItems = MODULE_FLYOUT_ITEMS[sNavKey];
-            return !!(aItems && aItems.length);
+        hasFlyout: function () {
+            return false;
         },
 
-        getFlyoutItems: function (sNavKey) {
-            var aItems = MODULE_FLYOUT_ITEMS[sNavKey];
-            return aItems ? aItems.slice() : [];
+        getFlyoutItems: function () {
+            return [];
         },
 
         normalizeActiveSubTab: normalizeActiveSubTab,

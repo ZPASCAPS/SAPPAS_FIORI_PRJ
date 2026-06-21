@@ -1,8 +1,8 @@
 <!--
-  FiGeneralLedger.view.xml — FI General Ledger (Z_C_FI_GL CDS OData)
+  FiGeneralLedger.view.xml ??FI General Ledger (Z_C_FI_GL CDS OData)
 -->
 <mvc:View
-    controllerName="com.capstone.dashboard.fioridashboard.controller.features.FiGeneralLedger"
+    controllerName="com.capstone.dashboard.fioridashboard.controller.features.fi.FiGeneralLedger"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
@@ -22,14 +22,14 @@
                     <VBox class="fiHeroContent">
                         <Title text="General Ledger" level="H2" class="fiHeroTitle" />
                         <Text
-                            text="계정별 회계전표와 차변·대변 흐름을 확인하는 화면입니다."
+                            text="계정�??�계?�표?� 차�?·?�변 ?�름???�인?�는 ?�면?�니??"
                             class="fiHeroDescription" />
                     </VBox>
                     <HBox alignItems="Center" class="fiHeroActions">
                         <HBox alignItems="Center" class="fiHeroActionsBox">
                             <Button
                                 id="fiGeneralLedgerContentFilterBtn"
-                                text="조회/필터"
+                                text="조회/?�터"
                                 icon="sap-icon://filter"
                                 type="Transparent"
                                 press=".onToolbarFilterOpen"
@@ -61,7 +61,7 @@
                             sticky="ColumnHeaders"
                             fixedLayout="Strict"
                             class="nxFiGlTable"
-                            noDataText="데이터 없음"
+                            noDataText="?�이???�음"
                             width="100%">
                             <columns>
                                 <Column width="7%"><Text text="CompanyCode" /></Column>
@@ -100,7 +100,7 @@
                         <HBox class="nxFiCardHead" alignItems="Center" justifyContent="SpaceBetween">
                             <VBox>
                                 <Title text="Selected Document Detail" level="H5" />
-                                <Text text="선택 전표 상세 정보" class="nxFiCardSub" />
+                                <Text text="?�택 ?�표 ?�세 ?�보" class="nxFiCardSub" />
                             </VBox>
                             <VBox class="nxFiCardIconWrap nxFiCardIconWrap--detail">
                                 <core:Icon src="sap-icon://detail-view" size="1.1rem" color="#FFFFFF" />

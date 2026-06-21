@@ -1,5 +1,5 @@
 /**
- * FiGeneralLedger.controller.js — FI General Ledger (Z_C_FI_GL CDS OData)
+ * FiGeneralLedger.controller.js ??FI General Ledger (Z_C_FI_GL CDS OData)
  */
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
@@ -20,7 +20,7 @@ sap.ui.define([
         "CreatedBy"
     ];
 
-    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.FiGeneralLedger", {
+    return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.fi.FiGeneralLedger", {
 
         onInit: function () {
             this._waitForDashboardModel();
@@ -80,7 +80,7 @@ sap.ui.define([
             }
 
             if (!oFiGL) {
-                oModel.setProperty("/fiGeneralLedger/error", "FI General Ledger OData 모델(fiGL)을 사용할 수 없습니다.");
+                oModel.setProperty("/fiGeneralLedger/error", "FI General Ledger OData 모델(fiGL)???�용?????�습?�다.");
                 return;
             }
 
@@ -134,7 +134,7 @@ sap.ui.define([
         _buildEmptyDetail: function () {
             return {
                 hasSelection: false,
-                emptyMessage: "왼쪽 목록에서 전표를 선택하면 상세 정보가 표시됩니다.",
+                emptyMessage: "?�쪽 목록?�서 ?�표�??�택?�면 ?�세 ?�보가 ?�시?�니??",
                 CompanyCode: "",
                 AccountingDocument: "",
                 FiscalYear: "",
@@ -191,7 +191,7 @@ sap.ui.define([
                 return sMessage;
             }
 
-            return "FI General Ledger OData 요청에 실패했습니다.";
+            return "FI General Ledger OData ?�청???�패?�습?�다.";
         },
 
         _onFiGLMetadataFailed: function (oEvent) {
@@ -227,7 +227,7 @@ sap.ui.define([
         },
 
         onToolbarFilterOpen: function () {
-            // UI only — 필터 로직은 추후 추가
+            // UI only ???�터 로직?� 추후 추�?
         }
     });
 });

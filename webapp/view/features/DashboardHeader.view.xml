@@ -31,9 +31,9 @@
                     src="images/pascal-pictogram.svg"
                     densityAware="false"
                     decorative="true"
-                    alt="PasCal"
+                    alt="Pascal"
                     class="nxHeaderPictogram" />
-                <Text text="PasCal" class="nxHeaderAppName" />
+                <Text text="Pascal" class="nxHeaderAppName" />
             </HBox>
 
             <VBox width="1px" height="1.75rem" class="nxHeaderDividerBar" />

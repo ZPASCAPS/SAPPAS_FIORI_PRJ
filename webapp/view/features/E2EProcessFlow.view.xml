@@ -110,10 +110,11 @@
                     <VBox id="e2eConnector45" class="e2eMtoConnector e2eMtoConnectorVertical e2eCon45 e2eMtoConnectorPending" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
                     <VBox id="e2eConnector56" class="e2eMtoConnector e2eCon56 e2eMtoConnectorPending" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
                     <VBox id="e2eConnector67" class="e2eMtoConnector e2eCon67 e2eMtoConnectorPending" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox id="e2eConnector78" class="e2eMtoConnector e2eMtoConnectorVertical e2eCon78 e2eMtoConnectorPending" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
-                    <VBox id="e2eConnector89" class="e2eMtoConnector e2eCon89 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector78" class="e2eMtoConnector e2eCon78 e2eMtoConnectorPending" renderType="Bare"><Text text="←" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector89" class="e2eMtoConnector e2eMtoConnectorVertical e2eCon89 e2eMtoConnectorPending" renderType="Bare"><Text text="↓" class="e2eMtoFlowArrow" /></VBox>
                     <VBox id="e2eConnector910" class="e2eMtoConnector e2eCon910 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
                     <VBox id="e2eConnector1011" class="e2eMtoConnector e2eCon1011 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
+                    <VBox id="e2eConnector1112" class="e2eMtoConnector e2eCon1112 e2eMtoConnectorPending" renderType="Bare"><Text text="→" class="e2eMtoFlowArrow" /></VBox>
 
                     <mvc:XMLView id="e2eStepView01" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step01SalesOrder" />
                     <mvc:XMLView id="e2eStepView02" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step02PlannedOrder" />
@@ -123,9 +124,10 @@
                     <mvc:XMLView id="e2eStepView05" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step05GoodsReceipt" />
                     <mvc:XMLView id="e2eStepView07" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step07GoodsReceipt" />
                     <mvc:XMLView id="e2eStepView08" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step08Shipment" />
-                    <mvc:XMLView id="e2eStepView09" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step09Billing" />
-                    <mvc:XMLView id="e2eStepView10" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step10AccountingDocument" />
-                    <mvc:XMLView id="e2eStepView11" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step11PaymentPosting" />
+                    <mvc:XMLView id="e2eStepView09" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step09Picking" />
+                    <mvc:XMLView id="e2eStepView10" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step10Billing" />
+                    <mvc:XMLView id="e2eStepView11" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step11AccountingDocument" />
+                    <mvc:XMLView id="e2eStepView12" viewName="com.capstone.dashboard.fioridashboard.view.features.e2e.Step12PaymentPosting" />
                 </VBox>
 
             </VBox>
