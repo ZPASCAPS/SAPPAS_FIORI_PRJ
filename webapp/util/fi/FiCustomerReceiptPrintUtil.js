@@ -174,7 +174,10 @@ sap.ui.define([
         ));
         aParts.push(_row(
             "Clearing Doc.",
-            _escapeHtml(FiCustomerReceiptFormatter.formatOptionalText(oCustomer.ClearingDocument))
+            _escapeHtml(FiCustomerReceiptFormatter.formatClearingDocument(
+                oCustomer.ClearingDocument,
+                oCustomer.clearingSameAsAccounting
+            ))
         ));
         aParts.push(_row(
             "Clearing Date",

@@ -2890,12 +2890,15 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxMmInvDashMatFilterBar--enhanced {
+    flex: 0 0 auto;
+    min-height: 2.35rem;
     padding: 0.5rem 0.65rem;
     margin-bottom: 0.55rem;
     background: linear-gradient(180deg, #F0F9FF 0%, #ECFEFF 100%);
     border: 1px solid #BAE6FD;
     border-radius: 0.55rem;
     box-shadow: none;
+    box-sizing: border-box;
 }
 
 .nxMmInvDashMatFilterLabelWrap {
@@ -15158,12 +15161,13 @@ html, body, body > div, #container, #container-uiarea,
 /* MM Inventory 2x2 Dashboard */
 .nxMmInvDashPage {
     background: #F0F9FF;
+    scrollbar-gutter: stable;
 }
 
 .nxMmInvDashGrid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
     gap: 0.75rem;
     width: 100%;
     min-width: 0;
@@ -15197,14 +15201,18 @@ html, body, body > div, #container, #container-uiarea,
     grid-row: 1;
     display: flex;
     flex-direction: column;
-    min-height: auto;
+    min-height: 0;
+    align-self: stretch;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
 }
 
 .nxMmInvDashCard--tl .nxMmInvDashSplit {
-    flex: 0 0 auto;
-    height: 13.25rem;
-    min-height: 13.25rem;
-    max-height: 13.25rem;
+    flex: 1 1 auto;
+    min-height: 13.5rem;
+    width: 100%;
+    max-width: 100%;
 }
 
 .nxMmInvDashCard--productionMerged {
@@ -15213,11 +15221,135 @@ html, body, body > div, #container, #container-uiarea,
     display: flex;
     flex-direction: column;
     min-height: 0;
+    align-self: stretch;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashProdTabs--row {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashProdTabs--row .sapMITBContainerContent {
+    justify-content: flex-start;
+    align-items: stretch;
+    height: auto !important;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashProdBody--current {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashProdBody--whatif {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+/* BOM 탭 콘텐츠 상단 정렬 — 좌측 재고 유형 탭과 높이 맞춤 */
+.nxMmInvDashCard--productionMerged .nxMmInvDashProdTabs .sapMITBHead {
+    margin-bottom: 0 !important;
+    flex: 0 0 auto;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashProdTabs--row .sapMITBContent {
+    height: auto !important;
+    min-height: 0 !important;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: 100%;
+    padding-top: 0.45rem;
+    padding-bottom: 0.35rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashCard--productionMerged .sapMITBContent:has(.nxMmInvDashProdBody--current),
+.nxMmInvDashCard--productionMerged .sapMITBContent:has(.nxMmInvDashProdBody--whatif),
+.nxMmInvDashCard--productionMerged .sapMITBContent:has(.nxMmInvDashBomBody) {
+    flex: 1 1 auto;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashBomBody {
+    padding: 0.25rem 0.15rem 0.35rem;
+    gap: 0;
+    overflow: visible;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashBomGrid {
+    margin-top: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
 }
 
 .nxMmInvDashCard--bl {
     grid-column: 1;
     grid-row: 2;
+    align-self: stretch;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.nxMmInvDashCard--bl .nxMmInvDashCompTabs {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInvDashCard--bl .nxMmInvDashCompTabs .sapMITBContainerContent {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInvDashCard--bl .nxMmInvDashCompTabs .sapMITBContent {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInvDashCard--bl .nxMmInvDashCompBody {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInvDashCard--bl .nxMmInvDashChartBody--dist,
+.nxMmInvDashCard--bl .nxMmInvDashChartBody--mmbe {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .nxMmInvDashCardHead {
@@ -15248,9 +15380,10 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxMmInvDashListPane {
-    flex: 1 1 0;
+    flex: 0 0 calc(50% - 0.325rem);
+    width: calc(50% - 0.325rem);
+    max-width: calc(50% - 0.325rem);
     min-width: 0;
-    max-width: 100%;
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -15258,24 +15391,81 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxMmInvDashMmbePane {
-    flex: 1 1 0;
+    flex: 0 0 calc(50% - 0.325rem);
+    width: calc(50% - 0.325rem);
+    max-width: calc(50% - 0.325rem);
     min-width: 0;
-    max-width: 100%;
     display: flex;
     flex-direction: column;
     min-height: 0;
     overflow: hidden;
 }
 
+.nxMmInvDashMmbeHead {
+    flex: 0 0 auto;
+    min-height: 2.35rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashMmbeHead .nxMmInvDashSubLabel,
+.nxMmInvDashMmbeHead .nxMmInvDashSubLabel.sapMText {
+    margin-bottom: 0 !important;
+}
+
+.nxMmInvDashMatScroll,
 .nxMmInvDashMmbeScroll {
-    flex: 1 1 auto;
+    flex: 1 1 0;
     min-height: 0;
     overflow: hidden;
+    border: 1px solid #E0F2FE;
+    border-radius: 0.5rem;
+    background: #FFFFFF;
+}
+
+.nxMmInvDashMatScroll .sapMScrollCont,
+.nxMmInvDashMatScroll .sapMScrollContScroll,
+.nxMmInvDashMmbeScroll .sapMScrollCont,
+.nxMmInvDashMmbeScroll .sapMScrollContScroll {
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+}
+
+.nxMmInvDashMatScroll .sapMScrollCont,
+.nxMmInvDashMmbeScroll .sapMScrollCont {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.nxMmInvDashMmbeScroll {
+    display: flex;
+    flex-direction: column;
 }
 
 .nxMmInvDashMmbeScroll .sapMScrollCont,
 .nxMmInvDashMmbeScroll .sapMScrollContScroll {
     height: 100% !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+}
+
+.nxMmInvDashMmbeScroll .sapMScrollCont {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.nxMmInvDashMmbeScroll .sapMScrollCont::-webkit-scrollbar {
+    width: 6px;
+}
+
+.nxMmInvDashMmbeScroll .sapMScrollCont::-webkit-scrollbar-thumb {
+    background: #94A3B8;
+    border-radius: 999px;
+}
+
+.nxMmInvDashMmbeScroll .sapMScrollCont::-webkit-scrollbar-track {
+    background: #F1F5F9;
+    border-radius: 999px;
 }
 
 .nxMmInvDashSubLabel,
@@ -15284,17 +15474,6 @@ html, body, body > div, #container, #container-uiarea,
     font-weight: 600 !important;
     color: #0369A1 !important;
     margin-bottom: 0;
-}
-
-.nxMmInvDashMatScroll {
-    flex: 1 1 auto;
-    min-height: 0;
-    height: 10.75rem !important;
-    max-height: 10.75rem !important;
-    overflow: hidden;
-    border: 1px solid #E0F2FE;
-    border-radius: 0.5rem;
-    background: #FFFFFF;
 }
 
 .nxMmInvDashMatScroll .sapMScrollCont {
@@ -15387,10 +15566,42 @@ html, body, body > div, #container, #container-uiarea,
     font-size: 0.82rem !important;
 }
 
+.nxMmInvDashMmbeScrollBody {
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashMmbeMatBadge {
+    padding: 0.45rem 0.65rem;
+    gap: 0.35rem;
+    border-bottom: 1px solid #E0F2FE;
+    background: linear-gradient(180deg, #F8FDFF 0%, #F0F9FF 100%);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.nxMmInvDashMmbeMatBadgeIcon {
+    flex-shrink: 0;
+}
+
+.nxMmInvDashMmbeMatBadgeText,
+.nxMmInvDashMmbeMatBadgeText .sapMText {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #0C4A6E !important;
+    line-height: 1.2 !important;
+}
+
 .nxMmInvDashMmbeTable {
-    border: 1px solid #E0F2FE;
-    border-radius: 0.5rem;
+    border: none;
+    border-radius: 0;
     background: #FFFFFF;
+    min-height: 100%;
+}
+
+.nxMmInvDashMmbeTable .sapMListTbl {
+    min-height: 100%;
 }
 
 .nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell {
@@ -15416,8 +15627,26 @@ html, body, body > div, #container, #container-uiarea,
 
 .nxMmInvDashMmbeCell--center,
 .nxMmInvDashMmbeCell--center .sapMText {
+    display: block !important;
     text-align: center !important;
-    width: 100%;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell:nth-child(2),
+.nxMmInvDashMmbeTable .sapMListTblCell:nth-child(2),
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell:nth-child(3),
+.nxMmInvDashMmbeTable .sapMListTblCell:nth-child(3),
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell:nth-child(5),
+.nxMmInvDashMmbeTable .sapMListTblCell:nth-child(5) {
+    text-align: center !important;
+}
+
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell:nth-child(2) .sapMText,
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell:nth-child(3) .sapMText,
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell:nth-child(5) .sapMText {
+    width: 100% !important;
+    text-align: center !important;
 }
 
 .nxMmInvDashMmbeQty,
@@ -15427,7 +15656,13 @@ html, body, body > div, #container, #container-uiarea,
     color: #0F172A !important;
 }
 
+.nxMmInvDashMmbeTable .sapMListTblHeader .sapMListTblCell:nth-child(4),
 .nxMmInvDashMmbeTable .sapMListTblCell:nth-child(4) {
+    text-align: right !important;
+}
+
+.nxMmInvDashMmbeTable .sapMListTblCell:nth-child(4) .sapMObjectNumber {
+    width: 100% !important;
     text-align: right !important;
 }
 
@@ -15658,9 +15893,362 @@ html, body, body > div, #container, #container-uiarea,
     background: transparent !important;
 }
 
+.nxMmInvDashProdTabs--row {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+}
+
+.nxMmInvDashProdTabs--row .sapMITBContainerContent,
+.nxMmInvDashProdTabs--row .sapMITBContent {
+    height: 100%;
+    box-sizing: border-box;
+}
+
 .nxMmInvDashProdBody {
     padding: 0.5rem 0.15rem;
     gap: 0.45rem;
+}
+
+.nxMmInvDashProdBody--whatif {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashProdBody--whatif .nxMmInvDashVizSection--mrp {
+    margin-top: 0.35rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid #E0F2FE;
+    flex: 0 0 auto;
+}
+
+.nxMmInvDashChartBody--mrpFill {
+    padding: 0.15rem 0 0.05rem;
+    width: 100%;
+}
+
+.nxMmInvAnalysisHost--mrpFill {
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.nxMmInvMrpFillChart {
+    width: 100%;
+    padding: 0.65rem 0.7rem;
+    border-radius: 0.85rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    border: 1px solid #EEF2F7;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    box-sizing: border-box;
+}
+
+.nxMmInvMrpFillSummary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+    margin-bottom: 0.65rem;
+}
+
+.nxMmInvMrpFillSummaryItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.45rem 0.55rem;
+    border-radius: 0.55rem;
+    border: 1px solid #E2E8F0;
+    background: #FFFFFF;
+    box-sizing: border-box;
+}
+
+.nxMmInvMrpFillSummaryItem--avg {
+    border-color: #BAE6FD;
+    background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
+}
+
+.nxMmInvMrpFillSummaryItem--ok {
+    border-color: #A7F3D0;
+    background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 100%);
+}
+
+.nxMmInvMrpFillSummaryItem--short {
+    border-color: #FECACA;
+    background: linear-gradient(180deg, #FEF2F2 0%, #FFFFFF 100%);
+}
+
+.nxMmInvMrpFillSummaryLabel {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.nxMmInvMrpFillSummaryValue {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.nxMmInvMrpFillSummaryItem--ok .nxMmInvMrpFillSummaryValue {
+    color: #047857;
+}
+
+.nxMmInvMrpFillSummaryItem--short .nxMmInvMrpFillSummaryValue {
+    color: #DC2626;
+}
+
+.nxMmInvMrpFillList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nxMmInvMrpFillRow {
+    padding: 0.55rem 0.6rem;
+    border-radius: 0.6rem;
+    border: 1px solid #E2E8F0;
+    background: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    box-sizing: border-box;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.nxMmInvMrpFillRow:hover {
+    border-color: #CBD5E1;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+}
+
+.nxMmInvMrpFillRow--ok {
+    border-left: 3px solid #10B981;
+}
+
+.nxMmInvMrpFillRow--warn {
+    border-left: 3px solid #F59E0B;
+}
+
+.nxMmInvMrpFillRow--short {
+    border-left: 3px solid #EF4444;
+}
+
+.nxMmInvMrpFillHead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.55rem;
+    margin-bottom: 0.4rem;
+}
+
+.nxMmInvMrpFillMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.08rem;
+    min-width: 0;
+}
+
+.nxMmInvMrpFillName {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1.25;
+}
+
+.nxMmInvMrpFillCode {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: #94A3B8;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.nxMmInvMrpFillStatus {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.64rem;
+    font-weight: 800;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.nxMmInvMrpFillStatusIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.95rem;
+    height: 0.95rem;
+    border-radius: 999px;
+    font-size: 0.58rem;
+    line-height: 1;
+    font-weight: 900;
+}
+
+.nxMmInvMrpFillStatus--ok {
+    color: #047857;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+}
+
+.nxMmInvMrpFillStatus--ok .nxMmInvMrpFillStatusIcon {
+    background: #10B981;
+    color: #FFFFFF;
+}
+
+.nxMmInvMrpFillStatus--warn {
+    color: #B45309;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+}
+
+.nxMmInvMrpFillStatus--warn .nxMmInvMrpFillStatusIcon {
+    background: #F59E0B;
+    color: #FFFFFF;
+}
+
+.nxMmInvMrpFillStatus--short {
+    color: #B91C1C;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+}
+
+.nxMmInvMrpFillStatus--short .nxMmInvMrpFillStatusIcon {
+    background: #EF4444;
+    color: #FFFFFF;
+}
+
+.nxMmInvMrpFillTrackRow {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.nxMmInvMrpFillTrack {
+    height: 0.55rem;
+    background: #EEF2F7;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.nxMmInvMrpFillBar {
+    height: 100%;
+    border-radius: 0;
+    min-width: 0;
+    transition: width 0.35s ease;
+}
+
+.nxMmInvMrpFillBar--ok {
+    background: linear-gradient(90deg, #34D399 0%, #059669 100%);
+}
+
+.nxMmInvMrpFillBar--warn {
+    background: linear-gradient(90deg, #FBBF24 0%, #D97706 100%);
+}
+
+.nxMmInvMrpFillBar--short {
+    background: linear-gradient(90deg, #F87171 0%, #DC2626 100%);
+}
+
+.nxMmInvMrpFillPctWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.04rem;
+    min-width: 3.6rem;
+}
+
+.nxMmInvMrpFillPct {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1;
+}
+
+.nxMmInvMrpFillPctSub {
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: #94A3B8;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.nxMmInvMrpFillDetail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.65rem;
+    margin-top: 0.38rem;
+    padding-top: 0.38rem;
+    border-top: 1px dashed #E2E8F0;
+}
+
+.nxMmInvMrpFillDetailItem {
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #64748B;
+}
+
+.nxMmInvMrpFillDetailItem em {
+    font-style: normal;
+    font-weight: 700;
+    color: #94A3B8;
+    margin-right: 0.12rem;
+}
+
+.nxMmInvMrpFillDetailItem--short {
+    color: #B91C1C;
+}
+
+.nxMmInvMrpFillDetailItem--short em {
+    color: #F87171;
+}
+
+@media (max-width: 960px) {
+    .nxMmInvMrpFillSummary {
+        grid-template-columns: 1fr;
+    }
+
+    .nxMmInvMrpFillTrackRow {
+        grid-template-columns: 1fr;
+    }
+
+    .nxMmInvMrpFillPctWrap {
+        align-items: flex-start;
+    }
+}
+
+.nxMmInvDashPaneEmpty--mrp {
+    min-height: 7.5rem;
+}
+
+.nxMmInvDashProdBody--whatif .nxMmInvDashGaugeList {
+    max-height: none;
+    overflow: visible;
+}
+
+.nxMmInvDashProdBody--current {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.nxMmInvDashProdBody--current .nxMmInvDashProdTiles {
+    flex: 0 0 auto;
+}
+
+.nxMmInvDashProdBody--current .nxMmInvDashProdChartSection {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .nxMmInvDashHint,
@@ -15671,17 +16259,96 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxMmInvDashProdTiles {
-    gap: 0.55rem;
-    margin-top: 0.35rem;
+    gap: 0.85rem;
+    margin-top: 0.4rem;
+    align-items: stretch;
 }
 
 .nxMmInvDashProdTile {
-    flex: 1 1 10rem;
-    min-width: 0;
-    padding: 0.65rem 0.75rem;
-    border-radius: 0.55rem;
-    background: linear-gradient(145deg, #F0F9FF, #ECFEFF);
+    flex: 1 1 calc(50% - 0.425rem);
+    min-width: 9.5rem;
+    min-height: 12rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    background: #FFFFFF;
+    border: 1px solid #E8EEF4;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    box-sizing: border-box;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.nxMmInvDashProdTile:hover {
+    transform: translateY(-2px);
+    border-color: #D7E0EA;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.nxMmInvDashProdTileStage {
+    width: 100%;
+    height: 8.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 0.65rem;
+    border-radius: 0.85rem;
+    background: #F8FAFC;
+    border: 1px solid #EEF2F7;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashProdTileImg {
+    width: 7rem;
+    height: 7rem;
+}
+
+.nxMmInvDashProdTileImg .sapMImg {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 14px rgba(15, 23, 42, 0.08));
+}
+
+.nxMmInvDashProdTileMeta {
+    width: 100%;
+    margin-top: 0.7rem;
+    gap: 0.38rem;
+}
+
+.nxMmInvDashProdTileName,
+.nxMmInvDashProdTileName .sapMText {
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
+    color: #64748B !important;
+    letter-spacing: 0.03em;
+    text-align: center;
+}
+
+.nxMmInvDashProdTileBadge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.18rem;
+    padding: 0.32rem 0.85rem;
+    border-radius: 999px;
+    box-sizing: border-box;
+    background: #EFF6FF;
     border: 1px solid #BAE6FD;
+}
+
+.nxMmInvDashProdTileQtyNum,
+.nxMmInvDashProdTileQtyNum .sapMText {
+    font-size: 1.08rem !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    letter-spacing: -0.03em;
+    color: #0369A1 !important;
+}
+
+.nxMmInvDashProdTileQtyUnit,
+.nxMmInvDashProdTileQtyUnit .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #64748B !important;
+    line-height: 1 !important;
 }
 
 .nxMmInvDashTileLabel,
@@ -15713,40 +16380,772 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxMmInvDashBomBody {
-    gap: 0.45rem;
-}
-
-.nxMmInvDashBomNote {
-    margin-top: 0.15rem;
+    gap: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
 }
 
 .nxMmInvDashBomGrid {
+    gap: 0.65rem;
+    margin-top: 0;
+    align-items: stretch;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+}
+
+.nxMmInvDashProdChartSection {
+    margin-top: 0.55rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid #E0F2FE;
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.nxMmInvDashProdChartTitle,
+.nxMmInvDashProdChartTitle .sapMTitle {
+    color: #0369A1 !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.35rem !important;
+    flex: 0 0 auto;
+}
+
+.nxMmInvDashChartBody--prod {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    padding: 0.2rem 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashProdBody--current .nxMmInvDashProdChartSection {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.nxMmInvDashCard--productionMerged .nxMmInvDashProdBody--current .nxMmInvDashChartBody--prod {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.nxMmInvDashChartBody--prod .sapUiHtml {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.nxMmInvDashChartBody--prod > .sapUiVBox {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.nxMmInvAnalysisHost--prodCompare {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+}
+
+.nxMmInvProdCompare {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    padding: 0.7rem 0.75rem 0.65rem;
+    border-radius: 0.85rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    border: 1px solid #EEF2F7;
+    box-sizing: border-box;
+    gap: 0.5rem;
+}
+
+.nxMmInvProdCompareTop {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(9.5rem, 42%);
+    gap: 0.65rem 0.85rem;
+    flex: 0 0 auto;
+    align-items: start;
+}
+
+.nxMmInvProdCompareSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.6rem;
+    min-width: 0;
+    padding: 0.15rem 0;
+}
+
+.nxMmInvProdCompareKpiLabel {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #64748B;
+    letter-spacing: 0.02em;
+}
+
+.nxMmInvProdCompareKpiValue {
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.05;
+    color: #0F172A;
+    letter-spacing: -0.03em;
+}
+
+.nxMmInvProdCompareKpiUnit {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #64748B;
+}
+
+.nxMmInvProdCompareKpiSub {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #94A3B8;
+}
+
+.nxMmInvProdCompareLegend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 0.45rem;
+}
+
+.nxMmInvProdCompareLegendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+    padding: 0.35rem 0.45rem;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.nxMmInvProdCompareLegendItem:hover {
+    background: #F8FAFC;
+    border-color: #E2E8F0;
+}
+
+.nxMmInvProdCompareLegendItem--active {
+    background: #F8FAFC;
+    border-color: #CBD5E1;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+.nxMmInvProdCompareLegendItem--active.nxMmInvProdCompareLegendItem--heat {
+    border-left: 3px solid #EF4444;
+}
+
+.nxMmInvProdCompareLegendItem--active.nxMmInvProdCompareLegendItem--bag {
+    border-left: 3px solid #3B82F6;
+}
+
+.nxMmInvProdCompareLegendDot {
+    flex: 0 0 0.62rem;
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 999px;
+}
+
+.nxMmInvProdCompareLegendItem--heat .nxMmInvProdCompareLegendDot {
+    background: linear-gradient(135deg, #FB7185, #DC2626);
+}
+
+.nxMmInvProdCompareLegendItem--bag .nxMmInvProdCompareLegendDot {
+    background: linear-gradient(135deg, #7DD3FC, #0284C7);
+}
+
+.nxMmInvProdCompareLegendThumb {
+    flex: 0 0 2.45rem;
+    width: 2.45rem;
+    height: 2.45rem;
+    object-fit: contain;
+    border-radius: 0.35rem;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 0.1rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvProdCompareLegendText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.nxMmInvProdCompareLegendName {
+    font-size: 1.12rem;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.02em;
+}
+
+.nxMmInvProdCompareLegendMeta {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #64748B;
+}
+
+.nxMmInvProdCompareChartWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    min-width: 0;
+    flex: 0 0 auto;
+    height: auto;
+    gap: 0;
+}
+
+.nxMmInvProdCompareChartMain {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 7.5rem;
+    max-height: none;
+    gap: 0.35rem;
+}
+
+.nxMmInvProdCompareMid {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    justify-content: flex-end;
+}
+
+.nxMmInvProdCompareMidLabel {
+    flex: 0 0 auto;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #64748B;
+    letter-spacing: 0.01em;
+}
+
+.nxMmInvProdCompareMidStrip {
+    display: flex;
+    width: 100%;
+    min-height: 2.35rem;
+    border-radius: 0.45rem;
+    overflow: hidden;
+    border: 1px solid #CBD5E1;
+    background: #E2E8F0;
+    flex: 0 0 auto;
+}
+
+.nxMmInvProdCompareMidSeg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 100%;
+    padding: 0.35rem 0.45rem;
+    border: 0;
+    cursor: pointer;
+    transition: filter 0.18s ease, box-shadow 0.18s ease;
+    box-sizing: border-box;
+    font: inherit;
+}
+
+.nxMmInvProdCompareMidSeg--heat {
+    background: linear-gradient(90deg, #EF4444 0%, #F87171 100%);
+    color: #FFFFFF;
+}
+
+.nxMmInvProdCompareMidSeg--bag {
+    background: linear-gradient(90deg, #3B82F6 0%, #60A5FA 100%);
+    color: #FFFFFF;
+}
+
+.nxMmInvProdCompareMidSeg:hover,
+.nxMmInvProdCompareMidSeg:focus {
+    filter: brightness(1.06);
+    outline: none;
+}
+
+.nxMmInvProdCompareMidSeg--active {
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85);
+    filter: brightness(1.08);
+}
+
+.nxMmInvProdCompareMidSegLabel {
+    font-size: 0.72rem;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nxMmInvProdCompareMidInsight {
+    flex: 0 0 auto;
+    padding: 0.45rem 0.55rem;
+    border-radius: 0.45rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748B;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.nxMmInvProdCompareMidInsight strong {
+    color: #0F172A;
+    font-weight: 800;
+}
+
+.nxMmInvProdCompareSvg {
+    width: 100%;
+    max-width: 15.5rem;
+    height: auto;
+    max-height: 100%;
+    display: block;
+}
+
+.nxMmInvProdCompareSeg--interactive {
+    cursor: pointer;
+    transition: opacity 0.18s ease, filter 0.18s ease;
+}
+
+.nxMmInvProdCompareSeg--interactive:hover,
+.nxMmInvProdCompareSeg--interactive:focus {
+    opacity: 0.92;
+    filter: url(#nxMmInvProdSegShadow) brightness(1.06);
+}
+
+.nxMmInvProdCompareSeg--selected {
+    opacity: 1 !important;
+    filter: url(#nxMmInvProdSegShadow) brightness(1.1) !important;
+    stroke-width: 4;
+}
+
+.nxMmInvProdCompareSegInfo {
+    width: 100%;
+    max-width: 15.5rem;
+    min-height: 2.4rem;
+    padding: 0.45rem 0.55rem;
+    border-radius: 0.45rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    box-sizing: border-box;
+}
+
+.nxMmInvProdCompareSegInfoPlaceholder {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #94A3B8;
+    text-align: center;
+    line-height: 1.35;
+}
+
+.nxMmInvProdCompareSegInfoBody {
+    display: flex;
+    align-items: center;
     gap: 0.55rem;
-    margin-top: 0.25rem;
+    min-width: 0;
+}
+
+.nxMmInvProdCompareSegInfoBody[hidden] {
+    display: none !important;
+}
+
+.nxMmInvProdCompareSegInfoImg {
+    flex: 0 0 2.1rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    object-fit: contain;
+    border-radius: 0.35rem;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    padding: 0.08rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvProdCompareSegInfoText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    min-width: 0;
+}
+
+.nxMmInvProdCompareSegInfoName {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0F172A;
+}
+
+.nxMmInvProdCompareSegInfoMeta {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #64748B;
+}
+
+.nxMmInvProdCompareSegInfo--active.nxMmInvProdCompareSegInfo--heat {
+    border-color: #FECACA;
+    background: #FEF2F2;
+}
+
+.nxMmInvProdCompareSegInfo--active.nxMmInvProdCompareSegInfo--bag {
+    border-color: #BAE6FD;
+    background: #F0F9FF;
+}
+
+.nxMmInvProdCompareFloatTip {
+    position: absolute;
+    z-index: 3;
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.45rem;
+    background: #0F172A;
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22);
+}
+
+.nxMmInvProdCompareFloatTip--visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nxMmInvProdCompareRatioBar {
+    display: flex;
+    width: 100%;
+    min-height: 3.35rem;
+    border-radius: 0;
+    overflow: hidden;
+    border: 1px solid #CBD5E1;
+    background: #E2E8F0;
+    flex: 0 0 auto;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
+}
+
+.nxMmInvProdCompareRatioSeg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-width: 0;
+    padding: 0.45rem 0.55rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: filter 0.18s ease, transform 0.18s ease;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.nxMmInvProdCompareRatioSeg:first-child {
+    border-radius: 0;
+}
+
+.nxMmInvProdCompareRatioSeg:last-child {
+    border-radius: 0;
+}
+
+.nxMmInvProdCompareRatioSeg:hover {
+    filter: brightness(1.06);
+    z-index: 1;
+}
+
+.nxMmInvProdCompareRatioSeg--heat {
+    background: linear-gradient(90deg, #FB7185 0%, #DC2626 100%);
+    color: #FFFFFF;
+    justify-content: flex-start;
+}
+
+.nxMmInvProdCompareRatioSeg--bag {
+    background: linear-gradient(90deg, #38BDF8 0%, #0284C7 100%);
+    color: #FFFFFF;
+    justify-content: flex-end;
+}
+
+.nxMmInvProdCompareRatioThumb {
+    width: 1.85rem;
+    height: 1.85rem;
+    object-fit: contain;
+    border-radius: 0.3rem;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.08rem;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+}
+
+.nxMmInvProdCompareRatioText {
+    font-size: 0.88rem;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+}
+
+.nxMmInvProdCompareRatioPct {
+    font-size: 0.78rem;
+    font-weight: 800;
+    opacity: 0.92;
+    flex: 0 0 auto;
+    margin-left: 0.15rem;
+}
+
+.nxMmInvProdCompareRatioSeg--bag .nxMmInvProdCompareRatioText,
+.nxMmInvProdCompareRatioSeg--bag .nxMmInvProdCompareRatioPct {
+    display: none;
+}
+
+.nxMmInvProdCompareRatioSeg--bag[data-tip] {
+    min-width: 3.2rem;
+}
+
+@media (min-width: 520px) {
+    .nxMmInvProdCompareRatioSeg--bag .nxMmInvProdCompareRatioText,
+    .nxMmInvProdCompareRatioSeg--bag .nxMmInvProdCompareRatioPct {
+        display: inline;
+    }
+}
+
+.nxMmInvProdCompareSeg {
+    stroke: #FFFFFF;
+    stroke-width: 3;
+    stroke-linejoin: round;
+}
+
+.nxMmInvProdCompareSegPhoto {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0.08rem;
+}
+
+.nxMmInvProdCompareSegPhoto--heat {
+    border-color: #FECDD3;
+}
+
+.nxMmInvProdCompareSegPhoto--bag {
+    border-color: #BAE6FD;
+}
+
+.nxMmInvProdCompareSegPct {
+    font-size: 14px;
+    font-weight: 800;
+    pointer-events: none;
+    paint-order: stroke fill;
+    stroke: rgba(255, 255, 255, 0.85);
+    stroke-width: 3px;
+}
+
+.nxMmInvProdCompareSegPct--heat {
+    fill: #FFFFFF;
+}
+
+.nxMmInvProdCompareSegPct--bag {
+    fill: #0F172A;
+    stroke: rgba(255, 255, 255, 0.95);
+}
+
+.nxMmInvProdCompareSegValue {
+    font-size: 11px;
+    font-weight: 800;
+    pointer-events: none;
+}
+
+.nxMmInvProdCompareSegValue--heat {
+    fill: #FFFFFF;
+}
+
+.nxMmInvProdCompareSegValue--bag {
+    fill: #0F172A;
+}
+
+.nxMmInvProdCompareSegBadge {
+    filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.12));
+}
+
+@media (max-width: 960px) {
+    .nxMmInvProdCompareTop {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .nxMmInvProdCompareChartWrap {
+        min-height: 10rem;
+    }
+
+    .nxMmInvProdCompareSvg {
+        max-width: 12.5rem;
+    }
+}
+
+.nxMmInvDashPaneEmpty--prod {
+    flex: 1 1 auto;
+    min-height: 9.5rem;
+}
+
+.nxMmInvDashBomMixSection {
+    margin-top: 0.65rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.15rem;
+    border-top: 1px solid #E0F2FE;
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: visible;
+}
+
+.nxMmInvDashBomMixTitle,
+.nxMmInvDashBomMixTitle .sapMTitle {
+    color: #0369A1 !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.2rem !important;
+}
+
+.nxMmInvDashBomMixHint {
+    margin-bottom: 0.35rem;
+}
+
+.nxMmInvDashBomMixGrid {
+    gap: 0.55rem;
+    align-items: stretch;
+}
+
+.nxMmInvDashBomMixPanel {
+    flex: 1 1 calc(50% - 0.3rem);
+    min-width: 0;
+    padding: 0.55rem 0.6rem 0.65rem;
+    border-radius: 0.55rem;
+    border: 1px solid #E0F2FE;
+    background: #F8FAFC;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+.nxMmInvDashBomMixPanel--heat {
+    background: linear-gradient(180deg, #FFF7ED 0%, #F8FAFC 100%);
+    border-color: #FED7AA;
+}
+
+.nxMmInvDashBomMixPanel--bag {
+    background: linear-gradient(180deg, #F0F9FF 0%, #F8FAFC 100%);
+    border-color: #BAE6FD;
+}
+
+.nxMmInvDashBomMixPanelTitle,
+.nxMmInvDashBomMixPanelTitle .sapMTitle {
+    color: #0F172A !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.35rem !important;
+}
+
+.nxMmInvDashBomMixChartWrap {
+    width: 100%;
+    min-height: auto;
+    overflow: visible;
+}
+
+.nxMmInvDashPaneEmpty--bomMix {
+    min-height: 6.5rem;
 }
 
 .nxMmInvDashBomCard {
-    flex: 1 1 14rem;
+    flex: 1 1 calc(50% - 0.325rem);
     min-width: 0;
-    padding: 0.65rem 0.7rem;
+    min-height: 0;
+    height: 100%;
+    padding: 0.85rem 0.9rem;
     border-radius: 0.65rem;
     border: 1px solid #E0F2FE;
     background: #FFFFFF;
     box-shadow: 0 8px 18px rgba(14, 165, 233, 0.06);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashBomCardHead {
+    margin-bottom: 0.55rem;
+    flex: 0 0 auto;
+}
+
+.nxMmInvDashBomCardHead .sapMTitle {
+    font-size: 1rem !important;
+}
+
+.nxMmInvDashBomTable {
+    border: 1px solid #E0F2FE;
+    border-radius: 0.45rem;
+    flex: 0 0 auto;
+    min-height: 0;
+}
+
+.nxMmInvDashBomTable .sapMListTbl {
+    height: 100%;
+}
+
+.nxMmInvDashBomTable .sapMListTblHeader {
+    background: #F0F9FF;
+}
+
+.nxMmInvDashBomTable .sapMListTblHeader .sapMListTblCell {
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+}
+
+.nxMmInvDashBomTable .sapMListTblRow .sapMListTblCell {
+    padding-top: 0.95rem;
+    padding-bottom: 0.95rem;
+    vertical-align: middle;
 }
 
 .nxMmInvDashBomCard--heat {
-    background: linear-gradient(180deg, #FFF7ED 0%, #FFFFFF 42%);
+    background: linear-gradient(180deg, #FFF7ED 0%, #FFFFFF 38%);
     border-color: #FED7AA;
 }
 
 .nxMmInvDashBomCard--bag {
-    background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 42%);
+    background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 38%);
     border-color: #BAE6FD;
-}
-
-.nxMmInvDashBomCardHead {
-    margin-bottom: 0.35rem;
 }
 
 .nxMmInvDashBomCode,
@@ -15763,14 +17162,9 @@ html, body, body > div, #container, #container-uiarea,
     margin-bottom: 0.35rem;
 }
 
-.nxMmInvDashBomTable {
-    border: 1px solid #E0F2FE;
-    border-radius: 0.45rem;
-}
-
 .nxMmInvDashBomMatName,
 .nxMmInvDashBomMatName .sapMText {
-    font-size: 0.74rem !important;
+    font-size: 0.82rem !important;
     font-weight: 600 !important;
     color: #0F172A !important;
 }
@@ -15779,6 +17173,108 @@ html, body, body > div, #container, #container-uiarea,
 .nxMmInvDashBomMatCode .sapMText {
     font-size: 0.66rem !important;
     color: #94A3B8 !important;
+}
+
+.nxMmInvDashBomViz {
+    flex: 0 0 auto;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 0.65rem;
+    border-top: 1px solid rgba(186, 230, 253, 0.85);
+}
+
+.nxMmInvDashBomViz .sapUiHtml {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+.nxMmInvAnalysisHost--bomCardViz {
+    flex: 0 0 auto;
+    min-height: 0;
+    height: auto;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    display: block;
+}
+
+.nxMmInvBomCardViz {
+    flex: 0 0 auto;
+    min-height: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.nxMmInvBomCardVizHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.45rem;
+    flex: 0 0 auto;
+}
+
+.nxMmInvBomCardVizLabel {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #0369A1;
+}
+
+.nxMmInvBomCardViz--heat .nxMmInvBomCardVizLabel {
+    color: #C2410C;
+}
+
+.nxMmInvBomCardViz--bag .nxMmInvBomCardVizLabel {
+    color: #0369A1;
+}
+
+.nxMmInvBomCardVizKpi {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #64748B;
+    white-space: nowrap;
+}
+
+.nxMmInvBomCardVizStack {
+    display: flex;
+    width: 100%;
+    min-height: 1.35rem;
+    border-radius: 0.35rem;
+    overflow: hidden;
+    border: 1px solid #CBD5E1;
+    background: #E2E8F0;
+    flex: 0 0 auto;
+}
+
+.nxMmInvBomCardVizStackSeg {
+    min-width: 0;
+    height: 100%;
+    min-height: 1.35rem;
+    transition: filter 0.18s ease;
+}
+
+.nxMmInvBomCardVizStackSeg:hover {
+    filter: brightness(1.08);
+}
+
+.nxMmInvBomMixChart--card {
+    flex: 0 0 auto;
+    min-height: 0;
+    justify-content: flex-start;
+}
+
+.nxMmInvBomMixChart--card .nxMmInvBomMixRow {
+    flex: 0 0 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .nxMmInvAnalysisHost--bomCompare {
@@ -15909,9 +17405,9 @@ html, body, body > div, #container, #container-uiarea,
 .nxMmInvBomMixRow {
     padding: 0.55rem 0.65rem;
     border-radius: 0.55rem;
-    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    background: #FFFFFF;
     border: 1px solid #E2E8F0;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    box-shadow: none;
 }
 
 .nxMmInvBomMixHead {
@@ -15957,7 +17453,6 @@ html, body, body > div, #container, #container-uiarea,
     border-radius: 999px;
     min-width: 0;
     transition: width 0.35s ease;
-    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .nxMmInvBomMixMeta {
@@ -15993,6 +17488,12 @@ html, body, body > div, #container, #container-uiarea,
     padding: 0.1rem 0 0.2rem;
 }
 
+.nxMmInvDashCard--bl .nxMmInvDashChartBody--dist .nxMmInvAnalysisHost--dist,
+.nxMmInvDashCard--bl .nxMmInvDashChartBody--mmbe .nxMmInvAnalysisHost--mmbeFlow {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
 .nxMmInvDashCompTabs {
     margin-top: 0.1rem;
 }
@@ -16000,11 +17501,417 @@ html, body, body > div, #container, #container-uiarea,
 .nxMmInvDashCompBody {
     padding-top: 0.25rem;
     gap: 0.2rem;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .nxMmInvDashChartBody--mmbe {
-    min-height: 11rem;
+    min-height: 13rem;
     padding: 0.15rem 0 0.1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.nxMmInvDashChartBody--mmbe .nxMmInvAnalysisHost--mmbeFlow {
+    min-height: 11.5rem;
+    flex: 1 1 auto;
+    height: 100%;
+}
+
+.nxMmInvAnalysisHost--mmbeFlow {
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+}
+
+.nxMmInvMmbeFlow {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    padding: 0.7rem 0.75rem 0.65rem;
+    border-radius: 0.85rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.nxMmInvMmbeFlowHead {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: end;
+    gap: 0.65rem 0.85rem;
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #EEF2F7;
+    flex: 0 0 auto;
+}
+
+.nxMmInvMmbeFlowKpiLabel {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748B;
+    letter-spacing: 0.02em;
+}
+
+.nxMmInvMmbeFlowKpiValue {
+    margin-top: 0.12rem;
+    font-size: 1.65rem;
+    font-weight: 800;
+    line-height: 1.05;
+    color: #0F172A;
+    letter-spacing: -0.03em;
+}
+
+.nxMmInvMmbeFlowKpiUnit {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #64748B;
+}
+
+.nxMmInvMmbeFlowKpiSub {
+    margin-top: 0.15rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #94A3B8;
+}
+
+.nxMmInvMmbeFlowAxis {
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    padding: 0.28rem 0.62rem;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.nxMmInvMmbeFlowAxis--left {
+    color: #0369A1;
+    background: #E0F2FE;
+    border: 1px solid #BAE6FD;
+}
+
+.nxMmInvMmbeFlowAxis--right {
+    color: #047857;
+    background: #D1FAE5;
+    border: 1px solid #6EE7B7;
+}
+
+.nxMmInvMmbeFlowBody {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(7rem, 9rem);
+    gap: 0.65rem;
+    align-items: stretch;
+    margin-bottom: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.nxMmInvMmbeFlowRowsCol {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+}
+
+.nxMmInvMmbeFlowColLabel {
+    font-size: 0.64rem;
+    font-weight: 700;
+    color: #94A3B8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.nxMmInvMmbeFlowRows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    flex: 1 1 auto;
+    min-height: 0;
+    justify-content: space-between;
+}
+
+.nxMmInvMmbeFlowRow {
+    position: relative;
+    padding: 0.5rem 0.55rem;
+    border-radius: 0.55rem;
+    background: #FFFFFF;
+    border: 1px solid #EEF2F7;
+    box-sizing: border-box;
+    flex: 1 1 0;
+    min-height: 2.65rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nxMmInvMmbeFlowRow--lead {
+    border-color: #6EE7B7;
+    background: linear-gradient(90deg, #ECFDF5 0%, #FFFFFF 55%);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
+}
+
+.nxMmInvMmbeFlowLeadBadge {
+    display: inline-block;
+    margin-bottom: 0.28rem;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    font-size: 0.58rem;
+    font-weight: 800;
+    color: #047857;
+    background: #D1FAE5;
+    border: 1px solid #6EE7B7;
+}
+
+.nxMmInvMmbeFlowRowHead {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.35rem 0.45rem;
+    margin-bottom: 0.32rem;
+}
+
+.nxMmInvMmbeFlowRowDot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+.nxMmInvMmbeFlowRowName {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #0F172A;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxMmInvMmbeFlowRowQty {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #0F172A;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    white-space: nowrap;
+}
+
+.nxMmInvMmbeFlowRowPct {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #64748B;
+    white-space: nowrap;
+}
+
+.nxMmInvMmbeFlowRow--lead .nxMmInvMmbeFlowRowPct {
+    color: #047857;
+}
+
+.nxMmInvMmbeFlowRowTrack {
+    height: 0.58rem;
+    background: #EEF2F7;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.nxMmInvMmbeFlowRow--lead .nxMmInvMmbeFlowRowTrack {
+    height: 0.68rem;
+    background: #D1FAE5;
+}
+
+.nxMmInvMmbeFlowRowBar {
+    height: 100%;
+    border-radius: 0;
+    min-width: 2px;
+    transition: width 0.35s ease;
+}
+
+.nxMmInvMmbeFlowMatPanel {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.nxMmInvMmbeFlowMatPanelInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.28rem;
+    width: 100%;
+    min-height: 100%;
+    padding: 0.65rem 0.45rem;
+    border-radius: 0.65rem;
+    background: linear-gradient(180deg, #34D399 0%, #059669 100%);
+    color: #FFFFFF;
+    text-align: center;
+    box-shadow: 0 8px 22px rgba(5, 150, 105, 0.28);
+    box-sizing: border-box;
+}
+
+.nxMmInvMmbeFlowMatTag {
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.88;
+}
+
+.nxMmInvMmbeFlowMatName {
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1.25;
+    word-break: keep-all;
+}
+
+.nxMmInvMmbeFlowMatCode {
+    font-size: 0.58rem;
+    font-weight: 600;
+    opacity: 0.88;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.nxMmInvMmbeFlowMatTotal {
+    margin-top: 0.15rem;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.nxMmInvMmbeFlowMatHint {
+    font-size: 0.58rem;
+    font-weight: 600;
+    opacity: 0.82;
+}
+
+.nxMmInvMmbeFlowStackWrap {
+    margin-bottom: 0;
+    flex: 0 0 auto;
+}
+
+.nxMmInvMmbeFlowStackLabel {
+    font-size: 0.66rem;
+    font-weight: 600;
+    color: #64748B;
+    margin-bottom: 0.32rem;
+}
+
+.nxMmInvMmbeFlowStackLabel strong {
+    color: #047857;
+    font-weight: 800;
+}
+
+.nxMmInvMmbeFlowStack {
+    display: flex;
+    width: 100%;
+    min-height: 2.45rem;
+    border-radius: 0;
+    overflow: hidden;
+    border: 1px solid #CBD5E1;
+    background: #E2E8F0;
+    box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.nxMmInvMmbeFlowStackSeg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 100%;
+    min-height: 2.45rem;
+    transition: filter 0.18s ease;
+    cursor: default;
+}
+
+.nxMmInvMmbeFlowStackSeg:hover {
+    filter: brightness(1.08);
+    z-index: 1;
+}
+
+.nxMmInvMmbeFlowStackSeg--lead {
+    box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.35);
+}
+
+.nxMmInvMmbeFlowStackLeadMark {
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1;
+}
+
+.nxMmInvMmbeFlowLegend {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.38rem 0.55rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid #EEF2F7;
+    flex: 0 0 auto;
+}
+
+.nxMmInvMmbeFlowLegendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.5rem;
+    border-radius: 0.45rem;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.nxMmInvMmbeFlowLegendItem--lead {
+    border-color: #6EE7B7;
+    background: #ECFDF5;
+}
+
+.nxMmInvMmbeFlowLegendDot {
+    flex: 0 0 0.45rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+}
+
+.nxMmInvMmbeFlowLegendText {
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #334155;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 960px) {
+    .nxMmInvMmbeFlowHead {
+        grid-template-columns: 1fr;
+    }
+
+    .nxMmInvMmbeFlowBody {
+        grid-template-columns: 1fr;
+    }
+
+    .nxMmInvMmbeFlowMatPanelInner {
+        min-height: 5.5rem;
+    }
+
+    .nxMmInvMmbeFlowAxis--left,
+    .nxMmInvMmbeFlowAxis--right {
+        justify-self: start;
+    }
 }
 
 .nxMmInvDashChartBody--mmbe .nxMmInvAnalysisHost--status {
@@ -16028,7 +17935,7 @@ html, body, body > div, #container, #container-uiarea,
     margin-top: 0.65rem;
     padding-top: 0.65rem;
     border-top: 1px solid #E0F2FE;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -16043,8 +17950,310 @@ html, body, body > div, #container, #container-uiarea,
 
 .nxMmInvAnalysisHost--dist {
     width: 100%;
-    padding: 0.25rem 0.35rem 0.15rem;
+    padding: 0;
     box-sizing: border-box;
+}
+
+.nxMmInvDistModern {
+    position: relative;
+    width: 100%;
+    padding: 0.65rem 0.75rem 0.55rem;
+    border-radius: 0.85rem;
+    background: #FFFFFF;
+    border: 1px solid #EEF2F7;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistModernHead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.55rem;
+}
+
+.nxMmInvDistModernKpiLabel {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #94A3B8;
+    letter-spacing: 0.02em;
+}
+
+.nxMmInvDistModernKpiValue {
+    margin-top: 0.12rem;
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.05;
+    color: #0F172A;
+    letter-spacing: -0.03em;
+}
+
+.nxMmInvDistModernKpiUnit {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #64748B;
+}
+
+.nxMmInvDistModernKpiSub {
+    margin-top: 0.15rem;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: #94A3B8;
+}
+
+.nxMmInvDistModernChartWrap {
+    display: flex;
+    align-items: stretch;
+    gap: 0.55rem;
+    width: 100%;
+    min-height: 10.5rem;
+}
+
+.nxMmInvDistModernYAxis {
+    flex: 0 0 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0.15rem 0 1.55rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistModernYTick {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: #CBD5E1;
+    line-height: 1;
+}
+
+.nxMmInvDistModernPlot {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 10.5rem;
+    padding-bottom: 2.35rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistModernGrid {
+    position: absolute;
+    inset: 0 0 2.35rem 0;
+    pointer-events: none;
+}
+
+.nxMmInvDistModernGridLine {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-top: 1px dashed #E8EDF3;
+}
+
+.nxMmInvDistModernBars {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1.15rem;
+    width: 100%;
+    height: 100%;
+    min-height: 8.75rem;
+    padding: 0 0.35rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistModernBars--spread {
+    justify-content: space-between;
+    gap: 0.35rem;
+}
+
+.nxMmInvDistModernBars--spread .nxMmInvDistModernBar {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+}
+
+.nxMmInvDistModernBars--spread .nxMmInvDistModernBarLabel {
+    max-width: 100%;
+}
+
+.nxMmInvDistModernBars--scroll {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.15rem;
+}
+
+.nxMmInvDistModernBars--scroll .nxMmInvDistModernBar {
+    flex: 0 0 auto;
+    min-width: 2.85rem;
+    max-width: 4.75rem;
+}
+
+.nxMmInvDistModernBars--count-1 {
+    gap: 0;
+}
+
+.nxMmInvDistModernBars--count-2 {
+    gap: 2rem;
+}
+
+.nxMmInvDistModernBars--count-3 {
+    gap: 1.65rem;
+}
+
+.nxMmInvDistModernBar {
+    position: relative;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 2.85rem;
+    max-width: 4.75rem;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.45rem;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistModernBar:focus-visible {
+    outline: 2px solid #FB923C;
+    outline-offset: 3px;
+    border-radius: 0.75rem;
+}
+
+.nxMmInvDistModernBarTrack {
+    width: 100%;
+    height: 7.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    background: #EEF2F7;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+.nxMmInvDistModernBarFill {
+    width: 100%;
+    border-radius: 0;
+    background: #111827;
+    transition: height 0.28s ease, background 0.2s ease, transform 0.2s ease;
+    min-height: 0.2rem;
+}
+
+.nxMmInvDistModernBar:hover .nxMmInvDistModernBarFill,
+.nxMmInvDistModernBar:focus-visible .nxMmInvDistModernBarFill {
+    background: #1F2937;
+    transform: translateY(-2px);
+}
+
+.nxMmInvDistModernBar--active .nxMmInvDistModernBarFill {
+    background: linear-gradient(180deg, #FF7A59 0%, #F97316 100%);
+    box-shadow: 0 10px 24px rgba(249, 115, 22, 0.28);
+}
+
+.nxMmInvDistModernBarLabel {
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: #64748B;
+    text-align: center;
+    line-height: 1.25;
+    width: 100%;
+    max-width: 4.75rem;
+    white-space: normal;
+    word-break: keep-all;
+    overflow: visible;
+}
+
+.nxMmInvDistModernBar--active .nxMmInvDistModernBarLabel {
+    color: #0F172A;
+}
+
+.nxMmInvDistModernBarStem {
+    position: absolute;
+    top: 0.15rem;
+    left: 50%;
+    width: 0;
+    height: 0.85rem;
+    border-left: 1px dashed transparent;
+    transform: translateX(-50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.nxMmInvDistModernBarStem--active {
+    border-left-color: #CBD5E1;
+    opacity: 1;
+}
+
+.nxMmInvDistModernPopover {
+    position: absolute;
+    top: -0.15rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    min-width: 4.5rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 0.65rem;
+    background: #FFFFFF;
+    border: 1px solid #EEF2F7;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.nxMmInvDistModernPopover--hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.nxMmInvDistModernPopoverValue {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1.1;
+}
+
+.nxMmInvDistModernPopoverName {
+    margin-top: 0.08rem;
+    font-size: 0.64rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+.nxMmInvDistModernPopoverMeta {
+    margin-top: 0.12rem;
+    font-size: 0.58rem;
+    font-weight: 500;
+    color: #94A3B8;
+    white-space: nowrap;
+}
+
+.nxMmInvDistModernFloatTip {
+    position: absolute;
+    z-index: 5;
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.45rem;
+    background: rgba(15, 23, 42, 0.92);
+    color: #FFFFFF;
+    font-size: 0.68rem;
+    font-weight: 600;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
+}
+
+.nxMmInvDistModernFloatTip--visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 .nxMmInvDistColChart {
@@ -16157,11 +18366,19 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxMmInvDashPaneEmpty {
-    min-height: 10rem;
+    flex: 1 1 0;
+    min-height: 0;
     padding: 1rem;
     background: #F8FAFC;
     border-radius: 0.5rem;
     border: 1px dashed #CBD5E1;
+    box-sizing: border-box;
+}
+
+.nxMmInvDashMmbePane > .nxMmInvDashPaneEmpty {
+    border: 1px solid #E0F2FE;
+    border-style: solid;
+    background: #FFFFFF;
 }
 
 .nxMmInvDashPaneEmpty--chart {
@@ -16200,6 +18417,11 @@ html, body, body > div, #container, #container-uiarea,
     .nxMmInvDashCard--bl {
         grid-column: 1;
         grid-row: auto;
+        height: auto;
+    }
+
+    .nxMmInvDashCard--tl .nxMmInvDashSplit {
+        min-height: 13.5rem;
     }
 
     .nxMmInvDashCard {
@@ -16364,7 +18586,9 @@ html, body, body > div, #container, #container-uiarea,
     align-items: flex-start !important;
     justify-content: center !important;
     width: 100% !important;
-    max-width: 100%;
+    max-width: 920px;
+    margin-left: auto;
+    margin-right: auto;
     box-sizing: border-box;
 }
 
@@ -16486,6 +18710,8 @@ html, body, body > div, #container, #container-uiarea,
 
 .fiReceiptLabel,
 .fiReceiptLabel.sapMText,
+.fiReceiptLabelLink,
+.fiReceiptLabelLink.sapMLnk,
 .fiReceiptMiniLabel,
 .fiReceiptMiniLabel.sapMText {
     font-size: 12px !important;
@@ -16495,6 +18721,43 @@ html, body, body > div, #container, #container-uiarea,
     overflow: visible !important;
     text-overflow: clip !important;
     max-width: none !important;
+}
+
+.fiReceiptLabelLink,
+.fiReceiptLabelLink.sapMLnk {
+    cursor: help;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    padding-bottom: 0;
+    align-self: flex-start;
+    color: #64748B !important;
+}
+
+.fiReceiptLabelLink:hover,
+.fiReceiptLabelLink.sapMLnk:hover,
+.fiReceiptLabelLink:focus,
+.fiReceiptLabelLink.sapMLnk:focus {
+    color: #64748B !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    outline: none;
+}
+
+.fiReceiptLabelLink:active,
+.fiReceiptLabelLink.sapMLnk:active {
+    color: #475569 !important;
+}
+
+.fiReceiptFieldHelpPopover.sapMPopover {
+    max-width: 20rem;
+}
+
+.fiReceiptFieldHelpText,
+.fiReceiptFieldHelpText.sapMText {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    color: #334155 !important;
+    padding: 0.25rem 0.5rem 0.75rem;
 }
 
 .fiReceiptValue,
@@ -16789,15 +19052,17 @@ html, body, body > div, #container, #container-uiarea,
 
     .fiReceiptMainReceiptArea.sapMVBox {
         padding: 16px 8px 24px;
-    }
-
-    .fiReceiptPaper.sapMVBox {
-        max-width: 100%;
+        align-items: center !important;
     }
 
     .fiReceiptMainReceiptInner.sapMHBox {
         flex-direction: column !important;
         align-items: center !important;
+        margin-left: 0;
+    }
+
+    .fiReceiptPaper.sapMVBox {
+        max-width: 100%;
     }
 
     .fiReceiptVoucherActions.sapMVBox {

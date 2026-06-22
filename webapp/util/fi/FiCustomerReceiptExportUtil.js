@@ -44,7 +44,10 @@ sap.ui.define([
             ["Fiscal Year", FiCustomerReceiptFormatter.formatOptionalText(oCustomer.FiscalYear)],
             ["Document Type", FiCustomerReceiptFormatter.formatOptionalText(oCustomer.DocumentType)],
             ["Posting Date", FiCustomerReceiptFormatter.formatDate(oCustomer.PostingDate)],
-            ["Clearing Doc.", FiCustomerReceiptFormatter.formatOptionalText(oCustomer.ClearingDocument)],
+            ["Clearing Doc.", FiCustomerReceiptFormatter.formatClearingDocument(
+                oCustomer.ClearingDocument,
+                oCustomer.clearingSameAsAccounting
+            )],
             ["Clearing Date", FiCustomerReceiptFormatter.formatDate(oCustomer.ClearingDate)]
         ];
     }

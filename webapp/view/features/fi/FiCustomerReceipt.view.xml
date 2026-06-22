@@ -76,33 +76,45 @@
                             <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
 
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Company Code" class="fiReceiptLabel" />
+                                <Link text="Company Code" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="companyCode" /></customData>
+                                </Link>
                                 <Text text="{fiReceiptView>/selectedCustomer/CompanyCode}" class="fiReceiptValue" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Customer" class="fiReceiptLabel" />
+                                <Link text="Customer" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="customer" /></customData>
+                                </Link>
                                 <Text text="{fiReceiptView>/selectedCustomer/Customer}" class="fiReceiptValue" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Customer Name" class="fiReceiptLabel" />
+                                <Link text="Customer Name" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="customerName" /></customData>
+                                </Link>
                                 <Text text="{fiReceiptView>/selectedCustomer/CustomerName}" class="fiReceiptValue fiReceiptValue--name" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Status" class="fiReceiptLabel" />
+                                <Link text="Status" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="status" /></customData>
+                                </Link>
                                 <Text
                                     text="{ path: 'fiReceiptView>/selectedCustomer/Status', formatter: '.formatStatus' }"
                                     class="{ parts: [{path: 'fiReceiptView>/selectedCustomer/Status'}], formatter: '.formatStatusBadgeClass' }"
                                     wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Currency" class="fiReceiptLabel" />
+                                <Link text="Currency" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="currency" /></customData>
+                                </Link>
                                 <Text text="{fiReceiptView>/selectedCustomer/Currency}" class="fiReceiptValue" wrapping="true" />
                             </HBox>
 
                             <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
 
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Invoice Amount" class="fiReceiptLabel" />
+                                <Link text="Invoice Amount" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="invoiceAmount" /></customData>
+                                </Link>
                                 <Text
                                     text="{
                                         parts: [
@@ -115,7 +127,9 @@
                                     wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Paid Amount" class="fiReceiptLabel" />
+                                <Link text="Paid Amount" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="paidAmount" /></customData>
+                                </Link>
                                 <Text
                                     text="{
                                         parts: [
@@ -128,7 +142,9 @@
                                     wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Open Amount" class="fiReceiptLabel" />
+                                <Link text="Open Amount" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="openAmount" /></customData>
+                                </Link>
                                 <Text
                                     text="{
                                         parts: [
@@ -141,14 +157,18 @@
                                     wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Payment Rate" class="fiReceiptLabel" />
+                                <Link text="Payment Rate" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="paymentRate" /></customData>
+                                </Link>
                                 <Text
                                     text="{ path: 'fiReceiptView>/selectedCustomer/PaymentRate', formatter: '.formatRate' }"
                                     class="fiReceiptValue fiReceiptValue--rate"
                                     wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Open Rate" class="fiReceiptLabel" />
+                                <Link text="Open Rate" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="openRate" /></customData>
+                                </Link>
                                 <Text
                                     text="{ path: 'fiReceiptView>/selectedCustomer/OpenRate', formatter: '.formatRate' }"
                                     class="fiReceiptValue"
@@ -158,42 +178,69 @@
                             <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
 
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Invoice Count" class="fiReceiptLabel" />
+                                <Link text="Invoice Count" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="invoiceCount" /></customData>
+                                </Link>
                                 <Text text="{fiReceiptView>/selectedCustomer/InvoiceCount}" class="fiReceiptValue" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Paid Count" class="fiReceiptLabel" />
+                                <Link text="Paid Count" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="paidCount" /></customData>
+                                </Link>
                                 <Text text="{fiReceiptView>/selectedCustomer/PaidCount}" class="fiReceiptValue" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Open Count" class="fiReceiptLabel" />
+                                <Link text="Open Count" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="openCount" /></customData>
+                                </Link>
                                 <Text text="{fiReceiptView>/selectedCustomer/OpenCount}" class="fiReceiptValue" wrapping="true" />
                             </HBox>
 
                             <VBox class="fiReceiptDashedLine" width="100%" renderType="Bare" />
 
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Accounting Doc." class="fiReceiptLabel" />
+                                <Link text="Accounting Doc." class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="accountingDoc" /></customData>
+                                </Link>
                                 <Text text="{ path: 'fiReceiptView>/selectedCustomer/AccountingDocument', formatter: '.formatOptionalText' }" class="fiReceiptValue" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Fiscal Year" class="fiReceiptLabel" />
+                                <Link text="Fiscal Year" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="fiscalYear" /></customData>
+                                </Link>
                                 <Text text="{ path: 'fiReceiptView>/selectedCustomer/FiscalYear', formatter: '.formatOptionalText' }" class="fiReceiptValue" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Document Type" class="fiReceiptLabel" />
+                                <Link text="Document Type" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="documentType" /></customData>
+                                </Link>
                                 <Text text="{ path: 'fiReceiptView>/selectedCustomer/DocumentType', formatter: '.formatOptionalText' }" class="fiReceiptValue" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Posting Date" class="fiReceiptLabel" />
+                                <Link text="Posting Date" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="postingDate" /></customData>
+                                </Link>
                                 <Text text="{ path: 'fiReceiptView>/selectedCustomer/PostingDate', formatter: '.formatDate' }" class="fiReceiptValue" wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Clearing Doc." class="fiReceiptLabel" />
-                                <Text text="{ path: 'fiReceiptView>/selectedCustomer/ClearingDocument', formatter: '.formatOptionalText' }" class="fiReceiptValue" wrapping="true" />
+                                <Link text="Clearing Doc." class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="clearingDoc" /></customData>
+                                </Link>
+                                <Text
+                                    text="{
+                                        parts: [
+                                            {path: 'fiReceiptView>/selectedCustomer/ClearingDocument'},
+                                            {path: 'fiReceiptView>/selectedCustomer/clearingSameAsAccounting'}
+                                        ],
+                                        formatter: '.formatClearingDocument'
+                                    }"
+                                    class="fiReceiptValue"
+                                    wrapping="true" />
                             </HBox>
                             <HBox class="fiReceiptRow" width="100%" renderType="Bare">
-                                <Text text="Clearing Date" class="fiReceiptLabel" />
+                                <Link text="Clearing Date" class="fiReceiptLabel fiReceiptLabelLink" press=".onReceiptFieldHelpPress">
+                                    <customData><core:CustomData key="helpKey" value="clearingDate" /></customData>
+                                </Link>
                                 <Text text="{ path: 'fiReceiptView>/selectedCustomer/ClearingDate', formatter: '.formatDate' }" class="fiReceiptValue" wrapping="true" />
                             </HBox>
 
@@ -388,7 +435,13 @@
                                             class="fiReceiptDocMeta"
                                             wrapping="true" />
                                         <Text
-                                            text="{ path: 'fiReceiptView>ClearingDocument', formatter: '.formatDocClearingLine' }"
+                                            text="{
+                                                parts: [
+                                                    {path: 'fiReceiptView>ClearingDocument'},
+                                                    {path: 'fiReceiptView>AccountingDocument'}
+                                                ],
+                                                formatter: '.formatDocClearingLine'
+                                            }"
                                             class="fiReceiptDocMeta"
                                             visible="{= !!${fiReceiptView>ClearingDocument} &amp;&amp; ${fiReceiptView>ClearingDocument} !== '00000000' }"
                                             wrapping="true" />

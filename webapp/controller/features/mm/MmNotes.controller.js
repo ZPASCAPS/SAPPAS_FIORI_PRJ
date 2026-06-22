@@ -25,6 +25,11 @@ sap.ui.define([
         { key: "Report", text: "Report" }
     ];
 
+    var FI_SECTION_OPTIONS = [
+        { key: "General", text: "General" },
+        { key: "Customer Receipt", text: "Customer Receipt" }
+    ];
+
     var GENERAL_SECTION_OPTIONS = [
         { key: "General", text: "General" }
     ];
@@ -171,7 +176,15 @@ sap.ui.define([
     }
 
     function getSectionOptions(sModule) {
-        return sModule === "MM" ? MM_SECTION_OPTIONS.slice() : GENERAL_SECTION_OPTIONS.slice();
+        if (sModule === "MM") {
+            return MM_SECTION_OPTIONS.slice();
+        }
+
+        if (sModule === "FI") {
+            return FI_SECTION_OPTIONS.slice();
+        }
+
+        return GENERAL_SECTION_OPTIONS.slice();
     }
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmNotes", {
@@ -205,9 +218,21 @@ sap.ui.define([
         },
 
         _onNotesSyncModule: function (sChannel, sEvent, oData) {
-            if (oData && oData.module) {
-                this._switchWorkspace(oData.module);
+            var sModule;
+
+            if (!oData || !oData.module) {
+                return;
             }
+
+            sModule = oData.module;
+
+            if (oData.force && sModule === this._getActiveModule()) {
+                this._loadModuleNotes(sModule);
+                setTimeout(this._updateModuleTabIndicator.bind(this, true), 0);
+                return;
+            }
+
+            this._switchWorkspace(sModule);
         },
 
         _getNotesODataModel: function () {

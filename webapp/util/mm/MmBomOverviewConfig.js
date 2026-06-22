@@ -8,8 +8,8 @@ sap.ui.define([], function () {
     "use strict";
 
     var FINISHED_PRODUCTS = [
-        { code: "UP-F-HIT-001", name: "히트텍", baseQty: 1, unit: "PC" },
-        { code: "UP-F-BAG-001", name: "가방", baseQty: 1, unit: "PC" }
+        { code: "UP-F-HIT-001", name: "히트텍", baseQty: 1, unit: "PC", imageSrc: "./img/mm/product-heattech.png" },
+        { code: "UP-F-BAG-001", name: "가방", baseQty: 1, unit: "PC", imageSrc: "./img/mm/product-bag.png" }
     ];
 
     var RAW_MATERIALS = [
@@ -46,6 +46,19 @@ sap.ui.define([], function () {
 
     var SHARED_MATERIAL = "UP-R-PES-001";
     var TOTAL_REQUIREMENT_QTY = 38;
+
+    var MATERIAL_ICON_BY_CODE = {
+        "UP-F-HIT-001": { src: "sap-icon://product", color: "#EA580C" },
+        "UP-F-BAG-001": { src: "sap-icon://retail-store", color: "#0284C7" },
+        "UP-R-BZP-001": { src: "sap-icon://chain-link", color: "#64748B" }
+    };
+
+    var CATEGORY_ICON_FINISHED = { src: "sap-icon://retail-fashion", color: "#059669" };
+    var CATEGORY_ICON_RAW = { src: "sap-icon://color-fill", color: "#0D9488" };
+
+    function _normalizeMaterialCode(sCode) {
+        return String(sCode || "").trim().toUpperCase();
+    }
 
     function getMaterialCodes() {
         return RAW_MATERIALS.map(function (oItem) {
@@ -87,6 +100,53 @@ sap.ui.define([], function () {
         return oReq.heattech + oReq.bag;
     }
 
+    function getMaterialIconMeta(sCode, sDisplayName, oOptions) {
+        var sMaterial = _normalizeMaterialCode(sCode);
+        var sName = String(sDisplayName || "").trim();
+        var oOpts = oOptions || {};
+        var bRaw = !!oOpts.isRawMaterial || getMaterialCodes().indexOf(sMaterial) >= 0;
+        var bFinished = !!oOpts.isFinishedProduct ||
+            FINISHED_PRODUCTS.some(function (oItem) {
+                return oItem.code === sMaterial;
+            });
+
+        if (MATERIAL_ICON_BY_CODE[sMaterial]) {
+            return MATERIAL_ICON_BY_CODE[sMaterial];
+        }
+
+        if (/가방/.test(sName) && !/지퍼/.test(sName)) {
+            return MATERIAL_ICON_BY_CODE["UP-F-BAG-001"];
+        }
+        if (/지퍼/.test(sName)) {
+            return MATERIAL_ICON_BY_CODE["UP-R-BZP-001"];
+        }
+        if (/히트텍/.test(sName)) {
+            return MATERIAL_ICON_BY_CODE["UP-F-HIT-001"];
+        }
+
+        if (bFinished) {
+            return CATEGORY_ICON_FINISHED;
+        }
+        if (bRaw) {
+            return CATEGORY_ICON_RAW;
+        }
+
+        return { src: "sap-icon://tag", color: "#64748B" };
+    }
+
+    function getFinishedProductImageSrc(sCode) {
+        var i;
+        var sMaterial = _normalizeMaterialCode(sCode);
+
+        for (i = 0; i < FINISHED_PRODUCTS.length; i++) {
+            if (FINISHED_PRODUCTS[i].code === sMaterial) {
+                return FINISHED_PRODUCTS[i].imageSrc || "";
+            }
+        }
+
+        return "";
+    }
+
     return {
         FINISHED_PRODUCTS: FINISHED_PRODUCTS,
         RAW_MATERIALS: RAW_MATERIALS,
@@ -98,6 +158,8 @@ sap.ui.define([], function () {
         getMaterialMeta: getMaterialMeta,
         getProductBom: getProductBom,
         getRequirement: getRequirement,
-        getTotalRequirement: getTotalRequirement
+        getTotalRequirement: getTotalRequirement,
+        getMaterialIconMeta: getMaterialIconMeta,
+        getFinishedProductImageSrc: getFinishedProductImageSrc
     };
 });

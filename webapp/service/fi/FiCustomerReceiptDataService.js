@@ -286,34 +286,124 @@ sap.ui.define([
         return isNaN(dParsed.getTime()) ? 0 : dParsed.getTime();
     }
 
-    function _pickRepresentativeDetail(aDetails) {
-        var aSorted = (aDetails || []).slice().sort(function (a, b) {
+    function _normalizeDocNumber(vValue) {
+        var s = String(vValue || "").trim();
+
+        if (!s || s === "00000000") {
+            return "";
+        }
+
+        return s;
+    }
+
+    function _sortDetailsByPostingDesc(aDetails) {
+        return (aDetails || []).slice().sort(function (a, b) {
             return _parseDateForSort(b.PostingDate) - _parseDateForSort(a.PostingDate);
         });
+    }
+
+    function _sortDetailsByClearingDesc(aDetails) {
+        return (aDetails || []).slice().sort(function (a, b) {
+            var iClr = _parseDateForSort(b.ClearingDate) - _parseDateForSort(a.ClearingDate);
+
+            if (iClr !== 0) {
+                return iClr;
+            }
+
+            return _parseDateForSort(b.PostingDate) - _parseDateForSort(a.PostingDate);
+        });
+    }
+
+    function _pickAccountingRow(aDetails) {
+        var aSorted = _sortDetailsByPostingDesc(aDetails);
+        var i;
+        var sType;
+        var sAcc;
+        var sClr;
+
+        for (i = 0; i < aSorted.length; i++) {
+            sType = String(aSorted[i].DocumentType || "").trim().toUpperCase();
+            sAcc = _normalizeDocNumber(aSorted[i].AccountingDocument);
+
+            if (sAcc && sType !== "DZ") {
+                return aSorted[i];
+            }
+        }
+
+        for (i = 0; i < aSorted.length; i++) {
+            sAcc = _normalizeDocNumber(aSorted[i].AccountingDocument);
+            sClr = _normalizeDocNumber(aSorted[i].ClearingDocument);
+
+            if (sAcc && sAcc !== sClr) {
+                return aSorted[i];
+            }
+        }
 
         return aSorted.length ? aSorted[0] : null;
     }
 
+    function _pickClearingInfo(aDetails, sAccountingDoc) {
+        var aSorted = _sortDetailsByClearingDesc(aDetails);
+        var sAccNorm = _normalizeDocNumber(sAccountingDoc);
+        var i;
+        var sClr;
+
+        for (i = 0; i < aSorted.length; i++) {
+            sClr = _normalizeDocNumber(aSorted[i].ClearingDocument);
+
+            if (sClr && sClr !== sAccNorm) {
+                return {
+                    clearingDocument: sClr,
+                    clearingDate: aSorted[i].ClearingDate || "",
+                    sameAsAccounting: false
+                };
+            }
+        }
+
+        for (i = 0; i < aSorted.length; i++) {
+            sClr = _normalizeDocNumber(aSorted[i].ClearingDocument);
+
+            if (sClr) {
+                return {
+                    clearingDocument: sClr,
+                    clearingDate: aSorted[i].ClearingDate || "",
+                    sameAsAccounting: sClr === sAccNorm
+                };
+            }
+        }
+
+        return {
+            clearingDocument: "",
+            clearingDate: "",
+            sameAsAccounting: false
+        };
+    }
+
     function _enrichSelectedCustomer(oCustomer, aDetails) {
-        var oRep = _pickRepresentativeDetail(aDetails);
+        var oAccRow = _pickAccountingRow(aDetails);
+        var oClr;
         var oEnriched = Object.assign({ hasSelection: true }, oCustomer);
 
-        if (!oRep) {
+        if (!oAccRow) {
             oEnriched.AccountingDocument = "";
             oEnriched.FiscalYear = "";
             oEnriched.DocumentType = "";
             oEnriched.PostingDate = "";
             oEnriched.ClearingDocument = "";
             oEnriched.ClearingDate = "";
+            oEnriched.clearingSameAsAccounting = false;
             return oEnriched;
         }
 
-        oEnriched.AccountingDocument = oRep.AccountingDocument || "";
-        oEnriched.FiscalYear = oRep.FiscalYear || "";
-        oEnriched.DocumentType = oRep.DocumentType || "";
-        oEnriched.PostingDate = oRep.PostingDate || "";
-        oEnriched.ClearingDocument = oRep.ClearingDocument || "";
-        oEnriched.ClearingDate = oRep.ClearingDate || "";
+        oClr = _pickClearingInfo(aDetails, oAccRow.AccountingDocument);
+
+        oEnriched.AccountingDocument = _normalizeDocNumber(oAccRow.AccountingDocument);
+        oEnriched.FiscalYear = oAccRow.FiscalYear || "";
+        oEnriched.DocumentType = oAccRow.DocumentType || "";
+        oEnriched.PostingDate = oAccRow.PostingDate || "";
+        oEnriched.ClearingDocument = oClr.clearingDocument;
+        oEnriched.ClearingDate = oClr.clearingDate || oAccRow.ClearingDate || "";
+        oEnriched.clearingSameAsAccounting = oClr.sameAsAccounting;
 
         return oEnriched;
     }
@@ -339,7 +429,8 @@ sap.ui.define([
             DocumentType: "",
             PostingDate: "",
             ClearingDocument: "",
-            ClearingDate: ""
+            ClearingDate: "",
+            clearingSameAsAccounting: false
         };
     }
 

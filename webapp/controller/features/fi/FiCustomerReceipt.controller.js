@@ -9,11 +9,14 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
+    "sap/m/Popover",
+    "sap/m/Text",
+    "sap/m/PlacementType",
     "com/capstone/dashboard/fioridashboard/service/fi/FiCustomerReceiptDataService",
     "com/capstone/dashboard/fioridashboard/util/fi/FiCustomerReceiptFormatter",
     "com/capstone/dashboard/fioridashboard/util/fi/FiCustomerReceiptExportUtil",
     "com/capstone/dashboard/fioridashboard/util/fi/FiCustomerReceiptPrintUtil"
-], function (Controller, JSONModel, MessageToast, FiCustomerReceiptDataService, FiCustomerReceiptFormatter, FiCustomerReceiptExportUtil, FiCustomerReceiptPrintUtil) {
+], function (Controller, JSONModel, MessageToast, Popover, Text, PlacementType, FiCustomerReceiptDataService, FiCustomerReceiptFormatter, FiCustomerReceiptExportUtil, FiCustomerReceiptPrintUtil) {
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.fi.FiCustomerReceipt", {
@@ -23,6 +26,7 @@ sap.ui.define([
         formatStatus: FiCustomerReceiptFormatter.formatStatus,
         formatStatusBadgeClass: FiCustomerReceiptFormatter.formatStatusBadgeClass,
         formatOptionalText: FiCustomerReceiptFormatter.formatOptionalText,
+        formatClearingDocument: FiCustomerReceiptFormatter.formatClearingDocument,
         formatDate: FiCustomerReceiptFormatter.formatDate,
         formatDocMeta: FiCustomerReceiptFormatter.formatDocMeta,
         formatDocPostingClearing: FiCustomerReceiptFormatter.formatDocPostingClearing,
@@ -248,6 +252,52 @@ sap.ui.define([
             }
 
             MessageToast.show(oResult.message);
+        },
+
+        onReceiptFieldHelpPress: function (oEvent) {
+            var oSource = oEvent.getSource();
+            var sHelpKey = "";
+            var oHelp;
+            var oPopover;
+
+            if (oSource && oSource.getCustomData) {
+                oSource.getCustomData().some(function (oData) {
+                    if (oData.getKey() === "helpKey") {
+                        sHelpKey = String(oData.getValue() || "");
+                        return true;
+                    }
+                    return false;
+                });
+            }
+
+            oHelp = FiCustomerReceiptFormatter.getFieldHelp(sHelpKey);
+            if (!oHelp) {
+                return;
+            }
+
+            oPopover = this._getFieldHelpPopover();
+            oPopover.setTitle(oHelp.title);
+            this._oFieldHelpText.setText(oHelp.description);
+            oPopover.openBy(oSource);
+        },
+
+        _getFieldHelpPopover: function () {
+            if (!this._oFieldHelpPopover) {
+                this._oFieldHelpText = new Text({
+                    wrapping: true
+                });
+                this._oFieldHelpText.addStyleClass("fiReceiptFieldHelpText");
+                this._oFieldHelpPopover = new Popover({
+                    placement: PlacementType.Bottom,
+                    showHeader: true,
+                    contentWidth: "18rem",
+                    content: [this._oFieldHelpText]
+                });
+                this._oFieldHelpPopover.addStyleClass("fiReceiptFieldHelpPopover");
+                this.getView().addDependent(this._oFieldHelpPopover);
+            }
+
+            return this._oFieldHelpPopover;
         },
 
         onCustomerSelect: function (oEvent) {

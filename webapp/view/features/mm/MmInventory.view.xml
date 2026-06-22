@@ -92,6 +92,7 @@
                     <VBox class="nxMmInvDashCard nxMmInvDashCard--tl" renderType="Bare">
                         <HBox class="nxMmInvDashCardHead" alignItems="Center" justifyContent="SpaceBetween">
                             <Title text="자재 현황" level="H5" />
+                            <core:Icon src="sap-icon://inventory" size="1rem" color="#0EA5E9" />
                         </HBox>
                         <HBox class="nxMmInvDashSplit" width="100%" renderType="Bare">
                             <VBox class="nxMmInvDashListPane" renderType="Bare">
@@ -112,7 +113,6 @@
                                 <ScrollContainer
                                     vertical="true"
                                     horizontal="false"
-                                    height="10.75rem"
                                     width="100%"
                                     class="nxMmInvDashMatScroll">
                                     <List
@@ -156,7 +156,14 @@
                                 </ScrollContainer>
                             </VBox>
                             <VBox class="nxMmInvDashMmbePane" renderType="Bare">
-                                <Text text="재고 유형별 현황 · {stockPositionView>/materialName}" class="nxMmInvDashSubLabel" />
+                                <HBox
+                                    alignItems="Center"
+                                    justifyContent="SpaceBetween"
+                                    class="nxMmInvDashMmbeHead nxMmInvDashMatFilterBar--enhanced"
+                                    width="100%">
+                                    <Text text="재고 유형별 현황" class="nxMmInvDashSubLabel" />
+                                    <core:Icon src="sap-icon://chart-table-view" size="1rem" color="#0EA5E9" />
+                                </HBox>
                                 <BusyIndicator visible="{stockPositionView>/loading}" class="nxMmInvDashMmbeBusy" />
                                 <VBox
                                     visible="{= !${stockPositionView>/hasSelection} &amp;&amp; !${stockPositionView>/loading} }"
@@ -176,49 +183,61 @@
                                     visible="{= ${stockPositionView>/hasSelection} &amp;&amp; !${stockPositionView>/showNoRows} &amp;&amp; !${stockPositionView>/loading} }"
                                     vertical="true"
                                     horizontal="false"
-                                    height="100%"
                                     width="100%"
                                     class="nxMmInvDashMmbeScroll">
-                                    <Table
-                                        items="{stockPositionView>/rows}"
-                                        class="nxMmInvDashMmbeTable"
-                                        width="100%">
-                                        <columns>
-                                            <Column width="30%"><Text text="Stock Type" /></Column>
-                                            <Column width="14%" hAlign="Center"><Text text="Plant" /></Column>
-                                            <Column width="18%" hAlign="Center"><Text text="Storage Location" /></Column>
-                                            <Column width="16%" hAlign="End"><Text text="Quantity" /></Column>
-                                            <Column width="12%" hAlign="Center"><Text text="Unit" /></Column>
-                                        </columns>
-                                        <items>
-                                            <ColumnListItem>
-                                                <cells>
-                                                    <Button
-                                                        text="{stockPositionView>StockTypeName}"
-                                                        type="Transparent"
-                                                        enabled="{stockPositionView>logClickable}"
-                                                        press=".onStockTypePress"
-                                                        class="nxMmInvStockTypeBtn" />
-                                                    <Text text="{stockPositionView>Plant}" class="nxMmInvDashMmbeCell nxMmInvDashMmbeCell--center" />
-                                                    <Text text="{stockPositionView>StorageLocation}" class="nxMmInvDashMmbeCell nxMmInvDashMmbeCell--center" />
-                                                    <ObjectNumber
-                                                        number="{stockPositionView>Quantity}"
-                                                        emphasized="true"
-                                                        class="nxMmInvDashMmbeQty" />
-                                                    <Text text="{stockPositionView>BaseUnit}" class="nxMmInvDashMmbeCell nxMmInvDashMmbeCell--center" />
-                                                </cells>
-                                            </ColumnListItem>
-                                        </items>
-                                    </Table>
+                                    <VBox width="100%" renderType="Bare" class="nxMmInvDashMmbeScrollBody">
+                                        <HBox
+                                            alignItems="Center"
+                                            class="nxMmInvDashMmbeMatBadge"
+                                            width="100%">
+                                            <core:Icon
+                                                src="{stockPositionView>/materialIcon}"
+                                                size="0.95rem"
+                                                color="{stockPositionView>/materialIconColor}"
+                                                class="nxMmInvDashMmbeMatBadgeIcon" />
+                                            <Text text="{stockPositionView>/materialName}" class="nxMmInvDashMmbeMatBadgeText" />
+                                        </HBox>
+                                        <Table
+                                            items="{stockPositionView>/rows}"
+                                            class="nxMmInvDashMmbeTable"
+                                            width="100%">
+                                            <columns>
+                                                <Column width="30%"><Text text="Stock Type" /></Column>
+                                                <Column width="14%" hAlign="Center"><Text text="Plant" /></Column>
+                                                <Column width="18%" hAlign="Center"><Text text="Storage Loc." wrapping="false" /></Column>
+                                                <Column width="16%" hAlign="End"><Text text="Quantity" /></Column>
+                                                <Column width="12%" hAlign="Center"><Text text="Unit" /></Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <Button
+                                                            text="{stockPositionView>StockTypeName}"
+                                                            type="Transparent"
+                                                            enabled="{stockPositionView>logClickable}"
+                                                            press=".onStockTypePress"
+                                                            class="nxMmInvStockTypeBtn" />
+                                                        <Text text="{stockPositionView>Plant}" class="nxMmInvDashMmbeCell nxMmInvDashMmbeCell--center" />
+                                                        <Text text="{stockPositionView>StorageLocation}" class="nxMmInvDashMmbeCell nxMmInvDashMmbeCell--center" />
+                                                        <ObjectNumber
+                                                            number="{stockPositionView>Quantity}"
+                                                            emphasized="true"
+                                                            class="nxMmInvDashMmbeQty" />
+                                                        <Text text="{stockPositionView>BaseUnit}" class="nxMmInvDashMmbeCell nxMmInvDashMmbeCell--center" />
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </VBox>
                                 </ScrollContainer>
                             </VBox>
                         </HBox>
                     </VBox>
 
-                    <!-- 2. BOM기반 생산 현황 + 분석 시각화 (merged) -->
+                    <!-- 2. BOM 기준 생산 가능 현황 + 분석 시각화 (merged) -->
                     <VBox class="nxMmInvDashCard nxMmInvDashCard--productionMerged" renderType="Bare">
                         <HBox class="nxMmInvDashCardHead" alignItems="Center" justifyContent="SpaceBetween">
-                            <Title text="BOM기반 생산 현황" level="H5" />
+                            <Title text="BOM 기준 생산 가능 현황" level="H5" />
                             <core:Icon src="sap-icon://factory" size="1rem" color="#0EA5E9" />
                         </HBox>
                         <IconTabBar
@@ -227,31 +246,85 @@
                             select=".onProductionTabSelect"
                             stretchContentHeight="false"
                             headerMode="Inline"
-                            class="nxMmInvDashProdTabs"
+                            class="nxMmInvDashProdTabs nxMmInvDashProdTabs--row"
                             expandable="false">
                             <items>
                                 <IconTabFilter key="CURRENT" text="현재 생산 가능 수량">
-                                    <VBox class="nxMmInvDashProdBody" renderType="Bare">
-                                        <HBox class="nxMmInvDashProdTiles" wrap="Wrap" width="100%">
-                                            <VBox class="nxMmInvDashProdTile">
-                                                <Text text="히트텍" class="nxMmInvDashTileLabel" />
-                                                <ObjectNumber
-                                                    number="{inventoryView>/production/current/heattechDisplay}"
-                                                    unit="PC"
-                                                    emphasized="true" />
+                                    <VBox class="nxMmInvDashProdBody nxMmInvDashProdBody--current" renderType="Bare">
+                                        <HBox class="nxMmInvDashProdTiles" wrap="Wrap" width="100%" alignItems="Stretch">
+                                            <VBox
+                                                class="nxMmInvDashProdTile"
+                                                alignItems="Center"
+                                                justifyContent="Center"
+                                                renderType="Bare">
+                                                <VBox class="nxMmInvDashProdTileStage" alignItems="Center" justifyContent="Center" renderType="Bare">
+                                                    <Image
+                                                        src="{inventoryView>/production/current/heattechImageSrc}"
+                                                        alt="히트텍"
+                                                        densityAware="false"
+                                                        mode="Contain"
+                                                        class="nxMmInvDashProdTileImg" />
+                                                </VBox>
+                                                <VBox class="nxMmInvDashProdTileMeta" alignItems="Center" renderType="Bare">
+                                                    <Text text="히트텍" class="nxMmInvDashProdTileName" />
+                                                    <HBox
+                                                        class="nxMmInvDashProdTileBadge"
+                                                        alignItems="Baseline"
+                                                        justifyContent="Center">
+                                                        <Text
+                                                            text="{inventoryView>/production/current/heattechDisplay}"
+                                                            class="nxMmInvDashProdTileQtyNum" />
+                                                        <Text text="PC" class="nxMmInvDashProdTileQtyUnit" />
+                                                    </HBox>
+                                                </VBox>
                                             </VBox>
-                                            <VBox class="nxMmInvDashProdTile">
-                                                <Text text="가방" class="nxMmInvDashTileLabel" />
-                                                <ObjectNumber
-                                                    number="{inventoryView>/production/current/bagDisplay}"
-                                                    unit="PC"
-                                                    emphasized="true" />
+                                            <VBox
+                                                class="nxMmInvDashProdTile"
+                                                alignItems="Center"
+                                                justifyContent="Center"
+                                                renderType="Bare">
+                                                <VBox class="nxMmInvDashProdTileStage" alignItems="Center" justifyContent="Center" renderType="Bare">
+                                                    <Image
+                                                        src="{inventoryView>/production/current/bagImageSrc}"
+                                                        alt="가방"
+                                                        densityAware="false"
+                                                        mode="Contain"
+                                                        class="nxMmInvDashProdTileImg" />
+                                                </VBox>
+                                                <VBox class="nxMmInvDashProdTileMeta" alignItems="Center" renderType="Bare">
+                                                    <Text text="가방" class="nxMmInvDashProdTileName" />
+                                                    <HBox
+                                                        class="nxMmInvDashProdTileBadge"
+                                                        alignItems="Baseline"
+                                                        justifyContent="Center">
+                                                        <Text
+                                                            text="{inventoryView>/production/current/bagDisplay}"
+                                                            class="nxMmInvDashProdTileQtyNum" />
+                                                        <Text text="PC" class="nxMmInvDashProdTileQtyUnit" />
+                                                    </HBox>
+                                                </VBox>
                                             </VBox>
                                         </HBox>
+                                        <VBox class="nxMmInvDashProdChartSection" width="100%" renderType="Bare">
+                                            <Title text="생산 가능 수량 비교" level="H6" class="nxMmInvDashProdChartTitle" />
+                                            <VBox
+                                                visible="{= !${inventoryView>/visualization/hasChart} || ${inventoryView>/visualization/mode} !== 'CURRENT' }"
+                                                class="nxMmInvDashPaneEmpty nxMmInvDashPaneEmpty--chart nxMmInvDashPaneEmpty--prod"
+                                                alignItems="Center"
+                                                justifyContent="Center">
+                                                <Text text="{inventoryView>/visualization/emptyMessage}" class="nxMmInvDashEmptyText" />
+                                            </VBox>
+                                            <VBox
+                                                visible="{= ${inventoryView>/visualization/hasChart} &amp;&amp; ${inventoryView>/visualization/mode} === 'CURRENT' }"
+                                                class="nxMmInvDashChartBody nxMmInvDashChartBody--prod"
+                                                width="100%">
+                                                <core:HTML content="{inventoryView>/visualization/html}" />
+                                            </VBox>
+                                        </VBox>
                                     </VBox>
                                 </IconTabFilter>
                                 <IconTabFilter key="WHATIF" text="MRP">
-                                    <VBox class="nxMmInvDashProdBody" renderType="Bare">
+                                    <VBox class="nxMmInvDashProdBody nxMmInvDashProdBody--whatif" renderType="Bare">
                                         <HBox class="nxMmInvDashWhatIfInputs" wrap="Wrap" alignItems="End">
                                             <VBox class="nxMmInvDashWhatIfField">
                                                 <Label text="히트텍 수량" />
@@ -307,11 +380,27 @@
                                                 </items>
                                             </Table>
                                         </ScrollContainer>
+                                        <VBox class="nxMmInvDashVizSection nxMmInvDashVizSection--mrp" width="100%" renderType="Bare">
+                                            <Title text="{inventoryView>/visualization/title}" level="H6" class="nxMmInvDashVizTitle" />
+                                            <VBox
+                                                visible="{= !${inventoryView>/visualization/hasChart} }"
+                                                class="nxMmInvDashPaneEmpty nxMmInvDashPaneEmpty--chart nxMmInvDashPaneEmpty--mrp"
+                                                alignItems="Center"
+                                                justifyContent="Center">
+                                                <Text text="{inventoryView>/visualization/emptyMessage}" class="nxMmInvDashEmptyText" />
+                                            </VBox>
+                                            <VBox
+                                                visible="{inventoryView>/visualization/hasChart}"
+                                                class="nxMmInvDashChartBody nxMmInvDashChartBody--mrpFill"
+                                                width="100%">
+                                                <core:HTML content="{inventoryView>/visualization/html}" />
+                                            </VBox>
+                                        </VBox>
                                     </VBox>
                                 </IconTabFilter>
                                 <IconTabFilter key="BOM" text="BOM">
                                     <VBox class="nxMmInvDashProdBody nxMmInvDashBomBody" renderType="Bare">
-                                        <HBox class="nxMmInvDashBomGrid" width="100%" renderType="Bare" wrap="Wrap">
+                                        <HBox class="nxMmInvDashBomGrid" width="100%" renderType="Bare" wrap="Wrap" alignItems="Stretch">
                                             <VBox class="nxMmInvDashBomCard nxMmInvDashBomCard--heat" renderType="Bare">
                                                 <HBox class="nxMmInvDashBomCardHead" alignItems="Center" justifyContent="SpaceBetween">
                                                     <VBox>
@@ -346,6 +435,9 @@
                                                         </ColumnListItem>
                                                     </items>
                                                 </Table>
+                                                <VBox class="nxMmInvDashBomViz" width="100%" renderType="Bare">
+                                                    <core:HTML content="{inventoryView>/production/unitBom/heattech/mixHtml}" />
+                                                </VBox>
                                             </VBox>
                                             <VBox class="nxMmInvDashBomCard nxMmInvDashBomCard--bag" renderType="Bare">
                                                 <HBox class="nxMmInvDashBomCardHead" alignItems="Center" justifyContent="SpaceBetween">
@@ -381,97 +473,15 @@
                                                         </ColumnListItem>
                                                     </items>
                                                 </Table>
+                                                <VBox class="nxMmInvDashBomViz" width="100%" renderType="Bare">
+                                                    <core:HTML content="{inventoryView>/production/unitBom/bag/mixHtml}" />
+                                                </VBox>
                                             </VBox>
                                         </HBox>
                                     </VBox>
                                 </IconTabFilter>
                             </items>
                         </IconTabBar>
-
-                        <VBox class="nxMmInvDashVizSection" renderType="Bare">
-                            <Title text="{inventoryView>/visualization/sectionTitle}" level="H6" class="nxMmInvDashVizTitle" />
-                            <Text
-                                visible="{= ${inventoryView>/visualization/description} ? true : false }"
-                                text="{inventoryView>/visualization/description}"
-                                class="nxMmInvDashHint nxMmInvDashVizHint" />
-                            <VBox
-                                visible="{= !${inventoryView>/visualization/hasChart} &amp;&amp; ${inventoryView>/visualization/mode} !== 'BOM' }"
-                                class="nxMmInvDashPaneEmpty nxMmInvDashPaneEmpty--chart"
-                                alignItems="Center"
-                                justifyContent="Center">
-                                <Text text="{inventoryView>/visualization/emptyMessage}" class="nxMmInvDashEmptyText" />
-                            </VBox>
-                            <VBox
-                                visible="{= ${inventoryView>/visualization/hasChart} &amp;&amp; ${inventoryView>/visualization/mode} === 'CURRENT' }"
-                                class="nxMmInvDashChartBody"
-                                width="100%">
-                                <core:HTML content="{inventoryView>/visualization/html}" />
-                            </VBox>
-                            <VBox
-                                visible="{= ${inventoryView>/visualization/hasChart} &amp;&amp; ${inventoryView>/visualization/mode} === 'BOM' }"
-                                class="nxMmInvDashChartBody nxMmInvDashChartBody--bomViz"
-                                width="100%">
-                                <IconTabBar
-                                    id="mmInventoryBomVizTabs"
-                                    selectedKey="{inventoryView>/visualization/bom/activeTab}"
-                                    select=".onBomVisualizationTabSelect"
-                                    stretchContentHeight="false"
-                                    headerMode="Inline"
-                                    class="nxMmInvDashProdTabs nxMmInvDashBomVizTabs"
-                                    expandable="false">
-                                    <items>
-                                        <IconTabFilter key="HEATTECH" text="히트텍">
-                                            <VBox class="nxMmInvDashBomVizBody" renderType="Bare">
-                                                <VBox
-                                                    visible="{= !${inventoryView>/visualization/bom/heattech/hasChart} }"
-                                                    class="nxMmInvDashPaneEmpty nxMmInvDashPaneEmpty--chart"
-                                                    alignItems="Center"
-                                                    justifyContent="Center">
-                                                    <Text text="{inventoryView>/visualization/bom/heattech/emptyMessage}" class="nxMmInvDashEmptyText" />
-                                                </VBox>
-                                                <VBox visible="{inventoryView>/visualization/bom/heattech/hasChart}" width="100%">
-                                                    <core:HTML content="{inventoryView>/visualization/bom/heattech/html}" />
-                                                </VBox>
-                                            </VBox>
-                                        </IconTabFilter>
-                                        <IconTabFilter key="BAG" text="가방">
-                                            <VBox class="nxMmInvDashBomVizBody" renderType="Bare">
-                                                <VBox
-                                                    visible="{= !${inventoryView>/visualization/bom/bag/hasChart} }"
-                                                    class="nxMmInvDashPaneEmpty nxMmInvDashPaneEmpty--chart"
-                                                    alignItems="Center"
-                                                    justifyContent="Center">
-                                                    <Text text="{inventoryView>/visualization/bom/bag/emptyMessage}" class="nxMmInvDashEmptyText" />
-                                                </VBox>
-                                                <VBox visible="{inventoryView>/visualization/bom/bag/hasChart}" width="100%">
-                                                    <core:HTML content="{inventoryView>/visualization/bom/bag/html}" />
-                                                </VBox>
-                                            </VBox>
-                                        </IconTabFilter>
-                                    </items>
-                                </IconTabBar>
-                            </VBox>
-                            <VBox
-                                visible="{= ${inventoryView>/visualization/hasChart} &amp;&amp; ${inventoryView>/visualization/mode} === 'WHATIF' }"
-                                class="nxMmInvDashGaugeList"
-                                width="100%"
-                                items="{inventoryView>/visualization/fulfillmentBars}">
-                                <items>
-                                    <VBox class="nxMmInvDashGaugeItem" width="100%">
-                                        <HBox alignItems="Center" justifyContent="SpaceBetween" width="100%">
-                                            <Text text="{inventoryView>materialName}" class="nxMmInvDashGaugeLabel" />
-                                            <ObjectStatus text="{inventoryView>statusText}" state="{inventoryView>progressState}" />
-                                        </HBox>
-                                        <ProgressIndicator
-                                            percentValue="{inventoryView>fulfillmentPct}"
-                                            displayValue="{inventoryView>fulfillmentDisplay}"
-                                            state="{inventoryView>progressState}"
-                                            width="100%"
-                                            class="nxMmInvDashGaugeBar" />
-                                    </VBox>
-                                </items>
-                            </VBox>
-                        </VBox>
                     </VBox>
 
                     <!-- 3. 자재 분포 -->
@@ -521,7 +531,7 @@
                                         </VBox>
                                     </VBox>
                                 </IconTabFilter>
-                                <IconTabFilter key="MMBE" text="자재 유형">
+                                <IconTabFilter key="MMBE" text="재고 유형">
                                     <VBox class="nxMmInvDashCompBody" renderType="Bare">
                                         <Text text="{inventoryView>/stockComposition/mmbe/description}" class="nxMmInvDashHint" />
                                         <VBox

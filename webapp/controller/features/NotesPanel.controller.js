@@ -53,13 +53,13 @@ sap.ui.define([
             oPanel.setVisible(bOpen);
 
             if (bOpen) {
-                this._syncNotesModule();
                 setTimeout(function () {
+                    this._syncNotesModule(true);
                     this._ensurePanelPortal();
                     this._bringPanelToFront();
                     this._positionPanelNearOpener(oData && oData.openById);
                     this._bindPanelDrag();
-                }.bind(this), 0);
+                }.bind(this), 50);
             } else {
                 this._unbindPanelDrag();
             }
@@ -74,13 +74,16 @@ sap.ui.define([
             this._unbindPanelDrag();
         },
 
-        _syncNotesModule: function () {
+        _syncNotesModule: function (bForce) {
             var oComponent = this.getOwnerComponent();
             var oModel = oComponent && oComponent.getModel("dashboard");
             var sNavKey = oModel && oModel.getProperty("/ui/navKey");
             var sModule = NAV_TO_NOTES_MODULE[sNavKey] || "MM";
 
-            this._oEventBus.publish("dashboard", "notesSyncModule", { module: sModule });
+            this._oEventBus.publish("dashboard", "notesSyncModule", {
+                module: sModule,
+                force: !!bForce
+            });
         },
 
         _getOpenerDom: function (sOpenById) {

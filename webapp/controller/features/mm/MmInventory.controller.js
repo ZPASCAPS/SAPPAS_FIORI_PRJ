@@ -9,8 +9,9 @@ sap.ui.define([
     "sap/m/ColumnListItem",
     "sap/m/Text",
     "com/capstone/dashboard/fioridashboard/service/mm/MmInventoryDataService",
-    "com/capstone/dashboard/fioridashboard/service/mm/MmStockLogDataService"
-], function (Controller, JSONModel, MessageToast, Column, ColumnListItem, Text, MmInventoryDataService, MmStockLogDataService) {
+    "com/capstone/dashboard/fioridashboard/service/mm/MmStockLogDataService",
+    "com/capstone/dashboard/fioridashboard/util/mm/MmBomOverviewConfig"
+], function (Controller, JSONModel, MessageToast, Column, ColumnListItem, Text, MmInventoryDataService, MmStockLogDataService, MmBomOverviewConfig) {
     "use strict";
 
     return Controller.extend("com.capstone.dashboard.fioridashboard.controller.features.mm.MmInventory", {
@@ -94,6 +95,17 @@ sap.ui.define([
                     logClickable: MmStockLogDataService.parseRowQuantity(oRow.Quantity) > 0
                 });
             });
+        },
+
+        _resolveMaterialIconMeta: function (oMaterial) {
+            return MmBomOverviewConfig.getMaterialIconMeta(
+                oMaterial && oMaterial.material,
+                oMaterial && (oMaterial.displayName || oMaterial.materialName),
+                {
+                    isRawMaterial: !!(oMaterial && oMaterial.isRawMaterial),
+                    isFinishedProduct: !!(oMaterial && oMaterial.isFinishedProduct)
+                }
+            );
         },
 
         _closeStockLogPopover: function () {
@@ -316,10 +328,11 @@ sap.ui.define([
             this._closeStockLogPopover();
         },
 
-        _loadStockPositionForSelectedMaterial: function (sMaterial, sMaterialName) {
+        _loadStockPositionForSelectedMaterial: function (sMaterial, sMaterialName, oMaterialMeta) {
             var oStockView = this._getStockPositionViewModel();
             var oComponent = this.getOwnerComponent();
             var sMat = _normalize(sMaterial);
+            var oIconMeta = this._resolveMaterialIconMeta(oMaterialMeta);
 
             if (!oStockView || !oComponent || !sMat) {
                 return;
@@ -330,6 +343,8 @@ sap.ui.define([
             oStockView.setProperty("/loading", true);
             oStockView.setProperty("/material", sMat);
             oStockView.setProperty("/materialName", sMaterialName || sMat);
+            oStockView.setProperty("/materialIcon", oIconMeta.src);
+            oStockView.setProperty("/materialIconColor", oIconMeta.color);
             oStockView.setProperty("/hasSelection", true);
             oStockView.setProperty("/showNoRows", false);
 
@@ -492,12 +507,13 @@ sap.ui.define([
             /* eslint-enable no-console */
         },
 
-        _applyInventoryState: function (sSelectedMaterial) {
+        _applyInventoryState: function (sSelectedMaterial, oOptions) {
             var oModel = this._getDashboardModel();
             var oViewModel = this._getViewModel();
             var sResolved;
             var oDashState;
             var oAnalysis;
+            var bExplicitSelection = sSelectedMaterial !== undefined && sSelectedMaterial !== null;
 
             if (!oModel || !oViewModel || !this._oCache) {
                 return;
@@ -505,7 +521,7 @@ sap.ui.define([
 
             this._syncWhatIfFromModel();
 
-            sResolved = (sSelectedMaterial !== undefined && sSelectedMaterial !== null)
+            sResolved = bExplicitSelection
                 ? _normalize(sSelectedMaterial)
                 : _normalize(oModel.getProperty("/mmInventory/selectedMaterial"));
 
@@ -526,7 +542,11 @@ sap.ui.define([
                 this._sMaterialCategoryFilter,
                 this._sDistributionCategoryFilter,
                 this._sCompositionTab,
-                this._sBomVisualizationTab
+                this._sBomVisualizationTab,
+                {
+                    preserveSelection: !!(oOptions && oOptions.preserveSelection) ||
+                        (bExplicitSelection && !!sResolved)
+                }
             );
 
             oModel.setProperty("/mmInventory", oDashState);
@@ -535,14 +555,105 @@ sap.ui.define([
             if (oAnalysis.selectedMaterial) {
                 this._loadStockPositionForSelectedMaterial(
                     oAnalysis.selectedMaterial,
-                    oAnalysis.selectedMaterialDisplayName || oAnalysis.selectedMaterialName
+                    oAnalysis.selectedMaterialDisplayName || oAnalysis.selectedMaterialName,
+                    (oAnalysis.materialList || []).filter(function (oMat) {
+                        return oMat.material === oAnalysis.selectedMaterial;
+                    })[0] || (oAnalysis.mergedMaterials || []).filter(function (oMat) {
+                        return oMat.material === oAnalysis.selectedMaterial;
+                    })[0] || null
                 );
             }
 
             setTimeout(function () {
                 this._syncListSelection(oAnalysis.selectedMaterial);
                 this._wireDonutTooltips();
+                this._wireDistChartInteractions();
+                this._wireProdCompareChartInteractions();
             }.bind(this), 80);
+        },
+
+        _wireDistChartInteractions: function () {
+            var oRoot = this.getView().getDomRef();
+            var aCharts;
+            var i;
+            var j;
+
+            if (!oRoot) {
+                return;
+            }
+
+            aCharts = oRoot.querySelectorAll("[data-dist-chart]");
+            for (i = 0; i < aCharts.length; i++) {
+                var oChart = aCharts[i];
+                var oFloatTip = oChart.querySelector(".nxMmInvDistModernFloatTip");
+                var aBars = oChart.querySelectorAll(".nxMmInvDistModernBar");
+
+                if (!aBars.length || oChart.getAttribute("data-dist-wired") === "true") {
+                    continue;
+                }
+
+                oChart.setAttribute("data-dist-wired", "true");
+
+                for (j = 0; j < aBars.length; j++) {
+                    (function (oBarEl, oChartEl, oTipEl) {
+                        oBarEl.addEventListener("mouseenter", function () {
+                            if (oTipEl) {
+                                oTipEl.textContent = (oBarEl.getAttribute("data-label") || "") + " · " +
+                                    (oBarEl.getAttribute("data-value") || "0") + " " +
+                                    (oBarEl.getAttribute("data-unit") || "PC");
+                                oTipEl.classList.add("nxMmInvDistModernFloatTip--visible");
+                            }
+                        });
+                        oBarEl.addEventListener("mousemove", function (oEvent) {
+                            if (!oTipEl) {
+                                return;
+                            }
+                            var oRect = oChartEl.getBoundingClientRect();
+                            oTipEl.style.left = (oEvent.clientX - oRect.left + 12) + "px";
+                            oTipEl.style.top = (oEvent.clientY - oRect.top - 32) + "px";
+                        });
+                        oBarEl.addEventListener("mouseleave", function () {
+                            if (oTipEl) {
+                                oTipEl.classList.remove("nxMmInvDistModernFloatTip--visible");
+                            }
+                        });
+                        oBarEl.addEventListener("click", function () {
+                            var sMaterial = oBarEl.getAttribute("data-material");
+                            var aAllBars = oChartEl.querySelectorAll(".nxMmInvDistModernBar");
+                            var k;
+
+                            if (!sMaterial) {
+                                return;
+                            }
+
+                            for (k = 0; k < aAllBars.length; k++) {
+                                aAllBars[k].classList.remove("nxMmInvDistModernBar--active");
+                                var oPopover = aAllBars[k].querySelector(".nxMmInvDistModernPopover");
+                                var oStem = aAllBars[k].querySelector(".nxMmInvDistModernBarStem");
+                                if (oPopover) {
+                                    oPopover.classList.add("nxMmInvDistModernPopover--hidden");
+                                }
+                                if (oStem) {
+                                    oStem.classList.remove("nxMmInvDistModernBarStem--active");
+                                }
+                            }
+
+                            oBarEl.classList.add("nxMmInvDistModernBar--active");
+                            var oActivePopover = oBarEl.querySelector(".nxMmInvDistModernPopover");
+                            var oActiveStem = oBarEl.querySelector(".nxMmInvDistModernBarStem");
+                            if (oActivePopover) {
+                                oActivePopover.classList.remove("nxMmInvDistModernPopover--hidden");
+                            }
+                            if (oActiveStem) {
+                                oActiveStem.classList.add("nxMmInvDistModernBarStem--active");
+                            }
+
+                            this._applyInventoryState(sMaterial, { preserveSelection: true });
+                            this._showInventoryToast(oBarEl.getAttribute("data-label") + " 선택");
+                        }.bind(this));
+                    }.bind(this)(aBars[j], oChart, oFloatTip));
+                }
+            }
         },
 
         _wireDonutTooltips: function () {
@@ -582,6 +693,161 @@ sap.ui.define([
                             oTipEl.style.opacity = "0";
                         });
                     }(aSlices[j], oTip, oHost));
+                }
+            }
+        },
+
+        _wireProdCompareChartInteractions: function () {
+            var oRoot = this.getView().getDomRef();
+            var aCharts;
+            var i;
+            var j;
+
+            if (!oRoot) {
+                return;
+            }
+
+            aCharts = oRoot.querySelectorAll("[data-prod-compare-chart]");
+            for (i = 0; i < aCharts.length; i++) {
+                var oChart = aCharts[i];
+                var oFloatTip = oChart.querySelector(".nxMmInvProdCompareFloatTip");
+                var oSegInfo = oChart.querySelector(".nxMmInvProdCompareSegInfo");
+                var oSegInfoBody = oChart.querySelector(".nxMmInvProdCompareSegInfoBody");
+                var oSegInfoPlaceholder = oChart.querySelector(".nxMmInvProdCompareSegInfoPlaceholder");
+                var oSegInfoImg = oChart.querySelector(".nxMmInvProdCompareSegInfoImg");
+                var oSegInfoName = oChart.querySelector(".nxMmInvProdCompareSegInfoName");
+                var oSegInfoMeta = oChart.querySelector(".nxMmInvProdCompareSegInfoMeta");
+                var aSegTargets = oChart.querySelectorAll(".nxMmInvProdCompareSeg--interactive");
+                var aMidSegs = oChart.querySelectorAll(".nxMmInvProdCompareMidSeg");
+                var aLegendItems = oChart.querySelectorAll(".nxMmInvProdCompareLegendItem[data-prod-key]");
+                var oMidInsight = oChart.querySelector(".nxMmInvProdCompareMidInsight");
+
+                if (oChart.getAttribute("data-prod-wired") === "true") {
+                    continue;
+                }
+
+                oChart.setAttribute("data-prod-wired", "true");
+
+                var fnSelectProduct = function (oSourceEl) {
+                    var sKey = oSourceEl.getAttribute("data-prod-key") || "";
+                    var sLabel = oSourceEl.getAttribute("data-label") || "";
+                    var sQty = oSourceEl.getAttribute("data-qty") || "";
+                    var sPct = oSourceEl.getAttribute("data-pct") || "";
+                    var sImg = oSourceEl.getAttribute("data-img") || "";
+                    var k;
+
+                    if (!sKey || !oSegInfo || !oSegInfoBody) {
+                        return;
+                    }
+
+                    oSegInfo.className = "nxMmInvProdCompareSegInfo nxMmInvProdCompareSegInfo--" + sKey +
+                        " nxMmInvProdCompareSegInfo--active";
+
+                    if (oSegInfoPlaceholder) {
+                        oSegInfoPlaceholder.hidden = true;
+                    }
+                    oSegInfoBody.hidden = false;
+
+                    if (oSegInfoImg) {
+                        oSegInfoImg.src = sImg;
+                        oSegInfoImg.alt = sLabel;
+                    }
+                    if (oSegInfoName) {
+                        oSegInfoName.textContent = sLabel;
+                    }
+                    if (oSegInfoMeta) {
+                        oSegInfoMeta.textContent = sQty + " PC · " + sPct + "% · BOM 기준 생산 가능";
+                    }
+                    if (oMidInsight) {
+                        oMidInsight.innerHTML = "<strong>" + sLabel + "</strong> · " + sQty +
+                            " PC · 전체 " + sPct + "% · BOM 기준";
+                    }
+
+                    for (k = 0; k < aSegTargets.length; k++) {
+                        aSegTargets[k].classList.toggle(
+                            "nxMmInvProdCompareSeg--selected",
+                            aSegTargets[k].getAttribute("data-prod-key") === sKey
+                        );
+                    }
+                    for (k = 0; k < aLegendItems.length; k++) {
+                        aLegendItems[k].classList.toggle(
+                            "nxMmInvProdCompareLegendItem--active",
+                            aLegendItems[k].getAttribute("data-prod-key") === sKey
+                        );
+                    }
+                    for (k = 0; k < aMidSegs.length; k++) {
+                        aMidSegs[k].classList.toggle(
+                            "nxMmInvProdCompareMidSeg--active",
+                            aMidSegs[k].getAttribute("data-prod-key") === sKey
+                        );
+                    }
+                };
+
+                for (j = 0; j < aSegTargets.length; j++) {
+                    (function (oTargetEl) {
+                        oTargetEl.addEventListener("click", function () {
+                            fnSelectProduct(oTargetEl);
+                        });
+                        oTargetEl.addEventListener("keydown", function (oEvent) {
+                            if (oEvent.key === "Enter" || oEvent.key === " ") {
+                                oEvent.preventDefault();
+                                fnSelectProduct(oTargetEl);
+                            }
+                        });
+                    }(aSegTargets[j]));
+                }
+
+                for (j = 0; j < aLegendItems.length; j++) {
+                    (function (oLegendEl) {
+                        oLegendEl.addEventListener("click", function () {
+                            fnSelectProduct(oLegendEl);
+                        });
+                        oLegendEl.addEventListener("keydown", function (oEvent) {
+                            if (oEvent.key === "Enter" || oEvent.key === " ") {
+                                oEvent.preventDefault();
+                                fnSelectProduct(oLegendEl);
+                            }
+                        });
+                    }(aLegendItems[j]));
+                }
+
+                for (j = 0; j < aMidSegs.length; j++) {
+                    (function (oTargetEl, oChartEl, oTipEl) {
+                        oTargetEl.addEventListener("click", function () {
+                            fnSelectProduct(oTargetEl);
+                        });
+                        oTargetEl.addEventListener("keydown", function (oEvent) {
+                            if (oEvent.key === "Enter" || oEvent.key === " ") {
+                                oEvent.preventDefault();
+                                fnSelectProduct(oTargetEl);
+                            }
+                        });
+                        oTargetEl.addEventListener("mouseenter", function (oEvent) {
+                            if (!oTipEl) {
+                                return;
+                            }
+                            oTipEl.textContent = oTargetEl.getAttribute("data-tip") || "";
+                            oTipEl.classList.add("nxMmInvProdCompareFloatTip--visible");
+                            if (oEvent && oEvent.clientX) {
+                                var oRect = oChartEl.getBoundingClientRect();
+                                oTipEl.style.left = (oEvent.clientX - oRect.left + 12) + "px";
+                                oTipEl.style.top = (oEvent.clientY - oRect.top - 32) + "px";
+                            }
+                        });
+                        oTargetEl.addEventListener("mousemove", function (oEvent) {
+                            if (!oTipEl || !oEvent.clientX) {
+                                return;
+                            }
+                            var oRect = oChartEl.getBoundingClientRect();
+                            oTipEl.style.left = (oEvent.clientX - oRect.left + 12) + "px";
+                            oTipEl.style.top = (oEvent.clientY - oRect.top - 32) + "px";
+                        });
+                        oTargetEl.addEventListener("mouseleave", function () {
+                            if (oTipEl) {
+                                oTipEl.classList.remove("nxMmInvProdCompareFloatTip--visible");
+                            }
+                        });
+                    }(aMidSegs[j], oChart, oFloatTip));
                 }
             }
         },
