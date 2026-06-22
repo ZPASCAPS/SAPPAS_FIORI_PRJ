@@ -76,6 +76,19 @@ sap.ui.define([
         return String(sFallback || sCode || "").trim() || sCode;
     }
 
+    function _resolveStockTypeLabel(oMat) {
+        var sName = oMat
+            ? (oMat.displayName || oMat.materialName || oMat.material || "")
+            : "";
+
+        sName = String(sName).trim();
+        if (!sName) {
+            return "재고 유형";
+        }
+
+        return sName + " 재고 유형";
+    }
+
     function _formatDisplayQty(fQty) {
         var n;
 
@@ -241,9 +254,9 @@ sap.ui.define([
 
     function _buildStockSummaryByMaterial(aStockRows, oFilters) {
         var m = {};
-        var aFiltered = _applyFilters(aStockRows, oFilters || {}, function (oItem) {
+        var aFiltered = _excludeMmbeStorageRows(_applyFilters(aStockRows, oFilters || {}, function (oItem) {
             return [oItem.Material, oItem.MaterialName, oItem.Plant, oItem.StorageLocation, oItem.MaterialType];
-        });
+        }));
 
         aFiltered.forEach(function (oRow) {
             var sCode = _normalizeCode(oRow.Material);
@@ -376,6 +389,12 @@ sap.ui.define([
 
     function _isExcludedMmbeStorageLocation(sStorageLocation) {
         return EXCLUDED_MMBE_STORAGE_LOCATIONS.indexOf(_normalizeCode(sStorageLocation)) >= 0;
+    }
+
+    function _excludeMmbeStorageRows(aRows) {
+        return (aRows || []).filter(function (oRow) {
+            return !_isExcludedMmbeStorageLocation(oRow.StorageLocation);
+        });
     }
 
     function filterMmbeDisplayRows(aRows) {
@@ -746,7 +765,7 @@ sap.ui.define([
     }
 
     function _fillMissingStockTypeRows(aMaterialRows, aCatalog, aLocations, oMeta) {
-        var aResult = (aMaterialRows || []).slice();
+        var aResult = _excludeMmbeStorageRows(aMaterialRows || []).slice();
         var mExisting = {};
         var i;
         var j;
@@ -798,7 +817,7 @@ sap.ui.define([
             return [oItem.Material, oItem.MaterialName, oItem.Plant, oItem.StorageLocation, oItem.MaterialType];
         });
 
-        return _sortStockPositionRows(aFiltered.filter(function (oRow) {
+        return _sortStockPositionRows(_excludeMmbeStorageRows(aFiltered).filter(function (oRow) {
             return _normalizeCode(oRow.Material) === sMat;
         }).map(function (oRow) {
             return {
@@ -875,6 +894,16 @@ sap.ui.define([
         };
     }
 
+    function _buildProductionSummaryLabel(sName, sDisplay) {
+        var sQty = String(sDisplay || "").trim();
+
+        if (!sQty || sQty === DATA_SHORT) {
+            return sName + " -";
+        }
+
+        return sName + " " + sQty + " PC";
+    }
+
     function _calculateCurrentProduction(mUnrestricted) {
         var oHeat = _calcProductAvailability(MmBomOverviewConfig.getProductBom(PRODUCT_HEATTECH), mUnrestricted);
         var oBag = _calcProductAvailability(BAG_BOM_INVENTORY, mUnrestricted);
@@ -882,8 +911,12 @@ sap.ui.define([
         return {
             heattechQty: oHeat.qty,
             heattechDisplay: oHeat.display,
+            heattechSummary: _buildProductionSummaryLabel("히트텍", oHeat.display),
+            heattechImageSrc: MmBomOverviewConfig.getFinishedProductImageSrc(PRODUCT_HEATTECH),
             bagQty: oBag.qty,
             bagDisplay: oBag.display,
+            bagSummary: _buildProductionSummaryLabel("가방", oBag.display),
+            bagImageSrc: MmBomOverviewConfig.getFinishedProductImageSrc(PRODUCT_BAG),
             heattechBottleneck: oHeat.bottleneck,
             bagBottleneck: oBag.bottleneck,
             description: ""
@@ -966,6 +999,22 @@ sap.ui.define([
             });
         });
 
+        aMaterials.sort(function (a, b) {
+            var iRankA = a.statusText === "충분" ? 0 : (a.progressState === "Warning" ? 1 : 2);
+            var iRankB = b.statusText === "충분" ? 0 : (b.progressState === "Warning" ? 1 : 2);
+
+            if (iRankA !== iRankB) {
+                return iRankA - iRankB;
+            }
+            if (iRankA === 0) {
+                return b.fulfillmentPct - a.fulfillmentPct;
+            }
+            if (iRankA === 1) {
+                return b.fulfillmentPct - a.fulfillmentPct;
+            }
+            return a.fulfillmentPct - b.fulfillmentPct;
+        });
+
         return {
             heattechTarget: iHeat,
             bagTarget: iBag,
@@ -1000,6 +1049,7 @@ sap.ui.define([
             aRows.push({
                 material: oMat.material,
                 label: oMat.displayName || oMat.materialName || oMat.material,
+                stockTypeLabel: _resolveStockTypeLabel(oMat),
                 value: fStock,
                 unit: oMat.baseUnit || "PC",
                 isSelected: !!sSel && sSel === oMat.material,
@@ -1049,7 +1099,9 @@ sap.ui.define([
         var mCounts = {};
         var iTotal = 0;
         var sMat = _normalizeCode(sSelectedMaterial);
-        var sName = oSelectedMeta ? (oSelectedMeta.materialName || sMat) : sMat;
+        var sName = oSelectedMeta
+            ? (oSelectedMeta.displayName || oSelectedMeta.materialName || sMat)
+            : _resolveMaterialDisplayName(sMat, sMat);
         var sDesc = sMat
             ? sName + " 재고 유형"
             : "자재를 선택하면 MMBE Stock Type별 재고 구성이 표시됩니다.";
@@ -1090,7 +1142,7 @@ sap.ui.define([
             description: sDesc,
             hasChart: true,
             emptyMessage: "",
-            html: MmChartHtmlUtil.buildInventoryAnalysisStatusDonut(mCounts, iTotal)
+            html: MmChartHtmlUtil.buildInventoryMmbeSankeyFlow(mCounts, iTotal, sName, sMat)
         };
     }
 
@@ -1145,14 +1197,17 @@ sap.ui.define([
             });
         }
 
+        var aMixRows = _buildUnitBomMix(aComponents);
+
         return {
             productCode: sProductCode,
             productName: sProductName,
             theme: sTheme,
             componentCount: aComponents.length,
             totalQtyPerUnit: iTotalQty,
-            summaryText: "",
-            components: aComponents
+            summaryText: "1PC당 총 " + iTotalQty + " PC · " + aComponents.length + "종",
+            components: aComponents,
+            mixHtml: MmChartHtmlUtil.buildInventoryUnitBomCardViz(aMixRows, sTheme, iTotalQty)
         };
     }
 
@@ -1223,6 +1278,8 @@ sap.ui.define([
                 qtyDisplay: String(iQty) + " PC",
                 mixDisplay: fPct.toFixed(1) + "%"
             };
+        }).sort(function (a, b) {
+            return b.qtyPerUnit - a.qtyPerUnit;
         });
     }
 
@@ -1296,67 +1353,54 @@ sap.ui.define([
     }
 
     function _buildProductionBarHtml(oCurrent) {
-        var aRows = [];
+        var oHeat = {
+            qty: null,
+            display: oCurrent.heattechDisplay
+        };
+        var oBag = {
+            qty: null,
+            display: oCurrent.bagDisplay
+        };
 
         if (oCurrent.heattechQty !== null && oCurrent.heattechDisplay !== DATA_SHORT) {
-            aRows.push({ label: "히트텍", value: oCurrent.heattechQty });
+            oHeat.qty = oCurrent.heattechQty;
         } else if (oCurrent.heattechDisplay === "0") {
-            aRows.push({ label: "히트텍", value: 0 });
+            oHeat.qty = 0;
         }
 
         if (oCurrent.bagQty !== null && oCurrent.bagDisplay !== DATA_SHORT) {
-            aRows.push({ label: "가방", value: oCurrent.bagQty });
+            oBag.qty = oCurrent.bagQty;
         } else if (oCurrent.bagDisplay === "0") {
-            aRows.push({ label: "가방", value: 0 });
+            oBag.qty = 0;
         }
 
-        if (!aRows.length) {
+        if (oHeat.qty === null && oBag.qty === null) {
             return "";
         }
 
-        return MmChartHtmlUtil.buildInventoryAnalysisShortageBar(aRows);
+        return MmChartHtmlUtil.buildInventoryProductionCompareChart({
+            label: "히트텍",
+            value: oHeat.qty,
+            display: oHeat.display,
+            imageSrc: MmBomOverviewConfig.getFinishedProductImageSrc(PRODUCT_HEATTECH)
+        }, {
+            label: "가방",
+            value: oBag.qty,
+            display: oBag.display,
+            imageSrc: MmBomOverviewConfig.getFinishedProductImageSrc(PRODUCT_BAG)
+        });
     }
 
     function _buildVisualization(sActiveTab, oCurrent, oWhatIf, oUnitBom, sBomVizTab, mUnrestricted) {
         if (sActiveTab === "BOM") {
-            var oHeatStock = _buildUnitBomStockMix(
-                (oUnitBom && oUnitBom.heattech && oUnitBom.heattech.components) || [],
-                mUnrestricted || {}
-            );
-            var oBagStock = _buildUnitBomStockMix(
-                (oUnitBom && oUnitBom.bag && oUnitBom.bag.components) || [],
-                mUnrestricted || {}
-            );
-            var sTab = String(sBomVizTab || "HEATTECH").toUpperCase();
-        var sCriteriaNote = oHeatStock.criteriaNote || oBagStock.criteriaNote || "";
-        var oHeatPanel = {
-            description: sCriteriaNote,
-            hasChart: oHeatStock.hasChart,
-            emptyMessage: "히트텍 BOM 원자재의 Unrestricted Use 재고가 없습니다.",
-            html: MmChartHtmlUtil.buildInventoryUnitBomMixChart(oHeatStock.rows, "heat", true)
-        };
-        var oBagPanel = {
-            description: sCriteriaNote,
-            hasChart: oBagStock.hasChart,
-            emptyMessage: "가방 BOM 원자재의 Unrestricted Use 재고가 없습니다.",
-            html: MmChartHtmlUtil.buildInventoryUnitBomMixChart(oBagStock.rows, "bag", true)
-        };
-            var oActive = sTab === "BAG" ? oBagPanel : oHeatPanel;
-
             return {
                 mode: "BOM",
                 sectionTitle: _productionSectionTitle("BOM"),
-                title: "완제품별 BOM 가용 재고 비율",
-                description: sCriteriaNote,
-                activeTab: sTab,
-                hasChart: oHeatPanel.hasChart || oBagPanel.hasChart,
-                emptyMessage: "가용 재고가 없습니다.",
-                html: oActive.html,
-                bom: {
-                    activeTab: sTab,
-                    heattech: oHeatPanel,
-                    bag: oBagPanel
-                },
+                title: "",
+                description: "",
+                hasChart: false,
+                emptyMessage: "",
+                html: "",
                 fulfillmentBars: []
             };
         }
@@ -1382,7 +1426,7 @@ sap.ui.define([
                 description: "",
                 hasChart: oWhatIf.materials.length > 0,
                 emptyMessage: NO_DATA,
-                html: "",
+                html: MmChartHtmlUtil.buildInventoryMrpFulfillmentChart(oWhatIf.materials),
                 fulfillmentBars: oWhatIf.materials
             };
         }
@@ -1418,7 +1462,7 @@ sap.ui.define([
         return (aMaterials || []).slice();
     }
 
-    function buildInventoryAnalysis(oCache, oFilters, sSelectedMaterial, oWhatIf, sActiveTab, sMaterialCategoryFilter, sDistributionCategoryFilter, sCompositionTab, sBomVizTab) {
+    function buildInventoryAnalysis(oCache, oFilters, sSelectedMaterial, oWhatIf, sActiveTab, sMaterialCategoryFilter, sDistributionCategoryFilter, sCompositionTab, sBomVizTab, oBuildOptions) {
         var aAllInv = oCache.items || [];
         var aAllStock = oCache.stockPositionRows || [];
         var aFilteredInv = _applyFilters(aAllInv, oFilters);
@@ -1433,12 +1477,17 @@ sap.ui.define([
         var oComposition;
         var oCurrent;
         var oWhatIfResult;
+        var bPreserveSelection = !!(oBuildOptions && oBuildOptions.preserveSelection);
 
-        if (!sSelected && aMaterialList.length > 0) {
-            sSelected = aMaterialList[0].material;
-        } else if (sSelected && aMaterialList.length && !aMaterialList.some(function (m) {
-            return m.material === sSelected;
-        })) {
+        if (!bPreserveSelection) {
+            if (!sSelected && aMaterialList.length > 0) {
+                sSelected = aMaterialList[0].material;
+            } else if (sSelected && aMaterialList.length && !aMaterialList.some(function (m) {
+                return m.material === sSelected;
+            })) {
+                sSelected = aMaterialList[0].material;
+            }
+        } else if (!sSelected && aMaterialList.length > 0) {
             sSelected = aMaterialList[0].material;
         }
 
@@ -1519,7 +1568,10 @@ sap.ui.define([
             storageLocationFilter: oFilters.storageLocationFilter || "ALL",
             materialTypeFilter: oFilters.materialTypeFilter || "ALL",
             plantOptions: _buildDistinctOptions(aAll, "Plant"),
-            storageLocationOptions: _buildDistinctOptions(aAll, "StorageLocation"),
+            storageLocationOptions: _buildDistinctOptions(
+                _excludeMmbeStorageRows((oCache.stockPositionRows || []).concat(aAll)),
+                "StorageLocation"
+            ),
             materialTypeOptions: _buildDistinctOptions(aAll, "MaterialType"),
             selectedMaterial: _normalizeCode(sSelectedMaterial)
         };
@@ -1653,7 +1705,7 @@ sap.ui.define([
                     })
             ]).then(function (aResults) {
                 var aItems = aResults[0];
-                var aStockRows = aResults[1];
+                var aStockRows = _excludeMmbeStorageRows(aResults[1]);
                 var sTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
                 return {
@@ -1681,6 +1733,8 @@ sap.ui.define([
                 loading: false,
                 material: "",
                 materialName: "",
+                materialIcon: "sap-icon://color-fill",
+                materialIconColor: "#0D9488",
                 hasSelection: false,
                 showNoRows: false,
                 emptyMessage: "자재를 선택하면 MMBE Stock Type별 재고 구성이 표시됩니다.",

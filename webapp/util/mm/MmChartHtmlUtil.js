@@ -297,6 +297,41 @@ sap.ui.define([
         return "<div class='nxMmOverviewBarChart nxMmOverviewBarChart--fillrate'>" + sRows + "</div>";
     }
 
+    function _formatDistKpi(nValue, sUnit) {
+        var n = Number(nValue || 0);
+        if (isNaN(n)) {
+            return "0";
+        }
+        if (n >= 1000000) {
+            return (n / 1000000).toFixed(1) + "M";
+        }
+        if (n >= 1000) {
+            return (n / 1000).toFixed(1) + "k";
+        }
+        return n.toLocaleString();
+    }
+
+    function _buildDistYAxis(fMax) {
+        var fTop = Math.max(Number(fMax || 0), 1);
+        var iPow = Math.pow(10, Math.floor(Math.log10(fTop)));
+        var fNorm = fTop / iPow;
+
+        if (fNorm <= 1) {
+            fTop = iPow;
+        } else if (fNorm <= 2) {
+            fTop = 2 * iPow;
+        } else if (fNorm <= 5) {
+            fTop = 5 * iPow;
+        } else {
+            fTop = 10 * iPow;
+        }
+
+        return {
+            max: fTop,
+            ticks: [fTop, Math.round(fTop * 0.75), Math.round(fTop * 0.5), Math.round(fTop * 0.25), 0]
+        };
+    }
+
     function buildInventoryMaterialDistributionBar(aRows) {
         if (!aRows || !aRows.length) {
             return _overviewEmpty("재고 분포 데이터 없음");
@@ -305,30 +340,69 @@ sap.ui.define([
         var fMax = Math.max.apply(null, aRows.map(function (r) {
             return Number(r.value || 0);
         }).concat([1]));
+        var oYAxis = _buildDistYAxis(fMax);
+        var fTop = oYAxis.max;
+        var iTotal = aRows.reduce(function (sum, r) {
+            return sum + Number(r.value || 0);
+        }, 0);
+        var sUnit = (aRows[0] && aRows[0].unit) || "PC";
+        var iCount = aRows.length;
+        var sBarsClass = "nxMmInvDistModernBars nxMmInvDistModernBars--spread nxMmInvDistModernBars--count-" +
+            Math.min(iCount, 12) + (iCount > 12 ? " nxMmInvDistModernBars--scroll" : "");
 
-        var sCols = aRows.map(function (oRow, idx) {
-            var fVal = Number(oRow.value || 0);
-            var iH = fVal > 0 ? Math.max(8, Math.round((fVal / fMax) * 100)) : 0;
-            var sLabel = _shortLabel(oRow.label, 12);
-            var sColor = oRow.isFinished
-                ? "#0284C7"
-                : (oRow.isRaw ? "#0D9488" : TYPE_COLORS_OVERVIEW[idx % TYPE_COLORS_OVERVIEW.length]);
-            var sSelectedColClass = "";
-            var sSelectedFillClass = "";
-            var sValueDisplay = _formatDonutQty(fVal);
-
-            return "<div class='nxMmInvDistCol" + sSelectedColClass + "' title='" +
-                _esc(oRow.label) + " · " + _esc(oRow.material) + "'>" +
-                "<div class='nxMmInvDistColValue'>" + sValueDisplay + "</div>" +
-                "<div class='nxMmInvDistColTrack'>" +
-                "<div class='nxMmInvDistColFill" + sSelectedFillClass +
-                "' style='height:" + iH + "%;background:" + sColor + "'></div></div>" +
-                "<div class='nxMmInvDistColLabel'>" + _esc(sLabel) + "</div>" +
-                "</div>";
+        var sGrid = oYAxis.ticks.slice(0, 4).map(function (tick, idx) {
+            var iPct = 100 - (idx * 25);
+            return "<div class='nxMmInvDistModernGridLine' style='bottom:" + iPct + "%'></div>";
         }).join("");
 
-        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--dist'>" +
-            "<div class='nxMmInvDistColChart'>" + sCols + "</div></div>";
+        var sYAxis = oYAxis.ticks.map(function (tick) {
+            return "<span class='nxMmInvDistModernYTick'>" + _formatDonutQty(tick) + "</span>";
+        }).join("");
+
+        var sBars = aRows.map(function (oRow) {
+            var fVal = Number(oRow.value || 0);
+            var iH = fVal > 0 ? Math.max(6, Math.round((fVal / fTop) * 100)) : 0;
+            var sLabel = String(oRow.label || "").trim();
+            var sStockTypeLabel = String(oRow.stockTypeLabel || sLabel + " 재고 유형").trim();
+            var sSelectedClass = oRow.isSelected ? " nxMmInvDistModernBar--active" : "";
+            var sValueDisplay = _formatDonutQty(fVal);
+
+            return "<button type='button' class='nxMmInvDistModernBar" + sSelectedClass + "'" +
+                " data-material='" + _esc(oRow.material) + "'" +
+                " data-label='" + _esc(oRow.label) + "'" +
+                " data-value='" + _esc(sValueDisplay) + "'" +
+                " data-unit='" + _esc(oRow.unit || sUnit) + "'" +
+                " data-type='" + _esc(sStockTypeLabel) + "'" +
+                " aria-label='" + _esc(oRow.label + " " + sValueDisplay + " " + (oRow.unit || sUnit)) + "'>" +
+                "<div class='nxMmInvDistModernPopover" + (oRow.isSelected ? "" : " nxMmInvDistModernPopover--hidden") + "'>" +
+                "<div class='nxMmInvDistModernPopoverValue'>" + sValueDisplay + "</div>" +
+                "<div class='nxMmInvDistModernPopoverName'>" + _esc(sLabel) + "</div>" +
+                "<div class='nxMmInvDistModernPopoverMeta'>" + _esc(sStockTypeLabel) + "</div>" +
+                "</div>" +
+                "<div class='nxMmInvDistModernBarStem" + (oRow.isSelected ? " nxMmInvDistModernBarStem--active" : "") + "'></div>" +
+                "<div class='nxMmInvDistModernBarTrack'>" +
+                "<div class='nxMmInvDistModernBarFill" + sSelectedClass + "' style='height:" + iH + "%'></div>" +
+                "</div>" +
+                "<div class='nxMmInvDistModernBarLabel' title='" + _esc(sLabel) + "'>" + _esc(sLabel) + "</div>" +
+                "</button>";
+        }).join("");
+
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--dist nxMmInvDistModern' data-dist-chart='true'>" +
+            "<div class='nxMmInvDistModernHead'>" +
+            "<div class='nxMmInvDistModernKpi'>" +
+            "<div class='nxMmInvDistModernKpiLabel'>총 재고</div>" +
+            "<div class='nxMmInvDistModernKpiValue'>" + _formatDistKpi(iTotal, sUnit) +
+            " <span class='nxMmInvDistModernKpiUnit'>" + _esc(sUnit) + "</span></div>" +
+            "<div class='nxMmInvDistModernKpiSub'>" + iCount + " 자재</div>" +
+            "</div></div>" +
+            "<div class='nxMmInvDistModernChartWrap'>" +
+            "<div class='nxMmInvDistModernYAxis'>" + sYAxis + "</div>" +
+            "<div class='nxMmInvDistModernPlot'>" +
+            "<div class='nxMmInvDistModernGrid'>" + sGrid + "</div>" +
+            "<div class='" + sBarsClass + "'>" + sBars + "</div>" +
+            "</div></div>" +
+            "<div class='nxMmInvDistModernFloatTip' aria-hidden='true'></div>" +
+            "</div>";
     }
 
     function buildInventoryAnalysisTypeBar(aRows) {
@@ -479,6 +553,125 @@ sap.ui.define([
             "<div class='nxMmInvAnalysisLegend nxMmInvAnalysisLegend--mmbe'>" + sLegend + "</div></div></div>";
     }
 
+    function _mmbeStockTypeShortLabel(sKey) {
+        var sNorm = String(sKey || "").toUpperCase();
+        if (sNorm.indexOf("UNRESTRICTED") >= 0) {
+            return "Unrestricted Use";
+        }
+        if (sNorm === "RESERVED") {
+            return "Reserved";
+        }
+        if (sNorm.indexOf("ON-ORDER") >= 0 || sNorm.indexOf("ON ORDER") >= 0) {
+            return "On-Order Stock";
+        }
+        if (sNorm.indexOf("SALES ORDER") >= 0) {
+            return "Sales Order Stock";
+        }
+        return String(sKey || "-");
+    }
+
+    function buildInventoryMmbeSankeyFlow(mCounts, iCenterTotal, sMaterialName, sMaterialCode) {
+        var aKeys = Object.keys(mCounts || {});
+
+        if (!aKeys.length) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        var iSum = iCenterTotal !== null && iCenterTotal !== undefined
+            ? Number(iCenterTotal)
+            : aKeys.reduce(function (s, k) { return s + Number(mCounts[k] || 0); }, 0);
+
+        if (iSum <= 0) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        var sMatName = String(sMaterialName || "자재").trim();
+        var sMatCode = String(sMaterialCode || "").trim();
+        var aRows = aKeys.map(function (sKey, idx) {
+            var fVal = Number(mCounts[sKey] || 0);
+            var sColor = _mmbeStockTypeColor(sKey) || TYPE_COLORS_OVERVIEW[idx % TYPE_COLORS_OVERVIEW.length];
+
+            return {
+                key: sKey,
+                shortLabel: _mmbeStockTypeShortLabel(sKey),
+                value: fVal,
+                pct: (fVal / iSum) * 100,
+                color: sColor
+            };
+        }).filter(function (oRow) {
+            return oRow.value > 0;
+        }).sort(function (a, b) {
+            return b.value - a.value;
+        });
+
+        if (!aRows.length) {
+            return _overviewEmpty("데이터 없음");
+        }
+
+        var sStackSegs = "";
+        var sRows = "";
+        var sLegend = "";
+        var i;
+
+        for (i = 0; i < aRows.length; i++) {
+            var oRow = aRows[i];
+            var iPctDisp = oRow.pct.toFixed(1);
+            var sTip = _esc(oRow.key) + " · " + _formatDonutQty(oRow.value) + " PC · " + iPctDisp + "%";
+
+            sStackSegs += "<div class='nxMmInvMmbeFlowStackSeg' style='width:" + iPctDisp +
+                "%;background:" + oRow.color + "' title='" + sTip + "'></div>";
+
+            sRows += "<div class='nxMmInvMmbeFlowRow' title='" + sTip + "'>" +
+                "<div class='nxMmInvMmbeFlowRowHead'>" +
+                "<span class='nxMmInvMmbeFlowRowDot' style='background:" + oRow.color + "'></span>" +
+                "<span class='nxMmInvMmbeFlowRowName'>" + _esc(oRow.shortLabel) + "</span>" +
+                "<span class='nxMmInvMmbeFlowRowQty'>" + _esc(_formatDonutQty(oRow.value)) + " PC</span>" +
+                "<span class='nxMmInvMmbeFlowRowPct'>" + iPctDisp + "%</span>" +
+                "</div>" +
+                "<div class='nxMmInvMmbeFlowRowTrack'>" +
+                "<div class='nxMmInvMmbeFlowRowBar' style='width:" + iPctDisp +
+                "%;background:linear-gradient(90deg," + oRow.color + " 0%," + oRow.color + "CC 100%)'></div>" +
+                "</div></div>";
+
+            sLegend += "<div class='nxMmInvMmbeFlowLegendItem' title='" + sTip + "'>" +
+                "<span class='nxMmInvMmbeFlowLegendDot' style='background:" + oRow.color + "'></span>" +
+                "<span class='nxMmInvMmbeFlowLegendText'>" + _esc(oRow.key) + " · " +
+                _formatDonutQty(oRow.value) + " (" + iPctDisp + "%)</span></div>";
+        }
+
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--mmbeFlow'>" +
+            "<div class='nxMmInvMmbeFlow'>" +
+            "<div class='nxMmInvMmbeFlowHead'>" +
+            "<div class='nxMmInvMmbeFlowKpi'>" +
+            "<div class='nxMmInvMmbeFlowKpiLabel'>Total Stock</div>" +
+            "<div class='nxMmInvMmbeFlowKpiValue'>" + _esc(_formatDonutQty(iSum)) +
+            " <span class='nxMmInvMmbeFlowKpiUnit'>PC</span></div>" +
+            "<div class='nxMmInvMmbeFlowKpiSub'>" + aRows.length + " 재고 유형 · " + _esc(sMatName) + "</div>" +
+            "</div>" +
+            "<div class='nxMmInvMmbeFlowAxis nxMmInvMmbeFlowAxis--left'>재고 유형</div>" +
+            "<div class='nxMmInvMmbeFlowAxis nxMmInvMmbeFlowAxis--right'>자재 유형</div>" +
+            "</div>" +
+            "<div class='nxMmInvMmbeFlowBody'>" +
+            "<div class='nxMmInvMmbeFlowRowsCol'>" +
+            "<div class='nxMmInvMmbeFlowColLabel'>재고 유형별 수량</div>" +
+            "<div class='nxMmInvMmbeFlowRows'>" + sRows + "</div>" +
+            "</div>" +
+            "<div class='nxMmInvMmbeFlowMatPanel'>" +
+            "<div class='nxMmInvMmbeFlowMatPanelInner'>" +
+            "<span class='nxMmInvMmbeFlowMatTag'>자재</span>" +
+            "<span class='nxMmInvMmbeFlowMatName'>" + _esc(sMatName) + "</span>" +
+            (sMatCode ? "<span class='nxMmInvMmbeFlowMatCode'>" + _esc(sMatCode) + "</span>" : "") +
+            "<span class='nxMmInvMmbeFlowMatTotal'>" + _esc(_formatDonutQty(iSum)) + " PC</span>" +
+            "<span class='nxMmInvMmbeFlowMatHint'>" + aRows.length + " 유형 합산</span>" +
+            "</div></div></div>" +
+            "<div class='nxMmInvMmbeFlowStackWrap'>" +
+            "<div class='nxMmInvMmbeFlowStackLabel'>재고 구성 비율</div>" +
+            "<div class='nxMmInvMmbeFlowStack' aria-label='재고 유형 비율'>" + sStackSegs + "</div>" +
+            "</div>" +
+            "<div class='nxMmInvMmbeFlowLegend'>" + sLegend + "</div>" +
+            "</div></div>";
+    }
+
     function buildInventoryUnitBomMixChart(aRows, sTheme, bStockMode) {
         if (!aRows || !aRows.length) {
             return _overviewEmpty("BOM 데이터 없음");
@@ -505,13 +698,60 @@ sap.ui.define([
                 "</div>" +
                 "<div class='nxMmInvBomMixTrackRow'>" +
                 "<div class='nxMmInvBomMixTrack'><div class='nxMmInvBomMixFill' style='width:" + oRow.barPct +
-                "%;background:linear-gradient(90deg," + sColor + ",#FFFFFF33)'></div></div>" +
+                "%;background:" + sColor + "'></div></div>" +
                 "<span class='nxMmInvBomMixMeta'>" + sMeta + "</span>" +
                 "</div></div>";
         }).join("");
 
         return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--bomMix " + sThemeClass + "'>" +
             "<div class='nxMmInvBomMixChart'>" + sRows + "</div></div>";
+    }
+
+    function buildInventoryUnitBomCardViz(aRows, sTheme, iTotalQty) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("BOM 구성 데이터 없음");
+        }
+
+        var aHeatColors = ["#EA580C", "#F97316", "#FB923C", "#FDBA74"];
+        var aBagColors = ["#0284C7", "#0D9488", "#6366F1", "#0891B2"];
+        var aColors = sTheme === "bag" ? aBagColors : aHeatColors;
+        var sThemeClass = sTheme === "bag" ? "nxMmInvBomCardViz--bag" : "nxMmInvBomCardViz--heat";
+        var sStackSegs = "";
+        var sRows = "";
+        var i;
+
+        for (i = 0; i < aRows.length; i++) {
+            var oRow = aRows[i];
+            var sColor = aColors[i % aColors.length];
+            var sShared = oRow.shared
+                ? "<span class='nxMmInvBomMixShared'>공용</span>"
+                : "";
+            var sTip = _esc(oRow.materialName) + " · " + _esc(oRow.qtyDisplay) + " · " + _esc(oRow.mixDisplay);
+
+            sStackSegs += "<div class='nxMmInvBomCardVizStackSeg' style='width:" + oRow.barPct +
+                "%;background:" + sColor + "' title='" + sTip + "'></div>";
+
+            sRows += "<div class='nxMmInvBomMixRow' title='" + sTip + "'>" +
+                "<div class='nxMmInvBomMixHead'>" +
+                "<span class='nxMmInvBomMixName'>" + _esc(oRow.materialName) + "</span>" +
+                sShared +
+                "</div>" +
+                "<div class='nxMmInvBomMixTrackRow'>" +
+                "<div class='nxMmInvBomMixTrack'><div class='nxMmInvBomMixFill' style='width:" + oRow.barPct +
+                "%;background:" + sColor + "'></div></div>" +
+                "<span class='nxMmInvBomMixMeta'>" + _esc(oRow.qtyDisplay) + " · " + _esc(oRow.mixDisplay) + "</span>" +
+                "</div></div>";
+        }
+
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--bomCardViz " + sThemeClass + "'>" +
+            "<div class='nxMmInvBomCardViz'>" +
+            "<div class='nxMmInvBomCardVizHead'>" +
+            "<span class='nxMmInvBomCardVizLabel'>1PC당 소요 구성</span>" +
+            "<span class='nxMmInvBomCardVizKpi'>총 " + Number(iTotalQty || 0) + " PC · " + aRows.length + "종</span>" +
+            "</div>" +
+            "<div class='nxMmInvBomCardVizStack' aria-label='1PC당 원자재 구성 비율'>" + sStackSegs + "</div>" +
+            "<div class='nxMmInvBomMixChart nxMmInvBomMixChart--card'>" + sRows + "</div>" +
+            "</div></div>";
     }
 
     function buildInventoryUnitBomCompare(aRows) {
@@ -546,6 +786,248 @@ sap.ui.define([
 
         return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--bomCompare'>" +
             "<div class='nxMmInvBomCompareChart'>" + sRows + "</div></div>";
+    }
+
+    function _polarPoint(cx, cy, r, deg) {
+        var rad = (deg - 90) * Math.PI / 180;
+
+        return {
+            x: cx + r * Math.cos(rad),
+            y: cy + r * Math.sin(rad)
+        };
+    }
+
+    function _donutSegmentPath(cx, cy, rOut, rIn, startDeg, endDeg) {
+        var pOutStart = _polarPoint(cx, cy, rOut, startDeg);
+        var pOutEnd = _polarPoint(cx, cy, rOut, endDeg);
+        var pInEnd = _polarPoint(cx, cy, rIn, endDeg);
+        var pInStart = _polarPoint(cx, cy, rIn, startDeg);
+        var bLarge = (endDeg - startDeg) > 180 ? 1 : 0;
+
+        return "M " + pOutStart.x.toFixed(2) + " " + pOutStart.y.toFixed(2) +
+            " A " + rOut + " " + rOut + " 0 " + bLarge + " 1 " + pOutEnd.x.toFixed(2) + " " + pOutEnd.y.toFixed(2) +
+            " L " + pInEnd.x.toFixed(2) + " " + pInEnd.y.toFixed(2) +
+            " A " + rIn + " " + rIn + " 0 " + bLarge + " 0 " + pInStart.x.toFixed(2) + " " + pInStart.y.toFixed(2) +
+            " Z";
+    }
+
+    function buildInventoryProductionCompareChart(oHeat, oBag) {
+        var fHeat = Math.max(0, Number(oHeat && oHeat.value != null ? oHeat.value : 0));
+        var fBag = Math.max(0, Number(oBag && oBag.value != null ? oBag.value : 0));
+        var fTotal = fHeat + fBag;
+        var sHeatLabel = (oHeat && oHeat.label) || "히트텍";
+        var sBagLabel = (oBag && oBag.label) || "가방";
+        var sHeatImg = _esc((oHeat && oHeat.imageSrc) || "./img/mm/product-heattech.png");
+        var sBagImg = _esc((oBag && oBag.imageSrc) || "./img/mm/product-bag.png");
+        var sHeatDisplay;
+        var sBagDisplay;
+        var fGap = 7;
+        var fUsable = 360 - fGap * 2;
+        var fHeatSweep;
+        var fBagSweep;
+        var fStartHeat;
+        var fEndHeat;
+        var fStartBag;
+        var fEndBag;
+        var iHeatPct;
+        var iBagPct;
+        var cx = 118;
+        var cy = 118;
+        var rOut = 92;
+        var rIn = 54;
+        var rMid = 73;
+        var oHeatMid;
+        var oBagMid;
+        var iHeatImg;
+        var iBagImg;
+
+        if (fTotal <= 0) {
+            return _overviewEmpty("생산 가능 수량 없음");
+        }
+
+        fHeatSweep = fUsable * (fHeat / fTotal);
+        fBagSweep = fUsable * (fBag / fTotal);
+        fStartHeat = -90 + fGap;
+        fEndHeat = fStartHeat + fHeatSweep;
+        fStartBag = fEndHeat + fGap;
+        fEndBag = fStartBag + fBagSweep;
+        iHeatPct = Math.round((fHeat / fTotal) * 100);
+        iBagPct = Math.max(0, 100 - iHeatPct);
+        sHeatDisplay = (oHeat && oHeat.display != null) ? String(oHeat.display) : String(fHeat);
+        sBagDisplay = (oBag && oBag.display != null) ? String(oBag.display) : String(fBag);
+        oHeatMid = _polarPoint(cx, cy, rMid, (fStartHeat + fEndHeat) / 2);
+        oBagMid = _polarPoint(cx, cy, rMid, (fStartBag + fEndBag) / 2);
+        iHeatImg = Math.round(24 + (fHeat / fTotal) * 42);
+        iBagImg = Math.round(24 + (fBag / fTotal) * 42);
+
+        var sHeatTip = _esc(sHeatLabel) + " · " + _esc(sHeatDisplay) + " PC · " + iHeatPct + "%";
+        var sBagTip = _esc(sBagLabel) + " · " + _esc(sBagDisplay) + " PC · " + iBagPct + "%";
+        var iHeatBarPct = fHeat > 0 ? Math.round((fHeat / fTotal) * 100) : 0;
+        var iBagBarPct = fBag > 0 ? (100 - iHeatBarPct) : 0;
+        var sLeadLabel = fHeat >= fBag ? sHeatLabel : sBagLabel;
+        var sLeadDisplay = fHeat >= fBag ? sHeatDisplay : sBagDisplay;
+        var iLeadPct = fHeat >= fBag ? iHeatPct : iBagPct;
+
+        function _prodCompareMidSeg(sTone, sLabel, iPct, iWidthPct, sTip, sLabelAttr, sQty, sImg) {
+            var sInner = iWidthPct >= 14
+                ? "<span class='nxMmInvProdCompareMidSegLabel'>" + _esc(sLabel) + " " + iPct + "%</span>"
+                : "<span class='nxMmInvProdCompareMidSegLabel'>" + iPct + "%</span>";
+
+            return "<button type='button' class='nxMmInvProdCompareMidSeg nxMmInvProdCompareMidSeg--" + sTone + "' " +
+                "style='width:" + iWidthPct + "%' data-prod-key='" + sTone + "' data-tip='" + sTip + "' " +
+                "data-label='" + sLabelAttr + "' data-qty='" + sQty + "' data-pct='" + iPct + "' data-img='" + sImg + "' " +
+                "aria-label='" + sTip + "'>" + sInner + "</button>";
+        }
+
+        var sMidStrip = (fHeat > 0 ? _prodCompareMidSeg("heat", sHeatLabel, iHeatPct, iHeatBarPct, sHeatTip,
+            _esc(sHeatLabel), _esc(sHeatDisplay), sHeatImg) : "") +
+            (fBag > 0 ? _prodCompareMidSeg("bag", sBagLabel, iBagPct, iBagBarPct, sBagTip,
+            _esc(sBagLabel), _esc(sBagDisplay), sBagImg) : "");
+
+        var sMidInsight = "<strong>" + _esc(sLeadLabel) + "</strong> · " + _esc(sLeadDisplay) +
+            " PC · 전체 " + iLeadPct + "% · BOM 기준";
+
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--prodCompare nxMmInvAnalysisHost--prodCompareTip' data-prod-compare-chart='true'>" +
+            "<div class='nxMmInvProdCompare'>" +
+            "<div class='nxMmInvProdCompareTop'>" +
+            "<div class='nxMmInvProdCompareSide'>" +
+            "<div class='nxMmInvProdCompareKpiLabel'>총 생산 가능 수량</div>" +
+            "<div class='nxMmInvProdCompareKpiValue'>" + _formatDonutQty(fTotal) +
+            " <span class='nxMmInvProdCompareKpiUnit'>PC</span></div>" +
+            "<div class='nxMmInvProdCompareKpiSub'>2 제품 · BOM 기준</div>" +
+            "<div class='nxMmInvProdCompareLegend'>" +
+            "<div class='nxMmInvProdCompareLegendItem nxMmInvProdCompareLegendItem--heat' data-prod-key='heat' data-tip='" + sHeatTip +
+            "' data-label='" + _esc(sHeatLabel) + "' data-qty='" + _esc(sHeatDisplay) + "' data-pct='" + iHeatPct +
+            "' data-img='" + sHeatImg + "' tabindex='0' role='button'>" +
+            "<span class='nxMmInvProdCompareLegendDot'></span>" +
+            "<img class='nxMmInvProdCompareLegendThumb' src='" + sHeatImg + "' alt='" + _esc(sHeatLabel) + "' />" +
+            "<div class='nxMmInvProdCompareLegendText'>" +
+            "<span class='nxMmInvProdCompareLegendName'>" + _esc(sHeatLabel) + "</span>" +
+            "<span class='nxMmInvProdCompareLegendMeta'>" + _esc(sHeatDisplay) + " PC · " + iHeatPct + "%</span>" +
+            "</div></div>" +
+            "<div class='nxMmInvProdCompareLegendItem nxMmInvProdCompareLegendItem--bag' data-prod-key='bag' data-tip='" + sBagTip +
+            "' data-label='" + _esc(sBagLabel) + "' data-qty='" + _esc(sBagDisplay) + "' data-pct='" + iBagPct +
+            "' data-img='" + sBagImg + "' tabindex='0' role='button'>" +
+            "<span class='nxMmInvProdCompareLegendDot'></span>" +
+            "<img class='nxMmInvProdCompareLegendThumb' src='" + sBagImg + "' alt='" + _esc(sBagLabel) + "' />" +
+            "<div class='nxMmInvProdCompareLegendText'>" +
+            "<span class='nxMmInvProdCompareLegendName'>" + _esc(sBagLabel) + "</span>" +
+            "<span class='nxMmInvProdCompareLegendMeta'>" + _esc(sBagDisplay) + " PC · " + iBagPct + "%</span>" +
+            "</div></div></div></div>" +
+            "<div class='nxMmInvProdCompareChartWrap'>" +
+            "<div class='nxMmInvProdCompareChartMain'>" +
+            "<svg class='nxMmInvProdCompareSvg' viewBox='0 0 236 236' role='img' aria-label='생산 가능 수량 비교'>" +
+            "<defs>" +
+            "<linearGradient id='nxMmInvProdHeatGrad' x1='0%' y1='0%' x2='100%' y2='100%'>" +
+            "<stop offset='0%' stop-color='#FB7185' /><stop offset='100%' stop-color='#DC2626' />" +
+            "</linearGradient>" +
+            "<linearGradient id='nxMmInvProdBagGrad' x1='0%' y1='0%' x2='100%' y2='100%'>" +
+            "<stop offset='0%' stop-color='#7DD3FC' /><stop offset='100%' stop-color='#0284C7' />" +
+            "</linearGradient>" +
+            "<filter id='nxMmInvProdSegShadow' x='-20%' y='-20%' width='140%' height='140%'>" +
+            "<feDropShadow dx='0' dy='4' stdDeviation='4' flood-color='#0F172A' flood-opacity='0.12' />" +
+            "</filter></defs>" +
+            "<path class='nxMmInvProdCompareSeg nxMmInvProdCompareSeg--heat nxMmInvProdCompareSeg--interactive' filter='url(#nxMmInvProdSegShadow)' " +
+            "d='" + _donutSegmentPath(cx, cy, rOut, rIn, fStartHeat, fEndHeat) + "' fill='url(#nxMmInvProdHeatGrad)' " +
+            "data-prod-key='heat' data-tip='" + sHeatTip + "' data-label='" + _esc(sHeatLabel) + "' data-qty='" + _esc(sHeatDisplay) +
+            "' data-pct='" + iHeatPct + "' data-img='" + sHeatImg + "' tabindex='0' role='button' aria-label='" + sHeatTip + "' />" +
+            "<path class='nxMmInvProdCompareSeg nxMmInvProdCompareSeg--bag nxMmInvProdCompareSeg--interactive' filter='url(#nxMmInvProdSegShadow)' " +
+            "d='" + _donutSegmentPath(cx, cy, rOut, rIn, fStartBag, fEndBag) + "' fill='url(#nxMmInvProdBagGrad)' " +
+            "data-prod-key='bag' data-tip='" + sBagTip + "' data-label='" + _esc(sBagLabel) + "' data-qty='" + _esc(sBagDisplay) +
+            "' data-pct='" + iBagPct + "' data-img='" + sBagImg + "' tabindex='0' role='button' aria-label='" + sBagTip + "' />" +
+            "<foreignObject x='" + (oHeatMid.x - iHeatImg / 2).toFixed(2) + "' y='" + (oHeatMid.y - iHeatImg / 2).toFixed(2) +
+            "' width='" + iHeatImg + "' height='" + iHeatImg + "' pointer-events='none'>" +
+            "<div xmlns='http://www.w3.org/1999/xhtml' class='nxMmInvProdCompareSegPhoto nxMmInvProdCompareSegPhoto--heat'>" +
+            "<img src='" + sHeatImg + "' alt='" + _esc(sHeatLabel) + "' style='width:100%;height:100%;object-fit:contain;' />" +
+            "</div></foreignObject>" +
+            "<foreignObject x='" + (oBagMid.x - iBagImg / 2).toFixed(2) + "' y='" + (oBagMid.y - iBagImg / 2).toFixed(2) +
+            "' width='" + iBagImg + "' height='" + iBagImg + "' pointer-events='none'>" +
+            "<div xmlns='http://www.w3.org/1999/xhtml' class='nxMmInvProdCompareSegPhoto nxMmInvProdCompareSegPhoto--bag'>" +
+            "<img src='" + sBagImg + "' alt='" + _esc(sBagLabel) + "' style='width:100%;height:100%;object-fit:contain;' />" +
+            "</div></foreignObject>" +
+            "</svg>" +
+            "<div class='nxMmInvProdCompareSegInfo' aria-live='polite'>" +
+            "<div class='nxMmInvProdCompareSegInfoPlaceholder'>차트를 클릭하면 제품 정보가 표시됩니다</div>" +
+            "<div class='nxMmInvProdCompareSegInfoBody' hidden>" +
+            "<img class='nxMmInvProdCompareSegInfoImg' src='' alt='' />" +
+            "<div class='nxMmInvProdCompareSegInfoText'>" +
+            "<span class='nxMmInvProdCompareSegInfoName'></span>" +
+            "<span class='nxMmInvProdCompareSegInfoMeta'></span>" +
+            "</div></div></div>" +
+            "<div class='nxMmInvProdCompareFloatTip' aria-hidden='true'></div>" +
+            "</div></div></div>" +
+            "<div class='nxMmInvProdCompareMid'>" +
+            "<div class='nxMmInvProdCompareMidLabel'>제품별 생산 가능 비율</div>" +
+            "<div class='nxMmInvProdCompareMidStrip' aria-label='제품별 생산 가능 비율'>" + sMidStrip + "</div>" +
+            "<div class='nxMmInvProdCompareMidInsight'>" + sMidInsight + "</div>" +
+            "</div></div></div>";
+    }
+
+    function buildInventoryMrpFulfillmentChart(aRows) {
+        if (!aRows || !aRows.length) {
+            return _overviewEmpty("충족률 데이터 없음");
+        }
+
+        var iOk = 0;
+        var iShort = 0;
+        var fPctSum = 0;
+        var sRows = aRows.map(function (oRow) {
+            var sState = String(oRow.progressState || "None");
+            var sTone = sState === "Success" ? "ok" : (sState === "Warning" ? "warn" : "short");
+            var iPct = Math.min(100, Math.max(0, Number(oRow.fulfillmentPct || 0)));
+            var fActual = oRow.fulfillmentActual != null ? oRow.fulfillmentActual : iPct;
+            var sStatus = String(oRow.statusText || (sTone === "ok" ? "충분" : "부족"));
+            var sIcon = sTone === "ok" ? "&#10003;" : (sTone === "warn" ? "!" : "&#10007;");
+
+            if (sTone === "ok") {
+                iOk += 1;
+            } else {
+                iShort += 1;
+            }
+            fPctSum += iPct;
+
+            return "<div class='nxMmInvMrpFillRow nxMmInvMrpFillRow--" + sTone + "'>" +
+                "<div class='nxMmInvMrpFillHead'>" +
+                "<div class='nxMmInvMrpFillMeta'>" +
+                "<span class='nxMmInvMrpFillName'>" + _esc(oRow.materialName) + "</span>" +
+                "<span class='nxMmInvMrpFillCode'>" + _esc(oRow.material || "") + "</span>" +
+                "</div>" +
+                "<div class='nxMmInvMrpFillStatus nxMmInvMrpFillStatus--" + sTone + "'>" +
+                "<span class='nxMmInvMrpFillStatusIcon' aria-hidden='true'>" + sIcon + "</span>" +
+                "<span class='nxMmInvMrpFillStatusText'>" + _esc(sStatus) + "</span>" +
+                "</div></div>" +
+                "<div class='nxMmInvMrpFillTrackRow'>" +
+                "<div class='nxMmInvMrpFillTrack'>" +
+                "<div class='nxMmInvMrpFillBar nxMmInvMrpFillBar--" + sTone + "' style='width:" + iPct + "%'></div>" +
+                "</div>" +
+                "<div class='nxMmInvMrpFillPctWrap'>" +
+                "<span class='nxMmInvMrpFillPct'>" + iPct + "%</span>" +
+                "<span class='nxMmInvMrpFillPctSub'>실제 " + fActual + "%</span>" +
+                "</div></div>" +
+                "<div class='nxMmInvMrpFillDetail'>" +
+                "<span class='nxMmInvMrpFillDetailItem'><em>필요</em> " + Number(oRow.requiredQty || 0) + " PC</span>" +
+                "<span class='nxMmInvMrpFillDetailItem'><em>재고</em> " + _esc(oRow.stockDisplay || "0 PC") + "</span>" +
+                "<span class='nxMmInvMrpFillDetailItem nxMmInvMrpFillDetailItem--short'><em>부족</em> " +
+                _esc(oRow.shortageDisplay || "0 PC") + "</span>" +
+                "</div></div>";
+        }).join("");
+
+        var iAvg = Math.round(fPctSum / aRows.length);
+
+        return "<div class='nxMmInvAnalysisHost nxMmInvAnalysisHost--mrpFill'>" +
+            "<div class='nxMmInvMrpFillChart'>" +
+            "<div class='nxMmInvMrpFillSummary'>" +
+            "<div class='nxMmInvMrpFillSummaryItem nxMmInvMrpFillSummaryItem--avg'>" +
+            "<span class='nxMmInvMrpFillSummaryLabel'>평균 충족률</span>" +
+            "<span class='nxMmInvMrpFillSummaryValue'>" + iAvg + "%</span></div>" +
+            "<div class='nxMmInvMrpFillSummaryItem nxMmInvMrpFillSummaryItem--ok'>" +
+            "<span class='nxMmInvMrpFillSummaryLabel'>충분</span>" +
+            "<span class='nxMmInvMrpFillSummaryValue'>" + iOk + "</span></div>" +
+            "<div class='nxMmInvMrpFillSummaryItem nxMmInvMrpFillSummaryItem--short'>" +
+            "<span class='nxMmInvMrpFillSummaryLabel'>부족</span>" +
+            "<span class='nxMmInvMrpFillSummaryValue'>" + iShort + "</span></div>" +
+            "</div>" +
+            "<div class='nxMmInvMrpFillList'>" + sRows + "</div></div></div>";
     }
 
     function buildInventoryAnalysisShortageBar(aRows) {
@@ -1154,8 +1636,12 @@ sap.ui.define([
         buildInventoryAnalysisTypeBar: buildInventoryAnalysisTypeBar,
         buildInventoryAnalysisFillRateBar: buildInventoryAnalysisFillRateBar,
         buildInventoryAnalysisStatusDonut: buildInventoryAnalysisStatusDonut,
+        buildInventoryMmbeSankeyFlow: buildInventoryMmbeSankeyFlow,
         buildInventoryUnitBomMixChart: buildInventoryUnitBomMixChart,
+        buildInventoryUnitBomCardViz: buildInventoryUnitBomCardViz,
         buildInventoryUnitBomCompare: buildInventoryUnitBomCompare,
+        buildInventoryProductionCompareChart: buildInventoryProductionCompareChart,
+        buildInventoryMrpFulfillmentChart: buildInventoryMrpFulfillmentChart,
         buildInventoryAnalysisShortageBar: buildInventoryAnalysisShortageBar,
         buildPurchasingLinkDonut: buildPurchasingLinkDonut,
         buildPurchasingDataAvailability: buildPurchasingDataAvailability,
