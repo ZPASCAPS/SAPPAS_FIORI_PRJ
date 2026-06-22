@@ -44,6 +44,48 @@
           "odataVersion": "2.0"
         }
       },
+      "ppOrderListService": {
+        "uri": "/sap/opu/odata/sap/ZCPP_E2E_ORDERLIST_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "ppPipelineService": {
+        "uri": "/sap/opu/odata/sap/ZI_PP_MTO_PIPELINE_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "ppOverviewService": {
+        "uri": "/sap/opu/odata/sap/ZCPP_E2E_OVERVIEW_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "ppBomStockService": {
+        "uri": "/sap/opu/odata/sap/ZCPP_E2E_BOMSTOCK_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "ppTrackerService": {
+        "uri": "/sap/opu/odata/sap/ZCPP_E2E_TRACKER_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "ppOperationSchedService": {
+        "uri": "/sap/opu/odata/sap/ZI_PP_OPERATION_SCHED_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
       "orderSummarySource": {
         "uri": "/sap/opu/odata/sap/Z_C_ORDERSUMMARY_SJ_CDS/",
         "type": "OData",
@@ -155,6 +197,27 @@
         "settings": {
           "odataVersion": "2.0"
         }
+      },
+      "sdControlSource": {
+        "uri": "/sap/opu/odata/sap/Z_C_SD_CONTROL_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "sdRmaSource": {
+        "uri": "/sap/opu/odata/sap/Z_C_SD_RMA_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "sdBestsellerSource": {
+        "uri": "/sap/opu/odata/sap/Z_C_SD_BESTSELLER_SJ_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
       }
 
     }
@@ -184,7 +247,9 @@
         "sap.ui.core": {},
         "sap.ui.layout": {},
         "sap.f": {},
-        "sap.suite.ui.microchart": {}
+        "sap.suite.ui.microchart": {},
+        "sap.suite.ui.commons": {},
+        "sap.ui.unified": {}
       }
     },
     "contentDensities": {
@@ -219,6 +284,54 @@
       "trackerModel": {
         "dataSource": "trackerSource",
         "preload": true
+      },
+      "ppOrderListModel": {
+        "dataSource": "ppOrderListService",
+        "preload": true,
+        "settings": {
+          "useBatch": false,
+          "defaultCountMode": "Inline"
+        }
+      },
+      "ppPipelineModel": {
+        "dataSource": "ppPipelineService",
+        "preload": true,
+        "settings": {
+          "useBatch": false,
+          "defaultCountMode": "Inline"
+        }
+      },
+      "ppOverviewModel": {
+        "dataSource": "ppOverviewService",
+        "preload": true,
+        "settings": {
+          "useBatch": false,
+          "defaultCountMode": "Inline"
+        }
+      },
+      "ppBomStockModel": {
+        "dataSource": "ppBomStockService",
+        "preload": true,
+        "settings": {
+          "useBatch": false,
+          "defaultCountMode": "Inline"
+        }
+      },
+      "ppTrackerModel": {
+        "dataSource": "ppTrackerService",
+        "preload": true,
+        "settings": {
+          "useBatch": false,
+          "defaultCountMode": "Inline"
+        }
+      },
+      "ppOperationSchedModel": {
+        "dataSource": "ppOperationSchedService",
+        "preload": true,
+        "settings": {
+          "useBatch": false,
+          "defaultCountMode": "Inline"
+        }
       },
       "orderSummaryModel": {
         "dataSource": "orderSummarySource",
@@ -326,12 +439,36 @@
       "sdKpiModel": {
         "dataSource": "sdKpiSource",
         "preload": true
+      },
+      "sdControlModel": {
+        "dataSource": "sdControlSource",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "OneWay",
+          "useBatch": false
+        }
+      },
+      "sdRmaModel": {
+        "dataSource": "sdRmaSource",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "OneWay",
+          "useBatch": false
+        }
+      },
+      "sdBestsellerModel": {
+        "dataSource": "sdBestsellerSource",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "OneWay",
+          "useBatch": false
+        }
       }
     },
     "resources": {
       "css": [
         {
-          "uri": "css/style.css"
+          "uri": "css/style.css?v=20260622e"
         }
       ]
     },

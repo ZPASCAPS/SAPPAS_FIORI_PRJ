@@ -444,9 +444,9 @@ sap.ui.define([
                     }
                 },
                 sdMain: {
-                    ready: false,
+                    ready: true,
                     lastUpdated: "데이터 없음",
-                    showStepsBelow: false
+                    showStepsBelow: true
                 },
                 mmInventory: {
                     loading: false,

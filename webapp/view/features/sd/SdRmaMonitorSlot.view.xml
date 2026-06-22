@@ -1,15 +1,64 @@
+<!--
+  SdRmaMonitorSlot.view.xml — Step 3: 반품(RMA) 입고 모니터링
+-->
 <mvc:View
     controllerName="com.capstone.dashboard.fioridashboard.controller.features.sd.SdRmaMonitorSlot"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     height="100%"
     width="100%">
-    <Panel
-        headerText="Step 3 · RMA Inbound Monitor"
-        width="100%"
-        class="nxSdMainPlaceholderPanel nxSdMainPlaceholderPanel--rma">
-        <content>
-            <Text text="반품(RMA) 입고 모니터링 리스트 — Step 3에서 구현" />
-        </content>
-    </Panel>
+
+    <VBox class="nxSdDashCard nxSdDashCard--rma" width="100%" height="100%" renderType="Bare">
+        <HBox class="nxSdDashCardHead" alignItems="Start" justifyContent="SpaceBetween" width="100%" renderType="Bare">
+            <VBox renderType="Bare">
+                <Title text="{sdRma>/title}" level="H5" class="nxSdDashCardTitle" />
+            </VBox>
+            <Text text="{sdRma>/summary/conversionText}" class="nxSdDashHeroMetric nxSdDashHeroMetric--sm" visible="{= ${sdRma>/summary/totalCount} > 0 }" />
+        </HBox>
+
+        <VBox class="nxSdDashFunnel" visible="{= ${sdRma>/summary/totalCount} > 0 }" renderType="Bare">
+            <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%" renderType="Bare" class="nxSdDashFunnelRow">
+                <Text text="입고 완료" class="nxSdDashFunnelLabel" />
+                <Text text="{sdRma>/summary/processedCount}" class="nxSdDashFunnelValue nxSdDashFunnelValue--ok" />
+            </HBox>
+            <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%" renderType="Bare" class="nxSdDashFunnelRow">
+                <Text text="입고 대기" class="nxSdDashFunnelLabel" />
+                <Text text="{sdRma>/summary/pendingCount}" class="nxSdDashFunnelValue nxSdDashFunnelValue--warn" />
+            </HBox>
+        </VBox>
+
+        <MessageStrip
+            text="{sdRma>/error}"
+            type="Error"
+            showIcon="true"
+            visible="{= !!${sdRma>/error} }"
+            class="nxSdDashMessage" />
+
+        <VBox class="nxSdDashCardBody nxSdDashCardBody--list" width="100%" renderType="Bare">
+            <List
+                class="nxSdDashProductList nxSdDashListFill nxSdRmaList"
+                width="100%"
+                growing="false"
+                showSeparators="Inner"
+                noDataText="{sdRma>/emptyText}"
+                items="{sdRma>/rows}">
+                <CustomListItem type="Inactive" class="nxSdDashProductRow">
+                    <HBox width="100%" alignItems="Center" justifyContent="SpaceBetween" renderType="Bare" class="nxSdDashProductRowInner">
+                        <HBox alignItems="Center" renderType="Bare" class="nxSdDashProductLeft">
+                            <VBox renderType="Bare" class="nxSdDashAvatar nxSdDashAvatar--rma">
+                                <core:Icon src="sap-icon://undo" size="0.9rem" color="#7C3AED" />
+                            </VBox>
+                            <VBox renderType="Bare" class="nxSdDashProductMain">
+                                <Text text="{sdRma>customerName}" class="nxSdDashProductTitle" />
+                                <Text text="{= '오더 ' + ${sdRma>returnOrderDisplay} }" class="nxSdDashProductMeta" />
+                                <Text text="{sdRma>returnReasonText}" class="nxSdDashProductReason" />
+                            </VBox>
+                        </HBox>
+                        <Text text="{sdRma>statusText}" class="{= 'nxSdDashPill ' + ${sdRma>statusPillClass} }" />
+                    </HBox>
+                </CustomListItem>
+            </List>
+        </VBox>
+    </VBox>
 </mvc:View>

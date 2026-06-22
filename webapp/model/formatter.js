@@ -155,6 +155,69 @@ sap.ui.define([], function () {
         return formatDate(vDate);
     }
 
+    function formatSalesOrderDisplay(sRaw) {
+        if (!sRaw) {
+            return "-";
+        }
+        var sTrimmed = String(sRaw).replace(/^0+/, "");
+        return sTrimmed || String(sRaw);
+    }
+
+    function formatSdControlStatusState(sControlType) {
+        switch (String(sControlType || "").toUpperCase()) {
+            case "CREDIT":
+                return "Error";
+            case "DELIVERY":
+                return "Warning";
+            default:
+                return "None";
+        }
+    }
+
+    function formatSdControlStatusIcon(sControlType) {
+        switch (String(sControlType || "").toUpperCase()) {
+            case "CREDIT":
+                return "sap-icon://alert";
+            case "DELIVERY":
+                return "sap-icon://lateness";
+            default:
+                return "";
+        }
+    }
+
+    function formatSdRmaReasonState(sReasonText) {
+        var sReason = String(sReasonText || "").trim();
+        if (!sReason || sReason === "-") {
+            return "None";
+        }
+        if (/단순\s*변심|변심/i.test(sReason)) {
+            return "Warning";
+        }
+        return "Error";
+    }
+
+    function formatSdRmaProcessingState(sProcessingStatus) {
+        switch (String(sProcessingStatus || "").toUpperCase()) {
+            case "PROCESSED":
+                return "Success";
+            case "PENDING":
+                return "Warning";
+            default:
+                return "None";
+        }
+    }
+
+    function formatSdRmaProcessingIcon(sProcessingStatus) {
+        switch (String(sProcessingStatus || "").toUpperCase()) {
+            case "PROCESSED":
+                return "sap-icon://accept";
+            case "PENDING":
+                return "sap-icon://pending";
+            default:
+                return "";
+        }
+    }
+
     return {
         dash: dash,
         formatDate: formatDate,
@@ -169,6 +232,12 @@ sap.ui.define([], function () {
         formatBLType: formatBLType,
         formatFIDocType: formatFIDocType,
         formatFIStatus: formatFIStatus,
-        formatDNActualDate: formatDNActualDate
+        formatDNActualDate: formatDNActualDate,
+        formatSalesOrderDisplay: formatSalesOrderDisplay,
+        formatSdControlStatusState: formatSdControlStatusState,
+        formatSdControlStatusIcon: formatSdControlStatusIcon,
+        formatSdRmaReasonState: formatSdRmaReasonState,
+        formatSdRmaProcessingState: formatSdRmaProcessingState,
+        formatSdRmaProcessingIcon: formatSdRmaProcessingIcon
     };
 });

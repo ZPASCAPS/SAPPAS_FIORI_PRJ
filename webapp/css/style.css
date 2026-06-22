@@ -17200,6 +17200,2982 @@ html, body, body > div, #container, #container-uiarea,
         flex-wrap: wrap;
         height: auto !important;
     }
+
+    .nxSdKpiTile {
+        flex: 1 1 100%;
+        min-height: 7rem;
+    }
+}
+
+/* ── SD Dashboard modern layout (KPI + 3-column body) ── */
+.nxSdMain--modern {
+    background: #F5F6FA !important;
+    gap: 0.65rem;
+    padding: 0.55rem 0.75rem 0.65rem !important;
+}
+
+.nxSdMainScroll.nxModuleOverviewScroll {
+    background: #F5F6FA !important;
+}
+
+.nxSdMain--step2 .nxSdMainSection--kpi {
+    flex: 0 0 9.5rem;
+    min-height: 9.5rem;
+    height: 9.5rem;
+    overflow: visible;
+}
+
+.nxSdMain--step2 .nxSdMainMiddleRow {
+    flex: 1 1 0;
+    min-height: 0;
+}
+
+.nxSdMainMiddleRow > .sapMFlexItem {
+    min-height: 0;
+    align-self: stretch !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.nxSdMain--tripleCol .nxSdMainTripleRow > .sapMFlexItem {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+}
+
+.nxSdMain--tripleCol .nxSdMainSection--control,
+.nxSdMain--tripleCol .nxSdMainSection--bestseller,
+.nxSdMain--tripleCol .nxSdMainSection--rma {
+    flex: 1 1 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.nxSdMainMiddleRow > .sapMFlexItem > .sapMFlexBox,
+.nxSdMain--tripleCol .nxSdMainTripleRow > .sapMFlexItem > .sapMFlexBox {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.sapMFlexBox.nxSdMain {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.sapMFlexBox.nxSdMain > .sapMFlexItem:first-child {
+    flex: 0 0 9.5rem !important;
+    min-height: 9.5rem !important;
+    max-height: 9.5rem !important;
+}
+
+.sapMFlexBox.nxSdMain > .sapMFlexItem:nth-child(2) {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    overflow: hidden;
+}
+
+.sapMFlexBox.nxSdMain > .sapMFlexItem:first-child > .sapMFlexBox,
+.sapMFlexBox.nxSdMain > .sapMFlexItem:nth-child(2) > .sapMFlexBox {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.nxSdMainSection--kpi > .sapUiView,
+.nxSdMainSection--control > .sapUiView,
+.nxSdMainSection--bestseller > .sapUiView,
+.nxSdMainSection--rma > .sapUiView {
+    height: 100% !important;
+}
+
+/* KPI cards */
+.nxSdDashKpiRow {
+    gap: 0.75rem;
+    width: 100%;
+    height: 100%;
+    align-items: stretch;
+}
+
+.nxSdDashKpiRow > .sapMFlexItem {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    height: 100% !important;
+}
+
+.nxSdDashKpiRow > .sapMFlexItem.sapMFlexBox.nxSdDashKpiCard {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.nxSdDashKpiCard > .sapMFlexItem {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    width: 100% !important;
+}
+
+.nxSdDashKpiCard {
+    flex: 1 1 0;
+    width: 100%;
+    height: 100%;
+    background: #FFFFFF;
+    border: 1px solid #ECECF1;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.04);
+    padding: 0.85rem 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+/* 클릭 가능한 KPI 카드 (여신 초과 → 블로킹 오더 모달) */
+.nxSdDashKpiCard--clickable {
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+.nxSdDashKpiCard--clickable:hover {
+    border-color: #C9B8FF !important;
+    box-shadow: 0 10px 24px rgba(124, 58, 237, 0.14) !important;
+    transform: translateY(-1px);
+}
+
+/* 여신 초과 블로킹 오더 모달 테이블 */
+.nxSdCreditBlockTable .sapMListTblHeaderCell .sapMText,
+.nxSdCreditBlockTable .sapMListTblHeaderCell .sapMLabel {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #5A5E70 !important;
+}
+
+.nxSdCreditBlockTable .sapMListTblCell {
+    vertical-align: middle !important;
+    padding: 0.6rem 0.6rem !important;
+}
+
+.nxSdCreditBlockTable .sapMListTblCell .sapMText {
+    font-size: 0.78rem !important;
+    color: #2A2D3A !important;
+}
+
+.nxSdDashKpiLabel, .nxSdDashKpiLabel .sapMText {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #8B8FA3 !important;
+}
+
+.nxSdDashKpiIconWrap {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 999px;
+    background: #F1ECFF;
+    align-items: center;
+    justify-content: center;
+    display: inline-flex !important;
+}
+
+.nxSdDashKpiValueRow { gap: 0.45rem; align-items: center; flex-wrap: wrap; }
+
+.nxSdDashKpiValue, .nxSdDashKpiValue .sapMText {
+    font-size: 1.65rem !important;
+    font-weight: 800 !important;
+    color: #15172A !important;
+    line-height: 1 !important;
+}
+
+.nxSdDashKpiValueUnit, .nxSdDashKpiValueUnit .sapMText {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #8B8FA3 !important;
+}
+
+.nxSdDashKpiFootnote, .nxSdDashKpiFootnote .sapMText {
+    font-size: 0.7rem !important;
+    color: #9AA0B2 !important;
+}
+
+.nxSdDashPill, .nxSdDashPill .sapMText {
+    display: inline-flex !important;
+    border-radius: 999px !important;
+    padding: 0.15rem 0.5rem !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap;
+}
+
+.nxSdDashPill--up, .nxSdDashPill--up .sapMText { background: #E8F8EF !important; color: #1F9D63 !important; }
+.nxSdDashPill--down, .nxSdDashPill--down .sapMText { background: #FDECEC !important; color: #E5484D !important; }
+.nxSdDashPill--warn, .nxSdDashPill--warn .sapMText { background: #FFF4E5 !important; color: #D97706 !important; }
+.nxSdDashPill--neutral, .nxSdDashPill--neutral .sapMText { background: #F1F3F9 !important; color: #667085 !important; }
+.nxSdDashPill--qty, .nxSdDashPill--qty .sapMText { background: #EEFBF3 !important; color: #118B5E !important; font-weight: 800 !important; }
+
+/* Dash cards */
+.nxSdDashCard {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    background: #FFFFFF;
+    border: 1px solid #ECECF1;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.04);
+    padding: 0.75rem 0.85rem 0.65rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    overflow: hidden;
+}
+
+.nxSdDashCard.sapMFlexBox { display: flex !important; flex-direction: column !important; }
+
+.nxSdDashCardHead { flex-shrink: 0; gap: 0.5rem; }
+
+.nxSdDashCardTitle, .nxSdDashCardTitle .sapMTitle {
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    color: #15172A !important;
+}
+
+.nxSdDashCardSub, .nxSdDashCardSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #8B8FA3 !important;
+}
+
+.nxSdDashHeroMetric, .nxSdDashHeroMetric .sapMText {
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+    color: #7C3AED !important;
+}
+
+.nxSdDashHeroMetric--sm, .nxSdDashHeroMetric--sm .sapMText {
+    font-size: 0.85rem !important;
+    white-space: nowrap;
+}
+
+.nxSdDashFunnel {
+    flex-shrink: 0;
+    border: 1px solid #EEF0F5;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #FAFBFD;
+}
+
+.nxSdDashFunnelRow {
+    padding: 0.35rem 0.55rem;
+    border-bottom: 1px solid #EEF0F5;
+}
+
+.nxSdDashFunnelRow:last-child { border-bottom: none; }
+
+.nxSdDashFunnelLabel, .nxSdDashFunnelLabel .sapMText { font-size: 0.68rem !important; color: #667085 !important; }
+.nxSdDashFunnelValue--ok, .nxSdDashFunnelValue--ok .sapMText { color: #1F9D63 !important; font-weight: 800 !important; }
+.nxSdDashFunnelValue--warn, .nxSdDashFunnelValue--warn .sapMText { color: #D97706 !important; font-weight: 800 !important; }
+
+.nxSdDashProductList {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+}
+
+.nxSdDashProductList .sapMLIB { border-bottom: 1px solid #F3F4F8 !important; }
+
+.nxSdDashProductRowInner.sapMFlexBox {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+.nxSdDashProductLeft.sapMFlexBox {
+    display: flex !important;
+    align-items: center !important;
+    min-width: 0;
+    flex: 1 1 auto;
+    gap: 0.45rem;
+}
+
+.nxSdDashAvatar {
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 999px;
+    background: #F1ECFF;
+    align-items: center;
+    justify-content: center;
+    display: inline-flex !important;
+    flex-shrink: 0;
+}
+
+.nxSdDashRankBadge, .nxSdDashRankBadge .sapMText {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 999px;
+    background: #F1F3F9;
+    color: #4B5563 !important;
+    font-weight: 800 !important;
+    font-size: 0.68rem !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nxSdDashProductRow--top .nxSdDashRankBadge,
+.nxSdDashProductRow--top .nxSdDashRankBadge .sapMText {
+    background: #EDE9FE;
+    color: #7C3AED !important;
+}
+
+.nxSdDashProductTitle, .nxSdDashProductTitle .sapMText {
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    color: #15172A !important;
+}
+
+.nxSdDashProductMeta, .nxSdDashProductMeta .sapMText {
+    font-size: 0.64rem !important;
+    color: #8B8FA3 !important;
+}
+
+.nxSdDashProductReason, .nxSdDashProductReason .sapMText {
+    font-size: 0.62rem !important;
+    color: #9AA0B2 !important;
+}
+
+.nxSdRaceBarTrack--compact {
+    height: 0.4rem;
+    background: #EEF0F5;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0.12rem 0;
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.nxSdRaceBarBand { height: 100%; min-width: 0; }
+.nxSdRaceBarBand--hit { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
+.nxSdRaceBarBand--bag { background: linear-gradient(90deg, #F97316, #FB923C); }
+
+.nxSdControlHeadPills { gap: 0.35rem; flex-shrink: 0; }
+.nxSdControlHeadPills.sapMFlexBox { display: flex !important; }
+
+.nxSdControlContent {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.nxSdControlTable, .nxSdDashTable {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.nxSdDashTable .sapMListTblHeader { background: #FAFBFD !important; }
+.nxSdDashTable .sapMListTblHeaderCell {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    color: #8B8FA3 !important;
+    border-bottom: 1px solid #ECECF1 !important;
+}
+
+.nxSdDashTable .sapMListTblCell {
+    font-size: 0.72rem !important;
+    border-bottom: 1px solid #F3F4F8 !important;
+}
+
+.nxSdControlProductLink .sapMLnk { font-size: 0.72rem !important; font-weight: 600 !important; }
+
+.nxSdControlDetailDialog .sapMDialogSection { padding: 0 !important; }
+.nxSdControlDetailBody { height: 100%; gap: 0.35rem; padding: 0.65rem 0.75rem 0.5rem; box-sizing: border-box; }
+.nxSdControlDetailTabBar { flex: 1 1 auto; min-height: 0; }
+.nxSdControlDetailScroll { width: 100%; }
+
+.nxSdControlDetailOrderList .sapMSLIInfo {
+    font-size: 0.68rem !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+}
+
+.nxSdControlDetailOrderList .sapMSLIDescription {
+    font-size: 0.72rem !important;
+}
+
+/* 납기 임박 · 지연 오더 (여신·납기 카드 하단) */
+.nxSdControlDeadline {
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid #ECECF2;
+    gap: 0.55rem;
+}
+
+.nxSdControlDeadlineHead {
+    margin-bottom: 0.1rem;
+}
+
+.nxSdControlDeadlineTitle, .nxSdControlDeadlineTitle .sapMTitle {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #2A2D3A !important;
+}
+
+.nxSdControlDeadlineSub, .nxSdControlDeadlineSub .sapMText {
+    font-size: 0.7rem !important;
+    color: #8B8FA3 !important;
+}
+
+.nxSdControlDeadlinePills { gap: 0.35rem; flex-shrink: 0; }
+.nxSdControlDeadlinePills.sapMFlexBox { display: flex !important; }
+
+.nxSdControlDeadlineEmpty, .nxSdControlDeadlineEmpty .sapMText {
+    font-size: 0.74rem !important;
+    color: #9A9EB0 !important;
+    padding: 0.5rem 0;
+}
+
+/* 6건 분량만 보이고 나머지는 스크롤/드래그로 */
+.nxSdControlDeadlineScroll {
+    max-height: 19.5rem;
+}
+
+.nxSdControlDeadlineScroll > .sapMScrollCont,
+.nxSdControlDeadlineScroll .sapMScrollContScroll {
+    max-height: 19.5rem;
+}
+
+.nxSdControlDeadlineList .sapMListUl { background: transparent !important; }
+.nxSdControlDeadlineList .sapMLIB {
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+}
+
+.nxSdControlDeadlineItem {
+    padding: 0.4rem 0.6rem !important;
+    margin-bottom: 0.4rem;
+    border-radius: 0.6rem;
+    background: #F7F7FB;
+    border-left: 3px solid #C8CAD6;
+    box-sizing: border-box;
+}
+
+.nxSdControlDeadlineItem--overdue {
+    background: #FDF1F1;
+    border-left-color: #E5484D;
+}
+
+.nxSdControlDeadlineItem--urgent {
+    background: #FFF7EC;
+    border-left-color: #F5A623;
+}
+
+.nxSdControlDeadlineRow { gap: 0.6rem; }
+.nxSdControlDeadlineLeft { gap: 0.6rem; min-width: 0; flex: 1 1 auto; }
+
+.nxSdControlDeadlineDday, .nxSdControlDeadlineDday .sapMText {
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    min-width: 3.6rem;
+    text-align: center;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+.nxSdControlDeadlineDday--overdue, .nxSdControlDeadlineDday--overdue .sapMText {
+    background: #E5484D !important;
+    color: #FFFFFF !important;
+}
+
+.nxSdControlDeadlineDday--urgent, .nxSdControlDeadlineDday--urgent .sapMText {
+    background: #F5A623 !important;
+    color: #FFFFFF !important;
+}
+
+.nxSdControlDeadlineDday--normal, .nxSdControlDeadlineDday--normal .sapMText {
+    background: #E7E8F0 !important;
+    color: #5A5E70 !important;
+}
+
+.nxSdControlDeadlineMain { min-width: 0; }
+
+.nxSdControlDeadlineCustomer, .nxSdControlDeadlineCustomer .sapMText {
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    color: #2A2D3A !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nxSdControlDeadlineMeta, .nxSdControlDeadlineMeta .sapMText {
+    font-size: 0.68rem !important;
+    color: #8B8FA3 !important;
+}
+
+.nxSdControlDeadlineAmount, .nxSdControlDeadlineAmount .sapMText {
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    color: #2A2D3A !important;
+    flex-shrink: 0;
+}
+
+/* ── 가로 납기 타임-버킷 보드 (오늘 기준선) ── */
+.nxSdDlBoardScroll { width: 100%; }
+.nxSdDlBoardScroll > .sapMScrollCont,
+.nxSdDlBoardScroll .sapMScrollContScroll { width: 100%; }
+
+.nxSdDlBoard.sapMFlexBox {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 0.85rem;
+    width: 100% !important;
+    align-items: stretch !important;
+    padding-bottom: 0.3rem;
+}
+
+/* 오늘 / D-1~3 / 이후 3등분 (동일 너비, 가로 스크롤 없음) */
+.nxSdDlCol {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    border-radius: 0.7rem;
+    background: #FAFAFD;
+    border: 1px solid #ECECF2;
+    padding: 0.5rem 0.5rem 0.3rem;
+    gap: 0.4rem;
+}
+
+/* 오늘 = 기준선 강조 */
+.nxSdDlCol[data-tone="today"] {
+    background: #F1ECFF;
+    border-color: #C9B8FF;
+    box-shadow: inset 3px 0 0 0 #7C3AED;
+}
+
+.nxSdDlColHead {
+    padding: 0.1rem 0.15rem 0.35rem;
+    border-bottom: 1px solid #ECECF2;
+}
+
+.nxSdDlColLabel, .nxSdDlColLabel .sapMText {
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    color: #5A5E70 !important;
+}
+
+.nxSdDlColCount, .nxSdDlColCount .sapMText {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    color: #FFFFFF !important;
+    background: #B6B9C6;
+    border-radius: 999px;
+    padding: 0.05rem 0.4rem;
+}
+
+.nxSdDlCol[data-tone="overdue"] .nxSdDlColLabel .sapMText { color: #E5484D !important; }
+.nxSdDlCol[data-tone="overdue"] .nxSdDlColCount { background: #E5484D !important; }
+.nxSdDlCol[data-tone="today"] .nxSdDlColLabel .sapMText { color: #7C3AED !important; }
+.nxSdDlCol[data-tone="today"] .nxSdDlColCount { background: #7C3AED !important; }
+.nxSdDlCol[data-tone="urgent"] .nxSdDlColLabel .sapMText { color: #D9821B !important; }
+.nxSdDlCol[data-tone="urgent"] .nxSdDlColCount { background: #F5A623 !important; }
+
+.nxSdDlColScroll { width: 100%; max-height: 16.5rem; }
+.nxSdDlColScroll > .sapMScrollCont,
+.nxSdDlColScroll .sapMScrollContScroll { max-height: 16.5rem; }
+
+/* 모든 컬럼(오늘 / D-1~3 / 이후) 2x2(가로 2열 x 세로 2행) 배치 */
+.nxSdDlColList {
+    padding-top: 0.35rem;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.4rem;
+    align-content: flex-start;
+}
+
+.nxSdDlChip {
+    flex: 1 1 calc(50% - 0.2rem);
+    width: auto;
+    min-width: 0;
+    box-sizing: border-box;
+    gap: 0.15rem;
+    margin-bottom: 0 !important;
+}
+
+/* "+N개 더보기" 버튼 */
+.nxSdDlMoreBtn {
+    margin-top: 0.4rem;
+}
+
+.nxSdDlMoreBtn .sapMBtnInner {
+    background: #FFFFFF !important;
+    border: 1px dashed #C8CAD6 !important;
+    border-radius: 0.6rem !important;
+    box-shadow: none !important;
+}
+
+.nxSdDlMoreBtn .sapMBtnContent,
+.nxSdDlMoreBtn .sapMBtnContent .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #5A5E70 !important;
+}
+
+/* 더보기 팝오버 칩: 항상 세로 단일열 */
+.nxSdDlMorePopover .nxSdDlChip--pop {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    margin-bottom: 0.4rem !important;
+}
+
+.nxSdDlChip .nxSdControlDeadlineDday {
+    min-width: 0 !important;
+    padding: 0.12rem 0.4rem;
+    font-size: 0.68rem !important;
+    border-radius: 999px;
+}
+
+/* 칩 색상 (data-urgency 기반) */
+.nxSdDlChip[data-urgency="overdue"] {
+    background: #FDF1F1 !important;
+    border-left-color: #E5484D !important;
+}
+.nxSdDlChip[data-urgency="urgent"] {
+    background: #FFF7EC !important;
+    border-left-color: #F5A623 !important;
+}
+.nxSdDlChip[data-urgency="normal"] {
+    background: #F7F7FB !important;
+    border-left-color: #C8CAD6 !important;
+}
+
+.nxSdDlChip[data-urgency="overdue"] .nxSdControlDeadlineDday {
+    background: #E5484D !important;
+    color: #FFFFFF !important;
+}
+.nxSdDlChip[data-urgency="urgent"] .nxSdControlDeadlineDday {
+    background: #F5A623 !important;
+    color: #FFFFFF !important;
+}
+.nxSdDlChip[data-urgency="normal"] .nxSdControlDeadlineDday {
+    background: #E7E8F0 !important;
+    color: #5A5E70 !important;
+}
+
+.nxSdDlChipAmt, .nxSdDlChipAmt .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #2A2D3A !important;
+    flex-shrink: 0;
+}
+
+.nxSdDlChipCust, .nxSdDlChipCust .sapMText {
+    font-size: 0.74rem !important;
+    font-weight: 600 !important;
+    color: #2A2D3A !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nxSdDlChipMeta, .nxSdDlChipMeta .sapMText {
+    font-size: 0.66rem !important;
+    color: #8B8FA3 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── 처리 가이드 패널 ── */
+.nxSdGuide {
+    margin-top: 0.9rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid #ECECF2;
+    gap: 0.6rem;
+}
+
+.nxSdGuideTitle, .nxSdGuideTitle .sapMTitle {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #2A2D3A !important;
+}
+
+.nxSdGuideSub, .nxSdGuideSub .sapMText {
+    font-size: 0.7rem !important;
+    color: #8B8FA3 !important;
+}
+
+.nxSdGuideRow.sapMFlexBox {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.75rem;
+}
+
+.nxSdGuideCard {
+    flex: 1 1 0;
+    min-width: 0;
+    box-sizing: border-box;
+    border-radius: 0.75rem;
+    background: #FAFAFD;
+    border: 1px solid #ECECF2;
+    border-left-width: 3px;
+    padding: 0.7rem 0.8rem;
+    gap: 0.55rem;
+}
+
+.nxSdGuideCard--credit { border-left-color: #E5484D; }
+.nxSdGuideCard--delivery { border-left-color: #F5A623; }
+
+.nxSdGuideCardHead { gap: 0.55rem; }
+
+.nxSdGuideIcon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    padding: 0.45rem;
+    box-sizing: border-box;
+}
+
+.nxSdGuideIcon--credit { color: #E5484D !important; background: #FDF1F1; }
+.nxSdGuideIcon--delivery { color: #D9821B !important; background: #FFF7EC; }
+
+.nxSdGuideCardTitle, .nxSdGuideCardTitle .sapMText {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #2A2D3A !important;
+}
+
+.nxSdGuideCardTag, .nxSdGuideCardTag .sapMText {
+    font-size: 0.62rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em;
+    color: #9A9EB0 !important;
+}
+
+.nxSdGuideSteps { gap: 0.25rem; }
+
+.nxSdGuideStep, .nxSdGuideStep .sapMText {
+    font-size: 0.73rem !important;
+    color: #5A5E70 !important;
+    line-height: 1.45 !important;
+}
+
+.nxSdGuideBtn { margin-top: 0.15rem; align-self: flex-start; }
+.nxSdGuideBtn .sapMBtnInner {
+    border-radius: 0.6rem !important;
+}
+
+@media (max-width: 1100px) {
+    .nxSdMain--tripleCol .nxSdMainTripleRow { flex-wrap: wrap; }
+    .nxSdMain--tripleCol .nxSdMainTripleRow > .sapMFlexItem {
+        flex: 1 1 100% !important;
+        min-height: 12rem;
+    }
+}
+
+/* SD triple column — equal panels fill viewport */
+.nxSdMain--tripleCol .nxSdMainTripleRow.sapMFlexBox {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.nxSdMain--tripleCol .nxSdMainTripleRow > .sapMFlexItem {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    align-self: stretch !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+}
+
+.nxSdMain--tripleCol .nxSdMainTripleRow > .sapMFlexItem > .sapMFlexBox {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+}
+
+.nxSdMainSection--control > .sapUiView,
+.nxSdMainSection--bestseller > .sapUiView,
+.nxSdMainSection--rma > .sapUiView {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: block !important;
+}
+
+.nxSdDashCard--control,
+.nxSdDashCard--bestseller,
+.nxSdDashCard--rma {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+}
+
+.nxSdDashListFill.sapMList,
+.nxSdDashListFill .sapMListUl,
+.nxSdDashListFill .sapMLIB,
+.nxSdDashListFill .sapMLIBContent {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.nxSdDashListFill.sapMList {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.nxSdDashListFill .sapMLIBContent {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.nxSdDashProductMain {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    width: 100% !important;
+}
+
+.nxSdDashProductRowInner.sapMFlexBox {
+    gap: 0.4rem;
+}
+
+.nxSdDashProductRowInner > .nxSdDashPill {
+    flex-shrink: 0;
+}
+
+.nxSdTopBpList .sapMListUl,
+.nxSdDashCard--rma .nxSdDashListFill .sapMListUl {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.nxSdTopBpList .sapMLIB,
+.nxSdDashCard--rma .nxSdDashListFill .sapMLIB {
+    flex: 1 1 0 !important;
+    min-height: 2.35rem !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nxSdTopBpList .sapMLIBContent,
+.nxSdDashCard--rma .nxSdDashListFill .sapMLIBContent {
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+}
+
+.nxSdDashCard--control .nxSdControlContent {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+}
+
+.nxSdDashCard--control .nxSdControlTable.sapMTable {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+}
+
+.nxSdDashCard--control .nxSdControlTable .sapMListTblParent {
+    max-height: 100% !important;
+    overflow-y: auto !important;
+}
+
+.nxSdDashCard--control .sapMListTbl,
+.nxSdDashCard--control .sapMListTblHeader,
+.nxSdDashCard--control .sapMListTblBody {
+    width: 100% !important;
+}
+
+.nxSdRaceBarTrack--compact {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* ══ SD Overview dashboard layout (HBox 50/25/25, flex only) ══ */
+.nxDashboardCanvasRoot {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.nxDashboardCanvasRoot > .nxSdMainScroll.nxModuleOverviewFill {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+}
+
+.nxMain > .nxModuleShellSlot ~ .sapUiView {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+}
+
+.nxSdMainScroll.nxModuleOverviewScroll,
+.nxSdMainScroll.nxModuleOverviewScroll > .sapMScrollCont,
+.nxSdMainScroll.nxModuleOverviewScroll .sapMScrollContScroll {
+    height: 100% !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+}
+
+.nxSdMainScroll > .sapUiView {
+    height: 100% !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+/* Root shell: KPI + body */
+.sapMFlexBox.nxSdMain.nxSdMain--dashboard {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.65rem !important;
+    height: 100% !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    padding: 0.5rem 0.75rem 0.65rem !important;
+}
+
+.sapMFlexBox.nxSdMain.nxSdMain--dashboard > .sapMFlexItem:first-child {
+    flex: 0 0 7.25rem !important;
+    height: 7.25rem !important;
+    min-height: 7.25rem !important;
+    max-height: 7.25rem !important;
+    width: 100% !important;
+}
+
+.sapMFlexBox.nxSdMain.nxSdMain--dashboard > .sapMFlexItem:first-child > .sapMFlexBox {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.sapMFlexBox.nxSdMain.nxSdMain--dashboard > .sapMFlexItem:nth-child(2) {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    overflow: hidden !important;
+}
+
+/* SD dashboard — KPI (7.25rem fixed) */
+.nxSdMain--dashboard .nxSdMainSection--kpi {
+    flex: 0 0 7.25rem !important;
+    height: 7.25rem !important;
+    min-height: 7.25rem !important;
+    max-height: 7.25rem !important;
+    width: 100% !important;
+    overflow: visible !important;
+}
+
+.nxSdMain--dashboard .nxSdMainSection--kpi > .sapUiView {
+    display: block !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    overflow: visible !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiRow.sapMFlexBox {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    gap: 1.25rem !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiRow > .sapMFlexItem {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    align-self: stretch !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiCard.sapMFlexBox {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+    padding: 0.7rem 1.25rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    gap: 0.25rem !important;
+    overflow: visible !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiCard > .sapMFlexItem {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    width: 100% !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiTopRow {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiBottom {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiIconWrap {
+    width: 3.3rem !important;
+    height: 3.3rem !important;
+    flex-shrink: 0 !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiIconWrap .sapUiIcon {
+    font-size: 2rem !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiLabel,
+.nxSdMain--dashboard .nxSdDashKpiLabel .sapMText {
+    font-size: 1.05rem !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiLabel,
+.nxSdMain--dashboard .nxSdDashKpiLabel .sapMText,
+.nxSdMain--dashboard .nxSdDashKpiValue,
+.nxSdMain--dashboard .nxSdDashKpiValue .sapMText,
+.nxSdMain--dashboard .nxSdDashKpiFootnote,
+.nxSdMain--dashboard .nxSdDashKpiFootnote .sapMText {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiValue,
+.nxSdMain--dashboard .nxSdDashKpiValue .sapMText {
+    font-size: 1.25rem !important;
+    line-height: 1.15 !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiValueRow {
+    gap: 0.35rem !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+}
+
+.nxSdMain--dashboard .nxSdDashKpiFootnote,
+.nxSdMain--dashboard .nxSdDashKpiFootnote .sapMText {
+    line-height: 1.2 !important;
+}
+
+/* Body row: 좌측 스택(상하분할) + 우측 반품(전체 높이) */
+.sapMFlexBox.nxSdMainBodyRow,
+.nxSdMain--dashboard .nxSdMainBodyRow.sapMFlexBox {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 1.25rem !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
+}
+
+/* 좌측 영역 = 누적구매량/여신납기 + 납기임박/처리가이드 */
+.nxSdMainLeftStack.sapMFlexBox {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.1rem !important;
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+}
+
+/* 우측 반품 = 전체 높이 */
+.nxSdMainRmaColumn.sapMFlexBox {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 0 0 25% !important;
+    width: 25% !important;
+    max-width: 25% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+/* 좌측 상단: 누적구매량 | 여신·납기 테이블 */
+.nxSdMainTopRow.sapMFlexBox {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 1.1rem !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
+}
+
+/* 좌측 하단: 납기 임박 보드 | 처리 가이드 */
+.nxSdMainBottomRow.sapMFlexBox {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 1.1rem !important;
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    align-items: stretch !important;
+}
+
+.nxSdMainBestsellerColumn.sapMFlexBox {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+.nxSdMainControlColumn.sapMFlexBox {
+    flex: 2 1 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+/* 처리 가이드 삭제 → 납기 임박 보드가 하단 행 전체 폭 사용 */
+.nxSdMainBottomRow > .nxSdBottomCard--deadline { flex: 1 1 0 !important; width: 100% !important; min-width: 0 !important; }
+
+.nxSdMainControlColumn > .sapUiView,
+.nxSdMainBestsellerColumn > .sapUiView,
+.nxSdMainRmaColumn > .sapUiView {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.nxSdMainTopRow .nxSdDashCard {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* 하단 카드 (납기임박 / 처리가이드) */
+.nxSdBottomCard {
+    box-sizing: border-box !important;
+    background: #FFFFFF;
+    border: 1px solid #ECECF2;
+    border-radius: 0.9rem;
+    padding: 0.85rem 0.95rem;
+    gap: 0.55rem;
+    overflow: hidden;
+}
+
+.nxSdBottomCard.sapMFlexBox {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Card shell + scrollable body */
+.nxSdMain--dashboard .nxSdDashCard.sapMFlexBox {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+.nxSdMain--dashboard .nxSdDashCardHead,
+.nxSdMain--dashboard .nxSdDashFunnel,
+.nxSdMain--dashboard .nxSdDashMessage {
+    flex-shrink: 0 !important;
+}
+
+.nxSdMain--dashboard .nxSdDashCardBody:not(.nxSdDashCardBody--table) {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: auto !important;
+}
+
+.nxSdMain--dashboard .nxSdDashCardBody--list {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: auto !important;
+}
+
+.nxSdMain--dashboard .nxSdDashCard--control .nxSdDashCardBody--table {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+}
+
+.nxSdMain--dashboard .nxSdDashCard--control .nxSdControlTable {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+}
+
+/* 여신·납기 카드 — 상단 행에서 전체 높이로 채움 */
+.nxSdMain--dashboard .nxSdMainControlColumn > .sapUiView {
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+.nxSdMain--dashboard .nxSdDashCard--control.nxSdDashCard {
+    height: 100% !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+    overflow: hidden !important;
+}
+
+.nxSdMain--dashboard .nxSdDashCard--control .nxSdControlTable.sapMTable {
+    flex: 0 0 auto !important;
+    height: auto !important;
+}
+
+.nxSdMain--dashboard .nxSdControlTable .sapMListTblCell {
+    vertical-align: middle !important;
+    padding: 0.65rem 0.5rem !important;
+    min-height: 3rem !important;
+}
+
+.nxSdMain--dashboard .nxSdControlTable .sapMText,
+.nxSdMain--dashboard .nxSdControlTable .sapMLnk,
+.nxSdMain--dashboard .nxSdControlTable .sapMObjStatusText {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.nxSdMain--dashboard .nxSdControlTable .sapMObjStatus,
+.nxSdMain--dashboard .nxSdControlTable .nxSdControlStatus {
+    white-space: nowrap !important;
+    overflow: visible !important;
+}
+
+.nxSdMain--dashboard .nxSdControlTable .nxSdControlStatus .sapMObjStatusText {
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+
+.nxSdMain--dashboard .nxSdControlTable .sapMLIBFocusable:focus {
+    outline: none !important;
+}
+
+.nxSdMain--dashboard .nxSdControlTable .sapMLIB,
+.nxSdMain--dashboard .nxSdControlTable .sapMListTblRow {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.nxSdMain--dashboard .nxSdControlTable .sapMLIBSelected,
+.nxSdMain--dashboard .nxSdControlTable .sapMLIBSelected .sapMListTblCell,
+.nxSdMain--dashboard .nxSdControlTable .sapMListTblRow.sapMLIBSelected,
+.nxSdMain--dashboard .nxSdControlTable .sapMListTblRow.sapMLIBSelected .sapMListTblCell {
+    background: #F0F7FF !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.nxSdMain--dashboard .nxSdDashListFill.sapMList {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.nxSdMain--dashboard .nxSdDashListFill .sapMListUl,
+.nxSdMain--dashboard .nxSdDashListFill .sapMLIB,
+.nxSdMain--dashboard .nxSdDashListFill .sapMLIBContent {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.sapMFlexBox.nxSdMain.nxSdMain--dashboard > .sapMFlexItem:nth-child(2) > .sapMFlexBox {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+.sapMFlexBox.nxSdMain.nxSdMain--dashboard > .sapMFlexItem:nth-child(2) > .sapMFlexBox.nxSdMainBodyRow {
+    height: 100% !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+}
+
+@media (max-width: 1100px) {
+    .nxSdMainBodyRow.sapMFlexBox {
+        flex-wrap: wrap !important;
+        overflow-y: auto !important;
+    }
+
+    .nxSdMainLeftStack.sapMFlexBox,
+    .nxSdMainRmaColumn.sapMFlexBox {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 16rem !important;
+    }
+}
+
+@media (max-width: 720px) {
+    .nxSdMainTopRow.sapMFlexBox,
+    .nxSdMainBottomRow.sapMFlexBox,
+    .nxSdGuideRow.sapMFlexBox {
+        flex-wrap: wrap !important;
+    }
+
+    .nxSdMainTopRow > .nxSdMainBestsellerColumn,
+    .nxSdMainTopRow > .nxSdMainControlColumn,
+    .nxSdMainBottomRow > .nxSdBottomCard {
+        flex: 1 1 100% !important;
+        min-width: 0 !important;
+        min-height: 14rem !important;
+    }
+}
+
+.nxSdMain--dashboard .nxSdRmaList.sapMList {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.nxSdMain--dashboard .nxSdRmaList .sapMLIB {
+    min-height: 4.25rem !important;
+    align-items: center !important;
+}
+
+.nxSdMain--dashboard .nxSdRmaList .sapMLIBContent {
+    padding-top: 0.55rem !important;
+    padding-bottom: 0.55rem !important;
+    min-height: 4.25rem !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nxSdMain--dashboard .nxSdRmaList .nxSdDashProductRowInner {
+    min-height: 3.15rem !important;
+}
+
+.nxSdMain--dashboard .nxSdDashCard--rma .sapMGrowingList,
+.nxSdMain--dashboard .nxSdDashCard--rma .sapMGrowingListTrigger,
+.nxSdMain--dashboard .nxSdDashCard--rma .sapMListGrowing {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+}
+
+/* ============================================================
+   PP module — PpMain (SaaS 공정 관제 대시보드 리디자인)
+   ============================================================ */
+/* ScrollContainer 높이 체인: 타임라인이 화면 하단까지 채워지도록 */
+.nxPpOverviewScroll,
+.nxPpOverviewScroll > .sapMScrollCont,
+.nxPpOverviewScroll .sapMScrollContScroll {
+    height: 100% !important;
+    min-height: 0 !important;
+    width: 100% !important;
+}
+
+.nxPpOverviewScroll > .sapMScrollCont > .sapMScrollContScroll > .sapUiView {
+    height: 100% !important;
+}
+
+.nxPpMain {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: #f4f6fb;
+    box-sizing: border-box;
+}
+
+/* ---- 상단 바 : 탭(좌) + 오더 검색/안내(우) ---- */
+.nxPpTopBar {
+    width: 100%;
+    box-sizing: border-box;
+    gap: 1rem;
+    padding: 0.65rem 1.25rem;
+    background: #ffffff;
+    border-bottom: 1px solid #e6e9f2;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+}
+
+/* 컴팩트 탭 헤더 (IconTabHeader) — 내용 너비에 맞춰 좌측 정렬 */
+.nxPpTabHeader.sapMITH {
+    flex: 0 0 auto;
+    width: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.nxPpTabHeader .sapMITBHead {
+    padding: 0 !important;
+    display: inline-flex !important;
+    width: auto !important;
+}
+
+.nxPpTabHeader .sapMITBItem {
+    margin: 0 0.15rem !important;
+}
+
+.nxPpTabHeader .sapMITBFiller {
+    display: none !important;
+}
+
+.nxPpTopControls {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.nxPpTabContent {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem 1.25rem;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+/* 파이프라인 카드는 콘텐츠 높이, 타임라인 카드는 남은 높이를 채움 */
+.nxPpPipelineCard {
+    flex: 0 0 auto;
+}
+
+.nxPpTimelineCard {
+    flex: 1 1 auto;
+    min-height: 18rem;
+}
+
+.nxPpShortageCard {
+    flex: 1 1 auto;
+    min-height: 22rem;
+}
+
+/* ---- 공통 카드 ---- */
+.nxPpCard {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e6e9f2;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+    padding: 1.15rem 1.35rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.nxPpCardHeader {
+    width: 100%;
+}
+
+.nxPpCardHeaderLeft {
+    gap: 0.6rem;
+}
+
+.nxPpCardHeaderIcon {
+    color: #2563eb;
+    font-size: 1.1rem;
+}
+
+.nxPpCardHeaderIcon--warn {
+    color: #ea580c;
+}
+
+.nxPpCardTitle,
+.nxPpCardTitle .sapMTitle {
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.nxPpCardHeaderHint,
+.nxPpCardHeaderHint .sapMText {
+    font-size: 0.78rem !important;
+    color: #94a3b8 !important;
+}
+
+/* ---- 오더 검색(인라인 단일 필드) ---- */
+.nxPpTopControls .nxPpFieldLabel {
+    flex: 0 0 auto;
+}
+
+.nxPpOrderDirect {
+    flex: 0 0 auto;
+    width: 18rem;
+}
+
+/* ---- 파이프라인 카드 헤더 우측: 진행률 + 위험 알림 칩 ---- */
+.nxPpPipelineHeaderRight {
+    gap: 1.1rem;
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.nxPpHeaderAlert {
+    gap: 0.6rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 12px;
+    border: 1px solid #e6e9f2;
+    background: #f8fafc;
+    max-width: 26rem;
+    min-width: 0;
+}
+
+.nxPpHeaderAlert--danger {
+    background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+    border-color: #fbd5d5;
+}
+
+.nxPpHeaderAlert--warning {
+    background: linear-gradient(135deg, #fffaf3 0%, #fff7ed 100%);
+    border-color: #fde3c4;
+}
+
+.nxPpHeaderAlert--ok {
+    background: linear-gradient(135deg, #f3fbf6 0%, #ecfdf3 100%);
+    border-color: #c6ecd3;
+}
+
+.nxPpHeaderAlert--none {
+    background: #f8fafc;
+    border-color: #e6e9f2;
+}
+
+.nxPpHeaderAlertIconWrap {
+    flex: 0 0 auto;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 9px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.nxPpHeaderAlertIcon {
+    font-size: 1.05rem;
+}
+
+.nxPpHeaderAlert--danger .nxPpHeaderAlertIcon {
+    color: #dc2626;
+}
+
+.nxPpHeaderAlert--warning .nxPpHeaderAlertIcon {
+    color: #ea580c;
+}
+
+.nxPpHeaderAlert--ok .nxPpHeaderAlertIcon {
+    color: #16a34a;
+}
+
+.nxPpHeaderAlert--none .nxPpHeaderAlertIcon {
+    color: #64748b;
+}
+
+.nxPpHeaderAlertTexts {
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.nxPpHeaderAlertTitle,
+.nxPpHeaderAlertTitle .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.nxPpHeaderAlertGuide,
+.nxPpHeaderAlertGuide .sapMText {
+    font-size: 0.74rem !important;
+    color: #475569 !important;
+}
+
+/* ---- 상단 컨트롤 카드 (검색 + 알림) : 컴팩트 ---- */
+.nxPpTopControls .nxPpCard {
+    padding: 0.55rem 0.85rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+    gap: 0.3rem;
+    justify-content: center;
+}
+
+.nxPpSearchCard {
+    flex: 0 1 19rem;
+    min-width: 14rem;
+}
+
+.nxPpFieldLabel,
+.nxPpFieldLabel .sapMLabel {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+}
+
+.nxPpOrderSearch {
+    width: 100%;
+}
+
+/* ---- 위험 알림 카드 ---- */
+.nxPpAlertCard {
+    flex: 1 1 17rem;
+    min-width: 15rem;
+    gap: 0.5rem;
+    justify-content: center;
+    border: 1px solid #e6e9f2;
+}
+
+.nxPpAlertCard--danger {
+    background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+    border-color: #fbd5d5;
+}
+
+.nxPpAlertCard--warning {
+    background: linear-gradient(135deg, #fffaf3 0%, #fff7ed 100%);
+    border-color: #fde3c4;
+}
+
+.nxPpAlertCard--ok {
+    background: linear-gradient(135deg, #f3fbf6 0%, #ecfdf3 100%);
+    border-color: #c6ecd3;
+}
+
+.nxPpAlertCard--none {
+    background: #f8fafc;
+    border-color: #e6e9f2;
+}
+
+.nxPpAlertTop {
+    gap: 0.65rem;
+    width: 100%;
+}
+
+.nxPpAlertIconWrap {
+    flex: 0 0 auto;
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.nxPpAlertIcon {
+    font-size: 1.15rem;
+}
+
+.nxPpAlertCard--danger .nxPpAlertIcon {
+    color: #dc2626;
+}
+
+.nxPpAlertCard--warning .nxPpAlertIcon {
+    color: #ea580c;
+}
+
+.nxPpAlertCard--ok .nxPpAlertIcon {
+    color: #16a34a;
+}
+
+.nxPpAlertCard--none .nxPpAlertIcon {
+    color: #64748b;
+}
+
+.nxPpAlertTexts {
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.nxPpAlertTitle,
+.nxPpAlertTitle .sapMText {
+    font-size: 0.92rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.nxPpAlertGuideRow {
+    gap: 0.3rem;
+}
+
+.nxPpAlertGuideArrow {
+    font-size: 0.65rem;
+    color: #94a3b8;
+}
+
+.nxPpAlertGuide,
+.nxPpAlertGuide .sapMText {
+    font-size: 0.78rem !important;
+    color: #475569 !important;
+}
+
+/* ---- 실시간 E2E 파이프라인 스텝퍼 ---- */
+.nxPpStepRow {
+    position: relative;
+    width: 100%;
+    padding: 1.5rem 0 0.6rem;
+}
+
+.nxPpStep {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 0.4rem;
+    text-align: center;
+}
+
+/* 스텝 영역: 라인(절대) + 노드 행(흐름)을 겹쳐 배치 */
+.nxPpStepArea {
+    position: relative;
+    width: 100%;
+}
+
+/* 회색 기본 라인: 첫 노드 중앙(10%) ~ 마지막 노드 중앙(90%) */
+.nxPpStepBaseLine {
+    position: absolute;
+    top: 3.95rem;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    z-index: 0;
+}
+
+/* 진행 라인(초록 fill): 완료 구간까지 차오르며 흐르는 효과 */
+.nxPpStepProgressLine {
+    position: absolute;
+    top: 3.95rem;
+    left: 10%;
+    height: 3px;
+    border-radius: 3px;
+    z-index: 0;
+    background: linear-gradient(90deg, #22c55e 0%, #86efac 50%, #22c55e 100%);
+    background-size: 200% 100%;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.45);
+    animation: nxPpFlow 1.8s linear infinite;
+    transition: width 0.5s ease;
+}
+@keyframes nxPpFlow {
+    0%   { background-position: 200% 0; }
+    100% { background-position: 0 0; }
+}
+
+/* 부분 진행 라인(주황): 진행 라인보다 한 구간 더 뻗어 '진행중' 단계까지 표시.
+   초록 진행선(progress)이 DOM상 뒤에 와서 겹치는 앞부분을 덮는다. */
+.nxPpStepPartialLine {
+    position: absolute;
+    top: 3.95rem;
+    left: 10%;
+    height: 3px;
+    border-radius: 3px;
+    z-index: 0;
+    background: linear-gradient(90deg, #fb923c 0%, #fdba74 50%, #fb923c 100%);
+    background-size: 200% 100%;
+    box-shadow: 0 0 6px rgba(234, 88, 12, 0.4);
+    animation: nxPpFlow 1.8s linear infinite;
+    transition: width 0.5s ease;
+}
+
+.nxPpStepIconWrap {
+    position: relative;
+    z-index: 1;
+    width: 4.9rem;
+    height: 4.9rem;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    transition: transform 0.15s ease;
+}
+
+.nxPpStepIcon {
+    font-size: 1.95rem;
+    color: #94a3b8;
+}
+
+.nxPpStepLabel,
+.nxPpStepLabel .sapMText {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+}
+
+.nxPpStepSub,
+.nxPpStepSub .sapMText {
+    font-size: 0.98rem !important;
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+    letter-spacing: 0.02em;
+}
+
+/* 단계별 상태 텍스트(완료/경고/병목/대기 모두 표시) */
+.nxPpStepStatus {
+    margin-top: 0.15rem;
+    max-width: 100%;
+}
+.nxPpStepStatus,
+.nxPpStepStatus .sapMText {
+    display: inline-block;
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    border-radius: 999px;
+    padding: 0.18rem 0.7rem;
+    text-align: center;
+    word-break: keep-all;
+}
+.nxPpStepStatus--done,
+.nxPpStepStatus--done .sapMText {
+    color: #15803d !important;
+    background: #ecfdf3;
+}
+.nxPpStepStatus--warning,
+.nxPpStepStatus--warning .sapMText {
+    color: #c2410c !important;
+    background: #fff7ed;
+}
+.nxPpStepStatus--bottleneck,
+.nxPpStepStatus--bottleneck .sapMText {
+    color: #dc2626 !important;
+    background: #fef2f2;
+}
+.nxPpStepStatus--pending,
+.nxPpStepStatus--pending .sapMText {
+    color: #94a3b8 !important;
+    background: #f1f5f9;
+}
+
+/* 상태별 스텝 */
+.nxPpStep--done .nxPpStepIconWrap {
+    background: #ecfdf3;
+    border-color: #22c55e;
+}
+.nxPpStep--done .nxPpStepIcon {
+    color: #16a34a;
+}
+
+.nxPpStep--bottleneck .nxPpStepIconWrap {
+    background: #fef2f2;
+    border-color: #ef4444;
+    transform: scale(1.06);
+    box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.12);
+}
+.nxPpStep--bottleneck .nxPpStepIcon {
+    color: #dc2626;
+}
+.nxPpStep--bottleneck .nxPpStepLabel .sapMText {
+    color: #dc2626 !important;
+}
+
+.nxPpStep--warning .nxPpStepIconWrap {
+    background: #fff7ed;
+    border-color: #f97316;
+    box-shadow: 0 0 0 5px rgba(249, 115, 22, 0.12);
+}
+.nxPpStep--warning .nxPpStepIcon {
+    color: #ea580c;
+}
+
+.nxPpStep--pending .nxPpStepIconWrap {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+/* 완료 노드 체크 배지 */
+.nxPpStepCheck {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 1.6rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    font-size: 0.98rem !important;
+    color: #ffffff !important;
+    background: #22c55e;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18);
+    z-index: 2;
+}
+
+/* 현재 단계 강조(펄스) */
+.nxPpStep--current .nxPpStepIconWrap {
+    animation: nxPpPulse 1.8s ease-out infinite;
+}
+@keyframes nxPpPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.35); }
+    70%  { box-shadow: 0 0 0 9px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+.nxPpStep--current.nxPpStep--bottleneck .nxPpStepIconWrap {
+    animation-name: nxPpPulseDanger;
+}
+@keyframes nxPpPulseDanger {
+    0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    70%  { box-shadow: 0 0 0 9px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+.nxPpStep--current.nxPpStep--warning .nxPpStepIconWrap {
+    animation-name: nxPpPulseWarn;
+}
+@keyframes nxPpPulseWarn {
+    0%   { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
+    70%  { box-shadow: 0 0 0 9px rgba(249, 115, 22, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+}
+
+/* 파이프라인 진행률 게이지 (카드 헤더 우측) */
+.nxPpProgressWrap {
+    gap: 0.3rem;
+    min-width: 11rem;
+}
+.nxPpProgressLabel,
+.nxPpProgressLabel .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+}
+.nxPpProgressTrack {
+    width: 11rem;
+    max-width: 40vw;
+    height: 0.5rem;
+    background: #e9eef6;
+    border-radius: 999px;
+    overflow: hidden;
+}
+.nxPpProgressFill {
+    height: 100%;
+    min-width: 0.5rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #3b82f6 0%, #22c55e 100%);
+    box-shadow: 0 1px 4px rgba(34, 197, 94, 0.35);
+    transition: width 0.5s ease;
+}
+
+/* ---- 주간 공정 타임라인 (Production Plan 스타일) ---- */
+/* 헤더 컨트롤 */
+.nxPpTlControls {
+    gap: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.nxPpTlNav {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.1rem;
+    gap: 0.05rem;
+}
+
+.nxPpTlNavBtn.sapMBtn,
+.nxPpTlTodayBtn.sapMBtn {
+    margin: 0 !important;
+}
+
+.nxPpTlNavBtn .sapMBtnInner,
+.nxPpTlTodayBtn .sapMBtnInner {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    min-width: 1.9rem !important;
+    height: 1.9rem !important;
+}
+
+.nxPpTlNavBtn .sapMBtnInner:hover,
+.nxPpTlTodayBtn .sapMBtnInner:hover {
+    background: #ffffff !important;
+    border-radius: 8px !important;
+}
+
+.nxPpTlTodayBtn .sapMBtnContent {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #2563eb !important;
+}
+
+.nxPpTlNavBtn .sapMBtnIcon {
+    color: #475569 !important;
+    font-size: 0.85rem !important;
+}
+
+.nxPpTlScopeChip,
+.nxPpTlScopeChip .sapMText {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    color: #2563eb !important;
+    background: #eef4ff;
+    border: 1px solid #d7e3ff;
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+}
+
+.nxPpLegend {
+    gap: 0.85rem;
+}
+
+.nxPpLegendItem {
+    gap: 0.35rem;
+}
+
+.nxPpLegendDot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    flex: 0 0 auto;
+}
+
+.nxPpLegendDot--normal {
+    background: #60a5fa;
+}
+
+.nxPpLegendDot--delay {
+    background: #f87171;
+}
+
+.nxPpLegendText,
+.nxPpLegendText .sapMText {
+    font-size: 0.74rem !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+}
+
+/* 타임라인 본문 (카드 남은 높이 채움) */
+.nxPpTimelineBody {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: #fafbff;
+    border: 1px solid #eef2f9;
+    border-radius: 12px;
+    padding: 0.6rem 0.85rem 0.85rem;
+    box-sizing: border-box;
+}
+
+/* 변수: swimlane 라벨 폭 */
+.nxPpTimelineBody {
+    --nxPpLaneLabelW: 9.5rem;
+}
+
+.nxPpTlHeaderRow {
+    flex: 0 0 auto;
+    display: grid !important;
+    grid-template-columns: var(--nxPpLaneLabelW) repeat(7, 1fr);
+    align-items: end;
+    border-bottom: 1px solid #eef2f9;
+    padding-bottom: 0.45rem;
+    margin-bottom: 0.4rem;
+}
+
+.nxPpTlCorner {
+    grid-column: 1;
+    width: var(--nxPpLaneLabelW);
+}
+
+.nxPpTlDays {
+    grid-column: 2 / -1;
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr);
+    min-width: 0;
+}
+
+.nxPpTlDayCell {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    gap: 0.05rem;
+    margin: 0 0.15rem;
+    padding: 0.25rem 0;
+    border-radius: 10px;
+}
+
+.nxPpTlDayCell--weekend {
+    background: #f1f5f9;
+}
+
+.nxPpTlDayCell--today {
+    background: #e6f0ff;
+    border: 1px solid #93c5fd;
+}
+
+.nxPpTlDow,
+.nxPpTlDow .sapMText {
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+}
+
+.nxPpTlDayCell--today .nxPpTlDow .sapMText {
+    color: #2563eb !important;
+}
+
+.nxPpTlDom,
+.nxPpTlDom .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+}
+
+.nxPpTlDayCell--today .nxPpTlDom .sapMText {
+    color: #1d4ed8 !important;
+}
+
+/* swimlane 영역 + 세로 그리드 */
+.nxPpTlLanesWrap {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+}
+
+.nxPpTlLanesWrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--nxPpLaneLabelW);
+    right: 0;
+    background-image: repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent calc(14.2857% - 1px),
+        #e9eef7 calc(14.2857% - 1px),
+        #e9eef7 14.2857%
+    );
+    z-index: 0;
+    pointer-events: none;
+}
+
+.nxPpTlLanes {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.nxPpTlLane {
+    width: 100%;
+    min-height: 3rem;
+    border-bottom: 1px dashed #e5eaf3;
+}
+
+.nxPpTlLaneLabel {
+    flex: 0 0 var(--nxPpLaneLabelW);
+    width: var(--nxPpLaneLabelW);
+    box-sizing: border-box;
+    padding-right: 0.6rem;
+    gap: 0.05rem;
+}
+
+.nxPpTlLaneName,
+.nxPpTlLaneName .sapMText {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nxPpTlLaneSub,
+.nxPpTlLaneSub .sapMText {
+    font-size: 0.68rem !important;
+    color: #94a3b8 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nxPpTlLaneTrack {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+}
+
+.nxPpTlSpacer {
+    flex: 0 0 auto;
+    align-self: stretch;
+    min-width: 0;
+}
+
+.nxPpTlBar {
+    flex: 0 0 auto;
+    min-width: 4rem !important;
+    height: 2rem !important;
+    border-radius: 999px;
+    padding: 0 0.75rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    gap: 0.4rem;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18) !important;
+    /* 기본 색상(상태 클래스가 못 붙어도 항상 컬러 표시되도록 보장) */
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    border: 1px solid #1d4ed8 !important;
+}
+.nxPpTlBar .sapMText {
+    color: #ffffff !important;
+}
+
+/* 공정별 팔레트 색(정상 상태 공정을 Cut/Sew 등으로 구분) */
+.nxPpTlBar--p0 {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    border-color: #1d4ed8 !important;
+}
+.nxPpTlBar--p1 {
+    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+    border-color: #0f766e !important;
+}
+.nxPpTlBar--p2 {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+    border-color: #6d28d9 !important;
+}
+.nxPpTlBar--p3 {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    border-color: #b45309 !important;
+}
+.nxPpTlBar--p4 {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%) !important;
+    border-color: #be185d !important;
+}
+.nxPpTlBar--p5 {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+    border-color: #0e7490 !important;
+}
+
+.nxPpTlBarText,
+.nxPpTlBarText .sapMText {
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nxPpTlBarBadge,
+.nxPpTlBarBadge .sapMText {
+    font-size: 0.66rem !important;
+    font-weight: 800 !important;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    padding: 0.05rem 0.4rem;
+    background: rgba(255, 255, 255, 0.65);
+}
+
+.nxPpTlBar--normal {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+}
+.nxPpTlBar--normal .sapMText {
+    color: #ffffff !important;
+}
+
+.nxPpTlBar--done {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    border-color: #15803d !important;
+}
+.nxPpTlBar--done .sapMText {
+    color: #ffffff !important;
+}
+
+.nxPpTlBar--warn {
+    background: linear-gradient(135deg, #fb923c 0%, #f97316 100%) !important;
+    border-color: #ea580c !important;
+}
+.nxPpTlBar--warn .sapMText {
+    color: #ffffff !important;
+}
+
+.nxPpTlBar--delay {
+    background-color: #ef4444 !important;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(127, 29, 29, 0.35) 0,
+        rgba(127, 29, 29, 0.35) 6px,
+        transparent 6px,
+        transparent 12px
+    ) !important;
+    border: 1px solid #b91c1c !important;
+}
+.nxPpTlBar--delay .sapMText {
+    color: #ffffff !important;
+}
+.nxPpTlBar--delay .nxPpTlBarBadge {
+    background: #b91c1c;
+}
+.nxPpTlBar--delay .nxPpTlBarBadge .sapMText {
+    color: #ffffff !important;
+}
+
+/* Empty state */
+.nxPpTlEmpty {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    gap: 0.4rem;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.nxPpTlEmptyGhost {
+    position: absolute;
+    top: 0;
+    left: var(--nxPpLaneLabelW);
+    right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding-top: 1.2rem;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.nxPpTlGhostBar {
+    height: 1.6rem;
+    border-radius: 999px;
+    border: 1.5px dashed #d4def0;
+    background: rgba(226, 232, 240, 0.25);
+}
+
+.nxPpTlGhostBar--a { width: 38%; margin-left: 2%; }
+.nxPpTlGhostBar--b { width: 30%; margin-left: 30%; }
+.nxPpTlGhostBar--c { width: 46%; margin-left: 12%; }
+
+.nxPpTlEmptyIconWrap {
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 50%;
+    background: #eef2fb;
+    margin-bottom: 0.3rem;
+}
+
+.nxPpTlEmptyIcon {
+    font-size: 1.5rem;
+    color: #94a3b8;
+}
+
+.nxPpTlEmptyText,
+.nxPpTlEmptyText .sapMText {
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+}
+
+.nxPpTlEmptySub,
+.nxPpTlEmptySub .sapMText {
+    font-size: 0.78rem !important;
+    color: #94a3b8 !important;
+}
+
+/* 결품 테이블 empty state */
+.nxPpTableEmpty {
+    width: 100%;
+    padding: 2.5rem 1rem;
+    gap: 0.4rem;
+}
+
+/* ---- 결품 관제 데스크 (Excel 버튼) ---- */
+.nxPpExcelBtn .sapMBtnInner {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 10px !important;
+}
+.nxPpExcelBtn .sapMBtnInner:hover {
+    background: #f1f5f9 !important;
+}
+.nxPpExcelBtn .sapMBtnContent {
+    font-weight: 700 !important;
+    color: #16a34a !important;
+}
+.nxPpExcelBtn .sapMBtnIcon {
+    color: #16a34a !important;
+}
+
+/* ---- 결품 품목 필터 ---- */
+.nxPpShortageFilter {
+    gap: 0.55rem;
+    padding: 0.85rem 0.25rem 0.95rem;
+    border-bottom: 1px solid #eef2f8;
+    margin-bottom: 0.35rem;
+}
+
+.nxPpShortageFilterIcon {
+    color: #2563eb;
+    font-size: 1rem;
+}
+
+.nxPpShortageFilterLabel,
+.nxPpShortageFilterLabel .sapMLabel {
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    margin-right: 0.2rem;
+}
+
+.nxPpShortageFilterBox {
+    max-width: 100%;
+}
+
+.nxPpShortageFilterCount,
+.nxPpShortageFilterCount .sapMText {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #64748b !important;
+    margin-left: 0.35rem;
+}
+
+/* ---- 결품 테이블 ---- */
+.nxPpShortageTable {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.nxPpShortageTable .sapMListNoData {
+    min-height: 16rem;
+    border: none;
+}
+
+.nxPpShortageTable .sapMListTblHeader {
+    background: #f8fafc;
+}
+
+.nxPpShortageTable .sapMListTblHeaderCell {
+    border-bottom: 2px solid #e6e9f2 !important;
+}
+
+.nxPpShortageTable .sapMListTblHeaderCell .sapMText {
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+    color: #64748b !important;
+    text-transform: none;
+}
+
+.nxPpShortageTable .sapMListTblCell {
+    vertical-align: middle;
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.nxPpShortageTable .sapMLIB:hover {
+    background: #f8faff !important;
+}
+
+.nxPpCellStrong,
+.nxPpCellStrong .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+}
+
+.nxPpCellSub,
+.nxPpCellSub .sapMText {
+    font-size: 0.72rem !important;
+    color: #94a3b8 !important;
+}
+
+.nxPpCellNum,
+.nxPpCellNum .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+}
+
+.nxPpCellShort,
+.nxPpCellShort .sapMText {
+    color: #dc2626 !important;
+    font-weight: 800 !important;
+}
+
+/* ---- 상태 배지 ---- */
+.nxPpBadge,
+.nxPpBadge .sapMText {
+    display: inline-block;
+    font-size: 0.73rem !important;
+    font-weight: 700 !important;
+    border-radius: 999px;
+    padding: 0.22rem 0.7rem;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.nxPpBadge--po {
+    background: #fef2f2;
+    color: #dc2626 !important;
+    border: 1px solid #fbd5d5;
+}
+
+.nxPpBadge--transit {
+    background: #fff7ed;
+    color: #ea580c !important;
+    border: 1px solid #fde3c4;
+}
+
+.nxPpBadge--done {
+    background: #ecfdf3;
+    color: #16a34a !important;
+    border: 1px solid #c6ecd3;
+}
+
+/* ---- 반응형 ---- */
+@media (max-width: 1024px) {
+    .nxPpTopBar {
+        padding: 0.6rem 0.85rem;
+    }
+
+    .nxPpTopControls {
+        justify-content: flex-start;
+    }
+
+    .nxPpTabContent {
+        padding: 0.85rem;
+        gap: 0.85rem;
+    }
+
+    .nxPpSearchCard {
+        flex: 1 1 14rem;
+    }
+
+    .nxPpStepLabel .sapMText {
+        font-size: 1.05rem !important;
+    }
+
+    .nxPpStepIconWrap {
+        width: 4.2rem;
+        height: 4.2rem;
+    }
+
+    .nxPpStepBaseLine,
+    .nxPpStepPartialLine,
+    .nxPpStepProgressLine {
+        top: 3.6rem;
+    }
+}
+
+/* ============================================================
+   생산 시작 시기 예측 인사이트 바
+   ============================================================ */
+.nxPpInsightBar {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.85rem;
+    padding: 0.7rem 1rem;
+    gap: 1rem;
+    border-radius: 12px;
+    border: 1px solid #e6e9f2;
+    background: #f8fafc;
+}
+
+.nxPpInsightBar--ok {
+    background: linear-gradient(135deg, #f3fbf6 0%, #ecfdf3 100%);
+    border-color: #c6ecd3;
+}
+
+.nxPpInsightBar--warning {
+    background: linear-gradient(135deg, #fffaf3 0%, #fff7ed 100%);
+    border-color: #fde3c4;
+}
+
+.nxPpInsightBar--danger {
+    background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+    border-color: #fbd5d5;
+}
+
+.nxPpInsightHead {
+    gap: 0.45rem;
+    padding-right: 0.85rem;
+    border-right: 1px solid #e2e8f0;
+}
+
+.nxPpInsightHeadIcon {
+    color: #2563eb;
+    font-size: 1rem;
+}
+
+.nxPpInsightHeadText,
+.nxPpInsightHeadText .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.nxPpInsightItem {
+    gap: 0.1rem;
+}
+
+.nxPpInsightCap,
+.nxPpInsightCap .sapMText {
+    font-size: 0.72rem !important;
+    color: #94a3b8 !important;
+    font-weight: 600 !important;
+}
+
+.nxPpInsightVal,
+.nxPpInsightVal .sapMText {
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.nxPpInsightVal--ok,
+.nxPpInsightVal--ok .sapMText {
+    color: #16a34a !important;
+}
+
+.nxPpInsightVal--warning,
+.nxPpInsightVal--warning .sapMText {
+    color: #ea580c !important;
+}
+
+.nxPpInsightVal--danger,
+.nxPpInsightVal--danger .sapMText {
+    color: #dc2626 !important;
+}
+
+.nxPpInsightArrow {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+}
+
+.nxPpInsightItem--gap {
+    padding-left: 0.85rem;
+    border-left: 1px solid #e2e8f0;
+}
+
+.nxPpInsightBadge,
+.nxPpInsightBadge .sapMText {
+    margin-left: auto;
+    display: inline-block;
+    font-size: 0.75rem !important;
+    font-weight: 800 !important;
+    border-radius: 999px;
+    padding: 0.28rem 0.85rem;
+    white-space: nowrap;
+}
+
+.nxPpInsightBadge--ok {
+    background: #ecfdf3;
+    color: #16a34a !important;
+    border: 1px solid #c6ecd3;
+}
+
+.nxPpInsightBadge--warning {
+    background: #fff7ed;
+    color: #ea580c !important;
+    border: 1px solid #fde3c4;
+}
+
+.nxPpInsightBadge--danger {
+    background: #fef2f2;
+    color: #dc2626 !important;
+    border: 1px solid #fbd5d5;
+}
+
+.nxPpInsightBadge--none {
+    background: #f1f5f9;
+    color: #64748b !important;
+    border: 1px solid #e2e8f0;
+}
+
+/* ============================================================
+   하단 BOM / 재고 현황
+   ============================================================ */
+.nxPpBottomRow {
+    width: 100%;
+    box-sizing: border-box;
+    gap: 0.85rem;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.nxPpBomCard {
+    flex: 2 1 28rem;
+    min-width: 24rem;
+    min-height: 18rem;
+}
+
+.nxPpBomSideCard {
+    flex: 1 1 16rem;
+    min-width: 14rem;
+    min-height: 18rem;
+}
+
+.nxPpBomBody {
+    width: 100%;
+    gap: 1.6rem;
+    flex: 1 1 auto;
+    padding: 0.5rem 0.25rem;
+}
+
+/* ---- 도넛 ---- */
+.nxPpDonutWrap {
+    position: relative;
+    width: 11rem;
+    height: 11rem;
+    flex: 0 0 auto;
+}
+
+.nxPpDonutRing {
+    width: 11rem;
+    height: 11rem;
+    border-radius: 50%;
+    position: relative;
+}
+
+.nxPpDonutRing::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64%;
+    height: 64%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) inset;
+}
+
+.nxPpDonutCenter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    gap: 0.1rem;
+}
+
+.nxPpDonutVal,
+.nxPpDonutVal .sapMText {
+    font-size: 1.7rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.nxPpDonutCap,
+.nxPpDonutCap .sapMText {
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    color: #94a3b8 !important;
+}
+
+/* ---- KPI 리스트 ---- */
+.nxPpBomKpis {
+    flex: 1 1 14rem;
+    min-width: 13rem;
+    gap: 0.55rem;
+    justify-content: center;
+}
+
+.nxPpBomKpiRow {
+    width: 100%;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed #eef2f7;
+}
+
+.nxPpBomKpiCap,
+.nxPpBomKpiCap .sapMText {
+    font-size: 0.85rem !important;
+    color: #475569 !important;
+    font-weight: 600 !important;
+}
+
+.nxPpBomKpiVal,
+.nxPpBomKpiVal .sapMText {
+    font-size: 0.95rem !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+.nxPpBomKpiVal--secured,
+.nxPpBomKpiVal--secured .sapMText {
+    color: #16a34a !important;
+}
+
+.nxPpBomKpiVal--shortage,
+.nxPpBomKpiVal--shortage .sapMText {
+    color: #dc2626 !important;
+}
+
+.nxPpBomDot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    margin-right: 0.45rem;
+}
+
+.nxPpBomDot--secured {
+    background: #16a34a;
+}
+
+.nxPpBomDot--shortage {
+    background: #dc2626;
+}
+
+.nxPpBomUnitHint,
+.nxPpBomUnitHint .sapMText {
+    font-size: 0.72rem !important;
+    color: #94a3b8 !important;
+    font-style: italic;
+}
+
+/* ---- empty state ---- */
+.nxPpBomEmpty {
+    flex: 1 1 auto;
+    width: 100%;
+    gap: 0.4rem;
+    min-height: 12rem;
+}
+
+/* ============================================================
+   우측 생산 가능 여부 요약
+   ============================================================ */
+.nxPpSideKpis {
+    width: 100%;
+    gap: 0.55rem;
+}
+
+.nxPpSideRow {
+    width: 100%;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed #eef2f7;
+}
+
+.nxPpSideCap,
+.nxPpSideCap .sapMText {
+    font-size: 0.82rem !important;
+    color: #475569 !important;
+    font-weight: 600 !important;
+}
+
+.nxPpSideVal,
+.nxPpSideVal .sapMText {
+    font-size: 0.9rem !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+.nxPpSideVal--po,
+.nxPpSideVal--po .sapMText {
+    color: #dc2626 !important;
+}
+
+.nxPpSideVal--transit,
+.nxPpSideVal--transit .sapMText {
+    color: #ea580c !important;
+}
+
+.nxPpSideVal--done,
+.nxPpSideVal--done .sapMText {
+    color: #16a34a !important;
+}
+
+.nxPpSideVal--none,
+.nxPpSideVal--none .sapMText {
+    color: #64748b !important;
+}
+
+.nxPpSideShortage {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #eef2f7;
+    gap: 0.4rem;
+}
+
+.nxPpSideShortageTitle,
+.nxPpSideShortageTitle .sapMText {
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+    color: #64748b !important;
+}
+
+.nxPpSideShortageItem {
+    width: 100%;
+    padding: 0.3rem 0.5rem;
+    border-radius: 8px;
+    background: #fef2f2;
+}
+
+.nxPpSideShortageCode,
+.nxPpSideShortageCode .sapMText {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+}
+
+.nxPpSideShortageQty,
+.nxPpSideShortageQty .sapMText {
+    font-size: 0.8rem !important;
+    font-weight: 800 !important;
+    color: #dc2626 !important;
+}
+
+@media (max-width: 1024px) {
+    .nxPpBomCard,
+    .nxPpBomSideCard {
+        flex: 1 1 100%;
+    }
+
+    .nxPpInsightBar {
+        gap: 0.6rem;
+    }
 }
 
 /* E2E 12-step flow: 4-4-4 layout

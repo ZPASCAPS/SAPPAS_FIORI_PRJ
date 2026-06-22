@@ -24,7 +24,7 @@
                 viewName="com.capstone.dashboard.fioridashboard.view.features.DashboardModuleNav" />
             <VBox
                 width="100%"
-                visible="{= ${dashboard>/ui/navKey} === 'SD_SALES' || ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'PP_PRODUCTION' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' }"
+                visible="{= ${dashboard>/ui/navKey} === 'MM_MATERIALS' || ${dashboard>/ui/navKey} === 'FI_CO_FINANCE' }"
                 class="nxModuleShellSlot">
                 <mvc:XMLView
                     width="100%"
