@@ -18750,6 +18750,100 @@ html, body, body > div, #container, #container-uiarea,
     color: #94a3b8 !important;
 }
 
+/* ---- 오더 검색(인라인 단일 필드) ---- */
+.nxPpTopControls .nxPpFieldLabel {
+    flex: 0 0 auto;
+}
+
+.nxPpOrderDirect {
+    flex: 0 0 auto;
+    width: 18rem;
+}
+
+/* ---- 파이프라인 카드 헤더 우측: 진행률 + 위험 알림 칩 ---- */
+.nxPpPipelineHeaderRight {
+    gap: 1.1rem;
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.nxPpHeaderAlert {
+    gap: 0.6rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 12px;
+    border: 1px solid #e6e9f2;
+    background: #f8fafc;
+    max-width: 26rem;
+    min-width: 0;
+}
+
+.nxPpHeaderAlert--danger {
+    background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+    border-color: #fbd5d5;
+}
+
+.nxPpHeaderAlert--warning {
+    background: linear-gradient(135deg, #fffaf3 0%, #fff7ed 100%);
+    border-color: #fde3c4;
+}
+
+.nxPpHeaderAlert--ok {
+    background: linear-gradient(135deg, #f3fbf6 0%, #ecfdf3 100%);
+    border-color: #c6ecd3;
+}
+
+.nxPpHeaderAlert--none {
+    background: #f8fafc;
+    border-color: #e6e9f2;
+}
+
+.nxPpHeaderAlertIconWrap {
+    flex: 0 0 auto;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 9px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.nxPpHeaderAlertIcon {
+    font-size: 1.05rem;
+}
+
+.nxPpHeaderAlert--danger .nxPpHeaderAlertIcon {
+    color: #dc2626;
+}
+
+.nxPpHeaderAlert--warning .nxPpHeaderAlertIcon {
+    color: #ea580c;
+}
+
+.nxPpHeaderAlert--ok .nxPpHeaderAlertIcon {
+    color: #16a34a;
+}
+
+.nxPpHeaderAlert--none .nxPpHeaderAlertIcon {
+    color: #64748b;
+}
+
+.nxPpHeaderAlertTexts {
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.nxPpHeaderAlertTitle,
+.nxPpHeaderAlertTitle .sapMText {
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.nxPpHeaderAlertGuide,
+.nxPpHeaderAlertGuide .sapMText {
+    font-size: 0.74rem !important;
+    color: #475569 !important;
+}
+
 /* ---- 상단 컨트롤 카드 (검색 + 알림) : 컴팩트 ---- */
 .nxPpTopControls .nxPpCard {
     padding: 0.55rem 0.85rem;
@@ -18869,7 +18963,7 @@ html, body, body > div, #container, #container-uiarea,
 .nxPpStepRow {
     position: relative;
     width: 100%;
-    padding: 0.75rem 0 0.35rem;
+    padding: 1.5rem 0 0.6rem;
 }
 
 .nxPpStep {
@@ -18889,7 +18983,7 @@ html, body, body > div, #container, #container-uiarea,
 /* 회색 기본 라인: 첫 노드 중앙(10%) ~ 마지막 노드 중앙(90%) */
 .nxPpStepBaseLine {
     position: absolute;
-    top: 2.5rem;
+    top: 3.95rem;
     left: 10%;
     right: 10%;
     height: 3px;
@@ -18901,7 +18995,7 @@ html, body, body > div, #container, #container-uiarea,
 /* 진행 라인(초록 fill): 완료 구간까지 차오르며 흐르는 효과 */
 .nxPpStepProgressLine {
     position: absolute;
-    top: 2.5rem;
+    top: 3.95rem;
     left: 10%;
     height: 3px;
     border-radius: 3px;
@@ -18917,11 +19011,27 @@ html, body, body > div, #container, #container-uiarea,
     100% { background-position: 0 0; }
 }
 
+/* 부분 진행 라인(주황): 진행 라인보다 한 구간 더 뻗어 '진행중' 단계까지 표시.
+   초록 진행선(progress)이 DOM상 뒤에 와서 겹치는 앞부분을 덮는다. */
+.nxPpStepPartialLine {
+    position: absolute;
+    top: 3.95rem;
+    left: 10%;
+    height: 3px;
+    border-radius: 3px;
+    z-index: 0;
+    background: linear-gradient(90deg, #fb923c 0%, #fdba74 50%, #fb923c 100%);
+    background-size: 200% 100%;
+    box-shadow: 0 0 6px rgba(234, 88, 12, 0.4);
+    animation: nxPpFlow 1.8s linear infinite;
+    transition: width 0.5s ease;
+}
+
 .nxPpStepIconWrap {
     position: relative;
     z-index: 1;
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 4.9rem;
+    height: 4.9rem;
     border-radius: 50%;
     background: #ffffff;
     border: 3px solid #e2e8f0;
@@ -18930,20 +19040,20 @@ html, body, body > div, #container, #container-uiarea,
 }
 
 .nxPpStepIcon {
-    font-size: 1.4rem;
+    font-size: 1.95rem;
     color: #94a3b8;
 }
 
 .nxPpStepLabel,
 .nxPpStepLabel .sapMText {
-    font-size: 0.85rem !important;
+    font-size: 1.2rem !important;
     font-weight: 700 !important;
     color: #1e293b !important;
 }
 
 .nxPpStepSub,
 .nxPpStepSub .sapMText {
-    font-size: 0.7rem !important;
+    font-size: 0.98rem !important;
     font-weight: 600 !important;
     color: #94a3b8 !important;
     letter-spacing: 0.02em;
@@ -18957,11 +19067,11 @@ html, body, body > div, #container, #container-uiarea,
 .nxPpStepStatus,
 .nxPpStepStatus .sapMText {
     display: inline-block;
-    font-size: 0.66rem !important;
+    font-size: 0.92rem !important;
     font-weight: 700 !important;
     line-height: 1.25 !important;
     border-radius: 999px;
-    padding: 0.12rem 0.5rem;
+    padding: 0.18rem 0.7rem;
     text-align: center;
     word-break: keep-all;
 }
@@ -19027,10 +19137,10 @@ html, body, body > div, #container, #container-uiarea,
     position: absolute;
     top: -2px;
     right: -2px;
-    width: 1.15rem;
-    height: 1.15rem;
-    line-height: 1.15rem;
-    font-size: 0.7rem !important;
+    width: 1.6rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+    font-size: 0.98rem !important;
     color: #ffffff !important;
     background: #22c55e;
     border: 2px solid #ffffff;
@@ -19683,17 +19793,18 @@ html, body, body > div, #container, #container-uiarea,
     }
 
     .nxPpStepLabel .sapMText {
-        font-size: 0.78rem !important;
+        font-size: 1.05rem !important;
     }
 
     .nxPpStepIconWrap {
-        width: 3rem;
-        height: 3rem;
+        width: 4.2rem;
+        height: 4.2rem;
     }
 
     .nxPpStepBaseLine,
+    .nxPpStepPartialLine,
     .nxPpStepProgressLine {
-        top: 2.25rem;
+        top: 3.6rem;
     }
 }
 

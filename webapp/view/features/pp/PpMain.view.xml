@@ -8,62 +8,20 @@
 
     <m:VBox class="nxPpMain" width="100%" height="100%" renderType="Bare">
 
-        <!-- ============ 상단 바 : (좌) 탭 메뉴  +  (우) 오더 검색 & 안내 ============ -->
-        <m:FlexBox class="nxPpTopBar" width="100%" wrap="Wrap" alignItems="Center" justifyContent="SpaceBetween" renderType="Bare">
-
-            <m:IconTabHeader
-                id="ppTabHeader"
-                class="nxPpTabHeader"
-                mode="Inline"
-                selectedKey="{ppView>/activeTab}"
-                select="onTabSelect">
-                <m:items>
-                    <m:IconTabFilter text="E2E 공급망 &amp; 공정 관제" icon="sap-icon://process" key="E2E" />
-                    <m:IconTabFilter text="자재 결품 관제 데스크" icon="sap-icon://warning" key="SHORTAGE" />
-                </m:items>
-            </m:IconTabHeader>
-
-            <m:HBox class="nxPpTopControls" wrap="Wrap" alignItems="Stretch" renderType="Bare">
-
-                <m:VBox class="nxPpCard nxPpSearchCard" renderType="Bare">
-                    <m:Label text="오더 검색" class="nxPpFieldLabel" />
-                    <m:ComboBox
-                        id="ppOrderSearch"
-                        class="nxPpOrderSearch"
-                        width="100%"
-                        showSecondaryValues="true"
-                        placeholder="오더번호 · 품목명 · 색상/사이즈 검색"
-                        filterSecondaryValues="true"
-                        selectionChange="onOrderSelect"
-                        selectedKey="{ppView>/selectedOrderKey}"
-                        items="{ppView>/orders}">
-                        <core:ListItem key="{ppView>key}" text="{ppView>salesOrder}" additionalText="{ppView>materialName}" />
-                    </m:ComboBox>
-                </m:VBox>
-
-                <m:VBox
-                    class="{= 'nxPpCard nxPpAlertCard nxPpAlertCard--' + ${ppView>/alert/severity} }"
-                    justifyContent="Center"
-                    renderType="Bare">
-                    <m:HBox class="nxPpAlertTop" alignItems="Center" renderType="Bare">
-                        <m:VBox class="nxPpAlertIconWrap" renderType="Bare" justifyContent="Center" alignItems="Center">
-                            <core:Icon src="{ppView>/alert/icon}" class="nxPpAlertIcon" />
-                        </m:VBox>
-                        <m:VBox class="nxPpAlertTexts" renderType="Bare">
-                            <m:Text text="{ppView>/alert/title}" class="nxPpAlertTitle" />
-                            <m:HBox alignItems="Center" renderType="Bare" class="nxPpAlertGuideRow">
-                                <core:Icon src="sap-icon://navigation-right-arrow" class="nxPpAlertGuideArrow" />
-                                <m:Text text="{ppView>/alert/guide}" class="nxPpAlertGuide" />
-                            </m:HBox>
-                        </m:VBox>
-                    </m:HBox>
-                </m:VBox>
+        <!-- ============ 상단 바 : 오더 조회 ============ -->
+        <m:FlexBox class="nxPpTopBar" width="100%" wrap="Wrap" alignItems="Center" justifyContent="End" renderType="Bare">
+            <m:HBox class="nxPpTopControls" wrap="Wrap" alignItems="Center" renderType="Bare">
+                <m:Label text="오더 검색" class="nxPpFieldLabel" />
+                <m:SearchField
+                    id="ppOrderDirect"
+                    class="nxPpOrderDirect"
+                    placeholder="오더번호 입력 (예: 394)"
+                    search="onOrderLookup" />
             </m:HBox>
         </m:FlexBox>
 
-        <!-- ============ 본문 : E2E (파이프라인 + 타임라인) ============ -->
+        <!-- ============ 본문 : E2E (파이프라인 + BOM/재고) ============ -->
         <m:VBox class="nxPpTabContent" width="100%" renderType="Bare"
-            visible="{= ${ppView>/activeTab} === 'E2E' }"
             busy="{ppView>/busy}" busyIndicatorDelay="0">
 
             <!-- 실시간 E2E 파이프라인 추적 -->
@@ -73,16 +31,28 @@
                         <core:Icon src="sap-icon://process" class="nxPpCardHeaderIcon" />
                         <m:Title text="실시간 E2E 파이프라인 추적" level="H5" class="nxPpCardTitle" />
                     </m:HBox>
-                    <m:VBox class="nxPpProgressWrap" alignItems="End" renderType="Bare">
-                        <m:Text text="{ppView>/progress/summary}" class="nxPpProgressLabel" />
-                        <m:HBox class="nxPpProgressTrack" renderType="Bare">
-                            <m:HBox class="nxPpProgressFill" width="{ppView>/progress/fillWidth}" renderType="Bare" />
+                    <m:HBox class="nxPpPipelineHeaderRight" alignItems="Center" renderType="Bare">
+                        <m:VBox class="nxPpProgressWrap" alignItems="End" renderType="Bare">
+                            <m:Text text="{ppView>/progress/summary}" class="nxPpProgressLabel" />
+                            <m:HBox class="nxPpProgressTrack" renderType="Bare">
+                                <m:HBox class="nxPpProgressFill" width="{ppView>/progress/fillWidth}" renderType="Bare" />
+                            </m:HBox>
+                        </m:VBox>
+                        <m:HBox class="{= 'nxPpHeaderAlert nxPpHeaderAlert--' + ${ppView>/alert/severity} }" alignItems="Center" renderType="Bare">
+                            <m:VBox class="nxPpHeaderAlertIconWrap" justifyContent="Center" alignItems="Center" renderType="Bare">
+                                <core:Icon src="{ppView>/alert/icon}" class="nxPpHeaderAlertIcon" />
+                            </m:VBox>
+                            <m:VBox class="nxPpHeaderAlertTexts" renderType="Bare">
+                                <m:Text text="{ppView>/alert/title}" class="nxPpHeaderAlertTitle" />
+                                <m:Text text="{ppView>/alert/guide}" class="nxPpHeaderAlertGuide" />
+                            </m:VBox>
                         </m:HBox>
-                    </m:VBox>
+                    </m:HBox>
                 </m:HBox>
 
                 <m:VBox class="nxPpStepArea" width="100%" renderType="Bare">
                     <m:HBox class="nxPpStepBaseLine" renderType="Bare" />
+                    <m:HBox class="nxPpStepPartialLine" width="{ppView>/progress/partialWidth}" visible="{ppView>/progress/partialVisible}" renderType="Bare" />
                     <m:HBox class="nxPpStepProgressLine" width="{ppView>/progress/lineWidth}" visible="{ppView>/progress/lineVisible}" renderType="Bare" />
                     <m:HBox class="nxPpStepRow" width="100%" justifyContent="SpaceBetween" alignItems="Start" renderType="Bare"
                         items="{ppView>/pipeline}">
@@ -98,31 +68,6 @@
                         </m:VBox>
                     </m:HBox>
                 </m:VBox>
-
-                <!-- 생산 시작 시기 예측 인사이트 바 -->
-                <m:HBox class="nxPpInsightBar nxPpInsightBar--{ppView>/insight/severity}"
-                    wrap="Wrap" alignItems="Center" renderType="Bare">
-                    <m:HBox class="nxPpInsightHead" alignItems="Center" renderType="Bare">
-                        <core:Icon src="sap-icon://date-time" class="nxPpInsightHeadIcon" />
-                        <m:Text text="생산 시작 시기 예측" class="nxPpInsightHeadText" />
-                    </m:HBox>
-                    <m:VBox class="nxPpInsightItem" renderType="Bare">
-                        <m:Text text="예상 생산 시작" class="nxPpInsightCap" />
-                        <m:Text text="{ppView>/insight/expectedText}" class="nxPpInsightVal" />
-                    </m:VBox>
-                    <core:Icon src="sap-icon://arrow-right" class="nxPpInsightArrow" />
-                    <m:VBox class="nxPpInsightItem" renderType="Bare">
-                        <m:Text text="계획 생산 시작 (납기 기준)" class="nxPpInsightCap" />
-                        <m:Text text="{ppView>/insight/requiredText}" class="nxPpInsightVal" />
-                    </m:VBox>
-                    <m:VBox class="nxPpInsightItem nxPpInsightItem--gap" renderType="Bare">
-                        <m:Text text="차이" class="nxPpInsightCap" />
-                        <m:Text text="{ppView>/insight/gapText}"
-                            class="nxPpInsightVal nxPpInsightVal--{ppView>/insight/severity}" />
-                    </m:VBox>
-                    <m:Text text="{ppView>/insight/badgeText}"
-                        class="nxPpInsightBadge nxPpInsightBadge--{ppView>/insight/severity}" />
-                </m:HBox>
             </m:VBox>
 
             <!-- ===== 하단 : 오더 기준 BOM / 재고 현황 (좌~중앙 도넛 + 우측 요약) ===== -->
@@ -198,7 +143,7 @@
                     </m:VBox>
                 </m:VBox>
 
-                <!-- 우측 : 생산 가능 여부 요약 + 부족 자재 TOP 3 -->
+                <!-- 우측 : 생산 가능 여부 요약 + 부족 자재 -->
                 <m:VBox class="nxPpCard nxPpBomSideCard" renderType="Bare" visible="{ppView>/bom/hasData}">
                     <m:HBox class="nxPpCardHeader" renderType="Bare" alignItems="Center">
                         <core:Icon src="sap-icon://decision" class="nxPpCardHeaderIcon" />
@@ -215,10 +160,6 @@
                             <m:Text text="{= ${ppView>/bom/shortageItemCount} + '개' }" class="nxPpSideVal" />
                         </m:HBox>
                         <m:HBox class="nxPpSideRow" justifyContent="SpaceBetween" alignItems="Center" renderType="Bare">
-                            <m:Text text="예상 생산 시작" class="nxPpSideCap" />
-                            <m:Text text="{ppView>/insight/expectedText}" class="nxPpSideVal" />
-                        </m:HBox>
-                        <m:HBox class="nxPpSideRow" justifyContent="SpaceBetween" alignItems="Center" renderType="Bare">
                             <m:Text text="조치 필요" class="nxPpSideCap" />
                             <m:Text text="{ppView>/feasibility/text}"
                                 class="nxPpSideVal nxPpSideVal--{ppView>/feasibility/statusKey}" />
@@ -226,7 +167,7 @@
                     </m:VBox>
 
                     <m:VBox class="nxPpSideShortage" renderType="Bare" visible="{ppView>/bom/hasShortage}">
-                        <m:Text text="부족 자재 TOP 3" class="nxPpSideShortageTitle" />
+                        <m:Text text="부족 자재" class="nxPpSideShortageTitle" />
                         <m:VBox renderType="Bare" items="{ppView>/bom/top3}">
                             <m:HBox class="nxPpSideShortageItem" justifyContent="SpaceBetween" alignItems="Center" renderType="Bare">
                                 <m:Text text="{ppView>materialCode}" class="nxPpSideShortageCode" />
@@ -236,95 +177,6 @@
                     </m:VBox>
                 </m:VBox>
             </m:HBox>
-        </m:VBox>
-
-        <!-- ============ 본문 : 자재 결품 관제 데스크 ============ -->
-        <m:VBox class="nxPpTabContent" width="100%" renderType="Bare"
-            visible="{= ${ppView>/activeTab} === 'SHORTAGE' }">
-            <m:VBox class="nxPpCard nxPpShortageCard" width="100%" renderType="Bare">
-                <m:HBox class="nxPpCardHeader" renderType="Bare" justifyContent="SpaceBetween" alignItems="Center">
-                    <m:HBox alignItems="Center" renderType="Bare" class="nxPpCardHeaderLeft">
-                        <core:Icon src="sap-icon://warning" class="nxPpCardHeaderIcon nxPpCardHeaderIcon--warn" />
-                        <m:VBox renderType="Bare">
-                            <m:Title text="긴급 조치 요망: 결품 내역 (RESB/EBKN)" level="H5" class="nxPpCardTitle" />
-                            <m:Text text="{= '총 ' + ${ppView>/shortage/count} + '건' }" class="nxPpCardHeaderHint" />
-                        </m:VBox>
-                    </m:HBox>
-                    <m:Button
-                        text="엑셀 다운로드"
-                        icon="sap-icon://excel-attachment"
-                        press="onExportShortage"
-                        class="nxPpExcelBtn" />
-                </m:HBox>
-
-                <m:HBox class="nxPpShortageFilter" alignItems="Center" renderType="Bare" wrap="Wrap">
-                    <core:Icon src="sap-icon://filter" class="nxPpShortageFilterIcon" />
-                    <m:Label text="품목 필터" class="nxPpShortageFilterLabel" />
-                    <m:MultiComboBox
-                        class="nxPpShortageFilterBox"
-                        width="34rem"
-                        placeholder="품목을 선택하세요 (미선택 시 전체)"
-                        items="{ppView>/shortage/materials}"
-                        selectedKeys="{ppView>/shortage/selectedKeys}"
-                        selectionChange="onShortageMaterialChange"
-                        selectionFinish="onShortageMaterialChange">
-                        <core:Item key="{ppView>key}" text="{ppView>text}" />
-                    </m:MultiComboBox>
-                    <m:Text
-                        text="{= ${ppView>/shortage/count} + ' / ' + ${ppView>/shortage/totalCount} + '건 표시' }"
-                        class="nxPpShortageFilterCount" />
-                </m:HBox>
-
-                <m:Table
-                    id="ppShortageTable"
-                    class="nxPpShortageTable"
-                    width="100%"
-                    items="{ppView>/shortage/rows}"
-                    growing="true"
-                    growingThreshold="50"
-                    sticky="ColumnHeaders"
-                    alternateRowColors="false">
-                    <m:noData>
-                        <m:VBox class="nxPpTableEmpty" alignItems="Center" justifyContent="Center" renderType="Bare">
-                            <m:VBox class="nxPpTlEmptyIconWrap" alignItems="Center" justifyContent="Center" renderType="Bare">
-                                <core:Icon src="sap-icon://inventory" class="nxPpTlEmptyIcon" />
-                            </m:VBox>
-                            <m:Text text="표시할 결품 내역이 없습니다." class="nxPpTlEmptyText" />
-                            <m:Text text="모든 자재가 정상 입고되었거나 조회된 데이터가 없습니다." class="nxPpTlEmptySub" />
-                        </m:VBox>
-                    </m:noData>
-                    <m:columns>
-                        <m:Column width="9rem"><m:Text text="생산 오더" /></m:Column>
-                        <m:Column width="16rem"><m:Text text="결품 자재명" /></m:Column>
-                        <m:Column width="8rem" hAlign="End"><m:Text text="소요 수량" /></m:Column>
-                        <m:Column width="8rem" hAlign="End"><m:Text text="출고 수량" /></m:Column>
-                        <m:Column width="8rem" hAlign="End"><m:Text text="부족 수량" /></m:Column>
-                        <m:Column width="9rem" hAlign="Center"><m:Text text="상태(병목)" /></m:Column>
-                    </m:columns>
-
-                    <m:items>
-                        <m:ColumnListItem class="nxPpShortageRow">
-                            <m:cells>
-                                <m:Text text="{ppView>salesOrder}" class="nxPpCellStrong" />
-                                <m:VBox renderType="Bare">
-                                    <m:Text text="{ppView>materialName}" class="nxPpCellStrong" />
-                                    <m:Text text="{ppView>materialCode}" class="nxPpCellSub" />
-                                </m:VBox>
-                                <m:Text text="{= ${ppView>requiredQty} + ' ' + ${ppView>unit} }" class="nxPpCellNum" />
-                                <m:Text text="{= ${ppView>issuedQty} + ' ' + ${ppView>unit} }" class="nxPpCellNum" />
-                                <m:Text
-                                    text="{= ${ppView>shortageQty} + ' ' + ${ppView>unit} }"
-                                    class="nxPpCellNum {ppView>shortClass}" />
-                                <m:HBox justifyContent="Center" renderType="Bare">
-                                    <m:Text
-                                        text="{ppView>statusText}"
-                                        class="nxPpBadge nxPpBadge--{ppView>statusKey}" />
-                                </m:HBox>
-                            </m:cells>
-                        </m:ColumnListItem>
-                    </m:items>
-                </m:Table>
-            </m:VBox>
         </m:VBox>
     </m:VBox>
 </mvc:View>

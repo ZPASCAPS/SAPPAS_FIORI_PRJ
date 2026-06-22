@@ -45,7 +45,7 @@
         }
       },
       "ppOrderListService": {
-        "uri": "/sap/opu/odata/sap/ZI_PP_MTO_ORDER_LIST_CDS/",
+        "uri": "/sap/opu/odata/sap/ZCPP_E2E_ORDERLIST_CDS/",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0"
@@ -58,22 +58,22 @@
           "odataVersion": "2.0"
         }
       },
-      "ppShortageService": {
-        "uri": "/sap/opu/odata/sap/ZI_PP_MAT_SHORTAGE_CDS/",
-        "type": "OData",
-        "settings": {
-          "odataVersion": "2.0"
-        }
-      },
       "ppOverviewService": {
-        "uri": "/sap/opu/odata/sap/ZC_PP_MTO_OVERVIEW_CDS/",
+        "uri": "/sap/opu/odata/sap/ZCPP_E2E_OVERVIEW_CDS/",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0"
         }
       },
       "ppBomStockService": {
-        "uri": "/sap/opu/odata/sap/ZC_PP_MTO_BOM_STOCK_CDS/",
+        "uri": "/sap/opu/odata/sap/ZCPP_E2E_BOMSTOCK_CDS/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      },
+      "ppTrackerService": {
+        "uri": "/sap/opu/odata/sap/ZCPP_E2E_TRACKER_CDS/",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0"
@@ -301,14 +301,6 @@
           "defaultCountMode": "Inline"
         }
       },
-      "ppShortageModel": {
-        "dataSource": "ppShortageService",
-        "preload": true,
-        "settings": {
-          "useBatch": false,
-          "defaultCountMode": "Inline"
-        }
-      },
       "ppOverviewModel": {
         "dataSource": "ppOverviewService",
         "preload": true,
@@ -319,6 +311,14 @@
       },
       "ppBomStockModel": {
         "dataSource": "ppBomStockService",
+        "preload": true,
+        "settings": {
+          "useBatch": false,
+          "defaultCountMode": "Inline"
+        }
+      },
+      "ppTrackerModel": {
+        "dataSource": "ppTrackerService",
         "preload": true,
         "settings": {
           "useBatch": false,
@@ -468,7 +468,7 @@
     "resources": {
       "css": [
         {
-          "uri": "css/style.css?v=20260621b"
+          "uri": "css/style.css?v=20260622e"
         }
       ]
     },
